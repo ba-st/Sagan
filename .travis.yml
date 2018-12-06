@@ -1,0 +1,26 @@
+language: smalltalk
+sudo: false
+os:
+- linux
+smalltalk:
+- Pharo64-7.0
+- Pharo-7.0
+- Pharo-6.1
+matrix:
+  allow_failures:
+  - smalltalk: Pharo64-7.0
+  - smalltalk: Pharo-7.0
+  fast_finish: true
+before_deploy:
+- cp "${SMALLTALK_CI_IMAGE}" "Sagan.image"
+- cp "${SMALLTALK_CI_CHANGES}" "Sagan.changes"
+- zip -q "${TRAVIS_BRANCH}-${TRAVIS_SMALLTALK_VERSION}.zip" "Sagan.image" "Sagan.changes"
+deploy:
+  provider: releases
+  api_key:
+    secure: iBD5Dqjq3tQ6pu7abNmtv/glOs2tDPyglRKVkTHuseTJDKmD8fErRSxUURtAzxmuLfA+dfUNwl3Rn8suJLlc/oTeJlpZRzu/2ivcYsQi3oIUSHDaZ6b8le7OQxnDRJAzzqEoQiRo0cgM/wNvFPKZbYB8oCoTjOKRGGX6umZl8fij2xoC+JiWbW79Wn9zQcCkUzGTGX3h792LUVi+J3FwQZiK4h+sSkgITrQl+Z/ejRhPPJvDZJFH7GmDeqASAJlJe2fFRQ2lGx5WJ7txCbGFfNIjaCOleOTR17f5/ZqiwfVPG+ZpK0+uiY/J7eoW6JRCTk3+RgExOqUOEMVjYGZpO28uCYLNJ6KFEQ36FGH4o1IflLdJPdkb9JvgmyIqubu2AoAHjJgqRhNvCTBvsplVjrRpjFu3t0z4KoLkWSJy9xLo7yGWB89K5hq2Ij0PnL3rnRa/aoJIyQFtvSS9P/3MU1NJZn8G1Tee72AEyXb4+x0fKAxGNUl/+bd98nkY9ey0Zw0GJyKr9dujGanW08N9cGhEoYuYN3to4brfSRsr3AB1cUZrQ9GmGQM7Own9yFv6AW0D708JGF6EfI5M26vQJnpBKOhiXgLNveuI0Rtcll+Vp9aVVRGuUKX90KqxeLNXHLglu4Vq0FQYvGqcvK49AnL3BqfP7PtOuQoRkYfdGIA=
+  file: "${TRAVIS_BRANCH}-${TRAVIS_SMALLTALK_VERSION}.zip"
+  skip_cleanup: true
+  on:
+    repo: ba-st/Sagan
+    tags: true
