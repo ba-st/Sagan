@@ -15,14 +15,14 @@ BaselineOfSagan >> baseline: spec [
 				package: 'Sagan-Core' with: [ spec requires: #('Kepler') ];
 				group: 'Core' with: #('Sagan-Core').
 
-			spec package: 'Sagan-Core-Tests' with: [ spec requires: #('Core') ].
+			spec package: 'Sagan-Core-Tests' with: [ spec requires: #('Core' 'Buoy') ].
 
 			spec
 				group: 'Deployment' with: 'Core';
 				group: 'Tests' with: 'Sagan-Core-Tests';
 				group: 'CI' with: 'Tests';
 				group: 'Development' with: #('Deployment' 'Tests');
-				group: 'default' with: #('Deployment')
+				group: 'default' with: #('Development')
 			]
 ]
 
@@ -31,8 +31,17 @@ BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
 		baseline: 'Kepler'
-		with: [ spec
+			with: [ spec
 				repository: 'github://ba-st/Kepler:v3/source';
 				loads: #('Core')
-			]
+			];
+		import: 'Kepler'.
+
+	spec
+		baseline: 'Buoy'
+			with: [ spec
+				repository: 'github://ba-st/Buoy:v4/source';
+				loads: #('SUnit')
+			];
+		import: 'Buoy'
 ]

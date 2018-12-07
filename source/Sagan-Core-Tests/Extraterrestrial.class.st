@@ -2,7 +2,7 @@
 I'm a dummy object used for the persistence tests
 "
 Class {
-	#name : #'KP_Person',
+	#name : #Extraterrestrial,
 	#superclass : #Object,
 	#instVars : [
 		'sequentialNumber',
@@ -13,39 +13,39 @@ Class {
 }
 
 { #category : #accessing }
-KP_Person class >> firstNamed: aFirstName lastNamed: aLastName [  
+Extraterrestrial class >> namedFirst: aFirstName last: aLastName [  
 
-	^ self new initializeFirstNamed: aFirstName lastNamed: aLastName  
+	^ self new initializeNamedFirst: aFirstName last: aLastName  
 ]
 
 { #category : #accessing }
-KP_Person >> firstName [
+Extraterrestrial >> firstName [
 
 	^ firstName
 ]
 
 { #category : #initialization }
-KP_Person >> initializeFirstNamed: aFirstName lastNamed: aLastName [
+Extraterrestrial >> initializeNamedFirst: aFirstName last: aLastName [
 
 	firstName := aFirstName.
 	lastName := aLastName
 ]
 
 { #category : #accessing }
-KP_Person >> lastName [
+Extraterrestrial >> lastName [
 
 	^ lastName
 ]
 
 { #category : #accessing }
-KP_Person >> sequentialNumber [
+Extraterrestrial >> sequentialNumber [
 
 	^ sequentialNumber
 ]
 
 { #category : #updating }
-KP_Person >> synchronizeWith: aKP_Person [
+Extraterrestrial >> synchronizeWith: anExtraterrestial [
 
-	firstName := aKP_Person firstName.
-	lastName := aKP_Person lastName
+	firstName := anExtraterrestial firstName.
+	lastName := anExtraterrestial lastName
 ]
