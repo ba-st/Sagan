@@ -8,28 +8,22 @@ Class {
 	#category : #'Sagan-Core'
 }
 
-{ #category : #'string matching' }
-InMemoryRepositoryMatchingCriteriaBuilder >> includes: aStringInRepository substring: aString [
-
-	^ aStringInRepository includesSubstring: aString
-]
-
 { #category : #'identity operations' }
-InMemoryRepositoryMatchingCriteriaBuilder >> is: objectInRepository notStoredAs: objectInMemory [
-
-	^ objectInRepository ~= objectInMemory
-]
-
-{ #category : #'string matching' }
-InMemoryRepositoryMatchingCriteriaBuilder >> is: aStringInRepository similarTo: aString [
-
-	^ aStringInRepository includesSubstring: aString
-]
-
-{ #category : #'identity operations' }
-InMemoryRepositoryMatchingCriteriaBuilder >> is: anObjectInRepository storedAs: anObject [
+InMemoryRepositoryMatchingCriteriaBuilder >> does: anObjectInRepository equal: anObject [
 
 	^ anObjectInRepository = anObject
+]
+
+{ #category : #'string matching' }
+InMemoryRepositoryMatchingCriteriaBuilder >> does: aStringInRepository includeSubstring: aString [
+
+	^ aStringInRepository includesSubstring: aString
+]
+
+{ #category : #'identity operations' }
+InMemoryRepositoryMatchingCriteriaBuilder >> does: objectInRepository notEqual: objectInMemory [
+
+	^ objectInRepository ~= objectInMemory
 ]
 
 { #category : #'boolean operations' }

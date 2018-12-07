@@ -19,26 +19,20 @@ Class {
 	#category : #'Sagan-Core'
 }
 
-{ #category : #'string matching' }
-RepositoryMatchingCriteriaBuilder >> includes: aStringInRepository substring: aString [
-
-	self subclassResponsibility 
-]
-
 { #category : #'identity operations' }
-RepositoryMatchingCriteriaBuilder >> is: objectInRepository notStoredAs: objectInMemory [
+RepositoryMatchingCriteriaBuilder >> does: objectInRepository equal: objectInMemory [
 
 	self subclassResponsibility 
 ]
 
 { #category : #'string matching' }
-RepositoryMatchingCriteriaBuilder >> is: aStringInRepository similarTo: aString [
+RepositoryMatchingCriteriaBuilder >> does: aStringInRepository includeSubstring: aString [
 
 	self subclassResponsibility 
 ]
 
 { #category : #'identity operations' }
-RepositoryMatchingCriteriaBuilder >> is: objectInRepository storedAs: objectInMemory [
+RepositoryMatchingCriteriaBuilder >> does: objectInRepository notEqual: objectInMemory [
 
 	self subclassResponsibility 
 ]

@@ -71,21 +71,12 @@ CriteriaBasedConflictCheckingStrategy >> assertNoConflictsFor: objectInMemory in
 	self
 		assertNoConflictsFor: objectInMemory
 		in: aRepository
-		accordingTo: [ :objectInRepository :criteria | 
+		when: [ :objectInRepository :criteria | 
 			conflictCriteriaBlock
 				value: objectInRepository
 				value: criteria
 				value: objectInMemory
 			]
-]
-
-{ #category : #private }
-CriteriaBasedConflictCheckingStrategy >> assertNoConflictsFor: objectInMemory in: aRepository accordingTo: matchingCriteria [
-
-	AssertionChecker
-		refuse: [ ( aRepository countMatching: matchingCriteria ) strictlyPositive ]
-		because: [ 'Something is in conflict with <1p>' expandMacrosWith: objectInMemory ]
-		raising: ConflictingObjectFound
 ]
 
 { #category : #Evaluating }
@@ -94,11 +85,20 @@ CriteriaBasedConflictCheckingStrategy >> assertNoConflictsFor: updatedObjectInMe
 	self
 		assertNoConflictsFor: updatedObjectInMemory
 		in: aRepository
-		accordingTo:
+		when:
 			[ :objectInRepository :criteria | 
 				criteria 
-					satisfying: ( criteria is: objectInRepository notStoredAs: originalObjectInMemory ) 
+					satisfying: ( criteria does: objectInRepository notEqual: originalObjectInMemory ) 
 					and: [ conflictCriteriaBlock value: objectInRepository value: criteria value: updatedObjectInMemory ] ]
+]
+
+{ #category : #private }
+CriteriaBasedConflictCheckingStrategy >> assertNoConflictsFor: objectInMemory in: aRepository when: matchingCriteria [
+
+	AssertionChecker
+		refuse: [ ( aRepository countMatching: matchingCriteria ) strictlyPositive ]
+		because: [ 'Something is in conflict with <1p>' expandMacrosWith: objectInMemory ]
+		raising: ConflictingObjectFound
 ]
 
 { #category : #initialization }

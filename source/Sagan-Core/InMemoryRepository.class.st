@@ -25,34 +25,6 @@ InMemoryRepository class >> withoutCheckingConflicts [
 	^ self checkingConflictsAccordingTo: DoNotCheckForConflictsStrategy new
 ]
 
-{ #category : #'private - management' }
-InMemoryRepository >> basicPurge: aDomainObject [
-
-	contents
-		remove: aDomainObject
-		ifAbsent: [ 
-			DataInconsistencyFound
-				signal: ( '<1p> was expected to be found in the contents, but it was not.' expandMacrosWith: aDomainObject )
-			].
-	^ aDomainObject
-]
-
-{ #category : #'private - management' }
-InMemoryRepository >> basicStore: aDomainObject [
-
-	contents add: aDomainObject.
-	^ aDomainObject
-]
-
-{ #category : #'private - management' }
-InMemoryRepository >> basicUpdate: aDomainObject with: anUpdatedDomainObject [
-
-	self basicPurge: aDomainObject.
-	aDomainObject synchronizeWith: anUpdatedDomainObject.
-	self basicStore: aDomainObject.
-	^ aDomainObject
-]
-
 { #category : #configuring }
 InMemoryRepository >> configureMappingsIn: aBlock [
 
@@ -102,16 +74,44 @@ InMemoryRepository >> matchingCriteriaBuilder [
 	^ InMemoryRepositoryMatchingCriteriaBuilder  new
 ]
 
+{ #category : #'private - management' }
+InMemoryRepository >> purgeAfterCheckingConflicts: aDomainObject [
+
+	contents
+		remove: aDomainObject
+		ifAbsent: [ 
+			DataInconsistencyFound
+				signal: ( '<1p> was expected to be found in the contents, but it was not.' expandMacrosWith: aDomainObject )
+			].
+	^ aDomainObject
+]
+
 { #category : #management }
 InMemoryRepository >> purgeAllMatching: aCriteriaOrBlock [
 
 	contents := contents reject: ( self asMatchingCriteria: aCriteriaOrBlock )
 ]
 
+{ #category : #'private - management' }
+InMemoryRepository >> storeAfterCheckingConflicts: aDomainObject [
+
+	contents add: aDomainObject.
+	^ aDomainObject
+]
+
 { #category : #management }
 InMemoryRepository >> update: aMutableDomainObject executing: aBlock [
 
 	aBlock value: aMutableDomainObject
+]
+
+{ #category : #'private - management' }
+InMemoryRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
+
+	self purgeAfterCheckingConflicts: aDomainObject.
+	aDomainObject synchronizeWith: anUpdatedDomainObject.
+	self storeAfterCheckingConflicts: aDomainObject.
+	^ aDomainObject
 ]
 
 { #category : #querying }

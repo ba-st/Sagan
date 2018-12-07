@@ -32,7 +32,7 @@ Repository >> asMatchingCriteria: aBlockOrCriteria [
 Repository >> assertIncludes: inMemoryObject [
 
 	AssertionChecker
-		enforce: [ ( self countMatching: [ :objectInRepository :criteria | criteria is: objectInRepository storedAs: inMemoryObject ] ) strictlyPositive ]
+		enforce: [ ( self countMatching: [ :objectInRepository :criteria | criteria does: objectInRepository equal: inMemoryObject ] ) strictlyPositive ]
 		because: [ '<1p> was not found.' expandMacrosWith: inMemoryObject ]
 		raising: ObjectNotFound
 ]
@@ -47,29 +47,6 @@ Repository >> assertNoConflictsFor: aDomainObject [
 Repository >> assertNoConflictsFor: anUpdatedDomainObject excluding: aDomainObject [
 
 	self conflictCheckingStrategy assertNoConflictsFor: anUpdatedDomainObject in: self excluding: aDomainObject
-]
-
-{ #category : #'private - management' }
-Repository >> basicPurge: aDomainObject [
-
-	"aDomainObject is managed in the repository, now needs to be purged."
-
-	^ self subclassResponsibility
-]
-
-{ #category : #'private - management' }
-Repository >> basicStore: aDomainObject [
-
-	"aDomainObject was not found in conflict according to the conflict strategy,
-	now needs to be stored."
-
-	^ self subclassResponsibility
-]
-
-{ #category : #'private - management' }
-Repository >> basicUpdate: aDomainObject with: anUpdatedDomainObject [
-
-	^ self subclassResponsibility
 ]
 
 { #category : #mappings }
@@ -119,7 +96,13 @@ Repository >> purge: aDomainObject [
 
 	^ self
 		assertIncludes: aDomainObject;
-		basicPurge: aDomainObject
+		purgeAfterCheckingConflicts: aDomainObject
+]
+
+{ #category : #'private - management' }
+Repository >> purgeAfterCheckingConflicts: aDomainObject [
+
+	^ self subclassResponsibility
 ]
 
 { #category : #management }
@@ -133,7 +116,13 @@ Repository >> store: aDomainObject [
 
 	^ self
 		assertNoConflictsFor: aDomainObject;
-		basicStore: aDomainObject
+		storeAfterCheckingConflicts: aDomainObject
+]
+
+{ #category : #'private - management' }
+Repository >> storeAfterCheckingConflicts: aDomainObject [
+
+	^ self subclassResponsibility
 ]
 
 { #category : #management }
@@ -148,7 +137,13 @@ Repository >> update: aDomainObject with: anUpdatedDomainObject [
 	^ self
 		assertIncludes: aDomainObject;
 		assertNoConflictsFor: anUpdatedDomainObject excluding: aDomainObject;
-		basicUpdate: aDomainObject with: anUpdatedDomainObject
+		updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject
+]
+
+{ #category : #'private - management' }
+Repository >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
+
+	^ self subclassResponsibility
 ]
 
 { #category : #querying }

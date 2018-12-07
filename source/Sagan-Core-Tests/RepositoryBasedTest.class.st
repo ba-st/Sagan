@@ -151,12 +151,10 @@ RepositoryBasedTest >> testFindAllMatching [
 		store: self silvesterStallone.
 
 	self
-		assert: ( self repository findAllMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ] ) size
-			equals: 1;
+		assert: ( self repository findAllMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ] ) size equals: 1;
 		assert: ( self repository findAllMatching: [ :extraterrestrial | extraterrestrial firstName = 'Yoko' ] ) isEmpty;
 		assert:
-			( self repository
-				findAllMatching: [ :extraterrestrial :criteria | criteria includes: extraterrestrial firstName substring: 'J' ] ) size
+			( self repository findAllMatching: [ :extraterrestrial :criteria | criteria does: extraterrestrial firstName includeSubstring: 'J' ] ) size
 			equals: 2
 ]
 
@@ -172,7 +170,7 @@ RepositoryBasedTest >> testFindAllMatchingSortedBy [
 		store: self johnLock.
 
 	sorted := self repository
-		findAllMatching: [ :extraterrestrial :criteria | criteria includes: extraterrestrial lastName asUppercase substring: 'L' ]
+		findAllMatching: [ :extraterrestrial :criteria | criteria does: extraterrestrial lastName asUppercase includeSubstring: 'L' ]
 		sortedBy: #firstName ascending , #lastName descending.
 
 	self
@@ -413,7 +411,7 @@ RepositoryBasedTest >> testWithOneMatchingSortedByDoElse [
 		store: self johnLock.
 
 	self repository
-		withOneMatching: [ :extraterrestrial :criteria | criteria includes: extraterrestrial lastName asUppercase substring: 'L' ]
+		withOneMatching: [ :extraterrestrial :criteria | criteria does: extraterrestrial lastName asUppercase includeSubstring: 'L' ]
 		sortedBy: #firstName ascending , #lastName descending
 		do: [ :extraterrestrial | 
 			self
