@@ -8,9 +8,6 @@ Class {
 		'typeResolverDefinitions',
 		'tablesInCreationOrder'
 	],
-	#pools : [
-		'RDBConstants'
-	],
 	#category : #'Sagan-RDBMS-Core'
 }
 
