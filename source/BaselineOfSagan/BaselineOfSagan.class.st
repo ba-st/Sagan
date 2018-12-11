@@ -19,7 +19,7 @@ BaselineOfSagan >> baseline: spec [
 
 			spec
 				package: 'Sagan-RDBMS' with: [ spec requires: #('P3' 'Core') ];
-				group: 'RDBMS'.
+				group: 'RDBMS' with: #('Sagan-RDBMS').
 
 			spec package: 'Sagan-RDBMS-Tests' with: [ spec requires: #('Sagan-RDBMS' 'Sagan-Core-Tests') ].
 
