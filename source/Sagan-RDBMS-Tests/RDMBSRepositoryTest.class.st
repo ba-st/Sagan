@@ -1,5 +1,8 @@
+"
+Unit test for RDMBSRepository
+"
 Class {
-	#name : #RDMBSAssistedRepositoryTest,
+	#name : #RDMBSRepositoryTest,
 	#superclass : #RepositoryBasedTest,
 	#instVars : [
 		'session'
@@ -8,7 +11,7 @@ Class {
 }
 
 { #category : #initialization }
-RDMBSAssistedRepositoryTest >> configureMappings [
+RDMBSRepositoryTest >> configureMappings [
 
 	repository
 		configureMappingsIn: [ :rdbmsRepository | 
@@ -39,7 +42,7 @@ RDMBSAssistedRepositoryTest >> configureMappings [
 ]
 
 { #category : #initialization }
-RDMBSAssistedRepositoryTest >> createSession [
+RDMBSRepositoryTest >> createSession [
 
 	| accessor |
 
@@ -54,7 +57,8 @@ RDMBSAssistedRepositoryTest >> createSession [
 				port: 5432;
 				databaseName: 'test';
 				yourself ).
-	accessor logging: true.
+	self isLogging
+		ifTrue: [ accessor logging: true ].
 	^ GlorpSession new
 		accessor: accessor;
 		system: ConfigurableDescriptorSystem new;
@@ -62,10 +66,10 @@ RDMBSAssistedRepositoryTest >> createSession [
 ]
 
 { #category : #initialization }
-RDMBSAssistedRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
+RDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
 	session := self createSession.
-	repository := RDMBSAssistedRepository
+	repository := RDMBSRepository
 		storingObjectsOfType: Extraterrestrial
 		checkingConflictsAccordingTo: aConflictCheckingStrategy
 		workingWith: [ session ].
@@ -79,7 +83,7 @@ RDMBSAssistedRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 ]
 
 { #category : #running }
-RDMBSAssistedRepositoryTest >> tearDown [
+RDMBSRepositoryTest >> tearDown [
 
 	session ifNotNil: [ session logout ].
 	super tearDown

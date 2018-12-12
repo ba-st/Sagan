@@ -75,7 +75,7 @@ InMemoryRepository >> matchingCriteriaBuilder [
 ]
 
 { #category : #'private - management' }
-InMemoryRepository >> purgeAfterCheckingConflicts: aDomainObject [
+InMemoryRepository >> purgeAfterCheckingInclusion: aDomainObject [
 
 	contents
 		remove: aDomainObject
@@ -108,7 +108,7 @@ InMemoryRepository >> update: aMutableDomainObject executing: aBlock [
 { #category : #'private - management' }
 InMemoryRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
 
-	self purgeAfterCheckingConflicts: aDomainObject.
+	self purgeAfterCheckingInclusion: aDomainObject.
 	aDomainObject synchronizeWith: anUpdatedDomainObject.
 	self storeAfterCheckingConflicts: aDomainObject.
 	^ aDomainObject
