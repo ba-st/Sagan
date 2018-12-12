@@ -7,7 +7,7 @@ I will keep a reference to the original error to aid in debugging or logging pur
 "
 Class {
 	#name : #PersistenceCommandFailed,
-	#superclass : #AnObsoleteSystemCommandExecutionError,
+	#superclass : #SystemCommandExecutionError,
 	#instVars : [
 		'originatingErrorMessageText'
 	],
