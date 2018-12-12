@@ -57,8 +57,9 @@ RDMBSRepositoryTest >> createSession [
 				port: 5432;
 				databaseName: 'test';
 				yourself ).
-	self isLogging
-		ifTrue: [ accessor logging: true ].
+
+	accessor logging: self isLogging.
+
 	^ GlorpSession new
 		accessor: accessor;
 		system: ConfigurableDescriptorSystem new;

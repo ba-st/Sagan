@@ -13,6 +13,10 @@ RDBMSRepositoryMatchingCriteriaBuilder >> does: anObjectInRepository equal: anOb
 { #category : #testing }
 RDBMSRepositoryMatchingCriteriaBuilder >> does: aStringInRepository includeSubstring: aString [
 
+	"#similarTo: is not implemented per-se but if you look at
+	FunctionExpression>>#createBasicFunctionsFor: , GLORP can handle it gracefully
+	and produce a LIKE."
+
 	^ aStringInRepository similarTo: ( '<1s><2s><1s>' expandMacrosWith: '%' with: aString )
 ]
 

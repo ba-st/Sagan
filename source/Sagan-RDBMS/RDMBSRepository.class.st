@@ -63,19 +63,19 @@ RDMBSRepository >> conflictCheckingStrategy [
 RDMBSRepository >> countMatching: aCriteriaOrBlock [
 
 	^ self
-		withSessionDo: [ :session | self handleReadErrorsDuring: [ session count: modelObjectClass where: ( self asMatchingCriteria: aCriteriaOrBlock ) ] ]
+		withReadSessionDo: [ :session | session count: modelObjectClass where: ( self asMatchingCriteria: aCriteriaOrBlock ) ]
 ]
 
 { #category : #'private - accessing' }
 RDMBSRepository >> executeQuery: query [
 
-	^ self withSessionDo: [ :session | self handleReadErrorsDuring: [ session execute: query ] ]
+	^ self withReadSessionDo: [ :session | session execute: query ]
 ]
 
 { #category : #querying }
 RDMBSRepository >> findAll [
 
-	^ self withSessionDo: [ :session | self handleReadErrorsDuring: [ session read: modelObjectClass ] ]
+	^ self withReadSessionDo: [ :session | session read: modelObjectClass ]
 ]
 
 { #category : #querying }
@@ -123,14 +123,13 @@ RDMBSRepository >> handleWriteErrorsDuring: aBlock [
 { #category : #'private - accessing' }
 RDMBSRepository >> inUnitOfWorkDo: aBlock [
 
-	^ self withSessionDo: [ :session | session inUnitOfWorkDo: aBlock ]
+	^ self withSessionDo: [ :session | self handleWriteErrorsDuring: [ session inUnitOfWorkDo: aBlock ] ]
 ]
 
 { #category : #initialization }
 RDMBSRepository >> initializeStoringObjectsOfType: aDomainObjectClass
 	checkingConflictsAccordingTo: aConflictCheckingStrategy
 	workingWith: aSessionProvider [
-
 
 	modelObjectClass := aDomainObjectClass.
 	conflictCheckingStrategy := aConflictCheckingStrategy.
@@ -146,40 +145,28 @@ RDMBSRepository >> matchingCriteriaBuilder [
 { #category : #'private - management' }
 RDMBSRepository >> purgeAfterCheckingInclusion: aDomainObject [
 
-	^ self
-		handleWriteErrorsDuring: [ self inUnitOfWorkDo: [ :session | session delete: aDomainObject ].
-			aDomainObject
-			]
+	self inUnitOfWorkDo: [ :session | session delete: aDomainObject ].
+	^ aDomainObject
 ]
 
 { #category : #management }
 RDMBSRepository >> purgeAllMatching: aCriteriaOrBlock [
 
-	self
-		handleWriteErrorsDuring: [ self
-				inUnitOfWorkDo:
-					[ :session | session delete: modelObjectClass where: ( self asMatchingCriteria: aCriteriaOrBlock ) ]
-			]
+	self inUnitOfWorkDo: [ :session | session delete: modelObjectClass where: ( self asMatchingCriteria: aCriteriaOrBlock ) ]
 ]
 
 { #category : #'private - management' }
 RDMBSRepository >> storeAfterCheckingConflicts: aDomainObject [
 
-	^ self
-		handleWriteErrorsDuring: [ self inUnitOfWorkDo: [ :session | session register: aDomainObject ].
-			aDomainObject
-			]
+	self inUnitOfWorkDo: [ :session | session register: aDomainObject ].
+	^ aDomainObject
 ]
 
 { #category : #management }
 RDMBSRepository >> update: aMutableDomainObject executing: aMonadycBlock [
 
-	^ self
-		handleWriteErrorsDuring: [ 
-			self
-				inUnitOfWorkDo: [ :session | session modify: aMutableDomainObject in: [ aMonadycBlock value: aMutableDomainObject ] ];
-				withSessionDo: [ :session | session refresh: aMutableDomainObject ]
-			]
+	self inUnitOfWorkDo: [ :session | session modify: aMutableDomainObject in: [ aMonadycBlock value: aMutableDomainObject ] ].
+	^ self withReadSessionDo: [ :session | session refresh: aMutableDomainObject ]
 ]
 
 { #category : #'private - management' }
@@ -205,6 +192,12 @@ RDMBSRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do:
 	query := SimpleQuery readOneOf: modelObjectClass where: ( self asMatchingCriteria: aCriteriaOrBlock ).
 	aSortFunction asSortFunction asOrderByIn: query.
 	^ ( self executeQuery: query ) ifNil: noneBlock ifNotNil: foundBlock
+]
+
+{ #category : #'private - accessing' }
+RDMBSRepository >> withReadSessionDo: aBlock [
+
+	^ self withSessionDo: [ :session | self handleReadErrorsDuring: [ aBlock value: session ] ]
 ]
 
 { #category : #'private - accessing' }
