@@ -1,16 +1,15 @@
 language: smalltalk
 sudo: false
+services:
+- postgresql
 os:
 - linux
 smalltalk:
 - Pharo64-7.0
 - Pharo-7.0
-- Pharo-6.1
-matrix:
-  allow_failures:
-  - smalltalk: Pharo64-7.0
-  - smalltalk: Pharo-7.0
-  fast_finish: true
+before_script:
+  - psql -c "ALTER USER postgres PASSWORD 'secret'" -U postgres;
+  - psql -c "CREATE DATABASE test" -U postgres;
 before_deploy:
 - cp "${SMALLTALK_CI_IMAGE}" "Sagan.image"
 - cp "${SMALLTALK_CI_CHANGES}" "Sagan.changes"

@@ -96,11 +96,11 @@ Repository >> purge: aDomainObject [
 
 	^ self
 		assertIncludes: aDomainObject;
-		purgeAfterCheckingConflicts: aDomainObject
+		purgeAfterCheckingInclusion: aDomainObject
 ]
 
 { #category : #'private - management' }
-Repository >> purgeAfterCheckingConflicts: aDomainObject [
+Repository >> purgeAfterCheckingInclusion: aDomainObject [
 
 	^ self subclassResponsibility
 ]

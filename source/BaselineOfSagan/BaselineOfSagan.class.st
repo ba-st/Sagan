@@ -18,8 +18,14 @@ BaselineOfSagan >> baseline: spec [
 			spec package: 'Sagan-Core-Tests' with: [ spec requires: #('Core' 'Buoy') ].
 
 			spec
-				group: 'Deployment' with: 'Core';
-				group: 'Tests' with: 'Sagan-Core-Tests';
+				package: 'Sagan-RDBMS' with: [ spec requires: #('P3' 'Core') ];
+				group: 'RDBMS' with: #('Sagan-RDBMS').
+
+			spec package: 'Sagan-RDBMS-Tests' with: [ spec requires: #('Sagan-RDBMS' 'Sagan-Core-Tests') ].
+
+			spec
+				group: 'Deployment' with: #('Core' 'RDBMS');
+				group: 'Tests' with: #('Sagan-Core-Tests' 'Sagan-RDBMS-Tests');
 				group: 'CI' with: 'Tests';
 				group: 'Development' with: #('Deployment' 'Tests');
 				group: 'default' with: #('Development')
@@ -43,5 +49,13 @@ BaselineOfSagan >> setUpDependencies: spec [
 				repository: 'github://ba-st/Buoy:v4/source';
 				loads: #('SUnit')
 			];
-		import: 'Buoy'
+		import: 'Buoy'.
+
+	spec
+		baseline: 'P3'
+			with: [ spec
+				repository: 'github://ba-st/P3:master/';
+				loads: #('glorp')
+			];
+		import: 'P3'
 ]
