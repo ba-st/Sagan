@@ -1,7 +1,5 @@
 language: smalltalk
 sudo: false
-services:
-- postgresql
 os:
 - linux
 smalltalk:
