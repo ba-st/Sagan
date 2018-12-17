@@ -8,7 +8,7 @@ Class {
 		'session'
 	],
 	#classVars : [
-		'Login'
+		'DefaultLogin'
 	],
 	#category : #'Sagan-RDBMS-Tests'
 }
@@ -22,13 +22,13 @@ RDMBSRepositoryTest class >> defaultLogin [
 { #category : #initialize }
 RDMBSRepositoryTest class >> initialize [
 
-	Login := (OSEnvironment current getEnv: 'RDBMS') ifNil: [ self defaultLogin ] ifNotNil: [ :variable | self loginFor: variable ]
+	DefaultLogin := (OSEnvironment current getEnv: 'RDBMS') ifNil: [ self defaultLogin ] ifNotNil: [ :variable | self loginFor: variable ]
 ]
 
 { #category : #'private protocol' }
 RDMBSRepositoryTest class >> login [
 
-	^ Login
+	^ DefaultLogin
 ]
 
 { #category : #configuring }
