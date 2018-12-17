@@ -38,9 +38,17 @@ RDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 		ifTrue: [ ^ self postgreSQLv9Login ].
 	( anEnvironmentVariable beginsWith: 'PostgreSQLv1' )
 		ifTrue: [ ^ self postgreSQLv10Login ].
-	( anEnvironmentVariable = 'MySQLv5' )
+	anEnvironmentVariable = 'MySQLv5'
 		ifTrue: [ ^ self mySQLv5Login ].
+	( anEnvironmentVariable beginsWith: 'MariaDB' )
+		ifTrue: [ ^ self mariaDBLogin ].
 	^ self defaultLogin
+]
+
+{ #category : #configuring }
+RDMBSRepositoryTest class >> mariaDBLogin [
+
+	^ self mySQLv5Login
 ]
 
 { #category : #configuring }
