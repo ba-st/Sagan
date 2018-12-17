@@ -10,6 +10,8 @@ env:
   - RDBMS=PostgreSQLv9.4
   - RDBMS=PostgreSQLv9.5
   - RDBMS=PostgreSQLv9.6
+  - RDBMS=PostgreSQLv10
+  - RDBMS=PostgreSQLv11
 before_install:
   - scripts/install-RDBMS.sh
 before_script:
