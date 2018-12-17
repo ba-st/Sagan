@@ -50,7 +50,7 @@ RDMBSRepositoryTest class >> mySQLv5Login [
 	^ Login new
 		database: MySQLPlatform new;
 		username: 'travis';
-		password: 'travis';
+		password: '';
 		host: 'localhost';
 		port: '3306';
 		databaseName: 'test';
