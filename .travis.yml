@@ -12,6 +12,8 @@ env:
   - RDBMS=PostgreSQLv9.6
   - RDBMS=PostgreSQLv10
   - RDBMS=PostgreSQLv11
+matrix:
+  fast_finish: true
 before_install:
   - scripts/install-RDBMS.sh
 before_script:
