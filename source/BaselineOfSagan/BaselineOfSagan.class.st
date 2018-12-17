@@ -67,5 +67,5 @@ BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
 		baseline: 'Garage' with: [ spec repository: 'github://pharo-rdbms/garage:master' ];
-		project: 'MySQL' copyFrom: 'Garage' with: [ spec loads: #('mysql') ]
+		project: 'MySQL-Driver' copyFrom: 'Garage' with: [ spec loads: #('mysql') ]
 ]
