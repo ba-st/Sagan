@@ -22,7 +22,7 @@ BaselineOfSagan >> baseline: spec [
 				group: 'RDBMS' with: #('Sagan-RDBMS').
 
 			spec group: 'PostgreSQL' with: #('RDBMS' 'P3').
-			spec group: 'MySQL' with: #('RDBMS' 'MySQL-Driver').
+			spec group: 'MySQL' with: #('RDBMS' 'MySQL-Driver' 'GarageGlorp').
 
 			spec package: 'Sagan-RDBMS-Tests' with: [ spec requires: #('PostgreSQL' 'MySQL' 'Sagan-Core-Tests') ].
 
@@ -56,6 +56,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 		import: 'Buoy'.
 
 	spec baseline: 'Glorp' with: [ spec repository: 'github://pharo-rdbms/glorp:master/' ].
+	spec baseline: 'GarageGlorp' with: [ spec repository: 'github://pharo-rdbms/glorp-garage:master/' ].
 	
 	spec
 		baseline: 'P3'
