@@ -21,8 +21,8 @@ BaselineOfSagan >> baseline: spec [
 				package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp' 'Core') ];
 				group: 'RDBMS' with: #('Sagan-RDBMS').
 
-			spec group: 'PostgreSQL' with: [ spec requires: #('RDBMS' 'P3') ].
-			spec group: 'MySQL' with: [ spec requires: #('RDBMS' 'MySQL') ].
+			spec group: 'PostgreSQL' with: #('RDBMS' 'P3').
+			spec group: 'MySQL' with: #('RDBMS' 'MySQL').
 
 			spec package: 'Sagan-RDBMS-Tests' with: [ spec requires: #('PostgreSQL' 'MySQL' 'Sagan-Core-Tests') ].
 
