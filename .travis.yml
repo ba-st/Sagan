@@ -1,23 +1,21 @@
 language: smalltalk
-sudo: false
+sudo: required
 os:
 - linux
 smalltalk:
 - Pharo64-7.0
 - Pharo-7.0
-matrix:
-  include:
-    - env: RDBMSVersion=9.2.
-      services: postgresql
-      before_script:
-        - psql -c "ALTER USER postgres PASSWORD 'secret'" -U postgres;
-        - psql -c "CREATE DATABASE test" -U postgres;
-    - env: RDBMSVersion=9.4
-      addons:
-          postgresql: "9.4"
-      before_script:
-        - psql -c "ALTER USER postgres PASSWORD 'secret'" -U postgres;
-        - psql -c "CREATE DATABASE test" -U postgres;
+env:
+  - RDBMS=PostgreSQLv9.3
+  - RDBMS=PostgreSQLv9.4
+  - RDBMS=PostgreSQLv9.5
+  - RDBMS=PostgreSQLv9.6
+  - RDBMS=PostgreSQLv10
+  - RDBMS=PostgreSQLv11
+before_install:
+  - scripts/install-RDBMS.sh
+before_script:
+  - scripts/setup-database.sh
 before_deploy:
 - cp "${SMALLTALK_CI_IMAGE}" "Sagan.image"
 - cp "${SMALLTALK_CI_CHANGES}" "Sagan.changes"
