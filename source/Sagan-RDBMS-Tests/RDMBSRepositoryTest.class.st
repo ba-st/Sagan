@@ -7,8 +7,73 @@ Class {
 	#instVars : [
 		'session'
 	],
+	#classVars : [
+		'Login'
+	],
 	#category : #'Sagan-RDBMS-Tests'
 }
+
+{ #category : #configuring }
+RDMBSRepositoryTest class >> defaultLogin [
+
+	^ self postgreSQLv9Login
+]
+
+{ #category : #initialize }
+RDMBSRepositoryTest class >> initialize [
+
+	Login := (OSEnvironment current getEnv: 'RDBMS') ifNil: [ self defaultLogin ] ifNotNil: [ :variable | self loginFor: variable ]
+]
+
+{ #category : #'private protocol' }
+RDMBSRepositoryTest class >> login [
+
+	^ Login
+]
+
+{ #category : #configuring }
+RDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
+
+	( anEnvironmentVariable beginsWith: 'PostgreSQLv9' )
+		ifTrue: [ ^ self postgreSQLv9Login ].
+	( anEnvironmentVariable beginsWith: 'PostgreSQLv1' )
+		ifTrue: [ ^ self postgreSQLv10Login ].
+	^ self defaultLogin
+]
+
+{ #category : #configuring }
+RDMBSRepositoryTest class >> postgreSQLv10Login [
+
+	self useP3Driver.
+	^ Login new
+		database: PostgreSQLPlatform new;
+		username: 'postgres';
+		password: 'secret';
+		host: 'localhost';
+		port: 5433;
+		databaseName: 'test';
+		yourself
+]
+
+{ #category : #configuring }
+RDMBSRepositoryTest class >> postgreSQLv9Login [
+
+	self useP3Driver.
+	^ Login new
+		database: PostgreSQLPlatform new;
+		username: 'postgres';
+		password: 'secret';
+		host: 'localhost';
+		port: 5432;
+		databaseName: 'test';
+		yourself
+]
+
+{ #category : #configuring }
+RDMBSRepositoryTest class >> useP3Driver [
+
+	DatabaseAccessor classForThisPlatform DefaultDriver: P3DatabaseDriver
+]
 
 { #category : #initialization }
 RDMBSRepositoryTest >> configureMappings [
@@ -46,18 +111,7 @@ RDMBSRepositoryTest >> createSession [
 
 	| accessor |
 
-	DatabaseAccessor classForThisPlatform DefaultDriver: P3DatabaseDriver.
-	accessor := DatabaseAccessor
-		forLogin:
-			( Login new
-				database: PostgreSQLPlatform new;
-				username: 'postgres';
-				password: 'secret';
-				host: 'localhost';
-				port: 5432;
-				databaseName: 'test';
-				yourself ).
-
+	accessor := DatabaseAccessor forLogin: self class login.
 	accessor logging: self isLogging.
 
 	^ GlorpSession new
