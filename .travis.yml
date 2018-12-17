@@ -1,5 +1,7 @@
 language: smalltalk
 sudo: required
+services:
+  - mysql
 os:
 - linux
 smalltalk:
@@ -12,6 +14,7 @@ env:
   - RDBMS=PostgreSQLv9.6
   - RDBMS=PostgreSQLv10
   - RDBMS=PostgreSQLv11
+  - RDBMS=MySQLv5
 before_install:
   - scripts/install-RDBMS.sh
 before_script:

@@ -13,4 +13,9 @@ elif [ "$RDBMS" = "PostgreSQLv11" ]; then
   sudo /etc/init.d/postgresql restart
   psql --port 5433 -c "ALTER USER postgres PASSWORD 'secret'" -U postgres;
   psql --port 5433 -c "CREATE DATABASE test" -U postgres;
+elif [ "$RDBMS" = "MySQLv5" ];then
+  mysql -uroot -e "CREATE DATABASE IF NOT EXISTS test;"
+  mysql -uroot -e "CREATE USER travis@localhost IDENTIFIED BY 'travis';"
+  mysql -uroot -e "GRANT ALL PRIVILEGES ON test.* TO 'travis'@'localhost';"
+  mysql -uroot -e "FLUSH PRIVILEGES;"
 fi;

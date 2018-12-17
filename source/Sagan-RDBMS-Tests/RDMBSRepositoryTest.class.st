@@ -38,7 +38,23 @@ RDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 		ifTrue: [ ^ self postgreSQLv9Login ].
 	( anEnvironmentVariable beginsWith: 'PostgreSQLv1' )
 		ifTrue: [ ^ self postgreSQLv10Login ].
+	( anEnvironmentVariable = 'MySQLv5' )
+		ifTrue: [ ^ self mySQLv5Login ].
 	^ self defaultLogin
+]
+
+{ #category : #configuring }
+RDMBSRepositoryTest class >> mySQLv5Login [
+
+	GAGlorpDriver beGlorpDefaultDriver.
+	^ Login new
+		database: MySQLPlatform new;
+		username: 'travis';
+		password: '';
+		host: 'localhost';
+		port: '3306';
+		databaseName: 'test';
+		yourself
 ]
 
 { #category : #configuring }

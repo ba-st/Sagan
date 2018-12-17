@@ -18,7 +18,4 @@ elif [ "$RDBMS" = "PostgreSQLv11" ]; then
   sudo /etc/init.d/postgresql stop
   sudo apt-get remove postgresql-9.2 postgresql-client-9.2
   sudo apt-get install postgresql-11 postgresql-client-11
-else
-  echo "Unsupported RDBMS"
-  exit 1
 fi;
