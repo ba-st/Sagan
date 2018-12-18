@@ -23,9 +23,9 @@ BaselineOfSagan >> baseline: spec [
 
 			spec group: 'PostgreSQL' with: #('RDBMS' 'P3').
 			spec group: 'MySQL' with: #('RDBMS' 'MySQL-Driver' 'GarageGlorp').
+			spec group: 'SQlite' with: #('RDBMS' 'GlorpSQLite').
 
-			spec package: 'Sagan-RDBMS-Tests' with: [ spec requires: #('PostgreSQL' 'MySQL' 'Sagan-Core-Tests') ].
-
+			spec package: 'Sagan-RDBMS-Tests' with: [ spec requires: #('PostgreSQL' 'MySQL' 'SQlite' 'Sagan-Core-Tests') ].
 
 			spec
 				group: 'Deployment' with: #('Core' 'RDBMS');
@@ -57,7 +57,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 
 	spec baseline: 'Glorp' with: [ spec repository: 'github://pharo-rdbms/glorp:master/' ].
 	spec baseline: 'GarageGlorp' with: [ spec repository: 'github://pharo-rdbms/glorp-garage:master/' ].
-	
+
 	spec
 		baseline: 'P3'
 			with: [ spec
@@ -68,5 +68,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
 		baseline: 'Garage' with: [ spec repository: 'github://pharo-rdbms/garage:master' ];
-		project: 'MySQL-Driver' copyFrom: 'Garage' with: [ spec loads: #('mysql') ]
+		project: 'MySQL-Driver' copyFrom: 'Garage' with: [ spec loads: #('mysql') ].
+
+	spec baseline: 'GlorpSQLite' with: [ spec repository: 'github://pharo-rdbms/glorp-sqlite3:master' ]
 ]

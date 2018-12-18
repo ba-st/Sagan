@@ -14,8 +14,11 @@ elif [ "$RDBMS" = "PostgreSQLv11" ]; then
   psql --port 5433 -c "ALTER USER postgres PASSWORD 'secret'" -U postgres;
   psql --port 5433 -c "CREATE DATABASE test" -U postgres;
 elif [[ "$RDBMS" = "MySQLv5" || "$RDBMS" = MariaDB* ]];then
+  mysql --version
   mysql -uroot -e "CREATE DATABASE IF NOT EXISTS test;"
   mysql -uroot -e "CREATE USER travis@localhost IDENTIFIED BY 'travis';"
   mysql -uroot -e "GRANT ALL PRIVILEGES ON test.* TO 'travis'@'localhost';"
   mysql -uroot -e "FLUSH PRIVILEGES;"
+elif [ "$RDBMS" = "SQLite3" ];then
+  sqlite3 -version
 fi;

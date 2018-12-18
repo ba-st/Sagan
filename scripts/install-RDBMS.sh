@@ -39,4 +39,6 @@ elif [ "$RDBMS" = "MariaDBv10.3" ]; then
   sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu trusty main'
   sudo apt-get update
   sudo apt-get install mariadb-server
+elif [ "$RDBMS" = "SQLite3" ]; then
+  sudo apt-get install sqlite3
 fi;

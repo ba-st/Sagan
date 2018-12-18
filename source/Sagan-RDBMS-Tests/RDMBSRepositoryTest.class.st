@@ -42,6 +42,8 @@ RDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 		ifTrue: [ ^ self mySQLv5Login ].
 	( anEnvironmentVariable beginsWith: 'MariaDB' )
 		ifTrue: [ ^ self mariaDBLogin ].
+	anEnvironmentVariable = 'SQLite3'
+		ifTrue: [ ^ self sqlite3Login ].
 	^ self defaultLogin
 ]
 
@@ -90,6 +92,20 @@ RDMBSRepositoryTest class >> postgreSQLv9Login [
 		host: 'localhost';
 		port: 5432;
 		databaseName: 'test';
+		yourself
+]
+
+{ #category : #configuring }
+RDMBSRepositoryTest class >> sqlite3Login [
+
+	PharoDatabaseAccessor DefaultDriver: GlorpSQLite3Driver.
+	^ Login new
+		database: UDBCSQLite3Platform new;
+		username: '';
+		password: '';
+		host: SmalltalkImage current imagePath asFileReference parent fullName , FileSystem disk delimiter asString;
+		port: '';
+		databaseName: 'test.db';
 		yourself
 ]
 
