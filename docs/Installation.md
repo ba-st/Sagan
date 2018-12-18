@@ -22,10 +22,16 @@ setUpDependencies: spec
 		baseline: 'Sagan'
 			with: [ spec
 				repository: 'github://ba-st/Sagan:v{XX}/source';
-				loads: #('Deployment') ];
+				loads: #('{Group}') ];
 		import: 'Sagan'.
 ```
 > Replace `{XX}` with the version you want to depend on
+
+> Replace `{Group}` with any of:
+- `MySQL` to use `MariaDB` or `MySQL`
+- `PostgreSQL`
+- `SQLite`
+
 
 ```smalltalk
 baseline: spec

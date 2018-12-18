@@ -28,6 +28,17 @@
 - Download a ready to use image from the [release page](https://github.com/ba-st/Sagan/releases/latest)
 - Explore the [documentation](docs/)
 
+## Platform Compatibility
+
+Sagan is tested against the following backends:
+
+| | Pharo 7.0 - 32 bits | Pharo 7.0 - 64 bits |
+| ----------- | ------------- |-------------- |
+| MariaDB | 10.0 - 10.1 - 10.2 - 10.3 | 10.0 - 10.1 - 10.2 - 10.3 |
+| MySQL | 5 | 5 |
+| PostgreSQL | 9.3 - 9.4 - 9.5 - 9.6 - 10 - 11 | 9.3 - 9.4 - 9.5 - 9.6 - 10 - 11 |
+| SQLite | - | 3 |
+
 ## Installation
 
 To load the project in a Pharo image, or declare it as a dependency of your own project follow this [instructions](docs/Installation.md).
