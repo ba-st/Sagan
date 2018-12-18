@@ -20,6 +20,10 @@ env:
   - RDBMS=MariaDBv10.2
   - RDBMS=MariaDBv10.3
   - RDBMS=SQLite3
+matrix:
+  exclude:
+    - smalltalk: Pharo-7.0
+      env: RDBMS=SQLite3
 before_install:
   - scripts/install-RDBMS.sh
 before_script:
