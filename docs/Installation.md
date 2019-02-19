@@ -6,10 +6,10 @@ You can load **Sagan** evaluating:
 ```smalltalk
 Metacello new
 	baseline: 'Sagan';
-	repository: 'github://ba-st/Sagan:master/source';
+	repository: 'github://ba-st/Sagan:release-candidate/source';
 	load.
 ```
->  Change `master` to some released version if you want a pinned version
+>  Change `release-candidate` to some released version if you want a pinned version
 
 ## Using as dependency
 
@@ -22,7 +22,7 @@ setUpDependencies: spec
 		baseline: 'Sagan'
 			with: [ spec
 				repository: 'github://ba-st/Sagan:v{XX}/source';
-				loads: #('{Group}') ];
+				loads: #('Deployment') ];
 		import: 'Sagan'.
 ```
 > Replace `{XX}` with the version you want to depend on
@@ -31,7 +31,6 @@ setUpDependencies: spec
 - `MySQL` to use `MariaDB` or `MySQL`
 - `PostgreSQL`
 - `SQLite`
-
 
 ```smalltalk
 baseline: spec
@@ -42,3 +41,15 @@ baseline: spec
 		do: [ self setUpDependencies: spec.
 			spec package: 'My-Package' with: [ spec requires: #('Sagan') ] ]
 ```
+
+## Provided groups
+
+- `Deployment` will load all the packages needed in a deployed application
+- `MySQL` will load all the packages needed in a deployed application using MariaDB or MySQL
+- `PostgreSQL` will load all the packages needed in a deployed application using PostgreSQL
+- `SQLite` will load all the packages needed in a deployed application using SQLite
+- `Tests` will load the test cases
+- `Dependent-SUnit-Extensions` will load the extensions to the SUnit framework
+- `Tools` will load the extensions to the SUnit framework and development tools (inspector and spotter extensions)
+- `CI` is the group loaded in the continuous integration setup
+- `Development` will load all the needed packages to develop and contribute to the project
