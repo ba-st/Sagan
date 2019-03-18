@@ -1,5 +1,5 @@
 Class {
-	#name : #RDMBSRepository,
+	#name : #RDBMSRepository,
 	#superclass : #Repository,
 	#instVars : [
 		'descriptorSystem',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RDMBSRepository class >> storingObjectsOfType: aDomainObjectClass checkingConflictsAccordingTo: aConflictCheckingStrategy workingWith: aSessionProvider [
+RDBMSRepository class >> storingObjectsOfType: aDomainObjectClass checkingConflictsAccordingTo: aConflictCheckingStrategy workingWith: aSessionProvider [
 
 	^ self new
 		initializeStoringObjectsOfType: aDomainObjectClass
@@ -20,72 +20,72 @@ RDMBSRepository class >> storingObjectsOfType: aDomainObjectClass checkingConfli
 ]
 
 { #category : #mappings }
-RDMBSRepository >> beAwareOfClassModelDefinedBy: aClassModelDefinition [
+RDBMSRepository >> beAwareOfClassModelDefinedBy: aClassModelDefinition [
 
 	self
 		withSessionDo: [ :session | session system addClassModelDefinedBy: aClassModelDefinition ]
 ]
 
 { #category : #mappings }
-RDMBSRepository >> beAwareOfDescriptorDefinedBy: aDescriptorDefinition [
+RDBMSRepository >> beAwareOfDescriptorDefinedBy: aDescriptorDefinition [
 
 	self
 		withSessionDo: [ :session | session system addDescriptorDefinedBy: aDescriptorDefinition ]
 ]
 
 { #category : #mappings }
-RDMBSRepository >> beAwareOfTableDefinedBy: aTableDefinition [
+RDBMSRepository >> beAwareOfTableDefinedBy: aTableDefinition [
 
 	self withSessionDo: [ :session | session system addTableDefinedBy: aTableDefinition ]
 ]
 
 { #category : #mappings }
-RDMBSRepository >> beAwareOfTypeResolverDefinedBy: aTypeResolverDefinition [
+RDBMSRepository >> beAwareOfTypeResolverDefinedBy: aTypeResolverDefinition [
 
 	self
 		withSessionDo: [ :session | session system addTypeResolverDefinedBy: aTypeResolverDefinition ]
 ]
 
 { #category : #mappings }
-RDMBSRepository >> configureMappingsIn: aBlock [
+RDBMSRepository >> configureMappingsIn: aBlock [
 
 	aBlock cull: self.
 	self withSessionDo: [ :session | session system: session system ]
 ]
 
 { #category : #'private - accessing' }
-RDMBSRepository >> conflictCheckingStrategy [
+RDBMSRepository >> conflictCheckingStrategy [
 
 	^ conflictCheckingStrategy
 ]
 
 { #category : #querying }
-RDMBSRepository >> countMatching: aCriteriaOrBlock [
+RDBMSRepository >> countMatching: aCriteriaOrBlock [
 
 	^ self
 		withReadSessionDo: [ :session | session count: modelObjectClass where: ( self asMatchingCriteria: aCriteriaOrBlock ) ]
 ]
 
 { #category : #'private - accessing' }
-RDMBSRepository >> executeQuery: query [
+RDBMSRepository >> executeQuery: query [
 
 	^ self withReadSessionDo: [ :session | session execute: query ]
 ]
 
 { #category : #querying }
-RDMBSRepository >> findAll [
+RDBMSRepository >> findAll [
 
 	^ self withReadSessionDo: [ :session | session read: modelObjectClass ]
 ]
 
 { #category : #querying }
-RDMBSRepository >> findAllMatching: aCriteriaOrBlock [
+RDBMSRepository >> findAllMatching: aCriteriaOrBlock [
 
 	^ self executeQuery: ( SimpleQuery read: modelObjectClass where: ( self asMatchingCriteria: aCriteriaOrBlock ) )
 ]
 
 { #category : #querying }
-RDMBSRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction [
+RDBMSRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction [
 
 	| query |
 
@@ -95,7 +95,7 @@ RDMBSRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction [
 ]
 
 { #category : #'private - error handling' }
-RDMBSRepository >> handleReadErrorsDuring: aBlock [
+RDBMSRepository >> handleReadErrorsDuring: aBlock [
 
 	^ aBlock
 		on: GlorpDatabaseReadError
@@ -108,7 +108,7 @@ RDMBSRepository >> handleReadErrorsDuring: aBlock [
 ]
 
 { #category : #'private - error handling' }
-RDMBSRepository >> handleWriteErrorsDuring: aBlock [
+RDBMSRepository >> handleWriteErrorsDuring: aBlock [
 
 	^ aBlock
 		on: GlorpDatabaseWriteError
@@ -121,13 +121,13 @@ RDMBSRepository >> handleWriteErrorsDuring: aBlock [
 ]
 
 { #category : #'private - accessing' }
-RDMBSRepository >> inUnitOfWorkDo: aBlock [
+RDBMSRepository >> inUnitOfWorkDo: aBlock [
 
 	^ self withSessionDo: [ :session | self handleWriteErrorsDuring: [ session inUnitOfWorkDo: aBlock ] ]
 ]
 
 { #category : #initialization }
-RDMBSRepository >> initializeStoringObjectsOfType: aDomainObjectClass
+RDBMSRepository >> initializeStoringObjectsOfType: aDomainObjectClass
 	checkingConflictsAccordingTo: aConflictCheckingStrategy
 	workingWith: aSessionProvider [
 
@@ -137,46 +137,46 @@ RDMBSRepository >> initializeStoringObjectsOfType: aDomainObjectClass
 ]
 
 { #category : #'private - accessing' }
-RDMBSRepository >> matchingCriteriaBuilder [
+RDBMSRepository >> matchingCriteriaBuilder [
 
 	^ RDBMSRepositoryMatchingCriteriaBuilder new
 ]
 
 { #category : #'private - management' }
-RDMBSRepository >> purgeAfterCheckingInclusion: aDomainObject [
+RDBMSRepository >> purgeAfterCheckingInclusion: aDomainObject [
 
 	self inUnitOfWorkDo: [ :session | session delete: aDomainObject ].
 	^ aDomainObject
 ]
 
 { #category : #management }
-RDMBSRepository >> purgeAllMatching: aCriteriaOrBlock [
+RDBMSRepository >> purgeAllMatching: aCriteriaOrBlock [
 
 	self inUnitOfWorkDo: [ :session | session delete: modelObjectClass where: ( self asMatchingCriteria: aCriteriaOrBlock ) ]
 ]
 
 { #category : #'private - management' }
-RDMBSRepository >> storeAfterCheckingConflicts: aDomainObject [
+RDBMSRepository >> storeAfterCheckingConflicts: aDomainObject [
 
 	self inUnitOfWorkDo: [ :session | session register: aDomainObject ].
 	^ aDomainObject
 ]
 
 { #category : #management }
-RDMBSRepository >> update: aMutableDomainObject executing: aMonadycBlock [
+RDBMSRepository >> update: aMutableDomainObject executing: aMonadycBlock [
 
 	self inUnitOfWorkDo: [ :session | session modify: aMutableDomainObject in: [ aMonadycBlock value: aMutableDomainObject ] ].
 	^ self withReadSessionDo: [ :session | session refresh: aMutableDomainObject ]
 ]
 
 { #category : #'private - management' }
-RDMBSRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
+RDBMSRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
 
 	^self update: aDomainObject executing: [:original | original synchronizeWith: anUpdatedDomainObject]
 ]
 
 { #category : #querying }
-RDMBSRepository >> withOneMatching: aCriteriaOrBlock do: foundBlock else: noneBlock [
+RDBMSRepository >> withOneMatching: aCriteriaOrBlock do: foundBlock else: noneBlock [
 
 	| query |
 
@@ -185,7 +185,7 @@ RDMBSRepository >> withOneMatching: aCriteriaOrBlock do: foundBlock else: noneBl
 ]
 
 { #category : #querying }
-RDMBSRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do: foundBlock else: noneBlock [
+RDBMSRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do: foundBlock else: noneBlock [
 
 	| query |
 
@@ -195,13 +195,13 @@ RDMBSRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do:
 ]
 
 { #category : #'private - accessing' }
-RDMBSRepository >> withReadSessionDo: aBlock [
+RDBMSRepository >> withReadSessionDo: aBlock [
 
 	^ self withSessionDo: [ :session | self handleReadErrorsDuring: [ aBlock value: session ] ]
 ]
 
 { #category : #'private - accessing' }
-RDMBSRepository >> withSessionDo: aBlock [
+RDBMSRepository >> withSessionDo: aBlock [
 
 	^ aBlock value: sessionProvider value
 ]

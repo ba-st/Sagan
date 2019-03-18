@@ -7,7 +7,7 @@ Class {
 { #category : #testing }
 RDBMSRepositoryMatchingCriteriaBuilder >> does: anObjectInRepository equal: anObjectInMemory [
 
-	^ anObjectInRepository sequentialNumber notNil AND: [ anObjectInRepository sequentialNumber = anObjectInMemory sequentialNumber ]
+	^ anObjectInRepository sequentialNumber notNIL AND: [ anObjectInRepository sequentialNumber = anObjectInMemory sequentialNumber ]
 ]
 
 { #category : #testing }
@@ -23,7 +23,7 @@ RDBMSRepositoryMatchingCriteriaBuilder >> does: aStringInRepository includeSubst
 { #category : #testing }
 RDBMSRepositoryMatchingCriteriaBuilder >> does: objectInRepository notEqual: objectInMemory [
 
-	^ objectInRepository sequentialNumber notNil AND: [ objectInRepository sequentialNumber ~= objectInMemory sequentialNumber ]
+	^ objectInRepository sequentialNumber notNIL AND: [ objectInRepository sequentialNumber ~= objectInMemory sequentialNumber ]
 ]
 
 { #category : #testing }
