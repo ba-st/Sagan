@@ -22,7 +22,10 @@ RDMBSRepositoryTest class >> defaultLogin [
 { #category : #initialize }
 RDMBSRepositoryTest class >> initialize [
 
-	DefaultLogin := (OSEnvironment current getEnv: 'RDBMS') ifNil: [ self defaultLogin ] ifNotNil: [ :variable | self loginFor: variable ]
+	DefaultLogin := OSEnvironment current
+		at: 'RDBMS'
+		ifPresent: [ :variable | self loginFor: variable ]
+		ifAbsent: [ self defaultLogin ]
 ]
 
 { #category : #'private protocol' }
@@ -164,7 +167,7 @@ RDMBSRepositoryTest >> createSession [
 RDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
 	session := self createSession.
-	repository := RDMBSRepository
+	repository := RDBMSRepository
 		storingObjectsOfType: Extraterrestrial
 		checkingConflictsAccordingTo: aConflictCheckingStrategy
 		workingWith: [ session ].
