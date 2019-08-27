@@ -27,6 +27,12 @@ RDBMSRepositoryMatchingCriteriaBuilder >> does: objectInRepository notEqual: obj
 ]
 
 { #category : #testing }
+RDBMSRepositoryMatchingCriteriaBuilder >> is: anObject includedIn: aCollection [
+
+	^ anObject in: aCollection
+]
+
+{ #category : #testing }
 RDBMSRepositoryMatchingCriteriaBuilder >> satisfying: aBooleanExpression and: aBlock [
 
 	^ aBooleanExpression AND: aBlock value

@@ -38,6 +38,12 @@ RepositoryMatchingCriteriaBuilder >> does: objectInRepository notEqual: objectIn
 ]
 
 { #category : #'boolean operations' }
+RepositoryMatchingCriteriaBuilder >> is: anObject includedIn: aCollection [
+
+	self subclassResponsibility 
+]
+
+{ #category : #'boolean operations' }
 RepositoryMatchingCriteriaBuilder >> satisfying: aBooleanExpression and: aBlock [
 
 	self subclassResponsibility 

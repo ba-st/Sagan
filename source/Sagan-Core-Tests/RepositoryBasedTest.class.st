@@ -151,10 +151,23 @@ RepositoryBasedTest >> testFindAllMatching [
 		store: self silvesterStallone.
 
 	self
-		assert: ( self repository findAllMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ] ) size equals: 1;
-		assert: ( self repository findAllMatching: [ :extraterrestrial | extraterrestrial firstName = 'Yoko' ] ) isEmpty;
 		assert:
-			( self repository findAllMatching: [ :extraterrestrial :criteria | criteria does: extraterrestrial firstName includeSubstring: 'J' ] ) size
+			( self repository findAllMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ] )
+				size
+			equals: 1;
+		assert:
+			( self repository findAllMatching: [ :extraterrestrial | extraterrestrial firstName = 'Yoko' ] )
+				isEmpty;
+		assert:
+			( self repository
+				findAllMatching: [ :extraterrestrial :criteria | criteria does: extraterrestrial firstName includeSubstring: 'J' ] )
+				size
+			equals: 2;
+		assert:
+			( self repository
+				findAllMatching:
+					[ :extraterrestrial :criteria | criteria is: extraterrestrial lastName includedIn: {'Travolta' . 'Lock'} ] )
+				size
 			equals: 2
 ]
 
