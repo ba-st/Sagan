@@ -26,6 +26,12 @@ InMemoryRepositoryMatchingCriteriaBuilder >> does: objectInRepository notEqual: 
 	^ objectInRepository ~= objectInMemory
 ]
 
+{ #category : #testing }
+InMemoryRepositoryMatchingCriteriaBuilder >> is: anObject includedIn: aCollection [
+
+	^ aCollection includes: anObject
+]
+
 { #category : #'boolean operations' }
 InMemoryRepositoryMatchingCriteriaBuilder >> satisfying: aBoolean and: aBlock [
 
