@@ -7,7 +7,8 @@ Class {
 	#name : #RepositoryBasedTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'repository'
+		'extraterrestrials',
+		'spaceships'
 	],
 	#category : #'Sagan-Core-Tests'
 }
@@ -21,7 +22,7 @@ RepositoryBasedTest class >> isAbstract [
 { #category : #'private - assertions' }
 RepositoryBasedTest >> assertRepositoryIncludesSilvesterStallone [
 
-	self repository
+	self extraterrestrials
 		withOneMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ]
 		do: [ :extraterrestrial | self assert: extraterrestrial lastName equals: 'Stallone' ]
 		else: [ self fail ]
@@ -31,7 +32,7 @@ RepositoryBasedTest >> assertRepositoryIncludesSilvesterStallone [
 RepositoryBasedTest >> assertTheOnlyOneInTheRepositoryIsSilvesterStallone [
 
 	self
-		withTheOnlyOneIn: self repository findAll
+		withTheOnlyOneIn: self extraterrestrials findAll
 		do: [ :extraterrestrial | 
 			self
 				assert: extraterrestrial firstName equals: 'Silvester';
@@ -51,6 +52,13 @@ RepositoryBasedTest >> extraterrestrialNamedFirst: aFirstName last: aLastName [
 	^ Extraterrestrial namedFirst: aFirstName last: aLastName
 ]
 
+{ #category : #'private - accessing' }
+RepositoryBasedTest >> extraterrestrials [ 
+
+	extraterrestrials ifNil: [ self setUpRepositoryWithNoConflictChecking  ].
+	^ extraterrestrials 
+]
+
 { #category : #'private - extraterrestrials' }
 RepositoryBasedTest >> johnLock [
 
@@ -61,13 +69,6 @@ RepositoryBasedTest >> johnLock [
 RepositoryBasedTest >> johnTravolta [
 
 	^ self extraterrestrialNamedFirst: 'John' last: 'Travolta'
-]
-
-{ #category : #'private - accessing' }
-RepositoryBasedTest >> repository [ 
-
-	repository ifNil: [ self setUpRepositoryWithNoConflictChecking  ].
-	^ repository 
 ]
 
 { #category : #initialization }
@@ -133,28 +134,28 @@ RepositoryBasedTest >> sistineStallone [
 { #category : #'tests - querying' }
 RepositoryBasedTest >> testCountMatching [
 
-	self repository
+	self extraterrestrials
 		store: self silvesterStallone;
 		store: self sistineStallone.
 
 	self
-		assert: ( self repository countMatching: [ :person | person lastName = 'Stallone' ] ) equals: 2;
-		assert: ( self repository countMatching: [ :person | person firstName = 'Silvester' ] ) equals: 1
+		assert: ( self extraterrestrials countMatching: [ :person | person lastName = 'Stallone' ] ) equals: 2;
+		assert: ( self extraterrestrials countMatching: [ :person | person firstName = 'Silvester' ] ) equals: 1
 ]
 
 { #category : #'tests - querying' }
 RepositoryBasedTest >> testFindAllMatching [
 
-	self repository
+	self extraterrestrials
 		store: self johnTravolta;
 		store: self johnLock;
 		store: self silvesterStallone.
 
 	self
-		assert: ( self repository findAllMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ] ) size equals: 1;
-		assert: ( self repository findAllMatching: [ :extraterrestrial | extraterrestrial firstName = 'Yoko' ] ) isEmpty;
+		assert: ( self extraterrestrials findAllMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ] ) size equals: 1;
+		assert: ( self extraterrestrials findAllMatching: [ :extraterrestrial | extraterrestrial firstName = 'Yoko' ] ) isEmpty;
 		assert:
-			( self repository findAllMatching: [ :extraterrestrial :criteria | criteria does: extraterrestrial firstName includeSubstring: 'J' ] ) size
+			( self extraterrestrials findAllMatching: [ :extraterrestrial :criteria | criteria does: extraterrestrial firstName includeSubstring: 'J' ] ) size
 			equals: 2
 ]
 
@@ -163,13 +164,13 @@ RepositoryBasedTest >> testFindAllMatchingSortedBy [
 
 	| sorted |
 
-	self repository
+	self extraterrestrials
 		store: self silvesterStallone;
 		store: self silvesterMcCoy;
 		store: self johnTravolta;
 		store: self johnLock.
 
-	sorted := self repository
+	sorted := self extraterrestrials
 		findAllMatching: [ :extraterrestrial :criteria | criteria does: extraterrestrial lastName asUppercase includeSubstring: 'L' ]
 		sortedBy: #firstName ascending , #lastName descending.
 
@@ -189,24 +190,24 @@ RepositoryBasedTest >> testPurge [
 	| stallone |
 
 	stallone := self silvesterStallone.
-	self repository store: stallone.
+	self extraterrestrials store: stallone.
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone.
 
-	self repository purge: stallone.
-	self assert: self repository findAll isEmpty
+	self extraterrestrials purge: stallone.
+	self assert: self extraterrestrials findAll isEmpty
 ]
 
 { #category : #'tests - management' }
 RepositoryBasedTest >> testPurgeAllMatching [
 
-	self repository
+	self extraterrestrials
 		store: self johnTravolta;
 		store: self ellaTravolta;
 		store: self silvesterStallone.
 
-	self assert: self repository findAll size equals: 3.
+	self assert: self extraterrestrials findAll size equals: 3.
 
-	self repository purgeAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Travolta' ].
+	self extraterrestrials purgeAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Travolta' ].
 
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
@@ -214,15 +215,15 @@ RepositoryBasedTest >> testPurgeAllMatching [
 { #category : #'tests - management' }
 RepositoryBasedTest >> testPurgeAllMatchingWhenNoneMatches [
 
-	self assert: self repository findAll isEmpty.
+	self assert: self extraterrestrials findAll isEmpty.
 
-	self repository purgeAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Travolta' ].
+	self extraterrestrials purgeAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Travolta' ].
 
-	self assert: self repository findAll isEmpty.
+	self assert: self extraterrestrials findAll isEmpty.
 
-	self repository store: self silvesterStallone.
+	self extraterrestrials store: self silvesterStallone.
 
-	self repository purgeAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Travolta' ].
+	self extraterrestrials purgeAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Travolta' ].
 
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
@@ -230,18 +231,18 @@ RepositoryBasedTest >> testPurgeAllMatchingWhenNoneMatches [
 { #category : #'tests - management' }
 RepositoryBasedTest >> testPurgeAllMatchingWhenOnlySomeMatch [
 
-	self repository
+	self extraterrestrials
 		store: self silvesterStallone;
 		store: self silvesterMcCoy;
 		store: self johnTravolta;
 		store: self ellaTravolta.
 
-	self assert: self repository findAll size equals: 4.
+	self assert: self extraterrestrials findAll size equals: 4.
 
-	self repository purgeAllMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ].
+	self extraterrestrials purgeAllMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ].
 
-	self assert: self repository findAll size equals: 2.
-	self repository
+	self assert: self extraterrestrials findAll size equals: 2.
+	self extraterrestrials
 		withOneMatching: [ :extraterrestrial | extraterrestrial firstName = 'John' ]
 			do: [ :person | self assert: person lastName equals: 'Travolta' ]
 			else: [ self fail ];
@@ -253,13 +254,13 @@ RepositoryBasedTest >> testPurgeAllMatchingWhenOnlySomeMatch [
 { #category : #'tests - management' }
 RepositoryBasedTest >> testStore [
 
-	self repository
+	self extraterrestrials
 		store: self johnTravolta;
 		store: self silvesterStallone.
 
-	self assert: self repository findAll size equals: 2.
+	self assert: self extraterrestrials findAll size equals: 2.
 	self assertRepositoryIncludesSilvesterStallone.
-	self repository
+	self extraterrestrials
 		withOneMatching: [ :extraterrestrial | extraterrestrial firstName = 'John' ]
 		do: [ :extraterrestrial | self assert: extraterrestrial lastName equals: 'Travolta' ]
 		else: [ self fail ]
@@ -270,10 +271,10 @@ RepositoryBasedTest >> testStoreWithConflict [
 
 	self setUpRepositoryForSimpleConflictChecking.
 
-	self repository store: self silvesterStallone.
+	self extraterrestrials store: self silvesterStallone.
 
 	self
-		should: [ self repository store: self silvesterMcCoy ] raise: ConflictingObjectFound;
+		should: [ self extraterrestrials store: self silvesterMcCoy ] raise: ConflictingObjectFound;
 		assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
 
@@ -282,15 +283,15 @@ RepositoryBasedTest >> testStoreWithConjunctiveConflictChecking [
 
 	self setUpRepositoryForConjunctiveConflictChecking.
 
-	self repository store: self silvesterStallone.
+	self extraterrestrials store: self silvesterStallone.
 
 	self
-		shouldnt: [ self repository store: self silvesterMcCoy ] raise: ConflictingObjectFound;
-		shouldnt: [ self repository store: self sistineStallone ] raise: ConflictingObjectFound;
-		should: [ self repository store: self silvesterStallone ] raise: ConflictingObjectFound.
+		shouldnt: [ self extraterrestrials store: self silvesterMcCoy ] raise: ConflictingObjectFound;
+		shouldnt: [ self extraterrestrials store: self sistineStallone ] raise: ConflictingObjectFound;
+		should: [ self extraterrestrials store: self silvesterStallone ] raise: ConflictingObjectFound.
 
 	self
-		assert: self repository findAll size equals: 3;
+		assert: self extraterrestrials findAll size equals: 3;
 		assertRepositoryIncludesSilvesterStallone
 ]
 
@@ -299,12 +300,12 @@ RepositoryBasedTest >> testStoreWithDisjunctiveConflictChecking [
 
 	self setUpRepositoryForDisjunctiveConflictChecking.
 
-	self repository store: self silvesterStallone.
+	self extraterrestrials store: self silvesterStallone.
 
 	self
-		should: [ self repository store: self silvesterMcCoy ] raise: ConflictingObjectFound;
-		should: [ self repository store: self sistineStallone ] raise: ConflictingObjectFound;
-		should: [ self repository store: self silvesterStallone ] raise: ConflictingObjectFound.
+		should: [ self extraterrestrials store: self silvesterMcCoy ] raise: ConflictingObjectFound;
+		should: [ self extraterrestrials store: self sistineStallone ] raise: ConflictingObjectFound;
+		should: [ self extraterrestrials store: self silvesterStallone ] raise: ConflictingObjectFound.
 
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
@@ -315,21 +316,21 @@ RepositoryBasedTest >> testUpdateWith [
 	| stallone |
 
 	stallone := self silvesterStallone.
-	self repository store: stallone.
+	self extraterrestrials store: stallone.
 	self
-		assert: self repository findAll size equals: 1;
-		assert: ( self repository findAll includes: stallone ).
+		assert: self extraterrestrials findAll size equals: 1;
+		assert: ( self extraterrestrials findAll includes: stallone ).
 
-	self repository update: stallone with: self johnLock.
+	self extraterrestrials update: stallone with: self johnLock.
 
-	self assert: self repository findAll size equals: 1.
+	self assert: self extraterrestrials findAll size equals: 1.
 
-	self repository
+	self extraterrestrials
 		withOneMatching: [ :extraterrestrial | extraterrestrial firstName = 'John' ]
 		do: [ :john | self assert: john lastName equals: 'Lock' ]
 		else: [ self fail ].
 
-	self assert: ( self repository findAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Stallone' ] ) isEmpty
+	self assert: ( self extraterrestrials findAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Stallone' ] ) isEmpty
 ]
 
 { #category : #'tests - conflict checking' }
@@ -340,12 +341,12 @@ RepositoryBasedTest >> testUpdateWithConflict [
 	self setUpRepositoryForSimpleConflictChecking.
 
 	stallone := self silvesterStallone.
-	self repository
+	self extraterrestrials
 		store: stallone;
 		store: self johnTravolta.
 
 	self
-		should: [ self repository update: stallone with: self johnLock ] raise: ConflictingObjectFound;
+		should: [ self extraterrestrials update: stallone with: self johnLock ] raise: ConflictingObjectFound;
 		assertRepositoryIncludesSilvesterStallone
 ]
 
@@ -357,14 +358,14 @@ RepositoryBasedTest >> testUpdateWithConflictUsingConjunctiveConflictChecking [
 	self setUpRepositoryForConjunctiveConflictChecking.
 
 	stallone := self silvesterStallone.
-	self repository
+	self extraterrestrials
 		store: stallone;
 		store: self johnTravolta.
 
 	self
-		should: [ self repository update: stallone with: self johnTravolta ] raise: ConflictingObjectFound;
-		shouldnt: [ self repository update: stallone with: self johnLock ] raise: ConflictingObjectFound;
-		shouldnt: [ self repository update: stallone with: self ellaTravolta ] raise: ConflictingObjectFound
+		should: [ self extraterrestrials update: stallone with: self johnTravolta ] raise: ConflictingObjectFound;
+		shouldnt: [ self extraterrestrials update: stallone with: self johnLock ] raise: ConflictingObjectFound;
+		shouldnt: [ self extraterrestrials update: stallone with: self ellaTravolta ] raise: ConflictingObjectFound
 ]
 
 { #category : #'tests - conflict checking' }
@@ -375,14 +376,14 @@ RepositoryBasedTest >> testUpdateWithConflictUsingDisjunctiveConflictChecking [
 	self setUpRepositoryForDisjunctiveConflictChecking.
 
 	stallone := self silvesterStallone.
-	self repository
+	self extraterrestrials
 		store: stallone;
 		store: self johnTravolta.
 
 	self
-		should: [ self repository update: stallone with: self johnTravolta ] raise: ConflictingObjectFound;
-		should: [ self repository update: stallone with: self johnLock ] raise: ConflictingObjectFound;
-		should: [ self repository update: stallone with: self ellaTravolta ] raise: ConflictingObjectFound;
+		should: [ self extraterrestrials update: stallone with: self johnTravolta ] raise: ConflictingObjectFound;
+		should: [ self extraterrestrials update: stallone with: self johnLock ] raise: ConflictingObjectFound;
+		should: [ self extraterrestrials update: stallone with: self ellaTravolta ] raise: ConflictingObjectFound;
 		assertRepositoryIncludesSilvesterStallone
 ]
 
@@ -394,23 +395,23 @@ RepositoryBasedTest >> testUpdateWithoutConflict [
 	self setUpRepositoryForSimpleConflictChecking.
 
 	stallone := self silvesterStallone.
-	self repository
+	self extraterrestrials
 		store: stallone;
 		store: self johnTravolta.
 
-	self shouldnt: [ self repository update: stallone with: self ellaTravolta ] raise: ConflictingObjectFound
+	self shouldnt: [ self extraterrestrials update: stallone with: self ellaTravolta ] raise: ConflictingObjectFound
 ]
 
 { #category : #'tests - querying' }
 RepositoryBasedTest >> testWithOneMatchingSortedByDoElse [
 
-	self repository
+	self extraterrestrials
 		store: self silvesterStallone;
 		store: self silvesterMcCoy;
 		store: self johnTravolta;
 		store: self johnLock.
 
-	self repository
+	self extraterrestrials
 		withOneMatching: [ :extraterrestrial :criteria | criteria does: extraterrestrial lastName asUppercase includeSubstring: 'L' ]
 		sortedBy: #firstName ascending , #lastName descending
 		do: [ :extraterrestrial | 

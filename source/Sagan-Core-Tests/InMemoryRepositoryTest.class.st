@@ -10,5 +10,5 @@ Class {
 { #category : #initialization }
 InMemoryRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
-	repository := InMemoryRepository checkingConflictsAccordingTo: aConflictCheckingStrategy
+	extraterrestrials := InMemoryRepository checkingConflictsAccordingTo: aConflictCheckingStrategy
 ]
