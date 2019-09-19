@@ -165,7 +165,7 @@ RepositoryBasedTest >> testFindAllMatching [
 				size
 			equals: 2;
 		assert:
-			( self repository
+			( self extraterrestrials
 				findAllMatching:
 					[ :extraterrestrial :criteria | criteria is: extraterrestrial lastName includedIn: {'Travolta' . 'Lock'} ] )
 				size

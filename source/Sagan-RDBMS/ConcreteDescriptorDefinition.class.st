@@ -25,7 +25,7 @@ ConcreteDescriptorDefinition class >> for: aModelClass onTableNamed: aTableName 
 
 	^ self new
 		initializeFor: aModelClass
-		onTableNamed: aTableName
+		onTableNamed: aTableName asString
 		mappingsDefinedBy: aMappingDefinitions
 		applyingAfterDefinition: aTwoArgBlock
 ]

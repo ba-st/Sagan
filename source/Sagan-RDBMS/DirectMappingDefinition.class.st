@@ -47,7 +47,7 @@ DirectMappingDefinition class >> fromAttributeNamed: anAttributeName toFieldName
 	^ self new
 		initializeFromAttributeNamed: anAttributeName
 		toFieldNamed: aFieldName
-		onTableNamed: aTableName
+		onTableNamed: aTableName asString
 		conversionDefinedBy: aConversionDefinition
 		applyingAfterDefinition: aTwoArgBlock
 ]

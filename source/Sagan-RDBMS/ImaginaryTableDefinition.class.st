@@ -16,10 +16,10 @@ ImaginaryTableDefinition class >> assertNoForeignKeyFieldDefinitionsOn: aFieldDe
 ]
 
 { #category : #'Instance Creation' }
-ImaginaryTableDefinition class >> named: aString fieldsDefinedBy: aFieldDefinitionCollection [
+ImaginaryTableDefinition class >> named: aName fieldsDefinedBy: aFieldDefinitionCollection [
 
 	self assertNoForeignKeyFieldDefinitionsOn: aFieldDefinitionCollection.
-	^ self new initializeNamed: aString fieldsDefinedBy: aFieldDefinitionCollection
+	^ self new initializeNamed: aName asString fieldsDefinedBy: aFieldDefinitionCollection
 ]
 
 { #category : #Defining }

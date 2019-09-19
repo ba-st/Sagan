@@ -44,7 +44,7 @@ AdHocMappingFieldAndValueAssociation class >> relating: anAccessorMessage
 	^ self new
 		initializeRelating: anAccessorMessage
 		to: aFieldName
-		on: aTableName
+		on: aTableName asString
 		convertingFromDatabaseToSmalltalkUsing: fromDatabaseToSmalltalkBlock
 		fromSmalltalkToDatabaseUsing: fromSmalltalkToDatabaseBlock
 ]

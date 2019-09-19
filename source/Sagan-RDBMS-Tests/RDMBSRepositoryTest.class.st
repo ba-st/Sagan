@@ -76,11 +76,11 @@ RDMBSRepositoryTest class >> postgreSQLv10Login [
 	self useP3Driver.
 	^ Login new
 		database: PostgreSQLPlatform new;
-		username: 'postgres';
-		password: 'secret';
+		username: 'root';
+		password: 'root';
 		host: 'localhost';
-		port: 5433;
-		databaseName: 'test';
+		port: 5432;
+		databaseName: 'sagan_test';
 		yourself
 ]
 
@@ -163,7 +163,7 @@ RDMBSRepositoryTest >> configureSpaceshipMappings [
 			rdbmsRepository
 				beAwareOfTableDefinedBy:
 					( RealTableDefinition
-						named: #Spaceship
+						named: 'Spaceship'
 						fieldsDefinedBy:
 							{SequentialNumberFieldDefinition new.
 							( CharacterFieldDefinition named: 'name' sized: 100 )} );
@@ -176,13 +176,13 @@ RDMBSRepositoryTest >> configureSpaceshipMappings [
 				beAwareOfDescriptorDefinedBy:
 					( ConcreteDescriptorDefinition
 						for: Spaceship
-						onTableNamed: #Spaceship
+						onTableNamed: 'Spaceship'
 						mappingsDefinedBy:
-							{( SequentialNumberMappingDefinition onTableNamed: #Spaceship ).
+							{( SequentialNumberMappingDefinition onTableNamed: 'Spaceship' ).
 							( DirectMappingDefinition
 								fromAttributeNamed: #name
 								toFieldNamed: 'name'
-								onTableNamed: #Spaceship )} )
+								onTableNamed: 'Spaceship' )} )
 			]
 ]
 

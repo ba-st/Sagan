@@ -36,7 +36,7 @@ OneToOneVariableMappingDefinition class >> forAttributeNamed: anAttributeName jo
 	^ self new
 		initializeForAttributeNamed: anAttributeName
 		joiningFieldNamed: aSourceFieldName
-		onTableNamed: aSourceTableName
+		onTableNamed: aSourceTableName asString
 		toFieldNamed: aTargetFieldName
 		onTableDeterminedByCaseBetweenDescribedForAnyOf: aModelClassCollection
 		applyingAfterDefinition: aTwoArgBlock
