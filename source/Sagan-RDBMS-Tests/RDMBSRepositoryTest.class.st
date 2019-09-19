@@ -76,11 +76,11 @@ RDMBSRepositoryTest class >> postgreSQLv10Login [
 	self useP3Driver.
 	^ Login new
 		database: PostgreSQLPlatform new;
-		username: 'root';
-		password: 'root';
+		username: 'postgres';
+		password: 'secret';
 		host: 'localhost';
-		port: 5432;
-		databaseName: 'sagan_test';
+		port: 5433;
+		databaseName: 'test';
 		yourself
 ]
 
