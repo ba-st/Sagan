@@ -10,7 +10,7 @@ Class {
 { #category : #'Instance Creation' }
 SequentialNumberMappingDefinition class >> onTableNamed: aTableName [
 
-	^ self new initializeOnTableNamed: aTableName
+	^ self new initializeOnTableNamed: aTableName asString
 ]
 
 { #category : #Defining }

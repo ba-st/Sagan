@@ -15,7 +15,7 @@ VariableJoinDefinition class >> fromFieldNamed: aSourceFieldName onTableNamed: a
 
 	^ self new
 		initializeFromFieldNamed: aSourceFieldName
-		onTableNamed: aSourceTableName
+		onTableNamed: aSourceTableName asString
 		toFieldNamed: aTargetFieldName
 		onEachTableDefinedFor: aModelClassCollection
 ]

@@ -10,18 +10,21 @@ Class {
 }
 
 { #category : #'Instance Creation' }
-RealTableDefinition class >> named: aString fieldsDefinedBy: aFieldDefinitionCollection [
+RealTableDefinition class >> named: aName fieldsDefinedBy: aFieldDefinitionCollection [
 
-	^ self named: aString fieldsDefinedBy: aFieldDefinitionCollection indexesDefinedBy: #()
+	^ self named: aName fieldsDefinedBy: aFieldDefinitionCollection indexesDefinedBy: #()
 ]
 
 { #category : #'Instance Creation' }
-RealTableDefinition class >> named: aString
+RealTableDefinition class >> named: aName
 	fieldsDefinedBy: aFieldDefinitionCollection
 	indexesDefinedBy: anIndexDefinitionCollection [
 
 
-	^ self new initializeNamed: aString fieldsDefinedBy: aFieldDefinitionCollection indexesDefinedBy: anIndexDefinitionCollection
+	^ self new
+		initializeNamed: aName asString
+		fieldsDefinedBy: aFieldDefinitionCollection
+		indexesDefinedBy: anIndexDefinitionCollection
 ]
 
 { #category : #Defining }

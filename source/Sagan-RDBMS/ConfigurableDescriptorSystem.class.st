@@ -14,25 +14,30 @@ Class {
 { #category : #configuring }
 ConfigurableDescriptorSystem >> addClassModelDefinedBy: aClassModelDefinition [
 
-	classModelDefinitions add: aClassModelDefinition
+	classModelDefinitions add: aClassModelDefinition.
+	allClasses := OrderedCollection new
 ]
 
 { #category : #configuring }
 ConfigurableDescriptorSystem >> addDescriptorDefinedBy: aDescriptorDefinition [
 
-	descriptorDefinitions add: aDescriptorDefinition
+	descriptorDefinitions add: aDescriptorDefinition.
+	descriptors := Dictionary new
 ]
 
 { #category : #configuring }
 ConfigurableDescriptorSystem >> addTableDefinedBy: aTableDefinition [
 
-	tableDefinitions add: aTableDefinition
+	tableDefinitions add: aTableDefinition.
+	tables := Dictionary new.
+	tablesInCreationOrder := nil
 ]
 
 { #category : #configuring }
 ConfigurableDescriptorSystem >> addTypeResolverDefinedBy: aTypeResolverDefinition [
 
-	typeResolverDefinitions add: aTypeResolverDefinition
+	typeResolverDefinitions add: aTypeResolverDefinition.
+	typeResolvers := Dictionary new
 ]
 
 { #category : #private }
