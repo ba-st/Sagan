@@ -25,7 +25,7 @@ FilteredAbstractDescriptorDefinition class >> for: anAbstractClass onTableNamed:
 
 	^ self new
 		initializeFor: anAbstractClass
-		onTableNamed: aTableName
+		onTableNamed: aTableName asString
 		mappingsDefinedBy: aMappingDefinitions
 		applyingAfterDefinition: aTwoArgBlock
 ]

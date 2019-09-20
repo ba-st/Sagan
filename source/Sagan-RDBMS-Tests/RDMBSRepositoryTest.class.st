@@ -119,9 +119,9 @@ RDMBSRepositoryTest class >> useP3Driver [
 ]
 
 { #category : #initialization }
-RDMBSRepositoryTest >> configureMappings [
+RDMBSRepositoryTest >> configureExtraterrestrialMappings [
 
-	repository
+	extraterrestrials
 		configureMappingsIn: [ :rdbmsRepository | 
 			rdbmsRepository
 				beAwareOfTableDefinedBy:
@@ -144,8 +144,45 @@ RDMBSRepositoryTest >> configureMappings [
 						onTableNamed: 'Extraterrestrial'
 						mappingsDefinedBy:
 							{( SequentialNumberMappingDefinition onTableNamed: 'Extraterrestrial' ).
-							( DirectMappingDefinition fromAttributeNamed: #firstName toFieldNamed: 'first_name' onTableNamed: 'Extraterrestrial' ).
-							( DirectMappingDefinition fromAttributeNamed: #lastName toFieldNamed: 'last_name' onTableNamed: 'Extraterrestrial' )} )
+							( DirectMappingDefinition
+								fromAttributeNamed: #firstName
+								toFieldNamed: 'first_name'
+								onTableNamed: 'Extraterrestrial' ).
+							( DirectMappingDefinition
+								fromAttributeNamed: #lastName
+								toFieldNamed: 'last_name'
+								onTableNamed: 'Extraterrestrial' )} )
+			]
+]
+
+{ #category : #initialization }
+RDMBSRepositoryTest >> configureSpaceshipMappings [
+
+	spaceships
+		configureMappingsIn: [ :rdbmsRepository | 
+			rdbmsRepository
+				beAwareOfTableDefinedBy:
+					( RealTableDefinition
+						named: 'Spaceship'
+						fieldsDefinedBy:
+							{SequentialNumberFieldDefinition new.
+							( CharacterFieldDefinition named: 'name' sized: 100 )} );
+				beAwareOfClassModelDefinedBy:
+					( ClassModelDefinition
+						for: Spaceship
+						attributesDefinedBy:
+							{( BasicAttributeDefinition named: RDBMSConstants sequentialNumberAttribute ).
+							( BasicAttributeDefinition named: #name )} );
+				beAwareOfDescriptorDefinedBy:
+					( ConcreteDescriptorDefinition
+						for: Spaceship
+						onTableNamed: 'Spaceship'
+						mappingsDefinedBy:
+							{( SequentialNumberMappingDefinition onTableNamed: 'Spaceship' ).
+							( DirectMappingDefinition
+								fromAttributeNamed: #name
+								toFieldNamed: 'name'
+								onTableNamed: 'Spaceship' )} )
 			]
 ]
 
@@ -167,11 +204,16 @@ RDMBSRepositoryTest >> createSession [
 RDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
 	session := self createSession.
-	repository := RDBMSRepository
+	extraterrestrials := RDBMSRepository
 		storingObjectsOfType: Extraterrestrial
 		checkingConflictsAccordingTo: aConflictCheckingStrategy
 		workingWith: [ session ].
-	self configureMappings.
+	self configureExtraterrestrialMappings.
+	spaceships := RDBMSRepository
+		storingObjectsOfType: Spaceship
+		checkingConflictsAccordingTo: aConflictCheckingStrategy
+		workingWith: [ session ].
+	self configureSpaceshipMappings.
 	session
 		loginIfError: [ :error | self fail: error messageText ];
 		recreateTablesIfError: [ :error | self fail: error messageText ];
@@ -185,4 +227,19 @@ RDMBSRepositoryTest >> tearDown [
 
 	session ifNotNil: [ session logout ].
 	super tearDown
+]
+
+{ #category : #'tests - querying' }
+RDMBSRepositoryTest >> testMoreThanOneRepository [
+
+	self extraterrestrials store: self silvesterStallone.
+	self assert: self extraterrestrials findAll size equals: 1.
+	self assertRepositoryIncludesSilvesterStallone.
+
+	spaceships store: ( Spaceship named: 'UFO 54-40' ).
+	self assert: spaceships findAll size equals: 1.
+	spaceships
+		withOneMatching: [ :spaceship | spaceship name = 'UFO 54-40' ]
+		do: [ :spaceship | self assert: spaceship name equals: 'UFO 54-40' ]
+		else: [ self fail ]
 ]

@@ -13,8 +13,8 @@
 </p>
 
 [![GitHub release](https://img.shields.io/github/release/ba-st/Sagan.svg)](https://github.com/ba-st/Sagan/releases/latest)
-[![Build Status](https://travis-ci.com/ba-st/Sagan.svg?branch=master)](https://travis-ci.com/ba-st/Sagan)
-[![Coverage Status](https://coveralls.io/repos/github/ba-st/Sagan/badge.svg?branch=master)](https://coveralls.io/github/ba-st/Sagan?branch=master)
+[![Build Status](https://travis-ci.com/ba-st/Sagan.svg?branch=release-candidate)](https://travis-ci.com/ba-st/Sagan)
+[![Coverage Status](https://coveralls.io/repos/github/ba-st/Sagan/badge.svg?branch=release-candidate)](https://coveralls.io/github/ba-st/Sagan?branch=release-candidate)
 
 > *Named in honour to [Carl Sagan](https://en.wikipedia.org/wiki/Carl_Sagan), for teaching us to stay humble against the vastness of the universe.*
 

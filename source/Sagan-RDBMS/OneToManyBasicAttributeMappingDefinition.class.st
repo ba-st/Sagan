@@ -42,7 +42,7 @@ OneToManyBasicAttributeMappingDefinition class >> forAttributeNamed: anAttribute
 		initializeForAttributeNamed: anAttributeName
 		obtainingValuesFrom: aFieldName
 		andPositionFrom: aPositionFieldName
-		on: aTableName
+		on: aTableName asString
 		translatingUsingAll: aTableFieldTranslationDefinitionCollection
 		applyingAfterDefinition: aOneArgBlock
 ]
