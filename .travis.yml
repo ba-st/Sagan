@@ -9,7 +9,6 @@ smalltalk:
 - Pharo64-7.0
 - Pharo32-7.0
 env:
-  - RDBMS=PostgreSQLv9.3
   - RDBMS=PostgreSQLv9.4
   - RDBMS=PostgreSQLv9.5
   - RDBMS=PostgreSQLv9.6

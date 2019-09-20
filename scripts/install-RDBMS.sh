@@ -9,9 +9,7 @@ elif [[ "$RDBMS" = MariaDB* ]]; then
   sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
 fi
 
-if [ "$RDBMS" = "PostgreSQLv9.3" ]; then
-  sudo apt-get install postgresql-9.3
-elif [ "$RDBMS" = "PostgreSQLv9.4" ]; then
+if [ "$RDBMS" = "PostgreSQLv9.4" ]; then
   sudo apt-get install postgresql-9.4
 elif [ "$RDBMS" = "PostgreSQLv9.5" ]; then
   sudo apt-get install postgresql-9.5
