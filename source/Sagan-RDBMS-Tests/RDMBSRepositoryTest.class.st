@@ -16,12 +16,14 @@ Class {
 { #category : #configuring }
 RDMBSRepositoryTest class >> defaultLogin [
 
+	<ignoreForCoverage>
 	^ self postgreSQLv9Login
 ]
 
 { #category : #initialize }
 RDMBSRepositoryTest class >> initialize [
 
+	<ignoreForCoverage>
 	DefaultLogin := OSEnvironment current
 		at: 'RDBMS'
 		ifPresent: [ :variable | self loginFor: variable ]
@@ -37,6 +39,7 @@ RDMBSRepositoryTest class >> login [
 { #category : #configuring }
 RDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 
+	<ignoreForCoverage>
 	( anEnvironmentVariable beginsWith: 'PostgreSQLv9' )
 		ifTrue: [ ^ self postgreSQLv9Login ].
 	( anEnvironmentVariable beginsWith: 'PostgreSQLv1' )
@@ -53,12 +56,14 @@ RDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 { #category : #configuring }
 RDMBSRepositoryTest class >> mariaDBLogin [
 
+	<ignoreForCoverage>
 	^ self mySQLv5Login
 ]
 
 { #category : #configuring }
 RDMBSRepositoryTest class >> mySQLv5Login [
 
+	<ignoreForCoverage>
 	GAGlorpDriver beGlorpDefaultDriver.
 	^ Login new
 		database: MySQLPlatform new;
@@ -73,6 +78,7 @@ RDMBSRepositoryTest class >> mySQLv5Login [
 { #category : #configuring }
 RDMBSRepositoryTest class >> postgreSQLv10Login [
 
+	<ignoreForCoverage>
 	self useP3Driver.
 	^ Login new
 		database: PostgreSQLPlatform new;
@@ -87,6 +93,7 @@ RDMBSRepositoryTest class >> postgreSQLv10Login [
 { #category : #configuring }
 RDMBSRepositoryTest class >> postgreSQLv9Login [
 
+	<ignoreForCoverage>
 	self useP3Driver.
 	^ Login new
 		database: PostgreSQLPlatform new;
@@ -101,6 +108,7 @@ RDMBSRepositoryTest class >> postgreSQLv9Login [
 { #category : #configuring }
 RDMBSRepositoryTest class >> sqlite3Login [
 
+	<ignoreForCoverage>
 	PharoDatabaseAccessor DefaultDriver: GlorpSQLite3Driver.
 	^ Login new
 		database: UDBCSQLite3Platform new;
@@ -115,6 +123,7 @@ RDMBSRepositoryTest class >> sqlite3Login [
 { #category : #configuring }
 RDMBSRepositoryTest class >> useP3Driver [
 
+	<ignoreForCoverage>
 	DatabaseAccessor classForThisPlatform DefaultDriver: P3DatabaseDriver
 ]
 
@@ -122,7 +131,7 @@ RDMBSRepositoryTest class >> useP3Driver [
 RDMBSRepositoryTest >> configureExtraterrestrialMappings [
 
 	extraterrestrials
-		configureMappingsIn: [ :rdbmsRepository | 
+		configureMappingsIn: [ :rdbmsRepository |
 			rdbmsRepository
 				beAwareOfTableDefinedBy:
 					( RealTableDefinition
@@ -159,7 +168,7 @@ RDMBSRepositoryTest >> configureExtraterrestrialMappings [
 RDMBSRepositoryTest >> configureSpaceshipMappings [
 
 	spaceships
-		configureMappingsIn: [ :rdbmsRepository | 
+		configureMappingsIn: [ :rdbmsRepository |
 			rdbmsRepository
 				beAwareOfTableDefinedBy:
 					( RealTableDefinition
