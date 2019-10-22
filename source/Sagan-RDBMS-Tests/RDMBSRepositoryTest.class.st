@@ -216,12 +216,12 @@ RDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 	extraterrestrials := RDBMSRepository
 		storingObjectsOfType: Extraterrestrial
 		checkingConflictsAccordingTo: aConflictCheckingStrategy
-		workingWith: [ session ].
+		workingWith: [:action | action value: session ].
 	self configureExtraterrestrialMappings.
 	spaceships := RDBMSRepository
 		storingObjectsOfType: Spaceship
 		checkingConflictsAccordingTo: aConflictCheckingStrategy
-		workingWith: [ session ].
+		workingWith: [:action | action value: session ].
 	self configureSpaceshipMappings.
 	session
 		loginIfError: [ :error | self fail: error messageText ];

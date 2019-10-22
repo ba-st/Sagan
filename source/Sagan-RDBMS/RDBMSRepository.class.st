@@ -7,7 +7,7 @@ Class {
 		'conflictCheckingStrategy',
 		'sessionProvider'
 	],
-	#category : #'Sagan-RDBMS-Core'
+	#category : #'Sagan-RDBMS-Repository'
 }
 
 { #category : #'instance creation' }
@@ -203,5 +203,5 @@ RDBMSRepository >> withReadSessionDo: aBlock [
 { #category : #'private - accessing' }
 RDBMSRepository >> withSessionDo: aBlock [
 
-	^ aBlock value: sessionProvider value
+	^ sessionProvider value: aBlock
 ]
