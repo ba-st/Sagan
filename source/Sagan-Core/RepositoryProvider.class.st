@@ -17,6 +17,12 @@ RepositoryProvider >> prepareForInitialPersistence [
 	self subclassResponsibility
 ]
 
+{ #category : #controlling }
+RepositoryProvider >> prepareForShutDown [
+
+	self subclassResponsibility
+]
+
 { #category : #initialization }
 RepositoryProvider >> reset [
 

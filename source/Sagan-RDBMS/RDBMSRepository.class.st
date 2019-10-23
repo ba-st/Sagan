@@ -163,6 +163,13 @@ RDBMSRepository >> storeAfterCheckingConflicts: aDomainObject [
 ]
 
 { #category : #management }
+RDBMSRepository >> transact: aBlock [
+
+	^ self
+		withSessionDo: [ :session | self handleWriteErrorsDuring: [ session inUnitOfWorkDo: aBlock ] ]
+]
+
+{ #category : #management }
 RDBMSRepository >> update: aMutableDomainObject executing: aMonadycBlock [
 
 	self inUnitOfWorkDo: [ :session | session modify: aMutableDomainObject in: [ aMonadycBlock value: aMutableDomainObject ] ].

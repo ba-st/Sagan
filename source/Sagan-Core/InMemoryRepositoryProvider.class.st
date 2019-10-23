@@ -17,6 +17,12 @@ InMemoryRepositoryProvider >> prepareForInitialPersistence [
 	
 ]
 
+{ #category : #controlling }
+InMemoryRepositoryProvider >> prepareForShutDown [
+
+	
+]
+
 { #category : #initialization }
 InMemoryRepositoryProvider >> reset [
 

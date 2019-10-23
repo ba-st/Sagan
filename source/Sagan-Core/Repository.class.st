@@ -126,6 +126,12 @@ Repository >> storeAfterCheckingConflicts: aDomainObject [
 ]
 
 { #category : #management }
+Repository >> transact: aBlock [
+
+	self subclassResponsibility
+]
+
+{ #category : #management }
 Repository >> update: aDomainObject executing: aBlock [
 
 	self subclassResponsibility

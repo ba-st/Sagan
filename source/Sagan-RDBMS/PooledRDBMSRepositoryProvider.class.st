@@ -45,18 +45,19 @@ PooledRDBMSRepositoryProvider >> initializeUsing: aLogin [
 	descriptorSystem := ConfigurableDescriptorSystem new.
 	sessionPool := OPBasicPool new.
 	sessionPool
-		maxIdleObjects: 10;
-		minIdleObjects: 5;
-		maxActiveObjects: 12;
 		creator: [ 
 			| session |
-			session := descriptorSystem sessionForLogin: login.
+			session := DescriptorSystem sessionForLogin: login.
+			session system: descriptorSystem.
 			session loginIfError: [ :error | DatabaseLoginFailed signal: error description ].
 			session
 			];
 		destroyer: [ :session | session logout ];
 		validator: [ :session | session isLoggedIn ];
-		passivator: [ :session | session reset ]
+		passivator: [ :session | session reset ];
+		maxIdleObjects: 10;
+		minIdleObjects: 5;
+		maxActiveObjects: 12
 ]
 
 { #category : #controlling }
@@ -69,6 +70,14 @@ PooledRDBMSRepositoryProvider >> prepareForInitialPersistence [
 				logout;
 				loginIfError: [ :error | Error signal: error description ]
 			]
+]
+
+{ #category : #controlling }
+PooledRDBMSRepositoryProvider >> prepareForShutDown [
+
+	sessionPool
+		minIdleObjects: nil;
+		clear
 ]
 
 { #category : #controlling }
