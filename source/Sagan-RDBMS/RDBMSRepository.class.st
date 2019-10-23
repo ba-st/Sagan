@@ -165,8 +165,7 @@ RDBMSRepository >> storeAfterCheckingConflicts: aDomainObject [
 { #category : #management }
 RDBMSRepository >> transact: aBlock [
 
-	^ self
-		withSessionDo: [ :session | self handleWriteErrorsDuring: [ session inUnitOfWorkDo: aBlock ] ]
+	^ self inUnitOfWorkDo: aBlock
 ]
 
 { #category : #management }

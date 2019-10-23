@@ -102,7 +102,7 @@ InMemoryRepository >> storeAfterCheckingConflicts: aDomainObject [
 { #category : #management }
 InMemoryRepository >> transact: aBlock [
 
-	aBlock value
+	^ aBlock value
 ]
 
 { #category : #management }

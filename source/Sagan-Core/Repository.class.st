@@ -128,7 +128,7 @@ Repository >> storeAfterCheckingConflicts: aDomainObject [
 { #category : #management }
 Repository >> transact: aBlock [
 
-	self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : #management }
