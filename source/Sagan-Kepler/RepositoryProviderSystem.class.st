@@ -65,6 +65,6 @@ RepositoryProviderSystem >> resolveDependencies [
 { #category : #'private - controlling' }
 RepositoryProviderSystem >> shutDownWhenStarted [
 
-	repositoryProviders do: [ :provider | provider prepareForShutDown ].
+	repositoryProviders valuesDo: [ :provider | provider prepareForShutDown ].
 	super shutDownWhenStarted
 ]
