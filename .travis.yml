@@ -7,7 +7,6 @@ os:
 smalltalk:
 - Pharo64-8.0
 - Pharo64-7.0
-- Pharo32-7.0
 env:
   - RDBMS=PostgreSQLv9.4
   - RDBMS=PostgreSQLv9.5
@@ -20,10 +19,6 @@ env:
   - RDBMS=MariaDBv10.2
   - RDBMS=MariaDBv10.3
   - RDBMS=SQLite3
-matrix:
-  exclude:
-    - smalltalk: Pharo32-7.0
-      env: RDBMS=SQLite3
 before_install:
   - scripts/install-RDBMS.sh
 before_script:

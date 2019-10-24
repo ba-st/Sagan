@@ -100,6 +100,12 @@ InMemoryRepository >> storeAfterCheckingConflicts: aDomainObject [
 ]
 
 { #category : #management }
+InMemoryRepository >> transact: aBlock [
+
+	^ aBlock value
+]
+
+{ #category : #management }
 InMemoryRepository >> update: aMutableDomainObject executing: aBlock [
 
 	aBlock value: aMutableDomainObject

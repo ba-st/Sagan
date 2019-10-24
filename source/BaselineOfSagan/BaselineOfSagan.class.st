@@ -29,11 +29,15 @@ BaselineOfSagan >> baselineSagan: spec [
 		group: 'Core' with: 'Sagan-Core'.
 
 	spec
+		package: 'Sagan-Kepler' with: [ spec requires: 'Kepler-Core' ];
+		group: 'Core' with: 'Sagan-Kepler'.
+
+	spec
 		package: 'Sagan-Core-Tests' with: [ spec requires: #('Sagan-Core' 'Buoy-SUnit') ];
 		group: 'Tests' with: 'Sagan-Core-Tests'.
 
 	spec
-		package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp' 'Core') ];
+		package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp' 'Core' 'ObjectPool-Core') ];
 		group: 'RDBMS' with: #('Sagan-RDBMS').
 
 	spec group: 'PostgreSQL' with: #('RDBMS' 'P3').
@@ -58,6 +62,10 @@ BaselineOfSagan >> setUpDependencies: spec [
 	spec
 		baseline: 'Kepler' with: [ spec repository: 'github://ba-st/Kepler:v4/source' ];
 		project: 'Kepler-Core' copyFrom: 'Kepler' with: [ spec loads: 'Core' ].
+
+	spec
+		baseline: 'ObjectPool' with: [ spec repository: 'github://pharo-ide/ObjectPool:v1.0.0' ];
+		project: 'ObjectPool-Core' copyFrom: 'ObjectPool' with: [ spec loads: 'Core' ].
 
 	spec
 		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v5/source' ];

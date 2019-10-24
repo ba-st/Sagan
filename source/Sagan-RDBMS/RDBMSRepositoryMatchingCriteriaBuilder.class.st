@@ -1,7 +1,7 @@
 Class {
 	#name : #RDBMSRepositoryMatchingCriteriaBuilder,
 	#superclass : #RepositoryMatchingCriteriaBuilder,
-	#category : #'Sagan-RDBMS-Core'
+	#category : #'Sagan-RDBMS-Repository'
 }
 
 { #category : #testing }

@@ -7,7 +7,7 @@ Class {
 		'conflictCheckingStrategy',
 		'sessionProvider'
 	],
-	#category : #'Sagan-RDBMS-Core'
+	#category : #'Sagan-RDBMS-Repository'
 }
 
 { #category : #'instance creation' }
@@ -163,6 +163,12 @@ RDBMSRepository >> storeAfterCheckingConflicts: aDomainObject [
 ]
 
 { #category : #management }
+RDBMSRepository >> transact: aBlock [
+
+	^ self inUnitOfWorkDo: aBlock
+]
+
+{ #category : #management }
 RDBMSRepository >> update: aMutableDomainObject executing: aMonadycBlock [
 
 	self inUnitOfWorkDo: [ :session | session modify: aMutableDomainObject in: [ aMonadycBlock value: aMutableDomainObject ] ].
@@ -203,5 +209,5 @@ RDBMSRepository >> withReadSessionDo: aBlock [
 { #category : #'private - accessing' }
 RDBMSRepository >> withSessionDo: aBlock [
 
-	^ aBlock value: sessionProvider value
+	^ sessionProvider value: aBlock
 ]
