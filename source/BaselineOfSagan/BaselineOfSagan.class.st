@@ -29,6 +29,10 @@ BaselineOfSagan >> baselineSagan: spec [
 		group: 'Core' with: 'Sagan-Core'.
 
 	spec
+		package: 'Sagan-Kepler' with: [ spec requires: 'Kepler-Core' ];
+		group: 'Core' with: 'Sagan-Kepler'.
+
+	spec
 		package: 'Sagan-Core-Tests' with: [ spec requires: #('Sagan-Core' 'Buoy-SUnit') ];
 		group: 'Tests' with: 'Sagan-Core-Tests'.
 
