@@ -31,9 +31,14 @@ PooledRDBMSRepositoryProvider >> currentSessionBlock [
 
 	^ [ :actionBlock | 
 	CurrentRDBMSSession
-		withValueDo: actionBlock
-		ifAbsent: [ sessionPool
-				withPooled: [ :session | CurrentRDBMSSession value: session during: [ actionBlock value: session ] ]
+		withValueDo: [ :wrapper | actionBlock value: wrapper realSession ]
+		ifAbsent: [ | wrapper |
+
+			wrapper := SessionReturningToPoolOnFinalize
+				wrapping: sessionPool borrow
+				returningOnFinalizeTo: sessionPool.
+			CurrentRDBMSSession value: wrapper.
+			actionBlock value: wrapper realSession
 			]
 	]
 ]
@@ -75,6 +80,7 @@ PooledRDBMSRepositoryProvider >> prepareForInitialPersistence [
 { #category : #controlling }
 PooledRDBMSRepositoryProvider >> prepareForShutDown [
 
+	CurrentRDBMSSession destroy.
 	sessionPool
 		minIdleObjects: nil;
 		clear
@@ -83,5 +89,6 @@ PooledRDBMSRepositoryProvider >> prepareForShutDown [
 { #category : #controlling }
 PooledRDBMSRepositoryProvider >> reset [
 
+	CurrentRDBMSSession destroy.
 	sessionPool clear
 ]
