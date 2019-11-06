@@ -29,16 +29,22 @@ PooledRDBMSRepositoryProvider >> createRepositoryStoringObjectsOfType: aBusiness
 { #category : #private }
 PooledRDBMSRepositoryProvider >> currentSessionBlock [
 
+	"We need the session to be the same for consecutive calls on the same process,
+	and it should return to the pool when the process ends.
+	
+	When the process is terminated:
+	- TheThing is destroyed because the only reference is the process.
+	- This triggers theThing's #finalize
+	- which returns the session to the pool. -serpi90"
+
 	^ [ :actionBlock | 
 	CurrentRDBMSSession
-		withValueDo: [ :wrapper | actionBlock value: wrapper realSession ]
-		ifAbsent: [ | wrapper |
+		withValueDo: [ :theThing | actionBlock value: theThing pooledObject ]
+		ifAbsent: [ | theThing |
 
-			wrapper := SessionReturningToPoolOnFinalize
-				wrapping: sessionPool borrow
-				returningOnFinalizeTo: sessionPool.
-			CurrentRDBMSSession value: wrapper.
-			actionBlock value: wrapper realSession
+			theThing := ReturnSessionToPoolOnFinalize toReturn: sessionPool borrow to: sessionPool.
+			CurrentRDBMSSession value: theThing.
+			actionBlock value: theThing pooledObject
 			]
 	]
 ]
