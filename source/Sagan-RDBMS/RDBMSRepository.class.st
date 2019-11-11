@@ -120,12 +120,6 @@ RDBMSRepository >> handleWriteErrorsDuring: aBlock [
 			]
 ]
 
-{ #category : #'private - accessing' }
-RDBMSRepository >> inUnitOfWorkDo: aBlock [
-
-	^ self withSessionDo: [ :session | self handleWriteErrorsDuring: [ session inUnitOfWorkDo: aBlock ] ]
-]
-
 { #category : #initialization }
 RDBMSRepository >> initializeStoringObjectsOfType: aDomainObjectClass
 	checkingConflictsAccordingTo: aConflictCheckingStrategy
@@ -145,34 +139,42 @@ RDBMSRepository >> matchingCriteriaBuilder [
 { #category : #'private - management' }
 RDBMSRepository >> purgeAfterCheckingInclusion: aDomainObject [
 
-	self inUnitOfWorkDo: [ :session | session delete: aDomainObject ].
+	self transact: [ :session | session delete: aDomainObject ].
 	^ aDomainObject
 ]
 
 { #category : #management }
 RDBMSRepository >> purgeAllMatching: aCriteriaOrBlock [
 
-	self inUnitOfWorkDo: [ :session | session delete: modelObjectClass where: ( self asMatchingCriteria: aCriteriaOrBlock ) ]
+	self transact: [ :session | session delete: modelObjectClass where: ( self asMatchingCriteria: aCriteriaOrBlock ) ]
 ]
 
 { #category : #'private - management' }
 RDBMSRepository >> storeAfterCheckingConflicts: aDomainObject [
 
-	self inUnitOfWorkDo: [ :session | session register: aDomainObject ].
+	self transact: [ :session | session register: aDomainObject ].
 	^ aDomainObject
 ]
 
 { #category : #management }
 RDBMSRepository >> transact: aBlock [
 
-	^ self inUnitOfWorkDo: aBlock
+	^ self
+		withSessionDo: [ :session | self handleWriteErrorsDuring: [ session inUnitOfWorkDo: aBlock ] ]
 ]
 
 { #category : #management }
 RDBMSRepository >> update: aMutableDomainObject executing: aMonadycBlock [
 
-	self inUnitOfWorkDo: [ :session | session modify: aMutableDomainObject in: [ aMonadycBlock value: aMutableDomainObject ] ].
-	^ self withReadSessionDo: [ :session | session refresh: aMutableDomainObject ]
+	| updatedInstance |
+
+	self
+		transact: [ :session | 
+			updatedInstance := session
+				modify: aMutableDomainObject
+				in: [ aMonadycBlock value: aMutableDomainObject ]
+			].
+	^ updatedInstance
 ]
 
 { #category : #'private - management' }

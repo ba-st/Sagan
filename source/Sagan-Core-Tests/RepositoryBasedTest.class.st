@@ -324,6 +324,28 @@ RepositoryBasedTest >> testStoreWithDisjunctiveConflictChecking [
 ]
 
 { #category : #'tests - management' }
+RepositoryBasedTest >> testUpdateInSameSessionAsFetch [
+
+	| stallone john |
+
+	john := self johnLock.
+	self extraterrestrials store: john.
+	self
+		assert: self extraterrestrials findAll size equals: 1;
+		assert: ( self extraterrestrials findAll includes: john ).
+
+	stallone := self silvesterStallone.
+	self extraterrestrials
+		transact: [ self extraterrestrials
+				withOneMatching: [ :extraterrestrial | extraterrestrial firstName = 'John' ]
+				do: [ :lock | self extraterrestrials update: lock with: stallone ]
+				else: [ self fail ]
+			].
+
+	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
+]
+
+{ #category : #'tests - management' }
 RepositoryBasedTest >> testUpdateWith [
 
 	| stallone |
