@@ -13,7 +13,7 @@ fi
 
 if [ "$RDBMS" = "PostgreSQLv9.4" ]; then
   sudo apt-get install postgresql-9.4 postgresql-client-9.4
-  /usr/lib/postgresql/9.4/bin/pg_ctl -D /var/lib/postgresql/9.4/main -l logfile start
+  sudo -u postgres /usr/lib/postgresql/9.4/bin/pg_ctl -D /var/lib/postgresql/9.4/main -l logfile start
 elif [ "$RDBMS" = "PostgreSQLv9.5" ]; then
   sudo apt-get install postgresql-9.5
 elif [ "$RDBMS" = "PostgreSQLv9.6" ]; then
