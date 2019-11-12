@@ -20,9 +20,9 @@ elif [ "$RDBMS" = "PostgreSQLv9.6" ]; then
 elif [ "$RDBMS" = "PostgreSQLv10" ]; then
   sudo apt-get install postgresql-10
 elif [ "$RDBMS" = "PostgreSQLv11" ]; then
-  sudo /etc/init.d/postgresql stop
   sudo apt-get remove postgresql-client-*
   sudo apt-get install postgresql-11 postgresql-client-11
+  sudo -u postgres pg_ctlcluster 11 main start
 elif [ "$RDBMS" = "MariaDBv10.0" ]; then
   sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
   sudo apt-get update
