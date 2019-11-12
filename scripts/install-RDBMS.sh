@@ -2,6 +2,8 @@
 
 if [[ "$RDBMS" = PostgreSQL* ]]; then
   sudo /etc/init.d/postgresql stop
+  sudo apt-get --purge remove postgresql-*
+  sudo rm -Rf /etc/postgresql /var/lib/postgresql  
   curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
   sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
   sudo apt-get update
@@ -19,7 +21,7 @@ elif [ "$RDBMS" = "PostgreSQLv10" ]; then
   sudo apt-get install postgresql-10
 elif [ "$RDBMS" = "PostgreSQLv11" ]; then
   sudo /etc/init.d/postgresql stop
-  sudo apt-get remove postgresql-9.2 postgresql-client-9.2
+  sudo apt-get --purge remove postgresql-client-*
   sudo apt-get install postgresql-11 postgresql-client-11
 elif [ "$RDBMS" = "MariaDBv10.0" ]; then
   sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
