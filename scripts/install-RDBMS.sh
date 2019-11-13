@@ -23,14 +23,13 @@ elif [ "$RDBMS" = "PostgreSQLv9.6" ]; then
     -e POSTGRES_DB=test \
     postgres:9.6
 elif [ "$RDBMS" = "PostgreSQLv10" ]; then
-  docker run -d -p 127.0.0.1:5433:5433 \
+  docker run -d -p 127.0.0.1:5432:5432 \
     -e POSTGRES_PASSWORD=secret \
     -e POSTGRES_USER=postgres \
     -e POSTGRES_DB=test \
-    postgres:10 \
-    -c 'password_encryption=md5'
+    postgres:10
 elif [ "$RDBMS" = "PostgreSQLv11" ]; then
-  docker run -d -p 127.0.0.1:5433:5433 \
+  docker run -d -p 127.0.0.1:5432:5432 \
     -e POSTGRES_PASSWORD=secret \
     -e POSTGRES_USER=postgres \
     -e POSTGRES_DB=test \

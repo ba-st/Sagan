@@ -40,10 +40,8 @@ RDMBSRepositoryTest class >> login [
 RDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 
 	<ignoreForCoverage>
-	( anEnvironmentVariable beginsWith: 'PostgreSQLv9' )
-		ifTrue: [ ^ self postgreSQLv9Login ].
-	( anEnvironmentVariable beginsWith: 'PostgreSQLv1' )
-		ifTrue: [ ^ self postgreSQLv10Login ].
+	( anEnvironmentVariable beginsWith: 'PostgreSQL' )
+		ifTrue: [ ^ self postgreSQLLogin ].
 	anEnvironmentVariable = 'MySQLv5'
 		ifTrue: [ ^ self mySQLv5Login ].
 	( anEnvironmentVariable beginsWith: 'MariaDB' )
@@ -76,22 +74,7 @@ RDMBSRepositoryTest class >> mySQLv5Login [
 ]
 
 { #category : #configuring }
-RDMBSRepositoryTest class >> postgreSQLv10Login [
-
-	<ignoreForCoverage>
-	self useP3Driver.
-	^ Login new
-		database: PostgreSQLPlatform new;
-		username: 'postgres';
-		password: 'secret';
-		host: 'localhost';
-		port: 5433;
-		databaseName: 'test';
-		yourself
-]
-
-{ #category : #configuring }
-RDMBSRepositoryTest class >> postgreSQLv9Login [
+RDMBSRepositoryTest class >> postgreSQLLogin [
 
 	<ignoreForCoverage>
 	self useP3Driver.
