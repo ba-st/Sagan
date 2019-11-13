@@ -13,6 +13,7 @@ env:
   - RDBMS=PostgreSQLv9.6
   - RDBMS=PostgreSQLv10
   - RDBMS=PostgreSQLv11
+  - RDBMS=PostgreSQLv12
   - RDBMS=MySQLv5.5
   - RDBMS=MySQLv5.6
   - RDBMS=MySQLv5.7
