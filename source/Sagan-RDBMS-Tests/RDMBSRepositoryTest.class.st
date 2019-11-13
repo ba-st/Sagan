@@ -65,8 +65,8 @@ RDMBSRepositoryTest class >> mySQLv5Login [
 	GAGlorpDriver beGlorpDefaultDriver.
 	^ Login new
 		database: MySQLPlatform new;
-		username: 'travis';
-		password: '';
+		username: 'root';
+		password: 'secret';
 		host: 'localhost';
 		port: '3306';
 		databaseName: 'test';

@@ -14,10 +14,10 @@ env:
   - RDBMS=PostgreSQLv10
   - RDBMS=PostgreSQLv11
 #  - RDBMS=MySQLv5
-#  - RDBMS=MariaDBv10.0
-#  - RDBMS=MariaDBv10.1
-#  - RDBMS=MariaDBv10.2
-#  - RDBMS=MariaDBv10.3
+  - RDBMS=MariaDBv10.1
+  - RDBMS=MariaDBv10.2
+  - RDBMS=MariaDBv10.3
+  - RDBMS=MariaDBv10.4  
   - RDBMS=SQLite3
 before_install:
   - scripts/install-RDBMS.sh
