@@ -17,7 +17,7 @@ Class {
 RDMBSRepositoryTest class >> defaultLogin [
 
 	<ignoreForCoverage>
-	^ self postgreSQLv9Login
+	^ self postgreSQLLogin
 ]
 
 { #category : #initialize }
