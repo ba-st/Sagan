@@ -42,8 +42,8 @@ RDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 	<ignoreForCoverage>
 	( anEnvironmentVariable beginsWith: 'PostgreSQL' )
 		ifTrue: [ ^ self postgreSQLLogin ].
-	anEnvironmentVariable = 'MySQLv5'
-		ifTrue: [ ^ self mySQLv5Login ].
+	( anEnvironmentVariable beginsWith: 'MySQL' )
+		ifTrue: [ ^ self mySQLLogin ].
 	( anEnvironmentVariable beginsWith: 'MariaDB' )
 		ifTrue: [ ^ self mariaDBLogin ].
 	anEnvironmentVariable = 'SQLite3'
@@ -55,11 +55,11 @@ RDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 RDMBSRepositoryTest class >> mariaDBLogin [
 
 	<ignoreForCoverage>
-	^ self mySQLv5Login
+	^ self mySQLLogin
 ]
 
 { #category : #configuring }
-RDMBSRepositoryTest class >> mySQLv5Login [
+RDMBSRepositoryTest class >> mySQLLogin [
 
 	<ignoreForCoverage>
 	GAGlorpDriver beGlorpDefaultDriver.
