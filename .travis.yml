@@ -1,7 +1,7 @@
 language: smalltalk
 sudo: required
 services:
-  - mysql
+  - docker
 os:
 - linux
 smalltalk:
@@ -13,16 +13,17 @@ env:
   - RDBMS=PostgreSQLv9.6
   - RDBMS=PostgreSQLv10
   - RDBMS=PostgreSQLv11
-  - RDBMS=MySQLv5
-  - RDBMS=MariaDBv10.0
+  - RDBMS=PostgreSQLv12
+  - RDBMS=MySQLv5.5
+  - RDBMS=MySQLv5.6
+  - RDBMS=MySQLv5.7
   - RDBMS=MariaDBv10.1
   - RDBMS=MariaDBv10.2
   - RDBMS=MariaDBv10.3
+  - RDBMS=MariaDBv10.4
   - RDBMS=SQLite3
 before_install:
   - scripts/install-RDBMS.sh
-before_script:
-  - scripts/setup-database.sh
 before_deploy:
 - cp "${SMALLTALK_CI_IMAGE}" "Sagan.image"
 - cp "${SMALLTALK_CI_CHANGES}" "Sagan.changes"

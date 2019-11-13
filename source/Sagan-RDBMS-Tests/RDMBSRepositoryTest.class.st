@@ -17,7 +17,7 @@ Class {
 RDMBSRepositoryTest class >> defaultLogin [
 
 	<ignoreForCoverage>
-	^ self postgreSQLv9Login
+	^ self postgreSQLLogin
 ]
 
 { #category : #initialize }
@@ -40,12 +40,10 @@ RDMBSRepositoryTest class >> login [
 RDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 
 	<ignoreForCoverage>
-	( anEnvironmentVariable beginsWith: 'PostgreSQLv9' )
-		ifTrue: [ ^ self postgreSQLv9Login ].
-	( anEnvironmentVariable beginsWith: 'PostgreSQLv1' )
-		ifTrue: [ ^ self postgreSQLv10Login ].
-	anEnvironmentVariable = 'MySQLv5'
-		ifTrue: [ ^ self mySQLv5Login ].
+	( anEnvironmentVariable beginsWith: 'PostgreSQL' )
+		ifTrue: [ ^ self postgreSQLLogin ].
+	( anEnvironmentVariable beginsWith: 'MySQL' )
+		ifTrue: [ ^ self mySQLLogin ].
 	( anEnvironmentVariable beginsWith: 'MariaDB' )
 		ifTrue: [ ^ self mariaDBLogin ].
 	anEnvironmentVariable = 'SQLite3'
@@ -57,18 +55,18 @@ RDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 RDMBSRepositoryTest class >> mariaDBLogin [
 
 	<ignoreForCoverage>
-	^ self mySQLv5Login
+	^ self mySQLLogin
 ]
 
 { #category : #configuring }
-RDMBSRepositoryTest class >> mySQLv5Login [
+RDMBSRepositoryTest class >> mySQLLogin [
 
 	<ignoreForCoverage>
 	GAGlorpDriver beGlorpDefaultDriver.
 	^ Login new
 		database: MySQLPlatform new;
-		username: 'travis';
-		password: '';
+		username: 'root';
+		password: 'secret';
 		host: 'localhost';
 		port: '3306';
 		databaseName: 'test';
@@ -76,22 +74,7 @@ RDMBSRepositoryTest class >> mySQLv5Login [
 ]
 
 { #category : #configuring }
-RDMBSRepositoryTest class >> postgreSQLv10Login [
-
-	<ignoreForCoverage>
-	self useP3Driver.
-	^ Login new
-		database: PostgreSQLPlatform new;
-		username: 'postgres';
-		password: 'secret';
-		host: 'localhost';
-		port: 5433;
-		databaseName: 'test';
-		yourself
-]
-
-{ #category : #configuring }
-RDMBSRepositoryTest class >> postgreSQLv9Login [
+RDMBSRepositoryTest class >> postgreSQLLogin [
 
 	<ignoreForCoverage>
 	self useP3Driver.

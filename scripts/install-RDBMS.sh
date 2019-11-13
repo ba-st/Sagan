@@ -1,42 +1,26 @@
 #!/usr/bin/env bash
 
-if [[ "$RDBMS" = PostgreSQL* ]]; then
-  sudo /etc/init.d/postgresql stop
-  curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-  sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-  sudo apt-get update
-elif [[ "$RDBMS" = MariaDB* ]]; then
-  sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-fi
-
-if [ "$RDBMS" = "PostgreSQLv9.4" ]; then
-  sudo apt-get install postgresql-9.4
-elif [ "$RDBMS" = "PostgreSQLv9.5" ]; then
-  sudo apt-get install postgresql-9.5
-elif [ "$RDBMS" = "PostgreSQLv9.6" ]; then
-  sudo apt-get install postgresql-9.6
-elif [ "$RDBMS" = "PostgreSQLv10" ]; then
-  sudo apt-get install postgresql-10
-elif [ "$RDBMS" = "PostgreSQLv11" ]; then
-  sudo /etc/init.d/postgresql stop
-  sudo apt-get remove postgresql-9.2 postgresql-client-9.2
-  sudo apt-get install postgresql-11 postgresql-client-11
-elif [ "$RDBMS" = "MariaDBv10.0" ]; then
-  sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
-  sudo apt-get update
-  sudo apt-get install mariadb-server
-elif [ "$RDBMS" = "MariaDBv10.1" ]; then
-  sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/ubuntu trusty main'
-  sudo apt-get update
-  sudo apt-get install mariadb-server
-elif [ "$RDBMS" = "MariaDBv10.2" ]; then
-  sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.2/ubuntu trusty main'
-  sudo apt-get update
-  sudo apt-get install mariadb-server
-elif [ "$RDBMS" = "MariaDBv10.3" ]; then
-  sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu trusty main'
-  sudo apt-get update
-  sudo apt-get install mariadb-server
+if  [[ "$RDBMS" = MariaDB* ]]; then
+  readonly DOCKER_IMAGE_VERSION=$(echo $RDBMS | cut --complement -c -8)
+  docker run -d -p 127.0.0.1:3306:3306 \
+    -e MYSQL_ROOT_PASSWORD=secret \
+    -e MYSQL_DATABASE=test \
+    mariadb/server:$DOCKER_IMAGE_VERSION
+elif  [[ "$RDBMS" = MySQL* ]]; then
+    readonly DOCKER_IMAGE_VERSION=$(echo $RDBMS | cut --complement -c -6)
+    docker run -d -p 127.0.0.1:3306:3306 \
+      -e MYSQL_ROOT_PASSWORD=secret \
+      -e MYSQL_ROOT_HOST=% \
+      -e MYSQL_DATABASE=test \
+      mysql/mysql-server:$DOCKER_IMAGE_VERSION
+elif  [[ "$RDBMS" = PostgreSQL* ]]; then
+  readonly DOCKER_IMAGE_VERSION=$(echo $RDBMS | cut --complement -c -11)
+  docker run -d -p 127.0.0.1:5432:5432 \
+    -e POSTGRES_PASSWORD=secret \
+    -e POSTGRES_USER=postgres \
+    -e POSTGRES_DB=test \
+    postgres:$DOCKER_IMAGE_VERSION
 elif [ "$RDBMS" = "SQLite3" ]; then
   sudo apt-get install sqlite3
+  sqlite3 -version
 fi;
