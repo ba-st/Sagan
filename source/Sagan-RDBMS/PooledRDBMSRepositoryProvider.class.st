@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'sessionPool',
 		'descriptorSystem',
-		'login'
+		'login',
+		'sessionProvider'
 	],
 	#category : #'Sagan-RDBMS-Repository'
 }
@@ -19,52 +20,24 @@ PooledRDBMSRepositoryProvider class >> using: aLogin [
 PooledRDBMSRepositoryProvider >> createRepositoryStoringObjectsOfType: aBusinessObjectClass
 	checkingConflictsAccordingTo: aConflictCheckingStrategy [
 
-
 	^ RDBMSRepository
 		storingObjectsOfType: aBusinessObjectClass
 		checkingConflictsAccordingTo: aConflictCheckingStrategy
-		workingWith: self currentSessionBlock
-]
-
-{ #category : #private }
-PooledRDBMSRepositoryProvider >> currentSessionBlock [
-
-	^ [ :actionBlock | 
-	CurrentRDBMSSession
-		withValueDo: actionBlock
-		ifAbsent: [ sessionPool
-				withPooled: [ :session | CurrentRDBMSSession value: session during: [ actionBlock value: session ] ]
-			]
-	]
+		workingWith: sessionProvider
 ]
 
 { #category : #initialization }
 PooledRDBMSRepositoryProvider >> initializeUsing: aLogin [
 
-	login := aLogin.
-	descriptorSystem := ConfigurableDescriptorSystem new.
-	sessionPool := OPBasicPool new.
-	sessionPool
-		creator: [ 
-			| session |
-			session := DescriptorSystem sessionForLogin: login.
-			session system: descriptorSystem.
-			session loginIfError: [ :error | DatabaseLoginFailed signal: error description ].
-			session
-			];
-		destroyer: [ :session | session logout ];
-		validator: [ :session | session isLoggedIn ];
-		passivator: [ :session | session reset ];
-		maxIdleObjects: 10;
-		minIdleObjects: 5;
-		maxActiveObjects: 12
+	sessionProvider := PooledRDBMSSessionProvider loginWith: aLogin. 
+
 ]
 
 { #category : #controlling }
 PooledRDBMSRepositoryProvider >> prepareForInitialPersistence [
 
-	self currentSessionBlock
-		value: [ :session | 
+	sessionProvider
+		withConfigurationSessionDo: [ :session | 
 			session
 				recreateTablesIfError: [ :error | Error signal: error description ];
 				logout;
@@ -75,13 +48,11 @@ PooledRDBMSRepositoryProvider >> prepareForInitialPersistence [
 { #category : #controlling }
 PooledRDBMSRepositoryProvider >> prepareForShutDown [
 
-	sessionPool
-		minIdleObjects: nil;
-		clear
+	sessionProvider deleteSessions
 ]
 
 { #category : #controlling }
 PooledRDBMSRepositoryProvider >> reset [
 
-	sessionPool clear
+	sessionProvider clearSessions
 ]

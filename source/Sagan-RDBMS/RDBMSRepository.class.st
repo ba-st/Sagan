@@ -22,35 +22,35 @@ RDBMSRepository class >> storingObjectsOfType: aDomainObjectClass checkingConfli
 { #category : #mappings }
 RDBMSRepository >> beAwareOfClassModelDefinedBy: aClassModelDefinition [
 
-	self
-		withSessionDo: [ :session | session system addClassModelDefinedBy: aClassModelDefinition ]
+	sessionProvider
+		withConfigurationSessionDo: [ :session | session system addClassModelDefinedBy: aClassModelDefinition ]
 ]
 
 { #category : #mappings }
 RDBMSRepository >> beAwareOfDescriptorDefinedBy: aDescriptorDefinition [
 
-	self
-		withSessionDo: [ :session | session system addDescriptorDefinedBy: aDescriptorDefinition ]
+	sessionProvider
+		withConfigurationSessionDo: [ :session | session system addDescriptorDefinedBy: aDescriptorDefinition ]
 ]
 
 { #category : #mappings }
 RDBMSRepository >> beAwareOfTableDefinedBy: aTableDefinition [
 
-	self withSessionDo: [ :session | session system addTableDefinedBy: aTableDefinition ]
+	sessionProvider
+		withConfigurationSessionDo: [ :session | session system addTableDefinedBy: aTableDefinition ]
 ]
 
 { #category : #mappings }
 RDBMSRepository >> beAwareOfTypeResolverDefinedBy: aTypeResolverDefinition [
 
-	self
-		withSessionDo: [ :session | session system addTypeResolverDefinedBy: aTypeResolverDefinition ]
+	sessionProvider
+		withConfigurationSessionDo: [ :session | session system addTypeResolverDefinedBy: aTypeResolverDefinition ]
 ]
 
 { #category : #mappings }
 RDBMSRepository >> configureMappingsIn: aBlock [
 
-	aBlock cull: self.
-	self withSessionDo: [ :session | session system: session system ]
+	aBlock cull: self
 ]
 
 { #category : #'private - accessing' }
@@ -159,8 +159,8 @@ RDBMSRepository >> storeAfterCheckingConflicts: aDomainObject [
 { #category : #management }
 RDBMSRepository >> transact: aBlock [
 
-	^ self
-		withSessionDo: [ :session | self handleWriteErrorsDuring: [ session inUnitOfWorkDo: aBlock ] ]
+	^ sessionProvider
+		withWorkingSessionDo: [ :session | self handleWriteErrorsDuring: [ session inUnitOfWorkDo: aBlock ] ]
 ]
 
 { #category : #management }
@@ -200,11 +200,6 @@ RDBMSRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do:
 { #category : #'private - accessing' }
 RDBMSRepository >> withReadSessionDo: aBlock [
 
-	^ self withSessionDo: [ :session | self handleReadErrorsDuring: [ aBlock value: session ] ]
-]
-
-{ #category : #'private - accessing' }
-RDBMSRepository >> withSessionDo: aBlock [
-
-	^ sessionProvider value: aBlock
+	^ sessionProvider
+		withWorkingSessionDo: [ :session | self handleReadErrorsDuring: [ aBlock value: session ] ]
 ]

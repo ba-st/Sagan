@@ -17,7 +17,7 @@ Class {
 RDMBSRepositoryTest class >> defaultLogin [
 
 	<ignoreForCoverage>
-	^ self postgreSQLLogin
+	^ self sqlite3Login
 ]
 
 { #category : #initialize }
@@ -199,12 +199,12 @@ RDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 	extraterrestrials := RDBMSRepository
 		storingObjectsOfType: Extraterrestrial
 		checkingConflictsAccordingTo: aConflictCheckingStrategy
-		workingWith: [:action | action value: session ].
+		workingWith: ( FixedRDBMSSessionProvider using: session ).
 	self configureExtraterrestrialMappings.
 	spaceships := RDBMSRepository
 		storingObjectsOfType: Spaceship
 		checkingConflictsAccordingTo: aConflictCheckingStrategy
-		workingWith: [:action | action value: session ].
+		workingWith: ( FixedRDBMSSessionProvider using: session ).
 	self configureSpaceshipMappings.
 	session
 		loginIfError: [ :error | self fail: error messageText ];

@@ -356,7 +356,9 @@ RepositoryBasedTest >> testUpdateWith [
 		assert: self extraterrestrials findAll size equals: 1;
 		assert: ( self extraterrestrials findAll includes: stallone ).
 
-	self extraterrestrials update: stallone with: self johnLock.
+	self
+		updateExtraterrestialMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ]
+		with: self johnLock.
 
 	self assert: self extraterrestrials findAll size equals: 1.
 
@@ -365,7 +367,10 @@ RepositoryBasedTest >> testUpdateWith [
 		do: [ :john | self assert: john lastName equals: 'Lock' ]
 		else: [ self fail ].
 
-	self assert: ( self extraterrestrials findAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Stallone' ] ) isEmpty
+	self
+		assert:
+			( self extraterrestrials
+				findAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Stallone' ] ) isEmpty
 ]
 
 { #category : #'tests - conflict checking' }
@@ -381,7 +386,9 @@ RepositoryBasedTest >> testUpdateWithConflict [
 		store: self johnTravolta.
 
 	self
-		should: [ self extraterrestrials update: stallone with: self johnLock ] raise: ConflictingObjectFound;
+		should: [ self extraterrestrials update: stallone with: self johnLock ]
+			raise: ConflictingObjectFound
+			withMessageText: 'Something is in conflict with an Extraterrestrial';
 		assertRepositoryIncludesSilvesterStallone
 ]
 
@@ -398,9 +405,21 @@ RepositoryBasedTest >> testUpdateWithConflictUsingConjunctiveConflictChecking [
 		store: self johnTravolta.
 
 	self
-		should: [ self extraterrestrials update: stallone with: self johnTravolta ] raise: ConflictingObjectFound;
-		shouldnt: [ self extraterrestrials update: stallone with: self johnLock ] raise: ConflictingObjectFound;
-		shouldnt: [ self extraterrestrials update: stallone with: self ellaTravolta ] raise: ConflictingObjectFound
+		should: [ self
+				updateExtraterrestialMatching: [ :extraterrestial | extraterrestial lastName = 'Stallone' ]
+				with: self johnTravolta
+			]
+			raise: ConflictingObjectFound;
+		shouldnt: [ self
+				updateExtraterrestialMatching: [ :extraterrestial | extraterrestial lastName = 'Stallone' ]
+				with: self johnLock
+			]
+			raise: ConflictingObjectFound;
+		shouldnt: [ self
+				updateExtraterrestialMatching: [ :extraterrestial | extraterrestial lastName = 'Lock' ]
+				with: self ellaTravolta
+			]
+			raise: ConflictingObjectFound
 ]
 
 { #category : #'tests - conflict checking' }
@@ -434,7 +453,12 @@ RepositoryBasedTest >> testUpdateWithoutConflict [
 		store: stallone;
 		store: self johnTravolta.
 
-	self shouldnt: [ self extraterrestrials update: stallone with: self ellaTravolta ] raise: ConflictingObjectFound
+	self
+		shouldnt: [ self
+				updateExtraterrestialMatching: [ :extraterrestial | extraterrestial lastName = 'Stallone' ]
+				with: self ellaTravolta
+			]
+		raise: ConflictingObjectFound
 ]
 
 { #category : #'tests - querying' }
@@ -455,4 +479,15 @@ RepositoryBasedTest >> testWithOneMatchingSortedByDoElse [
 				assert: extraterrestrial firstName equals: 'John'
 			]
 		else: [ self fail ]
+]
+
+{ #category : #'tests - management' }
+RepositoryBasedTest >> updateExtraterrestialMatching: aBlock with: aNewExtraterrestial [
+
+	self extraterrestrials
+		transact: [ self extraterrestrials
+				withOneMatching: aBlock
+				do: [ :extraterrestial | self extraterrestrials update: extraterrestial with: aNewExtraterrestial ]
+				else: [ self fail ]
+			]
 ]
