@@ -160,7 +160,7 @@ RDBMSRepository >> storeAfterCheckingConflicts: aDomainObject [
 RDBMSRepository >> transact: aBlock [
 
 	^ sessionProvider
-		withWorkingSessionDo: [ :session | self handleWriteErrorsDuring: [ session inUnitOfWorkDo: aBlock ] ]
+		withSessionDo: [ :session | self handleWriteErrorsDuring: [ session inUnitOfWorkDo: aBlock ] ]
 ]
 
 { #category : #management }
@@ -201,5 +201,5 @@ RDBMSRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do:
 RDBMSRepository >> withReadSessionDo: aBlock [
 
 	^ sessionProvider
-		withWorkingSessionDo: [ :session | self handleReadErrorsDuring: [ aBlock value: session ] ]
+		withSessionDo: [ :session | self handleReadErrorsDuring: [ aBlock value: session ] ]
 ]

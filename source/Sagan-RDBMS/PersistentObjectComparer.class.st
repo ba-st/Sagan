@@ -11,15 +11,14 @@ PersistentObjectComparer >> hashFor: anObject [
 ]
 
 { #category : #asserting }
-PersistentObjectComparer >> shouldConsider: element asEqualTo: referenceElementOrProxy [
+PersistentObjectComparer >> shouldConsider: anObject asEqualTo: anotherObject [
 
-	^element == referenceElementOrProxy or: [| referenceElement |
-		" We unproxy the element to avoid problems in the comparing of the classes "
-		referenceElement :=
-			referenceElementOrProxy isGlorpProxy
-				ifTrue: [referenceElementOrProxy getValue]
-				ifFalse: [referenceElementOrProxy].
-		(referenceElement class = element class) and: [
-			element sequentialNumber notNil
-				and: [element sequentialNumber = referenceElement sequentialNumber]]]
+	^anObject == anotherObject or: [| unproxiedObject |
+		unproxiedObject :=
+			anotherObject isGlorpProxy
+				ifTrue: [anotherObject getValue]
+				ifFalse: [anotherObject].
+		(unproxiedObject class = anObject class) and: [
+			anObject sequentialNumber notNil
+				and: [anObject sequentialNumber = unproxiedObject sequentialNumber]]]
 ]

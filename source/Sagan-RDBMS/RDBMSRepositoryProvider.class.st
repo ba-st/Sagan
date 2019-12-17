@@ -1,5 +1,5 @@
 Class {
-	#name : #PooledRDBMSRepositoryProvider,
+	#name : #RDBMSRepositoryProvider,
 	#superclass : #RepositoryProvider,
 	#instVars : [
 		'sessionPool',
@@ -10,14 +10,26 @@ Class {
 	#category : #'Sagan-RDBMS-Repository'
 }
 
-{ #category : #'instance creation' }
-PooledRDBMSRepositoryProvider class >> using: aLogin [
+{ #category : #'private-instance creation' }
+RDBMSRepositoryProvider class >> obtainingSessionFrom: aSessionProvider [
 
-	^ self new initializeUsing: aLogin
+	^ self new initializeObtainingSessionFrom: aSessionProvider
+]
+
+{ #category : #'instance creation' }
+RDBMSRepositoryProvider class >> using: aLogin [
+
+	^ self obtainingSessionFrom: ( PooledRDBMSSessionProvider loginWith: aLogin )
+]
+
+{ #category : #'instance creation' }
+RDBMSRepositoryProvider class >> usingSingleSessionWith: aLogin [
+
+	^ self obtainingSessionFrom: ( SingleRDBMSSessionProvider loginWith: aLogin )
 ]
 
 { #category : #building }
-PooledRDBMSRepositoryProvider >> createRepositoryStoringObjectsOfType: aBusinessObjectClass
+RDBMSRepositoryProvider >> createRepositoryStoringObjectsOfType: aBusinessObjectClass
 	checkingConflictsAccordingTo: aConflictCheckingStrategy [
 
 	^ RDBMSRepository
@@ -27,14 +39,14 @@ PooledRDBMSRepositoryProvider >> createRepositoryStoringObjectsOfType: aBusiness
 ]
 
 { #category : #initialization }
-PooledRDBMSRepositoryProvider >> initializeUsing: aLogin [
+RDBMSRepositoryProvider >> initializeObtainingSessionFrom: aSessionProvider [ 
 
-	sessionProvider := PooledRDBMSSessionProvider loginWith: aLogin. 
+	sessionProvider := aSessionProvider
 
 ]
 
 { #category : #controlling }
-PooledRDBMSRepositoryProvider >> prepareForInitialPersistence [
+RDBMSRepositoryProvider >> prepareForInitialPersistence [
 
 	sessionProvider
 		withConfigurationSessionDo: [ :session | 
@@ -46,13 +58,13 @@ PooledRDBMSRepositoryProvider >> prepareForInitialPersistence [
 ]
 
 { #category : #controlling }
-PooledRDBMSRepositoryProvider >> prepareForShutDown [
+RDBMSRepositoryProvider >> prepareForShutDown [
 
 	sessionProvider deleteSessions
 ]
 
 { #category : #controlling }
-PooledRDBMSRepositoryProvider >> reset [
+RDBMSRepositoryProvider >> reset [
 
 	sessionProvider clearSessions
 ]

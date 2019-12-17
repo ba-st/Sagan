@@ -18,6 +18,13 @@ PooledRDBMSSessionProvider class >> loginWith: aLogin [
 	^ self new initializeLoginWith: aLogin
 ]
 
+{ #category : #'private-accessing' }
+PooledRDBMSSessionProvider >> assertDescriptorSystemCanBeConfigured [
+
+	descriptorSystemWasCopied
+		ifTrue: [ self error: 'DescriptorSystem has been copied and cannot longer be configured' ]
+]
+
 { #category : #accessing }
 PooledRDBMSSessionProvider >> clearSessions [
 
@@ -66,7 +73,6 @@ PooledRDBMSSessionProvider >> initializeConfigurationSession [
 { #category : #initialization }
 PooledRDBMSSessionProvider >> initializeLoginWith: aLogin [
 
-	#jvanecek asString.
 	login := aLogin.
 	descriptorSystem := ConfigurableDescriptorSystem new.
 	descriptorSystemWasCopied := false.
@@ -81,9 +87,9 @@ PooledRDBMSSessionProvider >> initializeWorkingSessionsPool [
 	sessionPool := OPBasicPool new.
 	sessionPool
 		creator: [ self createNewSession ];
-		destroyer: [ :session | session logout ];
-		validator: [ :session | session isLoggedIn ];
-		passivator: [ :session | session reset ];
+		destroyer: #logout;
+		validator: #isLoggedIn;
+		passivator: #reset;
 		activator: [ :session | self configureDescriptorSystemTo: session ];
 		maxIdleObjects: 10;
 		minIdleObjects: 5;
@@ -93,14 +99,13 @@ PooledRDBMSSessionProvider >> initializeWorkingSessionsPool [
 { #category : #accessing }
 PooledRDBMSSessionProvider >> withConfigurationSessionDo: aBlockClosure [
 
-	descriptorSystemWasCopied
-		ifTrue: [ self error: 'DescriptorSystem has been copied and cannot longer be configured' ].
-
+	self assertDescriptorSystemCanBeConfigured.
+	
 	aBlockClosure cull: configurationSession
 ]
 
 { #category : #accessing }
-PooledRDBMSSessionProvider >> withWorkingSessionDo: aBlockClosure [
+PooledRDBMSSessionProvider >> withSessionDo: aBlockClosure [
 
 	^ CurrentRDBMSSession
 		withValueDo: aBlockClosure

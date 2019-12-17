@@ -23,7 +23,7 @@ RDBMSSessionProvider >> withConfigurationSessionDo: aBlockClosure [
 ]
 
 { #category : #enumerating }
-RDBMSSessionProvider >> withWorkingSessionDo: aBlockClosure [
+RDBMSSessionProvider >> withSessionDo: aBlockClosure [
 
 	self subclassResponsibility 
 ]

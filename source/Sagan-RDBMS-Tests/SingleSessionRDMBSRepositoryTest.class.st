@@ -2,10 +2,11 @@
 Unit test for RDMBSRepository
 "
 Class {
-	#name : #RDMBSRepositoryTest,
+	#name : #SingleSessionRDMBSRepositoryTest,
 	#superclass : #RepositoryBasedTest,
 	#instVars : [
-		'session'
+		'session',
+		'provider'
 	],
 	#classVars : [
 		'DefaultLogin'
@@ -14,14 +15,14 @@ Class {
 }
 
 { #category : #configuring }
-RDMBSRepositoryTest class >> defaultLogin [
+SingleSessionRDMBSRepositoryTest class >> defaultLogin [
 
 	<ignoreForCoverage>
-	^ self sqlite3Login
+	^ self postgreSQLLogin
 ]
 
 { #category : #initialize }
-RDMBSRepositoryTest class >> initialize [
+SingleSessionRDMBSRepositoryTest class >> initialize [
 
 	<ignoreForCoverage>
 	DefaultLogin := OSEnvironment current
@@ -31,13 +32,13 @@ RDMBSRepositoryTest class >> initialize [
 ]
 
 { #category : #'private protocol' }
-RDMBSRepositoryTest class >> login [
+SingleSessionRDMBSRepositoryTest class >> login [
 
 	^ DefaultLogin
 ]
 
 { #category : #configuring }
-RDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
+SingleSessionRDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 
 	<ignoreForCoverage>
 	( anEnvironmentVariable beginsWith: 'PostgreSQL' )
@@ -52,14 +53,14 @@ RDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 ]
 
 { #category : #configuring }
-RDMBSRepositoryTest class >> mariaDBLogin [
+SingleSessionRDMBSRepositoryTest class >> mariaDBLogin [
 
 	<ignoreForCoverage>
 	^ self mySQLLogin
 ]
 
 { #category : #configuring }
-RDMBSRepositoryTest class >> mySQLLogin [
+SingleSessionRDMBSRepositoryTest class >> mySQLLogin [
 
 	<ignoreForCoverage>
 	GAGlorpDriver beGlorpDefaultDriver.
@@ -74,7 +75,7 @@ RDMBSRepositoryTest class >> mySQLLogin [
 ]
 
 { #category : #configuring }
-RDMBSRepositoryTest class >> postgreSQLLogin [
+SingleSessionRDMBSRepositoryTest class >> postgreSQLLogin [
 
 	<ignoreForCoverage>
 	self useP3Driver.
@@ -89,7 +90,7 @@ RDMBSRepositoryTest class >> postgreSQLLogin [
 ]
 
 { #category : #configuring }
-RDMBSRepositoryTest class >> sqlite3Login [
+SingleSessionRDMBSRepositoryTest class >> sqlite3Login [
 
 	<ignoreForCoverage>
 	PharoDatabaseAccessor DefaultDriver: GlorpSQLite3Driver.
@@ -104,14 +105,14 @@ RDMBSRepositoryTest class >> sqlite3Login [
 ]
 
 { #category : #configuring }
-RDMBSRepositoryTest class >> useP3Driver [
+SingleSessionRDMBSRepositoryTest class >> useP3Driver [
 
 	<ignoreForCoverage>
 	DatabaseAccessor classForThisPlatform DefaultDriver: P3DatabaseDriver
 ]
 
 { #category : #initialization }
-RDMBSRepositoryTest >> configureExtraterrestrialMappings [
+SingleSessionRDMBSRepositoryTest >> configureExtraterrestrialMappings [
 
 	extraterrestrials
 		configureMappingsIn: [ :rdbmsRepository |
@@ -148,7 +149,7 @@ RDMBSRepositoryTest >> configureExtraterrestrialMappings [
 ]
 
 { #category : #initialization }
-RDMBSRepositoryTest >> configureSpaceshipMappings [
+SingleSessionRDMBSRepositoryTest >> configureSpaceshipMappings [
 
 	spaceships
 		configureMappingsIn: [ :rdbmsRepository |
@@ -179,50 +180,29 @@ RDMBSRepositoryTest >> configureSpaceshipMappings [
 ]
 
 { #category : #initialization }
-RDMBSRepositoryTest >> createSession [
+SingleSessionRDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
-	| accessor |
-
-	accessor := DatabaseAccessor forLogin: self class login.
-	accessor logging: self isLogging.
-
-	^ GlorpSession new
-		accessor: accessor;
-		system: ConfigurableDescriptorSystem new;
-		yourself
-]
-
-{ #category : #initialization }
-RDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
-
-	session := self createSession.
-	extraterrestrials := RDBMSRepository
-		storingObjectsOfType: Extraterrestrial
-		checkingConflictsAccordingTo: aConflictCheckingStrategy
-		workingWith: ( FixedRDBMSSessionProvider using: session ).
+	provider := RDBMSRepositoryProvider usingSingleSessionWith: self class login.
+	extraterrestrials := provider
+		createRepositoryStoringObjectsOfType: Extraterrestrial
+		checkingConflictsAccordingTo: aConflictCheckingStrategy.
 	self configureExtraterrestrialMappings.
-	spaceships := RDBMSRepository
-		storingObjectsOfType: Spaceship
-		checkingConflictsAccordingTo: aConflictCheckingStrategy
-		workingWith: ( FixedRDBMSSessionProvider using: session ).
+	spaceships := provider
+		createRepositoryStoringObjectsOfType: Spaceship
+		checkingConflictsAccordingTo: aConflictCheckingStrategy.
 	self configureSpaceshipMappings.
-	session
-		loginIfError: [ :error | self fail: error messageText ];
-		recreateTablesIfError: [ :error | self fail: error messageText ];
-		logout.
-
-	session loginIfError: [ :error | self fail: error messageText ]
+	provider prepareForInitialPersistence
 ]
 
 { #category : #running }
-RDMBSRepositoryTest >> tearDown [
+SingleSessionRDMBSRepositoryTest >> tearDown [
 
-	session ifNotNil: [ session logout ].
+	provider reset.
 	super tearDown
 ]
 
 { #category : #'tests - querying' }
-RDMBSRepositoryTest >> testMoreThanOneRepository [
+SingleSessionRDMBSRepositoryTest >> testMoreThanOneRepository [
 
 	self extraterrestrials store: self silvesterStallone.
 	self assert: self extraterrestrials findAll size equals: 1.

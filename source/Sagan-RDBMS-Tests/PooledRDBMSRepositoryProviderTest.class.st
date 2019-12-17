@@ -1,6 +1,9 @@
 Class {
 	#name : #PooledRDBMSRepositoryProviderTest,
 	#superclass : #RepositoryBasedTest,
+	#instVars : [
+		'provider'
+	],
 	#category : #'Sagan-RDBMS-Tests'
 }
 
@@ -75,9 +78,7 @@ PooledRDBMSRepositoryProviderTest >> configureSpaceshipMappings [
 { #category : #initialization }
 PooledRDBMSRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
-	| provider |
-
-	provider := PooledRDBMSRepositoryProvider using: RDMBSRepositoryTest login.
+	provider := RDBMSRepositoryProvider using: SingleSessionRDMBSRepositoryTest login.
 	extraterrestrials := provider
 		createRepositoryStoringObjectsOfType: Extraterrestrial
 		checkingConflictsAccordingTo: aConflictCheckingStrategy.
@@ -87,6 +88,13 @@ PooledRDBMSRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrat
 		checkingConflictsAccordingTo: aConflictCheckingStrategy.
 	self configureSpaceshipMappings.
 	provider prepareForInitialPersistence
+]
+
+{ #category : #initialization }
+PooledRDBMSRepositoryProviderTest >> tearDown [
+
+	provider reset.
+	super tearDown
 ]
 
 { #category : #tests }
