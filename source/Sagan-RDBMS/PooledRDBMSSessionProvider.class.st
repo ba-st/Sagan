@@ -22,7 +22,7 @@ PooledRDBMSSessionProvider class >> loginWith: aLogin [
 PooledRDBMSSessionProvider >> assertDescriptorSystemCanBeConfigured [
 
 	descriptorSystemWasCopied
-		ifTrue: [ self error: 'DescriptorSystem has been copied and cannot longer be configured' ]
+		ifTrue: [ AssertionFailed signal: 'DescriptorSystem has been copied and cannot longer be configured' ]
 ]
 
 { #category : #accessing }
