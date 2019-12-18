@@ -111,7 +111,10 @@ PooledRDBMSRepositoryProviderTest >> testUpdateWithOutsideTransactWillFail [
 		assert: self extraterrestrials findAll size equals: 1;
 		assert: ( self extraterrestrials findAll includes: stallone ).
 
-	self should: [ self extraterrestrials update: stallone with: self johnLock ] raise: PersistenceCommandFailed.
+	self
+		should: [ self extraterrestrials update: stallone with: self johnLock ]
+		raise: PersistenceCommandFailed
+		withMessageText: 'Cannot perform the action due to some persistence error while writing.'.
 
 	self assert: self extraterrestrials findAll size equals: 1.
 

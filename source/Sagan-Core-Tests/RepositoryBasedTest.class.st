@@ -409,7 +409,8 @@ RepositoryBasedTest >> testUpdateWithConflictUsingConjunctiveConflictChecking [
 				updateExtraterrestialMatching: [ :extraterrestial | extraterrestial lastName = 'Stallone' ]
 				with: self johnTravolta
 			]
-			raise: ConflictingObjectFound;
+			raise: ConflictingObjectFound
+			withMessageText: 'Something is in conflict with an Extraterrestrial';
 		shouldnt: [ self
 				updateExtraterrestialMatching: [ :extraterrestial | extraterrestial lastName = 'Stallone' ]
 				with: self johnLock

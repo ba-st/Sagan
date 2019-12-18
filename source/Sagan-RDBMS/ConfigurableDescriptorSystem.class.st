@@ -667,8 +667,8 @@ ConfigurableDescriptorSystem >> newTypeResolverFor: aClass [
 { #category : #copying }
 ConfigurableDescriptorSystem >> postCopy [
 
-	" Need to refresh the Descriptors because these have reference 
-	to the original system - jvanecek "
+	" Need to refresh the Descriptors because these references
+	the original system - jvanecek "
 
 	descriptors := Dictionary new
 ]
