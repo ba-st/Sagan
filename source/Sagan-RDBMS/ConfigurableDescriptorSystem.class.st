@@ -664,6 +664,15 @@ ConfigurableDescriptorSystem >> newTypeResolverFor: aClass [
 		ifNone: [ self signalDefinitionMissingFor: aClass ]
 ]
 
+{ #category : #copying }
+ConfigurableDescriptorSystem >> postCopy [
+
+	" Need to refresh the Descriptors because these references
+	the original system - jvanecek "
+
+	descriptors := Dictionary new
+]
+
 { #category : #private }
 ConfigurableDescriptorSystem >> signalDefinitionMissingFor: aGlorpObject [
 
