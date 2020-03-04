@@ -100,6 +100,18 @@ OneToOneMappingWithTranslationDefinition class >> forReadOnlyAttributeNamed: anA
 		applyingAfterDefinition: self makeMappingReadOnly
 ]
 
+{ #category : #'as yet unclassified' }
+OneToOneMappingWithTranslationDefinition class >> forReadOnlyNonProxyAttributeNamed: anAttributeName
+	translatingFieldsUsing: aTableFieldTranslationDefinition [
+
+	^self
+		forAttributeNamed: anAttributeName
+		translatingFieldsUsingAll: (Array with: aTableFieldTranslationDefinition)
+		applyingAfterDefinition: [:mapping :system |
+			self makeMappingReadOnly value: mapping value: system.
+			self makeMappingToNotProxy value: mapping value: system]
+]
+
 { #category : #Defining }
 OneToOneMappingWithTranslationDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem [
 
