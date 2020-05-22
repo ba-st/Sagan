@@ -98,10 +98,7 @@ PooledRDBMSRepositoryProviderTest >> tearDown [
 ]
 
 { #category : #tests }
-PooledRDBMSRepositoryProviderTest >> testUpdateWithOutsideTransactWillFail [
-
-	" When using a session pool, the update must be done in the same transaction as the lookup of 
-	the object to be updated, otherwise Glorp will try to do an insert instead of an update "
+PooledRDBMSRepositoryProviderTest >> testUpdateWithOutsideTransact [
 
 	| stallone |
 
@@ -111,20 +108,15 @@ PooledRDBMSRepositoryProviderTest >> testUpdateWithOutsideTransactWillFail [
 		assert: self extraterrestrials findAll size equals: 1;
 		assert: ( self extraterrestrials findAll includes: stallone ).
 
-	self
-		should: [ self extraterrestrials update: stallone with: self johnLock ]
-		raise: PersistenceCommandFailed
-		withMessageText: 'Cannot perform the action due to some persistence error while writing.'.
-
-	self assert: self extraterrestrials findAll size equals: 1.
+	self extraterrestrials update: stallone with: self johnLock.
 
 	self extraterrestrials
-		withOneMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ]
-		do: [ :john | self assert: john lastName equals: 'Stallone' ]
+		withOneMatching: [ :extraterrestrial | extraterrestrial firstName = 'John' ]
+		do: [ :john | self assert: john lastName equals: 'Lock' ]
 		else: [ self fail ].
 
 	self
 		assert:
-			( self extraterrestrials findAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Lock' ] )
-				isEmpty
+			( self extraterrestrials
+				findAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Stallone' ] ) isEmpty
 ]
