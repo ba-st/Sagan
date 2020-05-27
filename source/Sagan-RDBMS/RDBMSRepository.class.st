@@ -167,8 +167,12 @@ RDBMSRepository >> transact: aBlock [
 RDBMSRepository >> update: aMutableDomainObject executing: aMonadycBlock [
 
 	self
-		transact:
-			[ :session | session modify: aMutableDomainObject in: [ aMonadycBlock value: aMutableDomainObject ] ].
+		transact: [ :session | 
+			| originalObject |
+
+			originalObject := session refresh: aMutableDomainObject.
+			session modify: originalObject in: [ aMonadycBlock value: originalObject ]
+			].
 	^ aMutableDomainObject
 ]
 
