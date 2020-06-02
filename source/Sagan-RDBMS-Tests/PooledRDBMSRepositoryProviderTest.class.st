@@ -7,6 +7,17 @@ Class {
 	#category : #'Sagan-RDBMS-Tests'
 }
 
+{ #category : #utility }
+PooledRDBMSRepositoryProviderTest >> assertFleetOf: aMothership isEquivalentToFleetOf: anotherMothership [
+
+	self assert: aMothership fleet size equals: anotherMothership fleet size.
+	aMothership fleet
+		do: [ :aMember | 
+			self
+				assert: ( anotherMothership fleet anySatisfy: [ :anotherMember | aMember name = anotherMember name ] )
+			]
+]
+
 { #category : #'private-configuring' }
 PooledRDBMSRepositoryProviderTest >> configureExtraterrestrialMappings [
 
@@ -153,19 +164,15 @@ PooledRDBMSRepositoryProviderTest >> testPurgeMothershipWithEmptyFleet [
 { #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testPurgeMothershipWithMultipleShipFleet [
 
-	| sdf1 vf1A vf1D vf1J vf1S |
+	| sdf1 |
 
-	vf1A := Spaceship named: 'VF-1A'.
-	vf1D := Spaceship named: 'VF-1D'.
-	vf1J := Spaceship named: 'VF-1J'.
-	vf1S := Spaceship named: 'VF-1S'.
 	sdf1 := Mothership
 		named: 'SDF-1'
 		withAll:
-			{vf1A.
-			vf1D.
-			vf1J.
-			vf1S}.
+			{( Spaceship named: 'VF-1A' ).
+			( Spaceship named: 'VF-1D' ).
+			( Spaceship named: 'VF-1J' ).
+			( Spaceship named: 'VF-1S' )}.
 	ships store: sdf1.
 	ships purge: sdf1.
 	self assert: ships findAll isEmpty
@@ -174,10 +181,9 @@ PooledRDBMSRepositoryProviderTest >> testPurgeMothershipWithMultipleShipFleet [
 { #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testPurgeMothershipWithSingleShipFleet [
 
-	| sdf1 vf1A |
+	| sdf1 |
 
-	vf1A := Spaceship named: 'VF-1A'.
-	sdf1 := Mothership named: 'SDF-1' withAll: {vf1A}.
+	sdf1 := Mothership named: 'SDF-1' withAll: {( Spaceship named: 'VF-1A' )}.
 	ships store: sdf1.
 	ships purge: sdf1.
 	self assert: ships findAll isEmpty
@@ -191,340 +197,248 @@ PooledRDBMSRepositoryProviderTest >> testStoreMothershipWithEmptyFleet [
 	sdf1 := Mothership named: 'SDF-1' withAll: {}.
 	ships store: sdf1.
 	self assert: ships findAll size equals: 1.
-	ships
-		withOneMatching: [ :ship :criteria | criteria satisfyingAll: {( ship name = sdf1 name )} ]
+	self
+		withShipNamedAs: sdf1 name
 		do: [ :ship | 
 			self assert: ship name equals: sdf1 name.
-			self assert: ship fleet isEmpty
+			self assertFleetOf: ship isEquivalentToFleetOf: sdf1
 			]
-		else: [ self fail ]
 ]
 
 { #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testStoreMothershipWithMultipleShipFleet [
 
-	| sdf1 vf1A vf1D vf1J vf1S |
+	| sdf1 |
 
-	vf1A := Spaceship named: 'VF-1A'.
-	vf1D := Spaceship named: 'VF-1D'.
-	vf1J := Spaceship named: 'VF-1J'.
-	vf1S := Spaceship named: 'VF-1S'.
 	sdf1 := Mothership
 		named: 'SDF-1'
 		withAll:
-			{vf1A.
-			vf1D.
-			vf1J.
-			vf1S}.
+			{( Spaceship named: 'VF-1A' ).
+			( Spaceship named: 'VF-1D' ).
+			( Spaceship named: 'VF-1J' ).
+			( Spaceship named: 'VF-1S' )}.
 	ships store: sdf1.
 	self assert: ships findAll size equals: 1.
-	ships
-		withOneMatching: [ :ship :criteria | criteria satisfyingAll: {( ship name = sdf1 name )} ]
+	self
+		withShipNamedAs: sdf1 name
 		do: [ :ship | 
 			self assert: ship name equals: sdf1 name.
-			self assert: ship fleet size equals: 4.
-			ship fleet
-				do: [ :member | sdf1 fleet anySatisfy: [ :sdf1Member | member name = sdf1Member name ] ]
+			self assertFleetOf: ship isEquivalentToFleetOf: sdf1
 			]
-		else: [ self fail ]
 ]
 
 { #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testStoreMothershipWithSingleShipFleet [
 
-	| sdf1 vf1A |
+	| sdf1 |
 
-	vf1A := Spaceship named: 'VF-1A'.
-	sdf1 := Mothership named: 'SDF-1' withAll: {vf1A}.
+	sdf1 := Mothership named: 'SDF-1' withAll: {( Spaceship named: 'VF-1A' )}.
 	ships store: sdf1.
 	self assert: ships findAll size equals: 1.
-	ships
-		withOneMatching: [ :ship :criteria | criteria satisfyingAll: {( ship name = sdf1 name )} ]
+	self
+		withShipNamedAs: sdf1 name
 		do: [ :ship | 
 			self assert: ship name equals: sdf1 name.
-			self assert: ship fleet size equals: 1.
-			ship fleet
-				do: [ :member | sdf1 fleet anySatisfy: [ :sdf1Member | member name = sdf1Member name ] ]
+			self assertFleetOf: ship isEquivalentToFleetOf: sdf1
 			]
-		else: [ self fail ]
 ]
 
 { #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithEmptyFleetToNowHaveMultipleShipFleet [
 
-	| sdf1 updatedSDF1 vf1A |
+	| sdf1 updatedSDF1 |
 
-	vf1A := Spaceship named: 'VF-1A'.
 	sdf1 := Mothership named: 'SDF-1' withAll: {}.
-	updatedSDF1 := Mothership named: 'SDF-1*' withAll: {vf1A}.
+	updatedSDF1 := Mothership named: 'SDF-1*' withAll: {( Spaceship named: 'VF-1A' )}.
 	ships store: sdf1.
 	ships update: sdf1 with: updatedSDF1.
 	self assert: ships findAll size equals: 1.
-	ships
-		withOneMatching: [ :ship :criteria | criteria satisfyingAll: {( ship name = updatedSDF1 name )} ]
-		do: [ :ship | 
-			self assert: ship fleet size equals: 1.
-			ship fleet
-				do:
-					[ :member | updatedSDF1 fleet anySatisfy: [ :updatedSDF1Member | member name = updatedSDF1Member name ] ]
-			]
-		else: [ self fail ]
+	self
+		withShipNamedAs: updatedSDF1 name
+		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
 { #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithEmptyFleetToNowHaveSingleShipFleet [
 
-	| sdf1 updatedSDF1 vf1A vf1D vf1J vf1S |
+	| sdf1 updatedSDF1 |
 
-	vf1A := Spaceship named: 'VF-1A'.
-	vf1D := Spaceship named: 'VF-1D'.
-	vf1J := Spaceship named: 'VF-1J'.
-	vf1S := Spaceship named: 'VF-1S'.
 	sdf1 := Mothership named: 'SDF-1' withAll: {}.
 	updatedSDF1 := Mothership
 		named: 'SDF-1*'
 		withAll:
-			{vf1A.
-			vf1D.
-			vf1J.
-			vf1S}.
+			{( Spaceship named: 'VF-1A' ).
+			( Spaceship named: 'VF-1D' ).
+			( Spaceship named: 'VF-1J' ).
+			( Spaceship named: 'VF-1S' )}.
 	ships store: sdf1.
 	ships update: sdf1 with: updatedSDF1.
 	self assert: ships findAll size equals: 1.
-	ships
-		withOneMatching: [ :ship :criteria | criteria satisfyingAll: {( ship name = updatedSDF1 name )} ]
-		do: [ :ship | 
-			self assert: ship fleet size equals: 4.
-			ship fleet
-				do:
-					[ :member | updatedSDF1 fleet anySatisfy: [ :updatedSDF1Member | member name = updatedSDF1Member name ] ]
-			]
-		else: [ self fail ]
+	self
+		withShipNamedAs: updatedSDF1 name
+		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
 { #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithMultipleShipFleetToNowHaveEmptyFleet [
 
-	| sdf1 updatedSDF1 vf1A vf1D |
+	| sdf1 updatedSDF1 |
 
-	vf1A := Spaceship named: 'VF-1A'.
-	vf1D := Spaceship named: 'VF-1D'.
 	sdf1 := Mothership
 		named: 'SDF-1'
 		withAll:
-			{vf1A.
-			vf1D}.
+			{( Spaceship named: 'VF-1A' ).
+			( Spaceship named: 'VF-1D' )}.
 	updatedSDF1 := Mothership named: 'SDF-1*' withAll: {}.
 	ships store: sdf1.
 	ships update: sdf1 with: updatedSDF1.
 	self assert: ships findAll size equals: 1.
-	ships
-		withOneMatching: [ :ship :criteria | criteria satisfyingAll: {( ship name = updatedSDF1 name )} ]
-		do: [ :ship | self assert: ship fleet isEmpty ]
-		else: [ self fail ]
+	self
+		withShipNamedAs: updatedSDF1 name
+		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
 { #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithMultipleShipFleetToNowHaveMultipleShipFleetWhichNoLongerIncludesTheOriginalShip [
 
-	| sdf1 updatedSDF1 vf1A vf1D vf1J vf1S |
+	| sdf1 updatedSDF1 |
 
-	vf1A := Spaceship named: 'VF-1A'.
-	vf1D := Spaceship named: 'VF-1D'.
-	vf1J := Spaceship named: 'VF-1J'.
-	vf1S := Spaceship named: 'VF-1S'.
 	sdf1 := Mothership
 		named: 'SDF-1'
 		withAll:
-			{vf1A.
-			vf1D}.
+			{( Spaceship named: 'VF-1A' ).
+			( Spaceship named: 'VF-1D' )}.
 	updatedSDF1 := Mothership
 		named: 'SDF-1*'
 		withAll:
-			{vf1J.
-			vf1S}.
+			{( Spaceship named: 'VF-1J' ).
+			( Spaceship named: 'VF-1S' )}.
 	ships store: sdf1.
 	ships update: sdf1 with: updatedSDF1.
 	self assert: ships findAll size equals: 1.
-	ships
-		withOneMatching: [ :ship :criteria | criteria satisfyingAll: {( ship name = updatedSDF1 name )} ]
-		do: [ :ship | 
-			self assert: ship fleet size equals: 2.
-			ship fleet
-				do:
-					[ :member | updatedSDF1 fleet anySatisfy: [ :updatedSDF1Member | member name = updatedSDF1Member name ] ]
-			]
-		else: [ self fail ]
+	self
+		withShipNamedAs: updatedSDF1 name
+		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
 { #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithMultipleShipFleetToNowHaveMultipleShipFleetWhichStillIncludesASubsetOfTheOriginalShips [
 
-	| sdf1 updatedSDF1 vf1A vf1D vf1J vf1S |
+	| sdf1 updatedSDF1 |
 
-	vf1A := Spaceship named: 'VF-1A'.
-	vf1D := Spaceship named: 'VF-1D'.
-	vf1J := Spaceship named: 'VF-1J'.
-	vf1S := Spaceship named: 'VF-1S'.
 	sdf1 := Mothership
 		named: 'SDF-1'
 		withAll:
-			{vf1A.
-			vf1D}.
+			{( Spaceship named: 'VF-1A' ).
+			( Spaceship named: 'VF-1D' )}.
 	updatedSDF1 := Mothership
 		named: 'SDF-1*'
 		withAll:
-			{vf1A.
-			vf1J.
-			vf1S}.
+			{( Spaceship named: 'VF-1A' ).
+			( Spaceship named: 'VF-1J' ).
+			( Spaceship named: 'VF-1S' )}.
 	ships store: sdf1.
 	ships update: sdf1 with: updatedSDF1.
 	self assert: ships findAll size equals: 1.
-	ships
-		withOneMatching: [ :ship :criteria | criteria satisfyingAll: {( ship name = updatedSDF1 name )} ]
-		do: [ :ship | 
-			self assert: ship fleet size equals: 3.
-			ship fleet
-				do:
-					[ :member | updatedSDF1 fleet anySatisfy: [ :updatedSDF1Member | member name = updatedSDF1Member name ] ]
-			]
-		else: [ self fail ]
+	self
+		withShipNamedAs: updatedSDF1 name
+		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
 { #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithMultipleShipFleetToNowHaveMultipleShipFleetWhichStillIncludesAllOriginalShips [
 
-	| sdf1 updatedSDF1 vf1A vf1D vf1J vf1S |
+	| sdf1 updatedSDF1 |
 
-	vf1A := Spaceship named: 'VF-1A'.
-	vf1D := Spaceship named: 'VF-1D'.
-	vf1J := Spaceship named: 'VF-1J'.
-	vf1S := Spaceship named: 'VF-1S'.
 	sdf1 := Mothership
 		named: 'SDF-1'
 		withAll:
-			{vf1A.
-			vf1D}.
+			{( Spaceship named: 'VF-1A' ).
+			( Spaceship named: 'VF-1D' )}.
 	updatedSDF1 := Mothership
 		named: 'SDF-1*'
 		withAll:
-			{vf1A.
-			vf1D.
-			vf1J.
-			vf1S}.
+			{( Spaceship named: 'VF-1A' ).
+			( Spaceship named: 'VF-1D' ).
+			( Spaceship named: 'VF-1J' ).
+			( Spaceship named: 'VF-1S' )}.
 	ships store: sdf1.
 	ships update: sdf1 with: updatedSDF1.
 	self assert: ships findAll size equals: 1.
-	ships
-		withOneMatching: [ :ship :criteria | criteria satisfyingAll: {( ship name = updatedSDF1 name )} ]
-		do: [ :ship | 
-			self assert: ship fleet size equals: 4.
-			ship fleet
-				do:
-					[ :member | updatedSDF1 fleet anySatisfy: [ :updatedSDF1Member | member name = updatedSDF1Member name ] ]
-			]
-		else: [ self fail ]
+	self
+		withShipNamedAs: updatedSDF1 name
+		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
 { #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithSingleShipFleetToNowHaveDifferentSingleShipFleet [
 
-	| sdf1 updatedSDF1 vf1A vf1D |
+	| sdf1 updatedSDF1 |
 
-	vf1A := Spaceship named: 'VF-1A'.
-	vf1D := Spaceship named: 'VF-1D'.
-	sdf1 := Mothership named: 'SDF-1' withAll: {vf1A}.
-	updatedSDF1 := Mothership named: 'SDF-1*' withAll: {vf1D}.
+	sdf1 := Mothership named: 'SDF-1' withAll: {( Spaceship named: 'VF-1A' )}.
+	updatedSDF1 := Mothership named: 'SDF-1*' withAll: {( Spaceship named: 'VF-1D' )}.
 	ships store: sdf1.
 	ships update: sdf1 with: updatedSDF1.
 	self assert: ships findAll size equals: 1.
-	ships
-		withOneMatching: [ :ship :criteria | criteria satisfyingAll: {( ship name = updatedSDF1 name )} ]
-		do: [ :ship | 
-			self assert: ship fleet size equals: 1.
-			ship fleet
-				do:
-					[ :member | updatedSDF1 fleet anySatisfy: [ :updatedSDF1Member | member name = updatedSDF1Member name ] ]
-			]
-		else: [ self fail ]
+	self
+		withShipNamedAs: updatedSDF1 name
+		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
 { #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithSingleShipFleetToNowHaveEmptyFleet [
 
-	| sdf1 updatedSDF1 vf1A |
+	| sdf1 updatedSDF1 |
 
-	vf1A := Spaceship named: 'VF-1A'.
-	sdf1 := Mothership named: 'SDF-1' withAll: {vf1A}.
+	sdf1 := Mothership named: 'SDF-1' withAll: {( Spaceship named: 'VF-1A' )}.
 	updatedSDF1 := Mothership named: 'SDF-1*' withAll: {}.
 	ships store: sdf1.
 	ships update: sdf1 with: updatedSDF1.
 	self assert: ships findAll size equals: 1.
-	ships
-		withOneMatching: [ :ship :criteria | criteria satisfyingAll: {( ship name = updatedSDF1 name )} ]
-		do: [ :ship | self assert: ship fleet isEmpty ]
-		else: [ self fail ]
+	self
+		withShipNamedAs: updatedSDF1 name
+		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
 { #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithSingleShipFleetToNowHaveMultipleShipFleetWhichNoLongerIncludesTheOriginalShip [
 
-	| sdf1 updatedSDF1 vf1A vf1D vf1J vf1S |
+	| sdf1 updatedSDF1 |
 
-	vf1A := Spaceship named: 'VF-1A'.
-	vf1D := Spaceship named: 'VF-1D'.
-	vf1J := Spaceship named: 'VF-1J'.
-	vf1S := Spaceship named: 'VF-1S'.
-	sdf1 := Mothership named: 'SDF-1' withAll: {vf1A}.
+	sdf1 := Mothership named: 'SDF-1' withAll: {( Spaceship named: 'VF-1A' )}.
 	updatedSDF1 := Mothership
 		named: 'SDF-1*'
 		withAll:
-			{vf1D.
-			vf1J.
-			vf1S}.
+			{( Spaceship named: 'VF-1D' ).
+			( Spaceship named: 'VF-1J' ).
+			( Spaceship named: 'VF-1S' )}.
 	ships store: sdf1.
 	ships update: sdf1 with: updatedSDF1.
 	self assert: ships findAll size equals: 1.
-	ships
-		withOneMatching: [ :ship :criteria | criteria satisfyingAll: {( ship name = updatedSDF1 name )} ]
-		do: [ :ship | 
-			self assert: ship fleet size equals: 3.
-			ship fleet
-				do:
-					[ :member | updatedSDF1 fleet anySatisfy: [ :updatedSDF1Member | member name = updatedSDF1Member name ] ]
-			]
-		else: [ self fail ]
+	self
+		withShipNamedAs: updatedSDF1 name
+		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
 { #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithSingleShipFleetToNowHaveMultipleShipFleetWhichStillIncludesTheOriginalShip [
 
-	| sdf1 updatedSDF1 vf1A vf1D vf1J vf1S |
+	| sdf1 updatedSDF1 |
 
-	vf1A := Spaceship named: 'VF-1A'.
-	vf1D := Spaceship named: 'VF-1D'.
-	vf1J := Spaceship named: 'VF-1J'.
-	vf1S := Spaceship named: 'VF-1S'.
-	sdf1 := Mothership named: 'SDF-1' withAll: {vf1A}.
+	sdf1 := Mothership named: 'SDF-1' withAll: {( Spaceship named: 'VF-1A' )}.
 	updatedSDF1 := Mothership
 		named: 'SDF-1*'
 		withAll:
-			{vf1A.
-			vf1D.
-			vf1J.
-			vf1S}.
+			{( Spaceship named: 'VF-1A' ).
+			( Spaceship named: 'VF-1D' ).
+			( Spaceship named: 'VF-1J' ).
+			( Spaceship named: 'VF-1S' )}.
 	ships store: sdf1.
 	ships update: sdf1 with: updatedSDF1.
 	self assert: ships findAll size equals: 1.
-	ships
-		withOneMatching: [ :ship :criteria | criteria satisfyingAll: {( ship name = updatedSDF1 name )} ]
-		do: [ :ship | 
-			self assert: ship fleet size equals: 4.
-			ship fleet
-				do:
-					[ :member | updatedSDF1 fleet anySatisfy: [ :updatedSDF1Member | member name = updatedSDF1Member name ] ]
-			]
-		else: [ self fail ]
+	self
+		withShipNamedAs: updatedSDF1 name
+		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
 { #category : #tests }
@@ -549,4 +463,10 @@ PooledRDBMSRepositoryProviderTest >> testUpdateWithOutsideTransact [
 		assert:
 			( self extraterrestrials
 				findAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Stallone' ] ) isEmpty
+]
+
+{ #category : #utility }
+PooledRDBMSRepositoryProviderTest >> withShipNamedAs: aName do: aOneArgBlock [
+
+	ships withOneMatching: [ :ship | ship name = aName ] do: aOneArgBlock else: [ self fail ]
 ]
