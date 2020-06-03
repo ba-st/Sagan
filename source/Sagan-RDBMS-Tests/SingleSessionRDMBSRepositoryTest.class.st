@@ -151,7 +151,7 @@ SingleSessionRDMBSRepositoryTest >> configureExtraterrestrialMappings [
 { #category : #initialization }
 SingleSessionRDMBSRepositoryTest >> configureSpaceshipMappings [
 
-	spaceships
+	ships
 		configureMappingsIn: [ :rdbmsRepository |
 			rdbmsRepository
 				beAwareOfTableDefinedBy:
@@ -187,7 +187,7 @@ SingleSessionRDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrate
 		createRepositoryStoringObjectsOfType: Extraterrestrial
 		checkingConflictsAccordingTo: aConflictCheckingStrategy.
 	self configureExtraterrestrialMappings.
-	spaceships := provider
+	ships := provider
 		createRepositoryStoringObjectsOfType: Spaceship
 		checkingConflictsAccordingTo: aConflictCheckingStrategy.
 	self configureSpaceshipMappings.
@@ -208,9 +208,9 @@ SingleSessionRDMBSRepositoryTest >> testMoreThanOneRepository [
 	self assert: self extraterrestrials findAll size equals: 1.
 	self assertRepositoryIncludesSilvesterStallone.
 
-	spaceships store: ( Spaceship named: 'UFO 54-40' ).
-	self assert: spaceships findAll size equals: 1.
-	spaceships
+	ships store: ( Spaceship named: 'UFO 54-40' ).
+	self assert: ships findAll size equals: 1.
+	ships
 		withOneMatching: [ :spaceship | spaceship name = 'UFO 54-40' ]
 		do: [ :spaceship | self assert: spaceship name equals: 'UFO 54-40' ]
 		else: [ self fail ]

@@ -8,7 +8,7 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'extraterrestrials',
-		'spaceships'
+		'ships'
 	],
 	#category : #'Sagan-Core-Tests'
 }

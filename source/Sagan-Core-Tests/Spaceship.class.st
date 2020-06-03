@@ -1,6 +1,6 @@
 Class {
 	#name : #Spaceship,
-	#superclass : #Object,
+	#superclass : #SpaceshipBehavior,
 	#instVars : [
 		'sequentialNumber',
 		'name'
@@ -24,12 +24,6 @@ Spaceship >> initializeNamed: aName [
 Spaceship >> name [
 
 	^ name
-]
-
-{ #category : #accessing }
-Spaceship >> sequentialNumber [
-
-	^ sequentialNumber
 ]
 
 { #category : #updating }
