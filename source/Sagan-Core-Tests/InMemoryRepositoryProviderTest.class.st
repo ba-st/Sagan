@@ -21,37 +21,48 @@ InMemoryRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy
 { #category : #tests }
 InMemoryRepositoryProviderTest >> testSpaceshipQueryingForPositiveFirepower [
 
+	| solvalou solgrado zeodalley |
+
 	self setUpRepositoryWithNoConflictChecking.
 
-	ships store: ( Spaceship withoutFirepowerNamed: 'Solvalou' ).
-	ships store: ( Spaceship named: 'Solgrado' firepower: 7650 ).
-	ships store: ( Spaceship withUnlimitedFirepowerNamed: 'Zeodalley' ).
+	solvalou := Spaceship withoutFirepowerNamed: 'Solvalou'.
+	solgrado := Spaceship named: 'Solgrado' firepower: 7650.
+	zeodalley := Spaceship withUnlimitedFirepowerNamed: 'Zeodalley'.
+
+	ships store: solvalou.
+	ships store: solgrado.
+	ships store: zeodalley.
 
 	self
 		withAllSpaceshipsMatching:
 			[ :spaceship :builder | builder isUndefined: spaceship firepower otherwiseSatisfy: spaceship firepower > 0 ]
 		do: [ :spaceships | 
-			self assert: spaceships size equals: 2.
-			self assert: ( spaceships anySatisfy: [ :spaceship | spaceship name = 'Solgrado' ] ).
-			self assert: ( spaceships anySatisfy: [ :spaceship | spaceship name = 'Zeodalley' ] )
+			self
+				assertCollection: spaceships
+				hasSameElements:
+					{solgrado.
+					zeodalley}
 			]
 ]
 
 { #category : #tests }
 InMemoryRepositoryProviderTest >> testSpaceshipQueryingForZeroFirepower [
 
+	| solvalou solgrado zeodalley |
+
 	self setUpRepositoryWithNoConflictChecking.
 
-	ships store: ( Spaceship withoutFirepowerNamed: 'Solvalou' ).
-	ships store: ( Spaceship named: 'Solgrado' firepower: 7650 ).
-	ships store: ( Spaceship withUnlimitedFirepowerNamed: 'Zeodalley' ).
+	solvalou := Spaceship withoutFirepowerNamed: 'Solvalou'.
+	solgrado := Spaceship named: 'Solgrado' firepower: 7650.
+	zeodalley := Spaceship withUnlimitedFirepowerNamed: 'Zeodalley'.
+
+	ships store: solvalou.
+	ships store: solgrado.
+	ships store: zeodalley.
 
 	self
 		withAllSpaceshipsMatching: [ :spaceship :builder | builder satisfyingAny: {( spaceship firepower = 0 )} ]
-		do: [ :spaceships | 
-			self assert: spaceships size equals: 1.
-			self assert: ( spaceships anySatisfy: [ :spaceship | spaceship name = 'Solvalou' ] )
-			]
+		do: [ :spaceships | self assertCollection: spaceships hasSameElements: {solvalou} ]
 ]
 
 { #category : #utility }
