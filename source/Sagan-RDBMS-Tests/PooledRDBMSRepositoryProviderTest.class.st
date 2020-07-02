@@ -190,6 +190,19 @@ PooledRDBMSRepositoryProviderTest >> testPurgeMothershipWithSingleShipFleet [
 ]
 
 { #category : #tests }
+PooledRDBMSRepositoryProviderTest >> testResultOfUpdateWithIsTheUpdatedObject [
+
+	| sdf1 updatedSDF1 result |
+
+	sdf1 := Mothership named: 'SDF-1' withAll: {}.
+	updatedSDF1 := Mothership named: 'SDF-1*' withAll: {}.
+	ships store: sdf1.
+	result := ships update: sdf1 with: updatedSDF1.
+
+	self assert: result name equals: updatedSDF1 name
+]
+
+{ #category : #tests }
 PooledRDBMSRepositoryProviderTest >> testStoreMothershipWithEmptyFleet [
 
 	| sdf1 |
