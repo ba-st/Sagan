@@ -166,14 +166,13 @@ RDBMSRepository >> transact: aBlock [
 { #category : #management }
 RDBMSRepository >> update: aMutableDomainObject executing: aMonadycBlock [
 
-	self
+	^ self
 		transact: [ :session | 
 			| originalObject |
 
 			originalObject := session refresh: aMutableDomainObject.
 			session modify: originalObject in: [ aMonadycBlock value: originalObject ]
-			].
-	^ aMutableDomainObject
+			]
 ]
 
 { #category : #'private - management' }
