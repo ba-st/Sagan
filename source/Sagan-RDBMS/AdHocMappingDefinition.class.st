@@ -34,6 +34,30 @@ AdHocMappingDefinition class >> forAttributeNamed: anAttributeName sending: aMes
 ]
 
 { #category : #'Instance Creation' }
+AdHocMappingDefinition class >> forNullableAttributeNamed: anAttributeName
+	toMapSingleAssociationTo: aFieldName
+	on: aTableName
+	convertingFromDatabaseToSmalltalkUsing: dbToStBlock
+	fromSmalltalkToDatabaseUsing: stToDbBlock
+	consideringNullAs: aNullObject [
+
+
+	^ self
+		forAttributeNamed: anAttributeName
+		sending: #value:
+		to: [ :nullableObject | nullableObject ]
+		toMapAssociations:
+			( Array
+				with:
+					( AdHocMappingFieldAndValueAssociation
+						forNullableField: aFieldName
+						on: aTableName
+						convertingFromDatabaseToSmalltalkUsing: dbToStBlock
+						fromSmalltalkToDatabaseUsing: stToDbBlock
+						consideringNullAs: aNullObject ) )
+]
+
+{ #category : #'Instance Creation' }
 AdHocMappingDefinition class >> forProxyAttributeNamed: anAttributeName sending: aMessage to: anObjectToPrepareModel toMapAssociations: aFieldValueAssociationsCollection [
 
 	^ self

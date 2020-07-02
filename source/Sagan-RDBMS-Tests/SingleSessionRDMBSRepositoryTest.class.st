@@ -152,20 +152,22 @@ SingleSessionRDMBSRepositoryTest >> configureExtraterrestrialMappings [
 SingleSessionRDMBSRepositoryTest >> configureSpaceshipMappings [
 
 	ships
-		configureMappingsIn: [ :rdbmsRepository |
+		configureMappingsIn: [ :rdbmsRepository | 
 			rdbmsRepository
 				beAwareOfTableDefinedBy:
 					( RealTableDefinition
 						named: 'Spaceship'
 						fieldsDefinedBy:
 							{SequentialNumberFieldDefinition new.
-							( CharacterFieldDefinition named: 'name' sized: 100 )} );
+							( CharacterFieldDefinition named: 'name' sized: 100 ).
+							( DecimalFieldDefinition nullableNamed: 'firepower' )} );
 				beAwareOfClassModelDefinedBy:
 					( ClassModelDefinition
 						for: Spaceship
 						attributesDefinedBy:
 							{( BasicAttributeDefinition named: RDBMSConstants sequentialNumberAttribute ).
-							( BasicAttributeDefinition named: #name )} );
+							( BasicAttributeDefinition named: #name ).
+							( BasicAttributeDefinition named: #firepower )} );
 				beAwareOfDescriptorDefinedBy:
 					( ConcreteDescriptorDefinition
 						for: Spaceship
@@ -175,7 +177,14 @@ SingleSessionRDMBSRepositoryTest >> configureSpaceshipMappings [
 							( DirectMappingDefinition
 								fromAttributeNamed: #name
 								toFieldNamed: 'name'
-								onTableNamed: 'Spaceship' )} )
+								onTableNamed: 'Spaceship' ).
+							( AdHocMappingDefinition
+								forNullableAttributeNamed: #firepower
+								toMapSingleAssociationTo: 'firepower'
+								on: 'Spaceship'
+								convertingFromDatabaseToSmalltalkUsing: [ :number | number asFloat ]
+								fromSmalltalkToDatabaseUsing: [ :number | number asScaledDecimal ]
+								consideringNullAs: Spaceship unlimitedFirepower )} )
 			]
 ]
 
@@ -214,4 +223,46 @@ SingleSessionRDMBSRepositoryTest >> testMoreThanOneRepository [
 		withOneMatching: [ :spaceship | spaceship name = 'UFO 54-40' ]
 		do: [ :spaceship | self assert: spaceship name equals: 'UFO 54-40' ]
 		else: [ self fail ]
+]
+
+{ #category : #'tests - querying' }
+SingleSessionRDMBSRepositoryTest >> testSpaceshipQueryingForPositiveFirepower [
+
+	self setUpRepositoryWithNoConflictChecking.
+
+	ships store: ( Spaceship withoutFirepowerNamed: 'Solvalou' ).
+	ships store: ( Spaceship named: 'Solgrado' firepower: 7650 ).
+	ships store: ( Spaceship withUnlimitedFirepowerNamed: 'Zeodalley' ).
+
+	self
+		withAllSpaceshipsMatching:
+			[ :spaceship :builder | builder isUndefined: spaceship firepower otherwiseSatisfy: spaceship firepower > 0 ]
+		do: [ :spaceships | 
+			self assert: spaceships size equals: 2.
+			self assert: ( spaceships anySatisfy: [ :spaceship | spaceship name = 'Solgrado' ] ).
+			self assert: ( spaceships anySatisfy: [ :spaceship | spaceship name = 'Zeodalley' ] )
+			]
+]
+
+{ #category : #'tests - querying' }
+SingleSessionRDMBSRepositoryTest >> testSpaceshipQueryingForZeroFirepower [
+
+	self setUpRepositoryWithNoConflictChecking.
+
+	ships store: ( Spaceship withoutFirepowerNamed: 'Solvalou' ).
+	ships store: ( Spaceship named: 'Solgrado' firepower: 7650 ).
+	ships store: ( Spaceship withUnlimitedFirepowerNamed: 'Zeodalley' ).
+
+	self
+		withAllSpaceshipsMatching: [ :spaceship :builder | builder satisfyingAny: {( spaceship firepower = 0 )} ]
+		do: [ :spaceships | 
+			self assert: spaceships size equals: 1.
+			self assert: ( spaceships anySatisfy: [ :spaceship | spaceship name = 'Solvalou' ] )
+			]
+]
+
+{ #category : #utility }
+SingleSessionRDMBSRepositoryTest >> withAllSpaceshipsMatching: aMatchingCriteria do: aOneArgBlock [
+
+	aOneArgBlock value: ( ships findAllMatching: aMatchingCriteria )
 ]
