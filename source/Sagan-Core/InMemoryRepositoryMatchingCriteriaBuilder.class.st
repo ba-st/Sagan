@@ -32,6 +32,15 @@ InMemoryRepositoryMatchingCriteriaBuilder >> is: anObject includedIn: aCollectio
 	^ aCollection includes: anObject
 ]
 
+{ #category : #testing }
+InMemoryRepositoryMatchingCriteriaBuilder >> isUndefined: anObject otherwiseSatisfy: aBooleanExpression [
+
+	"It is assumed anObject will always be defined when in memory.
+	 By defined we refer to any object except nil."
+
+	^ aBooleanExpression
+]
+
 { #category : #'boolean operations' }
 InMemoryRepositoryMatchingCriteriaBuilder >> satisfying: aBoolean and: aBlock [
 

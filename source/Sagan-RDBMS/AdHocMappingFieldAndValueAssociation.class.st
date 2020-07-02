@@ -23,6 +23,23 @@ AdHocMappingFieldAndValueAssociation class >> forDecimalRelating: anAccessorMess
 ]
 
 { #category : #'Instance Creation' }
+AdHocMappingFieldAndValueAssociation class >> forNullableField: aFieldName on: aTableName convertingFromDatabaseToSmalltalkUsing: dbToStBlock fromSmalltalkToDatabaseUsing: stToDbBlock consideringNullAs: aNullObject [
+
+	^ self
+		relating: #yourself
+		to: aFieldName
+		on: aTableName
+		convertingFromDatabaseToSmalltalkUsing: [ :nullableObject | nullableObject ifNil: [ aNullObject ] ifNotNil: dbToStBlock ]
+		fromSmalltalkToDatabaseUsing: [ :nullableObject | 
+			nullableObject
+				ifNotNil: [ nullableObject = aNullObject
+						ifTrue: [ nil ]
+						ifFalse: [ stToDbBlock value: nullableObject ]
+					]
+			]
+]
+
+{ #category : #'Instance Creation' }
 AdHocMappingFieldAndValueAssociation class >> relating: anAccessorMessage to: aFieldName on: aTableName [
 
 	^ self

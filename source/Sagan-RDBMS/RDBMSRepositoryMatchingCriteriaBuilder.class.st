@@ -33,6 +33,12 @@ RDBMSRepositoryMatchingCriteriaBuilder >> is: anObject includedIn: aCollection [
 ]
 
 { #category : #testing }
+RDBMSRepositoryMatchingCriteriaBuilder >> isUndefined: anObject otherwiseSatisfy: aBooleanExpression [
+
+	^ self satisfying: anObject isNIL or: aBooleanExpression
+]
+
+{ #category : #testing }
 RDBMSRepositoryMatchingCriteriaBuilder >> satisfying: aBooleanExpression and: aBlock [
 
 	^ aBooleanExpression AND: aBlock value
