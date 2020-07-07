@@ -21,6 +21,7 @@ elif  [[ "$RDBMS" = PostgreSQL* ]]; then
     -e POSTGRES_DB=test \
     postgres:$DOCKER_IMAGE_VERSION
 elif [ "$RDBMS" = "SQLite3" ]; then
-  sudo apt-get install sqlite3
+  sudo apt-get --assume-yes --no-install-recommends install sqlite3
   sqlite3 -version
+  ln -s /usr/lib/x86_64-linux-gnu/libsqlite3.so.0 libsqlite3.so  
 fi;
