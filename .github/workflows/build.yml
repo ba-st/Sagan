@@ -15,7 +15,7 @@ jobs:
     name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }}
     steps:
       - uses: actions/checkout@v2
-      - uses: ba-st-actions/setup-smalltalkCI@v1.0.0
+      - uses: ba-st-actions/setup-smalltalkCI@v1
         with:
           smalltalk-version: ${{ matrix.smalltalk }}
       - name: Install RDBMS
