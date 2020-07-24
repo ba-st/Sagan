@@ -1,4 +1,4 @@
-name: MySQL Integration Tests
+name: MariaDB Integration Tests
 
 on: [push,pull_request]
 
@@ -9,15 +9,15 @@ jobs:
       fail-fast: false
       matrix:
         smalltalk: [ Pharo64-8.0, Pharo64-7.0 ]
-        rdbms: [ MySQLv5.5, MySQLv5.6, MySQLv5.7 ]
+        rdbms: [ MariaDBv10.1, MariaDBv10.2, MariaDBv10.3, MariaDBv10.4 ]
     name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }}
     steps:
       - uses: actions/checkout@v2
       - uses: ba-st-actions/setup-smalltalkCI@v1
         with:
           smalltalk-version: ${{ matrix.smalltalk }}
-      - name: Set up MySQL/MariaDB
-        run: ./scripts/setup-MySQL.sh
+      - name: Set up MariaDB
+        run: ./scripts/setup-MariaDB.sh
         env:
           RDBMS: ${{ matrix.rdbms }}
       - name: Load Image and Run Tests
