@@ -13,15 +13,4 @@ elif  [[ "$RDBMS" = MySQL* ]]; then
       -e MYSQL_ROOT_HOST=% \
       -e MYSQL_DATABASE=test \
       mysql/mysql-server:$DOCKER_IMAGE_VERSION
-elif  [[ "$RDBMS" = PostgreSQL* ]]; then
-  readonly DOCKER_IMAGE_VERSION=$(echo $RDBMS | cut --complement -c -11)
-  docker run -d -p 127.0.0.1:5432:5432 \
-    -e POSTGRES_PASSWORD=secret \
-    -e POSTGRES_USER=postgres \
-    -e POSTGRES_DB=test \
-    postgres:$DOCKER_IMAGE_VERSION
-elif [ "$RDBMS" = "SQLite3" ]; then
-  sudo apt-get --assume-yes --no-install-recommends install sqlite3
-  sqlite3 -version
-  ln -s /usr/lib/x86_64-linux-gnu/libsqlite3.so.0 libsqlite3.so  
 fi;

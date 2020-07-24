@@ -13,7 +13,9 @@
 </p>
 
 [![GitHub release](https://img.shields.io/github/release/ba-st/Sagan.svg)](https://github.com/ba-st/Sagan/releases/latest)
-[![Build Status](https://github.com/ba-st/Sagan/workflows/Build/badge.svg?branch=release-candidate)](https://github.com/ba-st/Sagan/actions?query=workflow%3ABuild)
+[![SQLite3 Status](https://github.com/ba-st/Sagan/workflows/SQLite3%20Integration%20Tests/badge.svg?branch=release-candidate)](https://github.com/ba-st/Sagan/actions?query=workflow%3ASQLite3%20Integration%20Tests)
+[![PostgreSQL Status](https://github.com/ba-st/Sagan/workflows/PostgreSQL%20Integration%20Tests/badge.svg?branch=release-candidate)](https://github.com/ba-st/Sagan/actions?query=workflow%3APostgreSQL%20Integration%20Tests)
+[![MySQL/MariaDB Status](https://github.com/ba-st/Sagan/workflows/MySQL%20Integration%20Tests/badge.svg?branch=release-candidate)](https://github.com/ba-st/Sagan/actions?query=workflow%3AMySQL%20Integration%20Tests)
 [![Coverage Status](https://codecov.io/github/ba-st/Sagan/coverage.svg?branch=release-candidate)](https://codecov.io/gh/ba-st/Sagan/branch/release-candidate)
 [![Pharo 7.0](https://img.shields.io/badge/Pharo-7.0-informational)](https://pharo.org)
 [![Pharo 8.0](https://img.shields.io/badge/Pharo-8.0-informational)](https://pharo.org)
