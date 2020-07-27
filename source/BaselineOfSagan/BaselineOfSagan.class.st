@@ -10,7 +10,9 @@ BaselineOfSagan >> baseline: spec [
 	<baseline>
 	spec
 		for: #pharo
-		do: [ self
+		do: [ 
+			spec preLoadDoIt: #lockDependenciesIn:.
+			self
 				setUpDependencies: spec;
 				baselineSagan: spec.
 			spec
@@ -50,6 +52,16 @@ BaselineOfSagan >> baselineSagan: spec [
 		group: 'Tests' with: 'Sagan-RDBMS-Tests'
 ]
 
+{ #category : #initialization }
+BaselineOfSagan >> lockDependenciesIn: spec [
+
+	Metacello new
+		baseline: 'Glorp';
+		repository: 'github://ba-st-dependencies/Glorp:release-candidate/';
+		onLock: [ :lock | lock honor ];
+		lock
+]
+
 { #category : #accessing }
 BaselineOfSagan >> projectClass [
 
@@ -74,10 +86,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
 		baseline: 'Glorp'
-			with: [ spec
-				repository: 'github://ba-st-dependencies/Glorp:release-candidate/';
-				lock
-			];
+			with: [ spec repository: 'github://ba-st-dependencies/Glorp:release-candidate/' ];
 		project: 'Glorp-Core' copyFrom: 'Glorp' with: [ spec loads: 'Core' ].
 
 	spec baseline: 'GarageGlorp' with: [ spec repository: 'github://pharo-rdbms/glorp-garage:master/' ].
