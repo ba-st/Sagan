@@ -93,7 +93,7 @@ SingleSessionRDMBSRepositoryTest class >> postgreSQLLogin [
 SingleSessionRDMBSRepositoryTest class >> sqlite3Login [
 
 	<ignoreForCoverage>
-	PharoDatabaseAccessor DefaultDriver: GlorpSQLite3Driver.
+	DatabaseAccessor classForThisPlatform DefaultDriver: SQLite3Driver.
 	^ Login new
 		database: UDBCSQLite3Platform new;
 		username: '';
