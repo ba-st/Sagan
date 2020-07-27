@@ -37,7 +37,7 @@ BaselineOfSagan >> baselineSagan: spec [
 		group: 'Tests' with: 'Sagan-Core-Tests'.
 
 	spec
-		package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp' 'Core' 'ObjectPool-Core') ];
+		package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp-Core' 'Core' 'ObjectPool-Core') ];
 		group: 'RDBMS' with: #('Sagan-RDBMS').
 
 	spec group: 'PostgreSQL' with: #('RDBMS' 'P3').
@@ -68,11 +68,18 @@ BaselineOfSagan >> setUpDependencies: spec [
 		project: 'ObjectPool-Core' copyFrom: 'ObjectPool' with: [ spec loads: 'Core' ].
 
 	spec
-		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v5/source' ];
+		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v6/source' ];
 		project: 'Buoy-SUnit' copyFrom: 'Buoy' with: [ spec loads: 'Dependent-SUnit-Extensions' ];
 		project: 'Buoy-Tools' copyFrom: 'Buoy' with: [ spec loads: 'Tools' ].
 
-	spec baseline: 'Glorp' with: [ spec repository: 'github://pharo-rdbms/glorp:master/' ].
+	spec
+		baseline: 'Glorp'
+			with: [ spec
+				repository: 'github://ba-st-dependencies/Glorp:release-candidate/';
+				lock
+			];
+		project: 'Glorp-Core' copyFrom: 'Glorp' with: [ spec loads: 'Core' ].
+
 	spec baseline: 'GarageGlorp' with: [ spec repository: 'github://pharo-rdbms/glorp-garage:master/' ].
 
 	spec
