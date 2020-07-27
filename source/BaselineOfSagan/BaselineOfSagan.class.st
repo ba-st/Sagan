@@ -14,7 +14,7 @@ BaselineOfSagan >> baseline: spec [
 			spec preLoadDoIt: #lockDependenciesIn:.
 			self
 				setUpDependencies: spec;
-				baselineSagan: spec.
+				setUpPackages: spec.
 			spec
 				group: 'Deployment' with: #('Core' 'RDBMS');
 				group: 'CI' with: 'Tests';
@@ -24,32 +24,9 @@ BaselineOfSagan >> baseline: spec [
 ]
 
 { #category : #initialization }
-BaselineOfSagan >> baselineSagan: spec [
+BaselineOfSagan >> glorpRepository [
 
-	spec
-		package: 'Sagan-Core' with: [ spec requires: 'Kepler-Core' ];
-		group: 'Core' with: 'Sagan-Core'.
-
-	spec
-		package: 'Sagan-Kepler' with: [ spec requires: 'Kepler-Core' ];
-		group: 'Core' with: 'Sagan-Kepler'.
-
-	spec
-		package: 'Sagan-Core-Tests' with: [ spec requires: #('Sagan-Core' 'Buoy-SUnit') ];
-		group: 'Tests' with: 'Sagan-Core-Tests'.
-
-	spec
-		package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp-Core' 'Core' 'ObjectPool-Core') ];
-		group: 'RDBMS' with: #('Sagan-RDBMS').
-
-	spec group: 'PostgreSQL' with: #('RDBMS' 'P3').
-	spec group: 'MySQL' with: #('RDBMS' 'MySQL-Driver' 'GarageGlorp').
-	spec group: 'SQlite' with: #('RDBMS' 'GlorpSQLite').
-
-	spec
-		package: 'Sagan-RDBMS-Tests'
-			with: [ spec requires: #('PostgreSQL' 'MySQL' 'SQlite' 'Sagan-Core-Tests') ];
-		group: 'Tests' with: 'Sagan-RDBMS-Tests'
+	^ 'github://ba-st-dependencies/Glorp:release-candidate/'
 ]
 
 { #category : #initialization }
@@ -57,7 +34,7 @@ BaselineOfSagan >> lockDependenciesIn: spec [
 
 	Metacello new
 		baseline: 'Glorp';
-		repository: 'github://ba-st-dependencies/Glorp:release-candidate/';
+		repository: self glorpRepository;
 		onLock: [ :lock | lock honor ];
 		lock
 ]
@@ -85,8 +62,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 		project: 'Buoy-Tools' copyFrom: 'Buoy' with: [ spec loads: 'Tools' ].
 
 	spec
-		baseline: 'Glorp'
-			with: [ spec repository: 'github://ba-st-dependencies/Glorp:release-candidate/' ];
+		baseline: 'Glorp' with: [ spec repository: self glorpRepository ];
 		project: 'Glorp-Core' copyFrom: 'Glorp' with: [ spec loads: 'Core' ].
 
 	spec baseline: 'GarageGlorp' with: [ spec repository: 'github://pharo-rdbms/glorp-garage:master/' ].
@@ -103,5 +79,37 @@ BaselineOfSagan >> setUpDependencies: spec [
 		baseline: 'Garage' with: [ spec repository: 'github://pharo-rdbms/garage:master' ];
 		project: 'MySQL-Driver' copyFrom: 'Garage' with: [ spec loads: #('mysql') ].
 
-	spec baseline: 'GlorpSQLite' with: [ spec repository: 'github://pharo-rdbms/glorp-sqlite3:master' ]
+	spec
+		baseline: 'SQLite3'
+			with: [ spec repository: 'github://ba-st-dependencies/Pharo-SQLite3:release-candidate' ];
+		project: 'Glorp SQLite3' copyFrom: 'SQLite3' with: [ spec loads: 'glorp' ]
+]
+
+{ #category : #initialization }
+BaselineOfSagan >> setUpPackages: spec [
+
+	spec
+		package: 'Sagan-Core' with: [ spec requires: 'Kepler-Core' ];
+		group: 'Core' with: 'Sagan-Core'.
+
+	spec
+		package: 'Sagan-Kepler' with: [ spec requires: 'Kepler-Core' ];
+		group: 'Core' with: 'Sagan-Kepler'.
+
+	spec
+		package: 'Sagan-Core-Tests' with: [ spec requires: #('Sagan-Core' 'Buoy-SUnit') ];
+		group: 'Tests' with: 'Sagan-Core-Tests'.
+
+	spec
+		package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp-Core' 'Core' 'ObjectPool-Core') ];
+		group: 'RDBMS' with: #('Sagan-RDBMS').
+
+	spec group: 'PostgreSQL' with: #('RDBMS' 'P3').
+	spec group: 'MySQL' with: #('RDBMS' 'MySQL-Driver' 'GarageGlorp').
+	spec group: 'SQlite' with: #('RDBMS' 'Glorp SQLite3').
+
+	spec
+		package: 'Sagan-RDBMS-Tests'
+			with: [ spec requires: #('PostgreSQL' 'MySQL' 'SQlite' 'Sagan-Core-Tests') ];
+		group: 'Tests' with: 'Sagan-RDBMS-Tests'
 ]
