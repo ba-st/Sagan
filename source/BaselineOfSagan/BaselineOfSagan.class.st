@@ -36,6 +36,7 @@ BaselineOfSagan >> lockDependenciesIn: spec [
 		baseline: 'Glorp';
 		repository: self glorpRepository;
 		onLock: [ :lock | lock honor ];
+		onConflictUseLoaded;
 		lock
 ]
 
@@ -49,7 +50,7 @@ BaselineOfSagan >> projectClass [
 BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
-		baseline: 'Kepler' with: [ spec repository: 'github://ba-st/Kepler:v4/source' ];
+		baseline: 'Kepler' with: [ spec repository: 'github://ba-st/Kepler:v5/source' ];
 		project: 'Kepler-Core' copyFrom: 'Kepler' with: [ spec loads: 'Core' ].
 
 	spec
@@ -106,10 +107,10 @@ BaselineOfSagan >> setUpPackages: spec [
 
 	spec group: 'PostgreSQL' with: #('RDBMS' 'P3').
 	spec group: 'MySQL' with: #('RDBMS' 'MySQL-Driver' 'GarageGlorp').
-	spec group: 'SQlite' with: #('RDBMS' 'Glorp SQLite3').
+	spec group: 'SQLite' with: #('RDBMS' 'Glorp SQLite3').
 
 	spec
 		package: 'Sagan-RDBMS-Tests'
-			with: [ spec requires: #('PostgreSQL' 'MySQL' 'SQlite' 'Sagan-Core-Tests') ];
+			with: [ spec requires: #('PostgreSQL' 'MySQL' 'SQLite' 'Sagan-Core-Tests') ];
 		group: 'Tests' with: 'Sagan-RDBMS-Tests'
 ]
