@@ -54,7 +54,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 		project: 'Kepler-Core' copyFrom: 'Kepler' with: [ spec loads: 'Core' ].
 
 	spec
-		baseline: 'ObjectPool' with: [ spec repository: 'github://pharo-ide/ObjectPool:v1.0.0' ];
+		baseline: 'ObjectPool' with: [ spec repository: 'github://pharo-ide/ObjectPool:v1.0.1' ];
 		project: 'ObjectPool-Core' copyFrom: 'ObjectPool' with: [ spec loads: 'Core' ].
 
 	spec
