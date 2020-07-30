@@ -4,7 +4,8 @@ SmalltalkCISpec {
       #baseline : 'Sagan',
       #directory : 'source',
       #load : [ 'CI' ],
-      #platforms : [  #pharo ]
+      #platforms : [  #pharo ],
+      #onConflict : #useLoaded
     }
   ],
   #testing : {
