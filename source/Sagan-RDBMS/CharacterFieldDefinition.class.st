@@ -24,7 +24,13 @@ CharacterFieldDefinition class >> named: aString sized: aSmallInteger applyingAf
 { #category : #'Instance Creation' }
 CharacterFieldDefinition class >> named: aString sized: aSmallInteger withDefaultValue: aValue [
 
-	^ self named: aString sized: aSmallInteger applyingAfterDefinition: ( self makeFieldHaveDefaultValue: aValue )
+	^ self
+		named: aString
+		sized: aSmallInteger
+		applyingAfterDefinition: [ :field :system | 
+			( self makeFieldHaveDefaultValue: aValue ) value: field value: system.
+			self makeFieldNotNullable value: field value: system
+			]
 ]
 
 { #category : #'Instance Creation' }
