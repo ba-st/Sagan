@@ -13,7 +13,7 @@ Class {
 OneToOneMappingWithTranslationDefinition class >> exclusiveForAttributeNamed: anAttributeName
 	translatingFieldsUsing: aTableFieldTranslationDefinition [
 
-
+	<ignoreForCoverage>
 	^ self
 		forAttributeNamed: anAttributeName
 		translatingFieldsUsingAll: ( Array with: aTableFieldTranslationDefinition )
@@ -24,7 +24,7 @@ OneToOneMappingWithTranslationDefinition class >> exclusiveForAttributeNamed: an
 OneToOneMappingWithTranslationDefinition class >> exclusiveForAttributeNamed: anAttributeName
 	translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection [
 
-
+	<ignoreForCoverage>
 	^ self
 		forAttributeNamed: anAttributeName
 		translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection
@@ -34,6 +34,7 @@ OneToOneMappingWithTranslationDefinition class >> exclusiveForAttributeNamed: an
 { #category : #'Instance Creation' }
 OneToOneMappingWithTranslationDefinition class >> forAttributeNamed: anAttributeName translatingFieldsUsing: aTableFieldTranslationDefinition [
 
+	<ignoreForCoverage>
 	^ self
 		forAttributeNamed: anAttributeName
 		translatingFieldsUsingAll: ( Array with: aTableFieldTranslationDefinition )
@@ -42,6 +43,7 @@ OneToOneMappingWithTranslationDefinition class >> forAttributeNamed: anAttribute
 { #category : #'Instance Creation' }
 OneToOneMappingWithTranslationDefinition class >> forAttributeNamed: anAttributeName translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection [
 
+	<ignoreForCoverage>
 	^ self
 		forAttributeNamed: anAttributeName
 		translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection
@@ -50,6 +52,8 @@ OneToOneMappingWithTranslationDefinition class >> forAttributeNamed: anAttribute
 
 { #category : #'Instance Creation' }
 OneToOneMappingWithTranslationDefinition class >> forAttributeNamed: anAttributeName translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection applyingAfterDefinition: aTwoArgBlock [ 
+	
+	<ignoreForCoverage>
 	^self new
 	initializeForAttributeNamed: anAttributeName
 	translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection
@@ -59,6 +63,7 @@ OneToOneMappingWithTranslationDefinition class >> forAttributeNamed: anAttribute
 { #category : #'Instance Creation' }
 OneToOneMappingWithTranslationDefinition class >> forPseudoAttributeNamed: anAttributeName ofType: aModelClass translatingFieldsUsing: aTableFieldTranslationDefinition [
 
+	<ignoreForCoverage>
 	^ self
 		forPseudoAttributeNamed: anAttributeName
 		ofType: aModelClass
@@ -68,6 +73,7 @@ OneToOneMappingWithTranslationDefinition class >> forPseudoAttributeNamed: anAtt
 { #category : #'Instance Creation' }
 OneToOneMappingWithTranslationDefinition class >> forPseudoAttributeNamed: anAttributeName ofType: aModelClass translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection [
 
+	<ignoreForCoverage>
 	^ self
 		forAttributeNamed: anAttributeName
 		translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection
@@ -82,7 +88,7 @@ OneToOneMappingWithTranslationDefinition class >> forPseudoAttributeNamed: anAtt
 OneToOneMappingWithTranslationDefinition class >> forReadOnlyAttributeNamed: anAttributeName
 	translatingFieldsUsing: aTableFieldTranslationDefinition [
 
-
+	<ignoreForCoverage>
 	^ self
 		forAttributeNamed: anAttributeName
 		translatingFieldsUsingAll: ( Array with: aTableFieldTranslationDefinition )
@@ -93,17 +99,17 @@ OneToOneMappingWithTranslationDefinition class >> forReadOnlyAttributeNamed: anA
 OneToOneMappingWithTranslationDefinition class >> forReadOnlyAttributeNamed: anAttributeName
 	translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection [
 
-
+	<ignoreForCoverage>
 	^ self
 		forAttributeNamed: anAttributeName
 		translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection
 		applyingAfterDefinition: self makeMappingReadOnly
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'Instance Creation' }
 OneToOneMappingWithTranslationDefinition class >> forReadOnlyNonProxyAttributeNamed: anAttributeName
 	translatingFieldsUsing: aTableFieldTranslationDefinition [
-
+	<ignoreForCoverage>
 	^self
 		forAttributeNamed: anAttributeName
 		translatingFieldsUsingAll: (Array with: aTableFieldTranslationDefinition)
@@ -114,7 +120,7 @@ OneToOneMappingWithTranslationDefinition class >> forReadOnlyNonProxyAttributeNa
 
 { #category : #Defining }
 OneToOneMappingWithTranslationDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem [
-
+	<ignoreForCoverage>
 	| mapping |
 
 	mapping := aDescriptorSystem
@@ -130,7 +136,7 @@ OneToOneMappingWithTranslationDefinition >> initializeForAttributeNamed: anAttri
 	translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection
 	applyingAfterDefinition: aTwoArgBlock [
 
-
+	<ignoreForCoverage>
 	basicDefinition := OneToOneMappingDefinition forAttributeNamed: anAttributeName.
 	translationDefinitions := aTableFieldTranslationDefinitionCollection.
 	postDefinitionAction := aTwoArgBlock
@@ -139,6 +145,7 @@ OneToOneMappingWithTranslationDefinition >> initializeForAttributeNamed: anAttri
 { #category : #Printing }
 OneToOneMappingWithTranslationDefinition >> printOn: aStream [
 
+	<ignoreForCoverage>
 	aStream
 		print: basicDefinition;
 		space;
