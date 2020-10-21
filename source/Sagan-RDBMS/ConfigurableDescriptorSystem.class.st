@@ -274,6 +274,16 @@ ConfigurableDescriptorSystem >> defineConstantMappingOn: aDescriptor fromAttribu
 ]
 
 { #category : #'defining fields' }
+ConfigurableDescriptorSystem >> defineDateFieldOn: aDatabaseTable named: fieldName [
+
+	| field |
+
+	field := DatabaseField named: fieldName type: platform date.
+	aDatabaseTable addField: field.
+	^ field
+]
+
+{ #category : #'defining fields' }
 ConfigurableDescriptorSystem >> defineDecimalFieldOn: aDatabaseTable named: fieldName withPrecision: precision andScale: scale [
 
 	| field |

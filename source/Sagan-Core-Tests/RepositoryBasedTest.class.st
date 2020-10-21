@@ -43,13 +43,13 @@ RepositoryBasedTest >> assertTheOnlyOneInTheRepositoryIsSilvesterStallone [
 { #category : #'private - extraterrestrials' }
 RepositoryBasedTest >> ellaTravolta [
 
-	^ self extraterrestrialNamedFirst: 'Ella' last: 'Travolta'
+	^ self extraterrestrialNamedFirst: 'Ella' last: 'Travolta' bornOn: '2000-04-03' asDate
 ]
 
 { #category : #'private - extraterrestrials' }
-RepositoryBasedTest >> extraterrestrialNamedFirst: aFirstName last: aLastName [
+RepositoryBasedTest >> extraterrestrialNamedFirst: aFirstName last: aLastName bornOn: aDate [
 
-	^ Extraterrestrial namedFirst: aFirstName last: aLastName
+	^ Extraterrestrial namedFirst: aFirstName last: aLastName bornOn: aDate
 ]
 
 { #category : #'private - accessing' }
@@ -62,13 +62,13 @@ RepositoryBasedTest >> extraterrestrials [
 { #category : #'private - extraterrestrials' }
 RepositoryBasedTest >> johnLock [
 
-	^ self extraterrestrialNamedFirst: 'John' last: 'Lock'
+	^ self extraterrestrialNamedFirst: 'John' last: 'Lock' bornOn: '1632-08-29' asDate
 ]
 
 { #category : #'private - extraterrestrials' }
 RepositoryBasedTest >> johnTravolta [
 
-	^ self extraterrestrialNamedFirst: 'John' last: 'Travolta'
+	^ self extraterrestrialNamedFirst: 'John' last: 'Travolta' bornOn: '1954-02-18' asDate
 ]
 
 { #category : #initialization }
@@ -116,19 +116,19 @@ RepositoryBasedTest >> setUpRepositoryWithNoConflictChecking [
 { #category : #'private - extraterrestrials' }
 RepositoryBasedTest >> silvesterMcCoy [
 
-	^ self extraterrestrialNamedFirst: 'Silvester' last: 'McCoy'
+	^ self extraterrestrialNamedFirst: 'Silvester' last: 'McCoy' bornOn: '1943-08-20' asDate
 ]
 
 { #category : #'private - extraterrestrials' }
 RepositoryBasedTest >> silvesterStallone [
 
-	^ self extraterrestrialNamedFirst: 'Silvester' last: 'Stallone'
+	^ self extraterrestrialNamedFirst: 'Silvester' last: 'Stallone' bornOn: '1946-07-06' asDate
 ]
 
 { #category : #'private - extraterrestrials' }
 RepositoryBasedTest >> sistineStallone [
 
-	^ self extraterrestrialNamedFirst: 'Sistine' last: 'Stallone'
+	^ self extraterrestrialNamedFirst: 'Sistine' last: 'Stallone' bornOn: '1998-06-27' asDate
 ]
 
 { #category : #'tests - querying' }
@@ -140,7 +140,8 @@ RepositoryBasedTest >> testCountMatching [
 
 	self
 		assert: ( self extraterrestrials countMatching: [ :person | person lastName = 'Stallone' ] ) equals: 2;
-		assert: ( self extraterrestrials countMatching: [ :person | person firstName = 'Silvester' ] ) equals: 1
+		assert: ( self extraterrestrials countMatching: [ :person | person firstName = 'Silvester' ] ) equals: 1; 
+		assert: ( self extraterrestrials countMatching: [ :person | person birthDate = '1998-06-27' asDate ] ) equals: 1
 ]
 
 { #category : #'tests - querying' }
@@ -195,6 +196,31 @@ RepositoryBasedTest >> testFindAllMatchingSortedBy [
 		assert: sorted second firstName equals: 'John';
 		assert: sorted last lastName equals: 'Stallone';
 		assert: sorted last firstName equals: 'Silvester'
+]
+
+{ #category : #'tests - querying' }
+RepositoryBasedTest >> testFindAllMatchingSortedByBirthDate [
+
+	| sorted |
+
+	self extraterrestrials
+		store: self silvesterStallone;
+		store: self silvesterMcCoy;
+		store: self johnTravolta;
+		store: self johnLock.
+
+	sorted := self extraterrestrials
+		findAllMatching: [ :extraterrestrial :criteria | criteria does: extraterrestrial lastName asUppercase includeSubstring: 'L' ]
+		sortedBy: #birthDate ascending.
+
+	self
+		assert: sorted size equals: 3;
+		assert: sorted first lastName equals: 'Lock';
+		assert: sorted first firstName equals: 'John';
+		assert: sorted second lastName equals: 'Stallone';
+		assert: sorted second firstName equals: 'Silvester';
+		assert: sorted last lastName equals: 'Travolta';
+		assert: sorted last firstName equals: 'John'
 ]
 
 { #category : #'tests - management' }

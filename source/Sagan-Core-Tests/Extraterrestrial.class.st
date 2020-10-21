@@ -7,15 +7,22 @@ Class {
 	#instVars : [
 		'sequentialNumber',
 		'firstName',
-		'lastName'
+		'lastName',
+		'birthDate'
 	],
 	#category : #'Sagan-Core-Tests'
 }
 
 { #category : #accessing }
-Extraterrestrial class >> namedFirst: aFirstName last: aLastName [  
+Extraterrestrial class >> namedFirst: aFirstName last: aLastName bornOn: aDate [
 
-	^ self new initializeNamedFirst: aFirstName last: aLastName  
+	^ self new initializeNamedFirst: aFirstName last: aLastName bornOn: aDate
+]
+
+{ #category : #accessing }
+Extraterrestrial >> birthDate [
+
+	^ birthDate
 ]
 
 { #category : #accessing }
@@ -25,10 +32,11 @@ Extraterrestrial >> firstName [
 ]
 
 { #category : #initialization }
-Extraterrestrial >> initializeNamedFirst: aFirstName last: aLastName [
+Extraterrestrial >> initializeNamedFirst: aFirstName last: aLastName bornOn: aDate [
 
 	firstName := aFirstName.
-	lastName := aLastName
+	lastName := aLastName. 
+	birthDate := aDate
 ]
 
 { #category : #accessing }
@@ -47,5 +55,6 @@ Extraterrestrial >> sequentialNumber [
 Extraterrestrial >> synchronizeWith: anExtraterrestial [
 
 	firstName := anExtraterrestial firstName.
-	lastName := anExtraterrestial lastName
+	lastName := anExtraterrestial lastName.
+	birthDate := anExtraterrestial birthDate
 ]

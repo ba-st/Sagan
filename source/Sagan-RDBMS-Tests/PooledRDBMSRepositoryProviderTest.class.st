@@ -22,7 +22,7 @@ PooledRDBMSRepositoryProviderTest >> assertFleetOf: aMothership isEquivalentToFl
 PooledRDBMSRepositoryProviderTest >> configureExtraterrestrialMappings [
 
 	extraterrestrials
-		configureMappingsIn: [ :rdbmsRepository |
+		configureMappingsIn: [ :rdbmsRepository | 
 			rdbmsRepository
 				beAwareOfTableDefinedBy:
 					( RealTableDefinition
@@ -30,14 +30,16 @@ PooledRDBMSRepositoryProviderTest >> configureExtraterrestrialMappings [
 						fieldsDefinedBy:
 							{SequentialNumberFieldDefinition new.
 							( CharacterFieldDefinition named: 'first_name' sized: 100 ).
-							( CharacterFieldDefinition named: 'last_name' sized: 100 )} );
+							( CharacterFieldDefinition named: 'last_name' sized: 100 ).
+							( DateFieldDefinition named: 'birth_date' )} );
 				beAwareOfClassModelDefinedBy:
 					( ClassModelDefinition
 						for: Extraterrestrial
 						attributesDefinedBy:
 							{( BasicAttributeDefinition named: RDBMSConstants sequentialNumberAttribute ).
 							( BasicAttributeDefinition named: #firstName ).
-							( BasicAttributeDefinition named: #lastName )} );
+							( BasicAttributeDefinition named: #lastName ).
+							( BasicAttributeDefinition named: #birthDate )} );
 				beAwareOfDescriptorDefinedBy:
 					( ConcreteDescriptorDefinition
 						for: Extraterrestrial
@@ -51,6 +53,10 @@ PooledRDBMSRepositoryProviderTest >> configureExtraterrestrialMappings [
 							( DirectMappingDefinition
 								fromAttributeNamed: #lastName
 								toFieldNamed: 'last_name'
+								onTableNamed: 'Extraterrestrial' ).
+							( DirectMappingDefinition
+								fromAttributeNamed: #birthDate
+								toFieldNamed: 'birth_date'
 								onTableNamed: 'Extraterrestrial' )} )
 			]
 ]
