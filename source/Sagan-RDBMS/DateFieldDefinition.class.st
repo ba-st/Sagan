@@ -50,7 +50,7 @@ DateFieldDefinition >> printOn: aStream [
 		print: fieldName;
 		space;
 		nextPut: $(;
-		nextPutAll: 'timestamp';
+		nextPutAll: 'date';
 		nextPut: $);
 		yourself
 ]
