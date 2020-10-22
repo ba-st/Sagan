@@ -38,6 +38,13 @@ RDBMSRepositoryProvider >> createRepositoryStoringObjectsOfType: aBusinessObject
 		workingWith: sessionProvider
 ]
 
+{ #category : #controlling }
+RDBMSRepositoryProvider >> destroyRepositories [
+
+	sessionProvider withSessionDo: [:session |
+		session dropAllTablesOnErrorDo: [:error | Error signal: error description]]
+]
+
 { #category : #initialization }
 RDBMSRepositoryProvider >> initializeObtainingSessionFrom: aSessionProvider [ 
 

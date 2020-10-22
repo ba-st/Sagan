@@ -25,6 +25,12 @@ RepositoryProviderSystem >> dependencies [
 ]
 
 { #category : #installing }
+RepositoryProviderSystem >> destroyRepositories [
+
+	repositoryProviders do: #destroyRepositories
+]
+
+{ #category : #installing }
 RepositoryProviderSystem >> implementedInterfaces [
 
 	^ #(#RepositoryProviderSystem)

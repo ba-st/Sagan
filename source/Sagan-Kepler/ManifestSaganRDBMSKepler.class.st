@@ -16,5 +16,6 @@ ManifestSaganRDBMSKepler class >> initialize [
 		declaring: #(
 			createRepositoryFor:storingObjectsOfType:checkingConflictsAccordingTo:
 			register:as:		
-			prepareForInitialPersistence)
+			prepareForInitialPersistence
+			destroyRepositores)
 ]

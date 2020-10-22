@@ -12,6 +12,12 @@ RepositoryProvider >> createRepositoryStoringObjectsOfType: aBusinessObjectClass
 ]
 
 { #category : #controlling }
+RepositoryProvider >> destroyRepositories [
+
+	self subclassResponsibility
+]
+
+{ #category : #controlling }
 RepositoryProvider >> prepareForInitialPersistence [
 
 	self subclassResponsibility
