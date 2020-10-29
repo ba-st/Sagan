@@ -13,7 +13,7 @@ jobs:
     name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }}
     steps:
       - uses: actions/checkout@v2
-      - uses: ba-st-actions/setup-smalltalkCI@v1
+      - uses: hpi-swa/setup-smalltalkCI@v1
         with:
           smalltalk-version: ${{ matrix.smalltalk }}
       - name: Set up PostgreSQL
@@ -25,9 +25,8 @@ jobs:
         timeout-minutes: 15
         env:
           RDBMS: ${{ matrix.rdbms }}
-      - run: echo "::set-env name=SCI_COVERAGE_FILE_LOCATION::${HOME}/.smalltalkCI/_builds/coveralls_results.json"
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.0.6
+        uses: codecov/codecov-action@v1
         with:
+          name: ${{matrix.rdbms}}-${{matrix.smalltalk}}
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ${{ env.SCI_COVERAGE_FILE_LOCATION }}
