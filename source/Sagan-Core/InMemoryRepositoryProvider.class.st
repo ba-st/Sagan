@@ -12,6 +12,12 @@ InMemoryRepositoryProvider >> createRepositoryStoringObjectsOfType: aBusinessObj
 ]
 
 { #category : #controlling }
+InMemoryRepositoryProvider >> destroyRepositories [
+	
+	" In memory all repositories are destroyed once the system is shut down "
+]
+
+{ #category : #controlling }
 InMemoryRepositoryProvider >> prepareForInitialPersistence [
 
 	
