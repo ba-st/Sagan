@@ -105,12 +105,14 @@ BaselineOfSagan >> setUpPackages: spec [
 		package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp-Core' 'Core' 'ObjectPool-Core') ];
 		group: 'RDBMS' with: #('Sagan-RDBMS').
 
+	spec package: 'Sagan-Kepler-Tests' with: [ spec requires: #('Sagan-Kepler') ].
+
 	spec group: 'PostgreSQL' with: #('RDBMS' 'P3').
 	spec group: 'MySQL' with: #('RDBMS' 'MySQL-Driver' 'GarageGlorp').
 	spec group: 'SQLite' with: #('RDBMS' 'Glorp SQLite3').
 
 	spec
 		package: 'Sagan-RDBMS-Tests'
-			with: [ spec requires: #('PostgreSQL' 'MySQL' 'SQLite' 'Sagan-Core-Tests') ];
+			with: [ spec requires: #('PostgreSQL' 'MySQL' 'SQLite' 'Sagan-Core-Tests' 'Sagan-Kepler-Tests') ];
 		group: 'Tests' with: 'Sagan-RDBMS-Tests'
 ]
