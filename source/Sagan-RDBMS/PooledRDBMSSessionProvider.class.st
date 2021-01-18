@@ -28,7 +28,8 @@ PooledRDBMSSessionProvider >> assertDescriptorSystemCanBeConfigured [
 { #category : #accessing }
 PooledRDBMSSessionProvider >> clearSessions [
 
-	sessionPool clear
+	sessionPool clear.
+	configurationSession reset
 ]
 
 { #category : #'private-accessing' }
@@ -60,7 +61,8 @@ PooledRDBMSSessionProvider >> createNewSession [
 PooledRDBMSSessionProvider >> deleteSessions [
 
 	sessionPool minIdleObjects: nil.
-	self clearSessions
+	self clearSessions.
+	configurationSession logout
 ]
 
 { #category : #initialization }
