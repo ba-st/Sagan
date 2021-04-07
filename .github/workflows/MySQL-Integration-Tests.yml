@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        smalltalk: [ Pharo64-9.0, Pharo64-8.0, Pharo64-7.0 ]
+        smalltalk: [ Pharo64-8.0, Pharo64-7.0 ]
         rdbms: [ MySQLv5.5, MySQLv5.6, MySQLv5.7 ]
     name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }}
     steps:
