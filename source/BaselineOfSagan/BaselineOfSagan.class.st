@@ -10,7 +10,7 @@ BaselineOfSagan >> baseline: spec [
 	<baseline>
 	spec
 		for: #pharo
-		do: [ 
+		do: [
 			spec preLoadDoIt: #lockDependenciesIn:.
 			self
 				setUpDependencies: spec;
@@ -71,7 +71,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 	spec
 		baseline: 'P3'
 			with: [ spec
-				repository: 'github://svenvc/P3:v1.2/';
+				repository: 'github://svenvc/P3:v1.3/';
 				loads: #('glorp')
 			];
 		import: 'P3'.
