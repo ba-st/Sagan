@@ -20,6 +20,7 @@
 [![Coverage Status](https://codecov.io/github/ba-st/Sagan/coverage.svg?branch=release-candidate)](https://codecov.io/gh/ba-st/Sagan/branch/release-candidate)
 [![Pharo 7.0](https://img.shields.io/badge/Pharo-7.0-informational)](https://pharo.org)
 [![Pharo 8.0](https://img.shields.io/badge/Pharo-8.0-informational)](https://pharo.org)
+[![Pharo 9.0](https://img.shields.io/badge/Pharo-9.0-informational)](https://pharo.org)
 
 > *Named in honour to [Carl Sagan](https://en.wikipedia.org/wiki/Carl_Sagan), for teaching us to stay humble against the vastness of the universe.*
 
