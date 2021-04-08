@@ -70,11 +70,8 @@ BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
 		baseline: 'P3'
-			with: [ spec
-				repository: 'github://svenvc/P3:v1.3/';
-				loads: #('glorp')
-			];
-		import: 'P3'.
+			with: [ spec repository: 'github://ba-st-dependencies/P3:release-candidate/'];
+			project: 'Glorp P3' copyFrom: 'P3' with: [ spec loads: 'glorp' ].
 
 	spec
 		baseline: 'Garage' with: [ spec repository: 'github://pharo-rdbms/garage:master' ];
@@ -107,7 +104,7 @@ BaselineOfSagan >> setUpPackages: spec [
 
 	spec package: 'Sagan-Kepler-Tests' with: [ spec requires: #('Sagan-Kepler') ].
 
-	spec group: 'PostgreSQL' with: #('RDBMS' 'P3').
+	spec group: 'PostgreSQL' with: #('RDBMS' 'Glorp P3').
 	spec group: 'MySQL' with: #('RDBMS' 'MySQL-Driver' 'GarageGlorp').
 	spec group: 'SQLite' with: #('RDBMS' 'Glorp SQLite3').
 
