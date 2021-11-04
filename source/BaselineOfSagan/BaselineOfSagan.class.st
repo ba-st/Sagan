@@ -26,7 +26,7 @@ BaselineOfSagan >> baseline: spec [
 { #category : #initialization }
 BaselineOfSagan >> glorpRepository [
 
-	^ 'github://ba-st-dependencies/Glorp:release-candidate/'
+	^ 'github://pharo-rdbms/glorp:v9.0.1'
 ]
 
 { #category : #initialization }
@@ -66,20 +66,14 @@ BaselineOfSagan >> setUpDependencies: spec [
 		baseline: 'Glorp' with: [ spec repository: self glorpRepository ];
 		project: 'Glorp-Core' copyFrom: 'Glorp' with: [ spec loads: 'Core' ].
 
-	spec baseline: 'GarageGlorp' with: [ spec repository: 'github://pharo-rdbms/glorp-garage:master/' ].
-
 	spec
 		baseline: 'P3'
 			with: [ spec repository: 'github://ba-st-dependencies/P3:release-candidate/'];
 			project: 'Glorp P3' copyFrom: 'P3' with: [ spec loads: 'glorp' ].
 
 	spec
-		baseline: 'Garage' with: [ spec repository: 'github://pharo-rdbms/garage:master' ];
-		project: 'MySQL-Driver' copyFrom: 'Garage' with: [ spec loads: #('mysql') ].
-
-	spec
 		baseline: 'SQLite3'
-			with: [ spec repository: 'github://ba-st-dependencies/Pharo-SQLite3:release-candidate' ];
+			with: [ spec repository: 'github://pharo-rdbms/Pharo-SQLite3:v2.1.0' ];
 		project: 'Glorp SQLite3' copyFrom: 'SQLite3' with: [ spec loads: 'glorp' ]
 ]
 
