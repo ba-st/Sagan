@@ -9,22 +9,3 @@ services:
       POSTGRES_DB: test
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: secret
-    
-  mysql: 
-    container_name: 'mysql'
-    image: mysql/mysql-server:5.7
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_DATABASE: test
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_ROOT_PASSWORD: secret
-
-  mariadb:
-    container_name: 'mariadb'
-    image: mariadb:10.4
-    ports:
-      - 3307:3306
-    environment:
-      MYSQL_DATABASE: test
-      MYSQL_ROOT_PASSWORD: secret
