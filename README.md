@@ -15,10 +15,7 @@
 [![GitHub release](https://img.shields.io/github/release/ba-st/Sagan.svg)](https://github.com/ba-st/Sagan/releases/latest)
 [![SQLite3 Status](https://github.com/ba-st/Sagan/workflows/SQLite3%20Integration%20Tests/badge.svg?branch=release-candidate)](https://github.com/ba-st/Sagan/actions?query=workflow%3ASQLite3%20Integration%20Tests)
 [![PostgreSQL Status](https://github.com/ba-st/Sagan/workflows/PostgreSQL%20Integration%20Tests/badge.svg?branch=release-candidate)](https://github.com/ba-st/Sagan/actions?query=workflow%3APostgreSQL%20Integration%20Tests)
-[![MySQL Status](https://github.com/ba-st/Sagan/workflows/MySQL%20Integration%20Tests/badge.svg?branch=release-candidate)](https://github.com/ba-st/Sagan/actions?query=workflow%3AMySQL%20Integration%20Tests)
-[![MariaDB Status](https://github.com/ba-st/Sagan/workflows/MariaDB%20Integration%20Tests/badge.svg?branch=release-candidate)](https://github.com/ba-st/Sagan/actions?query=workflow%3AMariaDB%20Integration%20Tests)
 [![Coverage Status](https://codecov.io/github/ba-st/Sagan/coverage.svg?branch=release-candidate)](https://codecov.io/gh/ba-st/Sagan/branch/release-candidate)
-[![Pharo 7.0](https://img.shields.io/badge/Pharo-7.0-informational)](https://pharo.org)
 [![Pharo 8.0](https://img.shields.io/badge/Pharo-8.0-informational)](https://pharo.org)
 [![Pharo 9.0](https://img.shields.io/badge/Pharo-9.0-informational)](https://pharo.org)
 
@@ -38,12 +35,10 @@
 
 Sagan is tested against the following backends:
 
-|  | Pharo 7.0 - 64 bits | Pharo 8.0 - 64 bits | Pharo 9.0 - 64 bits |
-| ----------- | ------------- | -------------- | -------------- |
-| MariaDB | 10.1 - 10.2 - 10.3 - 10.4 | 10.1 - 10.2 - 10.3 - 10.4 ||
-| MySQL | 5.5 - 5.6 - 5.7 | 5.5 - 5.6 - 5.7 ||
-| PostgreSQL  | 9.4 - 9.5 - 9.6 - 10 - 11 - 12 - 13 | 9.4 - 9.5 - 9.6 - 10 - 11 - 12 - 13 | 9.4 - 9.5 - 9.6 - 10 - 11 - 12 - 13 |
-| SQLite | 3 | 3 | 3 |
+|  | Pharo 8.0 - 64 bits | Pharo 9.0 - 64 bits |
+| ------------- | -------------- | -------------- |
+| PostgreSQL  | 9.4 - 9.5 - 9.6 - 10 - 11 - 12 - 13 | 9.4 - 9.5 - 9.6 - 10 - 11 - 12 - 13 |
+| SQLite | 3 | 3 |
 
 ## Installation
 
