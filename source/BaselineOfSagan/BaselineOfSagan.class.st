@@ -71,7 +71,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
 		baseline: 'SQLite3'
-			with: [ spec repository: 'github://pharo-rdbms/Pharo-SQLite3:v2.1.0' ];
+			with: [ spec repository: 'github://pharo-rdbms/Pharo-SQLite3:v2.1.1' ];
 		project: 'Glorp SQLite3' copyFrom: 'SQLite3' with: [ spec loads: 'glorp' ]
 ]
 
