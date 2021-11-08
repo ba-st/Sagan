@@ -35,8 +35,6 @@ BaselineOfSagan >> lockDependenciesIn: spec [
 	Metacello new
 		baseline: 'Glorp';
 		repository: self glorpRepository;
-		onLock: [ :lock | lock honor ];
-		onConflictUseLoaded;
 		lock
 ]
 
