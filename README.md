@@ -19,9 +19,11 @@
 [![Pharo 8.0](https://img.shields.io/badge/Pharo-8.0-informational)](https://pharo.org)
 [![Pharo 9.0](https://img.shields.io/badge/Pharo-9.0-informational)](https://pharo.org)
 
-> *Named in honour to [Carl Sagan](https://en.wikipedia.org/wiki/Carl_Sagan), for teaching us to stay humble against the vastness of the universe.*
+> *Named in honour to [Carl Sagan](https://en.wikipedia.org/wiki/Carl_Sagan), for
+> teaching us to stay humble against the vastness of the universe.*
 
 ## License
+
 - The code is licensed under [MIT](LICENSE).
 - The documentation is licensed under [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/).
 
@@ -42,7 +44,8 @@ Sagan is tested against the following backends:
 
 ## Installation
 
-To load the project in a Pharo image, or declare it as a dependency of your own project follow this [instructions](docs/Installation.md).
+To load the project in a Pharo image, or declare it as a dependency of your own
+project follow this [instructions](docs/Installation.md).
 
 ## Contributing
 

@@ -1,5 +1,5 @@
 "
-I represent a builder of matching criterias.
+I represent a builder of matching criteria.
 
 My purpose it's to abstract away complex query construction for the repositories.
 Usually every backend hast it's own DSL to create queries and you cannot switch 
@@ -8,9 +8,9 @@ easily between them.
 My subclasses will resolve any specific details son it can generate efficient 
 queries for each backend.
 
-End users can also add new criterias and implement it for the differente backends 
+End users can also add new criteria and implement it for the different backends 
 they use, so really complex cases and specific situations can be solved without 
-sacrifying readability and polymorphism.
+sacrificing readability and polymorphism.
 
 "
 Class {
