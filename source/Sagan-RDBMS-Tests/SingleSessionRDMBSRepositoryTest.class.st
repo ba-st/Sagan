@@ -43,35 +43,9 @@ SingleSessionRDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 	<ignoreForCoverage>
 	( anEnvironmentVariable beginsWith: 'PostgreSQL' )
 		ifTrue: [ ^ self postgreSQLLogin ].
-	( anEnvironmentVariable beginsWith: 'MySQL' )
-		ifTrue: [ ^ self mySQLLogin ].
-	( anEnvironmentVariable beginsWith: 'MariaDB' )
-		ifTrue: [ ^ self mariaDBLogin ].
 	anEnvironmentVariable = 'SQLite3'
 		ifTrue: [ ^ self sqlite3Login ].
 	^ self defaultLogin
-]
-
-{ #category : #configuring }
-SingleSessionRDMBSRepositoryTest class >> mariaDBLogin [
-
-	<ignoreForCoverage>
-	^ self mySQLLogin
-]
-
-{ #category : #configuring }
-SingleSessionRDMBSRepositoryTest class >> mySQLLogin [
-
-	<ignoreForCoverage>
-	GAGlorpDriver beGlorpDefaultDriver.
-	^ Login new
-		database: MySQLPlatform new;
-		username: 'root';
-		password: 'secret';
-		host: 'localhost';
-		port: '3306';
-		databaseName: 'test';
-		yourself
 ]
 
 { #category : #configuring }
