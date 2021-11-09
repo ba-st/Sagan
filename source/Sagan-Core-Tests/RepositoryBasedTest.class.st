@@ -383,7 +383,7 @@ RepositoryBasedTest >> testUpdateWith [
 		assert: ( self extraterrestrials findAll includes: stallone ).
 
 	self
-		updateExtraterrestialMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ]
+		updateExtraterrestrialMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ]
 		with: self johnLock.
 
 	self assert: self extraterrestrials findAll size equals: 1.
@@ -432,18 +432,18 @@ RepositoryBasedTest >> testUpdateWithConflictUsingConjunctiveConflictChecking [
 
 	self
 		should: [ self
-				updateExtraterrestialMatching: [ :extraterrestial | extraterrestial lastName = 'Stallone' ]
+				updateExtraterrestrialMatching: [ :extraterrestrial | extraterrestrial lastName = 'Stallone' ]
 				with: self johnTravolta
 			]
 			raise: ConflictingObjectFound
 			withMessageText: 'Something is in conflict with an Extraterrestrial';
 		shouldnt: [ self
-				updateExtraterrestialMatching: [ :extraterrestial | extraterrestial lastName = 'Stallone' ]
+				updateExtraterrestrialMatching: [ :extraterrestrial | extraterrestrial lastName = 'Stallone' ]
 				with: self johnLock
 			]
 			raise: ConflictingObjectFound;
 		shouldnt: [ self
-				updateExtraterrestialMatching: [ :extraterrestial | extraterrestial lastName = 'Lock' ]
+				updateExtraterrestrialMatching: [ :extraterrestrial | extraterrestrial lastName = 'Lock' ]
 				with: self ellaTravolta
 			]
 			raise: ConflictingObjectFound
@@ -482,7 +482,7 @@ RepositoryBasedTest >> testUpdateWithoutConflict [
 
 	self
 		shouldnt: [ self
-				updateExtraterrestialMatching: [ :extraterrestial | extraterrestial lastName = 'Stallone' ]
+				updateExtraterrestrialMatching: [ :extraterrestrial | extraterrestrial lastName = 'Stallone' ]
 				with: self ellaTravolta
 			]
 		raise: ConflictingObjectFound
@@ -509,12 +509,12 @@ RepositoryBasedTest >> testWithOneMatchingSortedByDoElse [
 ]
 
 { #category : #'tests - management' }
-RepositoryBasedTest >> updateExtraterrestialMatching: aBlock with: aNewExtraterrestial [
+RepositoryBasedTest >> updateExtraterrestrialMatching: aBlock with: aNewExtraterrestrial [
 
 	self extraterrestrials
 		transact: [ self extraterrestrials
 				withOneMatching: aBlock
-				do: [ :extraterrestial | self extraterrestrials update: extraterrestial with: aNewExtraterrestial ]
+				do: [ :extraterrestrial | self extraterrestrials update: extraterrestrial with: aNewExtraterrestrial ]
 				else: [ self fail ]
 			]
 ]

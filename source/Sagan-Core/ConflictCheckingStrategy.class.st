@@ -1,7 +1,7 @@
 "
 I'm an abstract class defining the protocol required for conflict checking.
 Repository instances can be configured with a conflict checking strategy, so when a 
-domain object is stored or upated the appropiate message will be dispatched to the 
+domain object is stored or updated the appropriate message will be dispatched to the 
 strategy.
 
 Public API and Key Messages
