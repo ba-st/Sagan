@@ -5,7 +5,7 @@ Class {
 		'repositoryProviderSystem',
 		'celestialBodies'
 	],
-	#category : #'Sagan-Kepler-Tests'
+	#category : #'Sagan-RDBMS-Tests'
 }
 
 { #category : #testing }

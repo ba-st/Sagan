@@ -1,7 +1,7 @@
 Class {
 	#name : #GalacticCoordinatesMappingConfiguration,
 	#superclass : #RDBMSMappingConfiguration,
-	#category : #'Sagan-Kepler-Tests'
+	#category : #'Sagan-RDBMS-Tests'
 }
 
 { #category : #accessing }
