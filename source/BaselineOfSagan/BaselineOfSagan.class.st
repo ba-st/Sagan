@@ -10,9 +10,7 @@ BaselineOfSagan >> baseline: spec [
 	<baseline>
 	spec
 		for: #pharo
-		do: [
-			spec preLoadDoIt: #lockDependenciesIn:.
-			self
+		do: [ self
 				setUpDependencies: spec;
 				setUpPackages: spec.
 			spec
@@ -21,23 +19,6 @@ BaselineOfSagan >> baseline: spec [
 				group: 'Tools' with: 'Buoy-Tools';
 				group: 'Development' with: #('Tests' 'Tools')
 			]
-]
-
-{ #category : #initialization }
-BaselineOfSagan >> glorpRepository [
-
-	^ 'github://pharo-rdbms/glorp:v9.0.1'
-]
-
-{ #category : #initialization }
-BaselineOfSagan >> lockDependenciesIn: spec [
-
-	Metacello new
-		baseline: 'Glorp';
-		repository: self glorpRepository;
-		onLock: [ :lock | lock honor ];
-		onConflictUseLoaded;
-		lock
 ]
 
 { #category : #accessing }
@@ -63,17 +44,17 @@ BaselineOfSagan >> setUpDependencies: spec [
 		project: 'Buoy-Tools' copyFrom: 'Buoy' with: [ spec loads: 'Tools' ].
 
 	spec
-		baseline: 'Glorp' with: [ spec repository: self glorpRepository ];
+		baseline: 'Glorp' with: [ spec repository: 'github://pharo-rdbms/glorp:v9.0.2' ];
 		project: 'Glorp-Core' copyFrom: 'Glorp' with: [ spec loads: 'Core' ].
 
 	spec
 		baseline: 'P3'
-			with: [ spec repository: 'github://ba-st-dependencies/P3:release-candidate/'];
+			with: [ spec repository: 'github://ba-st-dependencies/P3:v1.3.0/'];
 			project: 'Glorp P3' copyFrom: 'P3' with: [ spec loads: 'glorp' ].
 
 	spec
 		baseline: 'SQLite3'
-			with: [ spec repository: 'github://pharo-rdbms/Pharo-SQLite3:v2.1.0' ];
+			with: [ spec repository: 'github://pharo-rdbms/Pharo-SQLite3:v2.1.2' ];
 		project: 'Glorp SQLite3' copyFrom: 'SQLite3' with: [ spec loads: 'glorp' ]
 ]
 

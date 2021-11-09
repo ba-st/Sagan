@@ -1,0 +1,30 @@
+name: Group loading check
+
+on: [push,pull_request]
+
+jobs:
+   build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        smalltalk: [ Pharo64-9.0, Pharo64-8.0 ]  
+        rdbms: [ SQLite3 ]
+        load-spec: [ deployment, tests, tools, development]
+    name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }} + ${{ matrix.load-spec }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hpi-swa/setup-smalltalkCI@v1
+        with:
+          smalltalk-version: ${{ matrix.smalltalk }}
+      - name: Install SQLite3
+        run: ./scripts/install-SQLite3.sh
+        env:
+          RDBMS: ${{ matrix.rdbms }}
+      - name: Load group in image
+        run: smalltalkci -s ${{ matrix.smalltalk }} .loading.${{ matrix.load-spec }}.ston
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RDBMS: ${{ matrix.rdbms }}
+        timeout-minutes: 15
+
