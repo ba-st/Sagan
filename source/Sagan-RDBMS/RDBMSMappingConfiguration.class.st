@@ -1,7 +1,7 @@
 Class {
 	#name : #RDBMSMappingConfiguration,
 	#superclass : #Object,
-	#category : #'Sagan-Kepler-Tests'
+	#category : #'Sagan-RDBMS'
 }
 
 { #category : #applying }

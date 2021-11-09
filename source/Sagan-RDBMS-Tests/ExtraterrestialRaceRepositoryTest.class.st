@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'extraterrestialRaces'
 	],
-	#category : #'Sagan-Kepler-Tests'
+	#category : #'Sagan-RDBMS-Tests'
 }
 
 { #category : #accessing }

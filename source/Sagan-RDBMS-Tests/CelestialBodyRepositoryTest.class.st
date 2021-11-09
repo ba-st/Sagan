@@ -1,7 +1,7 @@
 Class {
 	#name : #CelestialBodyRepositoryTest,
 	#superclass : #RepositoryProviderSystemBasedTest,
-	#category : #'Sagan-Kepler-Tests'
+	#category : #'Sagan-RDBMS-Tests'
 }
 
 { #category : #running }
