@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #applying }
-ExtraterrestialRaceMappingConfiguration >> applyTo: aRepository [
+ExtraterrestialRaceMappingConfiguration >> cull: aRepository [
 
 	aRepository
 		configureMappingsIn: [ :repository | 

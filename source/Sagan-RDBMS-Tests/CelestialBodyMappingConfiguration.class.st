@@ -10,18 +10,6 @@ CelestialBodyMappingConfiguration class >> celestialBodyTableName [
 	^ 'CELESTIAL_BODY'
 ]
 
-{ #category : #applying }
-CelestialBodyMappingConfiguration >> applyTo: aRepository [
-
-	aRepository
-		configureMappingsIn: [ :repository | 
-			repository
-				beAwareOfClassModelDefinedBy: self celestialBodyClassDefinition;
-				beAwareOfDescriptorDefinedBy: self celestialBodyDescriptorDefinition;
-				beAwareOfTableDefinedBy: self celestialBodyTableDefinition
-			]
-]
-
 { #category : #'private - accessing' }
 CelestialBodyMappingConfiguration >> celestialBodyClassDefinition [
 
@@ -92,4 +80,16 @@ CelestialBodyMappingConfiguration >> celestialBodyTableDefinition [
 CelestialBodyMappingConfiguration >> celestialBodyTableName [
 
 	^ self class celestialBodyTableName
+]
+
+{ #category : #applying }
+CelestialBodyMappingConfiguration >> cull: aRepository [
+
+	aRepository
+		configureMappingsIn: [ :repository | 
+			repository
+				beAwareOfClassModelDefinedBy: self celestialBodyClassDefinition;
+				beAwareOfDescriptorDefinedBy: self celestialBodyDescriptorDefinition;
+				beAwareOfTableDefinedBy: self celestialBodyTableDefinition
+			]
 ]

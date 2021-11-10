@@ -29,7 +29,7 @@ GalacticCoordinatesMappingConfiguration class >> zCoordinateFieldName [
 ]
 
 { #category : #applying }
-GalacticCoordinatesMappingConfiguration >> applyTo: aRepository [
+GalacticCoordinatesMappingConfiguration >> cull: aRepository [
 
 	aRepository
 		configureMappingsIn: [ :repository | 

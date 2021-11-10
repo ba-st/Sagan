@@ -24,15 +24,15 @@ ExtraterrestialRaceRepositoryTest >> setUpRepositories [
 		storingObjectsOfType: CelestialBody
 		checkingConflictsAccordingTo: DoNotCheckForConflictsStrategy new.
 
-	CelestialBodyMappingConfiguration new applyTo: celestialBodies.
-	GalacticCoordinatesMappingConfiguration new applyTo: celestialBodies.
+	CelestialBodyMappingConfiguration new cull: celestialBodies.
+	GalacticCoordinatesMappingConfiguration new cull: celestialBodies.
 
 	extraterrestialRaces := repositoryProviderSystem
 		createRepositoryFor: self repositoriesContainerName
 		storingObjectsOfType: ExtraterrestialRace
 		checkingConflictsAccordingTo: DoNotCheckForConflictsStrategy new.
 
-	ExtraterrestialRaceMappingConfiguration new applyTo: extraterrestialRaces
+	ExtraterrestialRaceMappingConfiguration new cull: extraterrestialRaces
 ]
 
 { #category : #accessing }

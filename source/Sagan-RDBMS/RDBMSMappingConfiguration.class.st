@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #applying }
-RDBMSMappingConfiguration >> applyTo: aRepository [
+RDBMSMappingConfiguration >> cull: aRepository [
 
 	self subclassResponsibility 
 ]
