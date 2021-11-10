@@ -21,8 +21,8 @@ CelestialBodyRepositoryTest >> setUpRepositories [
 		storingObjectsOfType: CelestialBody
 		checkingConflictsAccordingTo: DoNotCheckForConflictsStrategy new.
 
-	CelestialBodyMappingConfiguration new applyTo: celestialBodies.
-	GalacticCoordinatesMappingConfiguration new applyTo: celestialBodies
+	CelestialBodyMappingConfiguration new cull: celestialBodies.
+	GalacticCoordinatesMappingConfiguration new cull: celestialBodies
 ]
 
 { #category : #running }
