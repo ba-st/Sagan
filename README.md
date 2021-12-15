@@ -41,6 +41,7 @@ Sagan is tested against the following backends:
 |                 | 11  | ✔️             | ✔️            |
 |                 | 12  | ✔️             | ✔️            |
 |                 | 13  | ✔️             | ✔️            |
+|                 | 14  | ✔️             | ✔️            |
 | **SQLite**      | 3   | ✔️             | ✔️            |
 
 ## Installation
