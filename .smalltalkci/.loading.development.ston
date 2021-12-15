@@ -2,10 +2,9 @@ SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
       #baseline : 'Sagan',
-      #directory : 'source',
-      #load : [ 'CI' ],
-      #platforms : [  #pharo ],
-      #onConflict : #useLoaded
+      #directory : '../source',
+      #load : [ 'Development' ],
+      #platforms : [  #pharo ]
     }
   ],
   #testing : {

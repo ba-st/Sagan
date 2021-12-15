@@ -2,15 +2,12 @@ SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
       #baseline : 'Sagan',
-      #directory : 'source',
-      #load : [ 'Development' ],
+      #directory : '../source',
+      #load : [ 'Tools' ],
       #platforms : [  #pharo ]
     }
   ],
   #testing : {
-    #coverage : {
-      #packages : [ 'Sagan*' ],
-      #format: #lcov
-    }
+    #failOnZeroTests : false
   }
 }
