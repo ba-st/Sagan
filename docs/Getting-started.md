@@ -1,11 +1,12 @@
-# Development
+# Getting started with Sagan
 
 ## How can I start my project with Sagan?
 
-First, of course, [install it](docs/Installation.md). We recommend to load the
+First, of course, [install it](how-to/how-to-load-in-pharo.md). We recommend to
+load the
 group `Development` so you have all the tests and can use them as examples.
 
-The main feature in Sagan is the notion of [`Repository`](/source/Sagan-Core/Repository.class.st).
+The main feature in Sagan is the notion of [`Repository`](../source/Sagan-Core/Repository.class.st).
 You'll use them to store, purge and query objects of some domain. Conceptually,
 a Repository encapsulates the set of objects persisted in a data store and the
 operations performed over them, providing a more object-oriented view of the
@@ -13,29 +14,29 @@ persistence layer.
 
 Currently Sagan supports two types of repositories:
 
-- [`InMemoryRepository`](/source/Sagan-Core/InMemoryRepository.class.st): this one
-  will keep the managed objects in an OrderedCollection and I will not provide
+- [`InMemoryRepository`](../source/Sagan-Core/InMemoryRepository.class.st): this
+  one will keep the managed objects in an OrderedCollection and I will not provide
   any transactional semantics. It is useful when you start prototyping and
   writing tests, and don't want to struggle with mapping your objects to any db yet.
-- [`RDBMSRepository`](/source/Sagan-RDBMS/RDBMSRepository.class.st): once you're
+- [`RDBMSRepository`](../source/Sagan-RDBMS/RDBMSRepository.class.st): once you're
   comfortable with your model, you might start thinking on a more robust and
   permanent persistence of your objects. So where you used the in-memory
   repository, you can swap it with this one, which is an abstraction of
   relational databases and is built on top of [Glorp](https://github.com/pharo-rdbms/glorp).
 
-When creating one, you must provide a [`RDBMSSessionProvider`](/source/Sagan-RDBMS/RDBMSSessionProvider.class.st)
+When creating one, you must provide a [`RDBMSSessionProvider`](../source/Sagan-RDBMS/RDBMSSessionProvider.class.st)
 that will wrap the actual Glorp Session, whose responsibility, among other
 things, is to login to your database of choice.
 
-At first, is a good choice to use the [`SingleRDBMSSessionProvider`](/source/Sagan-RDBMS/SingleRDBMSSessionProvider.class.st),
+At first, is a good choice to use the [`SingleRDBMSSessionProvider`](../source/Sagan-RDBMS/SingleRDBMSSessionProvider.class.st),
 and only worry about defining the mapping for your object correctly (see
 [Define the mapping to your RDBMS](#define-the-mapping-to-your-rdbms)).
 If you pretend to have a heavy concurrent workload on your database, then we
-recommend you to consider using the [`PooledRDBMSSessionProvider`](/source/Sagan-RDBMS/PooledRDBMSSessionProvider.class.st).
+recommend you to consider using the [`PooledRDBMSSessionProvider`](../source/Sagan-RDBMS/PooledRDBMSSessionProvider.class.st).
 
 The usual case you're probably be facing is the need of more than one Repository,
 one for each type of object in your project's domain. To ease the
-standardized way of creating them, the proper way is using a [`RepositoryProvider`](/source/Sagan-Core/RepositoryProvider.class.st).
+standardized way of creating them, the proper way is using a [`RepositoryProvider`](../source/Sagan-Core/RepositoryProvider.class.st).
 There is 3 different ways of instantiating a provider:
 
 - `InMemoryRepositoryProvider new`
@@ -50,11 +51,11 @@ Sagan is:
    to store
 3. Configure the mappings for every repository (this step is not necessary if in-memory)
 4. Send the message `#prepareForInitialPersistence` to the provider. If you're
-   using the rdbms repositories, this will create all the database structures
+   using the RDBMS repositories, this will create all the database structures
    needed to deploy the server.
 
 As said before, you can start using the in-memory provider, and once you got
-all your project setup and running, you can swap to a rdbms provider with any of
+all your project setup and running, you can swap to a RDBMS provider with any of
 the servers will show in the next section.
 
 ## Setting up your database (with Docker)
@@ -62,13 +63,13 @@ the servers will show in the next section.
 As Sagan is an abstraction layer on top of Glorp, it support all the database
 servers Glorp does, but we guarantee that will work fairly with Postgres, and
 SQLite3. If you use SQLServer or any other that Glorp supports and wish to
-contribute to Sagan please check [this](https://github.com/ba-st/Sagan/blob/release-candidate/CONTRIBUTING.md).
+contribute to Sagan please check [this](../CONTRIBUTING.md).
 
 Note that Glorp (and therefore Sagan) requires the database drivers in your
 computer, or at least a reachable server, for the actual database connectivity.
 
 In order to try any of these servers in an isolated environment, we provide you
-with a [docker-compose](/docker/docker-compose.yml) that ease you the deploy of
+with a [docker-compose](../docker/docker-compose.yml) that ease you the deploy of
 the server.
 
 ### PostgreSQL

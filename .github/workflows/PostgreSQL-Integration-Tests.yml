@@ -21,7 +21,7 @@ jobs:
         env:
           RDBMS: ${{ matrix.rdbms }}
       - name: Load Image and Run Tests
-        run: smalltalkci -s ${{ matrix.smalltalk }}
+        run: smalltalkci -s ${{ matrix.smalltalk }} .smalltalkci/.unit-tests.ston
         timeout-minutes: 15
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
