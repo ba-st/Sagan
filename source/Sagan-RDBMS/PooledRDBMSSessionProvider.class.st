@@ -13,9 +13,12 @@ Class {
 }
 
 { #category : #'instance creation' }
-PooledRDBMSSessionProvider class >> loginWith: aLogin [ 
+PooledRDBMSSessionProvider class >> loginWith: aLogin configuredBy: aBlock [
 
-	^ self new initializeLoginWith: aLogin
+	| options |
+	options := Dictionary new.
+	aBlock cull: options.
+	^ self new initializeLoginWith: aLogin configuredBy: options
 ]
 
 { #category : #'private-accessing' }
@@ -73,17 +76,17 @@ PooledRDBMSSessionProvider >> initializeConfigurationSession [
 ]
 
 { #category : #initialization }
-PooledRDBMSSessionProvider >> initializeLoginWith: aLogin [
+PooledRDBMSSessionProvider >> initializeLoginWith: aLogin configuredBy: options [
 
 	login := aLogin.
 	descriptorSystem := ConfigurableDescriptorSystem new.
 	descriptorSystemWasCopied := false.
 	self initializeConfigurationSession.
-	self initializeWorkingSessionsPool
+	self initializeWorkingSessionsPoolConfiguredBy: options
 ]
 
 { #category : #initialization }
-PooledRDBMSSessionProvider >> initializeWorkingSessionsPool [
+PooledRDBMSSessionProvider >> initializeWorkingSessionsPoolConfiguredBy: options [
 
 	descriptorsBySession := Dictionary new.
 	sessionPool := OPBasicPool new.
@@ -93,9 +96,9 @@ PooledRDBMSSessionProvider >> initializeWorkingSessionsPool [
 		validator: #isLoggedIn;
 		passivator: #reset;
 		activator: [ :session | self configureDescriptorSystemTo: session ];
-		maxIdleObjects: 10;
-		minIdleObjects: 5;
-		maxActiveObjects: 12
+		maxIdleObjects: (options at: #maxIdleObjectsCount ifAbsent: [ 10 ]);
+		minIdleObjects: (options at: #minIdleObjectsCount ifAbsent: [ 5 ]);
+		maxActiveObjects: (options at: #maxActiveObjectsCount ifAbsent: [ 12 ])
 ]
 
 { #category : #accessing }

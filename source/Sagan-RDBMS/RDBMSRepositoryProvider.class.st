@@ -17,9 +17,11 @@ RDBMSRepositoryProvider class >> obtainingSessionFrom: aSessionProvider [
 ]
 
 { #category : #'instance creation' }
-RDBMSRepositoryProvider class >> using: aLogin [
+RDBMSRepositoryProvider class >> usingSessionPoolWith: aLogin configuredBy: configurationAction [
 
-	^ self obtainingSessionFrom: ( PooledRDBMSSessionProvider loginWith: aLogin )
+	^ self obtainingSessionFrom: (PooledRDBMSSessionProvider
+			   loginWith: aLogin
+			   configuredBy: configurationAction)
 ]
 
 { #category : #'instance creation' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RDBMSMappingConfiguration,
 	#superclass : #Object,
-	#category : #'Sagan-RDBMS'
+	#category : #'Sagan-RDBMS-Mappings'
 }
 
 { #category : #applying }
