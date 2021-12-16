@@ -142,9 +142,9 @@ PooledRDBMSRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrat
 		            SingleSessionRDMBSRepositoryTest login
 		            configuredBy: [ :options | 
 			            options
-				            at: #maxIdleObjectsCount put: 8;
-				            at: #minIdleObjectsCount put: 4;
-				            at: #maxActiveObjectsCount put: 10 ].
+				            at: #maxIdleSessionsCount put: 8;
+				            at: #minIdleSessionsCount put: 4;
+				            at: #maxActiveSessionsCount put: 10 ].
 	extraterrestrials := provider
 		createRepositoryStoringObjectsOfType: Extraterrestrial
 		checkingConflictsAccordingTo: aConflictCheckingStrategy.

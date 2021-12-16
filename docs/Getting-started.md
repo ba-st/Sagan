@@ -41,7 +41,13 @@ There is 3 different ways of instantiating a provider:
 
 - `InMemoryRepositoryProvider new`
 - `RDBMSRepositoryProvider usingSingleSessionWith: aLogin`
-- `RDBMSRepositoryProvider using: aLogin`
+- `RDBMSRepositoryProvider usingSessionPoolWith: aLogin configuredBy: configurationAction`.
+
+Valid options for the session pooling configuration are:
+
+- `maxIdleSessionsCount` defaulting to 10
+- `minIdleSessionsCount` defaulting to 5
+- `maxActiveSessionsCount` defaulting to 12
 
 Concretely, the complete algorithm to start a project with persistence using
 Sagan is:

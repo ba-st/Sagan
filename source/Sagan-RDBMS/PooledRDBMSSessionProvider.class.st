@@ -96,9 +96,9 @@ PooledRDBMSSessionProvider >> initializeWorkingSessionsPoolConfiguredBy: options
 		validator: #isLoggedIn;
 		passivator: #reset;
 		activator: [ :session | self configureDescriptorSystemTo: session ];
-		maxIdleObjects: (options at: #maxIdleObjectsCount ifAbsent: [ 10 ]);
-		minIdleObjects: (options at: #minIdleObjectsCount ifAbsent: [ 5 ]);
-		maxActiveObjects: (options at: #maxActiveObjectsCount ifAbsent: [ 12 ])
+		maxIdleObjects: (options at: #maxIdleSessionsCount ifAbsent: [ 10 ]);
+		minIdleObjects: (options at: #minIdleSessionsCount ifAbsent: [ 5 ]);
+		maxActiveObjects: (options at: #maxActiveSessionsCount ifAbsent: [ 12 ])
 ]
 
 { #category : #accessing }
