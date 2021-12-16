@@ -60,6 +60,7 @@ SingleSessionRDMBSRepositoryTest class >> postgreSQLLogin [
 		host: 'localhost';
 		port: 5432;
 		databaseName: 'test';
+		setSSL;
 		yourself
 ]
 
