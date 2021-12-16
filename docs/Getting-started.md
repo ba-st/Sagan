@@ -88,7 +88,7 @@ cd docker;
 docker-compose up -d postgres
 ```
 
-This will start the latest PostgreSQL 12 with an empty database called `test`,
+This will start the latest PostgreSQL 14 with an empty database called `test`,
 configured with the user `postgres` and password `secret`, listening in the
 default port 5432.
 
@@ -103,6 +103,7 @@ RDBMSRepositoryProvider using: (
         host: 'localhost';
         port: 5432;
         databaseName: 'test';
+        setSSL;
         yourself)
 ```
 
