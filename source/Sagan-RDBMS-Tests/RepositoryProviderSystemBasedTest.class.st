@@ -23,7 +23,7 @@ RepositoryProviderSystemBasedTest >> repositoriesContainerName [
 { #category : #running }
 RepositoryProviderSystemBasedTest >> repositoryProvider [
 
-	^ RDBMSRepositoryProvider usingSingleSessionWith: SingleSessionRDMBSRepositoryTest login
+	^ RDBMSRepositoryProvider using: SingleSessionRDMBSRepositoryTest login
 ]
 
 { #category : #running }
