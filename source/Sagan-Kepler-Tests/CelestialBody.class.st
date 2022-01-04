@@ -16,10 +16,22 @@ CelestialBody class >> named: aName locatedAt: aGalacticCoordinates in: aPlaneta
 	^ self new initializeNamed: aName locatedAt: aGalacticCoordinates in: aPlanetarySystem
 ]
 
+{ #category : #comparing }
+CelestialBody >> = anObject [
+
+	^ PersistentObjectComparer new shouldConsider: self asEqualTo: anObject
+]
+
 { #category : #accessing }
 CelestialBody >> galacticCoordinates [
 
 	^ galacticCoordinates
+]
+
+{ #category : #comparing }
+CelestialBody >> hash [ 
+
+	^ PersistentObjectComparer new hashFor: self
 ]
 
 { #category : #initialization }
@@ -39,4 +51,10 @@ CelestialBody >> name [
 CelestialBody >> planetarySystem [
 
 	^ planetarySystem
+]
+
+{ #category : #accessing }
+CelestialBody >> sequentialNumber [
+
+	^ sequentialNumber
 ]

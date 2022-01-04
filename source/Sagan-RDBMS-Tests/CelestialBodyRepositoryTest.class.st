@@ -46,8 +46,8 @@ CelestialBodyRepositoryTest >> testFilterByCoordinateX [
 			self
 				assert: found name equals: 'Alderaan';
 				assert: found planetarySystem equals: 'Kuat Sector';
-				assert: found galacticCoordinates x equals: 70;
-				assert: found galacticCoordinates y equals: 35;
+				assert: found galacticCoordinates x closeTo: 70;
+				assert: found galacticCoordinates y closeTo: 35;
 				assert: found galacticCoordinates z equals: 0
 			]
 ]
@@ -67,8 +67,8 @@ CelestialBodyRepositoryTest >> testFilterByCoordinateY [
 			self
 				assert: found name equals: 'Tatooine';
 				assert: found planetarySystem equals: 'Arkanis Sector';
-				assert: found galacticCoordinates x equals: 296;
-				assert: found galacticCoordinates y equals: -248;
+				assert: found galacticCoordinates x closeTo: 296;
+				assert: found galacticCoordinates y closeTo: -248;
 				assert: found galacticCoordinates z equals: 0
 			]
 ]
