@@ -313,7 +313,9 @@ RepositoryBasedTest >> testStoreWithConflict [
 	self extraterrestrials store: self silvesterStallone.
 
 	self
-		should: [ self extraterrestrials store: self silvesterMcCoy ] raise: ConflictingObjectFound;
+		should: [ self extraterrestrials store: self silvesterMcCoy ]
+		raise: ConflictingObjectFound
+		withMessageText: 'Something is in conflict with an Extraterrestrial';
 		assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
 
@@ -325,13 +327,58 @@ RepositoryBasedTest >> testStoreWithConjunctiveConflictChecking [
 	self extraterrestrials store: self silvesterStallone.
 
 	self
-		shouldnt: [ self extraterrestrials store: self silvesterMcCoy ] raise: ConflictingObjectFound;
-		shouldnt: [ self extraterrestrials store: self sistineStallone ] raise: ConflictingObjectFound;
-		should: [ self extraterrestrials store: self silvesterStallone ] raise: ConflictingObjectFound.
+		shouldnt: [ self extraterrestrials store: self silvesterMcCoy ]
+		raise: ConflictingObjectFound;
+		shouldnt: [ self extraterrestrials store: self sistineStallone ]
+		raise: ConflictingObjectFound;
+		should: [ self extraterrestrials store: self silvesterStallone ]
+		raise: ConflictingObjectFound
+		withMessageText: 'Something is in conflict with an Extraterrestrial'.
 
 	self
 		assert: self extraterrestrials findAll size equals: 3;
 		assertRepositoryIncludesSilvesterStallone
+]
+
+{ #category : #'tests - conflict checking' }
+RepositoryBasedTest >> testStoreWithConjunctiveDescriptedConflictChecking [
+
+	self setUpRepositoryWith: (CriteriaBasedConflictCheckingStrategy
+			 forAllIn: { 
+					 [ :person | person firstName ].
+					 [ :person | person lastName ] }
+			 explainingConflictWith: 'That full name is already used.').
+
+	self extraterrestrials store: self silvesterStallone.
+
+	self
+		shouldnt: [ self extraterrestrials store: self silvesterMcCoy ]
+		raise: ConflictingObjectFound;
+		shouldnt: [ self extraterrestrials store: self sistineStallone ]
+		raise: ConflictingObjectFound;
+		should: [ self extraterrestrials store: self silvesterStallone ]
+		raise: ConflictingObjectFound
+		withMessageText: 'That full name is already used.'.
+
+	self
+		assert: self extraterrestrials findAll size equals: 3;
+		assertRepositoryIncludesSilvesterStallone
+]
+
+{ #category : #'tests - conflict checking' }
+RepositoryBasedTest >> testStoreWithDescriptedConflict [
+
+	self setUpRepositoryWith: (CriteriaBasedConflictCheckingStrategy
+			 forSingleAspectMatching: [ :person | person firstName ]
+			 explainingConflictWith: 'That first name is already used.').
+
+	self extraterrestrials store: self silvesterStallone.
+
+	self
+		should: [ self extraterrestrials store: self silvesterMcCoy ]
+		raise: ConflictingObjectFound
+		withMessageText: 'That first name is already used.';
+		assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
 
 { #category : #'tests - conflict checking' }
@@ -342,9 +389,35 @@ RepositoryBasedTest >> testStoreWithDisjunctiveConflictChecking [
 	self extraterrestrials store: self silvesterStallone.
 
 	self
-		should: [ self extraterrestrials store: self silvesterMcCoy ] raise: ConflictingObjectFound;
-		should: [ self extraterrestrials store: self sistineStallone ] raise: ConflictingObjectFound;
-		should: [ self extraterrestrials store: self silvesterStallone ] raise: ConflictingObjectFound.
+		should: [ self extraterrestrials store: self silvesterMcCoy ]
+		raise: ConflictingObjectFound;
+		should: [ self extraterrestrials store: self sistineStallone ]
+		raise: ConflictingObjectFound;
+		should: [ self extraterrestrials store: self silvesterStallone ]
+		raise: ConflictingObjectFound
+		withMessageText: 'Something is in conflict with an Extraterrestrial'.
+
+	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
+]
+
+{ #category : #'tests - conflict checking' }
+RepositoryBasedTest >> testStoreWithDisjunctiveDescriptedConflictChecking [
+
+	self setUpRepositoryWith: (CriteriaBasedConflictCheckingStrategy
+			 forAnyIn: { 
+					 [ :person | person firstName ].
+					 [ :person | person lastName ] }
+			 explainingConflictWith: 'That full name is already used.').
+	self extraterrestrials store: self silvesterStallone.
+
+	self
+		should: [ self extraterrestrials store: self silvesterMcCoy ]
+		raise: ConflictingObjectFound;
+		should: [ self extraterrestrials store: self sistineStallone ]
+		raise: ConflictingObjectFound;
+		should: [ self extraterrestrials store: self silvesterStallone ]
+		raise: ConflictingObjectFound
+		withMessageText: 'That full name is already used.'.
 
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
@@ -453,7 +526,6 @@ RepositoryBasedTest >> testUpdateWithConflictUsingConjunctiveConflictChecking [
 RepositoryBasedTest >> testUpdateWithConflictUsingDisjunctiveConflictChecking [
 
 	| stallone |
-
 	self setUpRepositoryForDisjunctiveConflictChecking.
 
 	stallone := self silvesterStallone.
@@ -462,9 +534,16 @@ RepositoryBasedTest >> testUpdateWithConflictUsingDisjunctiveConflictChecking [
 		store: self johnTravolta.
 
 	self
-		should: [ self extraterrestrials update: stallone with: self johnTravolta ] raise: ConflictingObjectFound;
-		should: [ self extraterrestrials update: stallone with: self johnLock ] raise: ConflictingObjectFound;
-		should: [ self extraterrestrials update: stallone with: self ellaTravolta ] raise: ConflictingObjectFound;
+		should: [ 
+			self extraterrestrials update: stallone with: self johnTravolta ]
+		raise: ConflictingObjectFound;
+		should: [ 
+			self extraterrestrials update: stallone with: self johnLock ]
+		raise: ConflictingObjectFound;
+		should: [ 
+			self extraterrestrials update: stallone with: self ellaTravolta ]
+		raise: ConflictingObjectFound
+		withMessageText: 'Something is in conflict with an Extraterrestrial';
 		assertRepositoryIncludesSilvesterStallone
 ]
 
