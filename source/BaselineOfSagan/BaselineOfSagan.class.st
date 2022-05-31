@@ -49,7 +49,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
 		baseline: 'P3'
-			with: [ spec repository: 'github://ba-st-dependencies/P3:v1.4.0'];
+			with: [ spec repository: 'github://ba-st-dependencies/P3:v1.4.1'];
 			project: 'Glorp P3' copyFrom: 'P3' with: [ spec loads: 'glorp' ].
 
 	spec
