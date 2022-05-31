@@ -13,7 +13,8 @@ Class {
 	#name : #CriteriaBasedConflictCheckingStrategy,
 	#superclass : #ConflictCheckingStrategy,
 	#instVars : [
-		'conflictCriteriaBlock'
+		'conflictCriteriaBlock',
+		'explanationBlock'
 	],
 	#category : #'Sagan-Core'
 }
@@ -21,7 +22,19 @@ Class {
 { #category : #'instance creation' }
 CriteriaBasedConflictCheckingStrategy class >> accordingTo: aBlockOrMatchingCriteria [
 
-	^ self new initializeAccordingTo: aBlockOrMatchingCriteria
+	^ self
+		  accordingTo: aBlockOrMatchingCriteria
+		  explainingConflictWith: [ :objectInMemory | 
+			  'Something is in conflict with <1p>' expandMacrosWith:
+				  objectInMemory ]
+]
+
+{ #category : #'instance creation' }
+CriteriaBasedConflictCheckingStrategy class >> accordingTo: aBlockOrMatchingCriteria explainingConflictWith: aBlock [
+
+	^ self new
+		  initializeAccordingTo: aBlockOrMatchingCriteria
+		  explainingConflictWith: aBlock
 ]
 
 { #category : #private }
@@ -48,6 +61,18 @@ CriteriaBasedConflictCheckingStrategy class >> forAllIn: aMonadycBlockCollection
 ]
 
 { #category : #'instance creation' }
+CriteriaBasedConflictCheckingStrategy class >> forAllIn: aMonadycBlockCollection explainingConflictWith: aBlock [
+
+	^ self
+		  accordingTo: [ :objectInRepository :criteria :objectInMemory | 
+			  criteria satisfyingAll: (self
+					   compare: objectInRepository
+					   to: objectInMemory
+					   withAll: aMonadycBlockCollection) ]
+		  explainingConflictWith: aBlock
+]
+
+{ #category : #'instance creation' }
 CriteriaBasedConflictCheckingStrategy class >> forAnyIn: aMonadycBlockCollection [
 
 	^ self
@@ -58,11 +83,35 @@ CriteriaBasedConflictCheckingStrategy class >> forAnyIn: aMonadycBlockCollection
 ]
 
 { #category : #'instance creation' }
+CriteriaBasedConflictCheckingStrategy class >> forAnyIn: aMonadycBlockCollection explainingConflictWith: aBlock [
+
+	^ self
+		  accordingTo: [ :objectInRepository :criteria :objectInMemory | 
+			  criteria satisfyingAny: (self
+					   compare: objectInRepository
+					   to: objectInMemory
+					   withAll: aMonadycBlockCollection) ]
+		  explainingConflictWith: aBlock
+]
+
+{ #category : #'instance creation' }
 CriteriaBasedConflictCheckingStrategy class >> forSingleAspectMatching: aMonadycBlock [
 
 	^ self
 		accordingTo:
 			[ :objectInRepository :criteria :objectInMemory | self compare: objectInRepository to: objectInMemory with: aMonadycBlock ]
+]
+
+{ #category : #'instance creation' }
+CriteriaBasedConflictCheckingStrategy class >> forSingleAspectMatching: aMonadycBlock explainingConflictWith: aBlock [
+
+	^ self
+		  accordingTo: [ :objectInRepository :criteria :objectInMemory | 
+			  self
+				  compare: objectInRepository
+				  to: objectInMemory
+				  with: aMonadycBlock ]
+		  explainingConflictWith: aBlock
 ]
 
 { #category : #Evaluating }
@@ -96,13 +145,15 @@ CriteriaBasedConflictCheckingStrategy >> assertNoConflictsFor: updatedObjectInMe
 CriteriaBasedConflictCheckingStrategy >> assertNoConflictsFor: objectInMemory in: aRepository when: matchingCriteria [
 
 	AssertionChecker
-		refuse: [ ( aRepository countMatching: matchingCriteria ) strictlyPositive ]
-		because: [ 'Something is in conflict with <1p>' expandMacrosWith: objectInMemory ]
+		refuse: [ 
+		(aRepository countMatching: matchingCriteria) strictlyPositive ]
+		because: [ explanationBlock cull: objectInMemory ]
 		raising: ConflictingObjectFound
 ]
 
 { #category : #initialization }
-CriteriaBasedConflictCheckingStrategy >> initializeAccordingTo: aBlock [
+CriteriaBasedConflictCheckingStrategy >> initializeAccordingTo: aBlock explainingConflictWith: aExplanationBlock [
 
-	conflictCriteriaBlock := aBlock 
+	conflictCriteriaBlock := aBlock.
+	explanationBlock := aExplanationBlock
 ]

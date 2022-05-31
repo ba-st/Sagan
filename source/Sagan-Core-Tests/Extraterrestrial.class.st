@@ -45,6 +45,15 @@ Extraterrestrial >> lastName [
 	^ lastName
 ]
 
+{ #category : #printing }
+Extraterrestrial >> printOn: aStream [
+
+	aStream
+		nextPutAll: lastName;
+		nextPutAll: ', ';
+		nextPutAll: firstName
+]
+
 { #category : #accessing }
 Extraterrestrial >> sequentialNumber [
 
