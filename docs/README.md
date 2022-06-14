@@ -3,7 +3,7 @@
 Sagan is aimed to help solutions implementing polyglot persistence.
 
 To learn about the project, [install it](how-to/how-to-load-in-pharo.md) and
-start [here](Getting-Started.md)
+start [here](Getting-started.md)
 
 ---
 
