@@ -56,10 +56,10 @@ SingleSessionRDMBSRepositoryTest class >> postgreSQLLogin [
 	^ Login new
 		database: PostgreSQLPlatform new;
 		username: 'postgres';
-		password: 'yj5KsyaL9HH5iQbw';
-		host: 'srvpostgres.mercap.net';
+		password: 'secret';
+		host: 'localhost';
 		port: 5432;
-		databaseName: 'inventory_jvanecek';
+		databaseName: 'test';
 		setSSL;
 		yourself
 ]
