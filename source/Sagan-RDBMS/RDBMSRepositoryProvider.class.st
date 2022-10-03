@@ -33,7 +33,14 @@ RDBMSRepositoryProvider class >> usingSessionPoolWith: aLogin configuredBy: conf
 { #category : #'instance creation' }
 RDBMSRepositoryProvider class >> usingSingleSessionWith: aLogin [
 
-	^ self obtainingSessionFrom: ( SingleRDBMSSessionProvider loginWith: aLogin )
+	^ self usingSingleSessionWith: aLogin configuredBy: [  ]
+]
+
+{ #category : #'instance creation' }
+RDBMSRepositoryProvider class >> usingSingleSessionWith: aLogin configuredBy: aBlock [
+
+	^ self obtainingSessionFrom:
+		  (SingleRDBMSSessionProvider loginWith: aLogin configuredBy: aBlock)
 ]
 
 { #category : #building }

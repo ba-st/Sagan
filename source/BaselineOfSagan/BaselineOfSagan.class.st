@@ -55,7 +55,11 @@ BaselineOfSagan >> setUpDependencies: spec [
 	spec
 		baseline: 'SQLite3'
 			with: [ spec repository: 'github://pharo-rdbms/Pharo-SQLite3:v2.2.0' ];
-		project: 'Glorp SQLite3' copyFrom: 'SQLite3' with: [ spec loads: 'glorp' ]
+		project: 'Glorp SQLite3' copyFrom: 'SQLite3' with: [ spec loads: 'glorp' ]. 
+		
+	spec 
+		baseline: 'Launchpad' with: [ spec repository: 'github://ba-st/Launchpad:v4' ];
+		project: 'Launchpad-Logging' copyFrom: 'Launchpad' with: [ spec loads: 'Deployment' ]
 ]
 
 { #category : #initialization }
