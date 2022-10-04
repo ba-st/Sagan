@@ -173,18 +173,15 @@ SingleSessionRDMBSRepositoryTest >> configureSpaceshipMappings [
 SingleSessionRDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
 	provider := RDBMSRepositoryProvider
-		            usingSingleSessionWith: self class login
-		            configuredBy: [ :options | 
-		            options at: #enableLogging put: true ].
+		usingSingleSessionWith: self class login
+		configuredBy: [ :options | options at: #enableLogging put: true ].
 	extraterrestrials := provider
-		                     createRepositoryStoringObjectsOfType:
-		                     Extraterrestrial
-		                     checkingConflictsAccordingTo:
-		                     aConflictCheckingStrategy.
+		createRepositoryStoringObjectsOfType: Extraterrestrial
+		checkingConflictsAccordingTo: aConflictCheckingStrategy.
 	self configureExtraterrestrialMappings.
 	ships := provider
-		         createRepositoryStoringObjectsOfType: Spaceship
-		         checkingConflictsAccordingTo: aConflictCheckingStrategy.
+		createRepositoryStoringObjectsOfType: Spaceship
+		checkingConflictsAccordingTo: aConflictCheckingStrategy.
 	self configureSpaceshipMappings.
 	provider prepareForInitialPersistence
 ]
@@ -200,15 +197,19 @@ SingleSessionRDMBSRepositoryTest >> tearDown [
 SingleSessionRDMBSRepositoryTest >> testLogging [
 
 	| logger |
+	
 	logger := MemoryLogger new runDuring: [ 
-		          self extraterrestrials store: self silvesterStallone ].
+		self extraterrestrials store: self silvesterStallone ].
 
 	self
-		assert: logger recordings size equals: 27;
-		assert: (logger recordings first printString endsWith:
-					 '[DEBUG] Glorp event received {"detail":"Login"}');
-		assert: (logger recordings second printString endsWith:
-					 '[DEBUG] Glorp event received {"detail":"Login finished"}')
+		assert: (logger recordings first printString 
+			endsWith: '[DEBUG] Glorp event received {"detail":"Login"}');
+		assert: (logger recordings second printString 
+			endsWith: '[DEBUG] Glorp event received {"detail":"Login finished"}');
+		assert: ((logger recordings at: logger recordings size - 2) printString 
+			endsWith: '[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (sequential_number,first_name,last_name,birth_date)  VALUES (1,''Silvester'',''Stallone'',''1946-07-06'')"}');
+		assert: (logger recordings last printString 
+			endsWith: '[DEBUG] Glorp event received {"detail":"Commit Transaction"}')
 ]
 
 { #category : #'tests - querying' }
