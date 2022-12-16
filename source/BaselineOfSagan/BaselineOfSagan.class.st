@@ -44,8 +44,8 @@ BaselineOfSagan >> setUpDependencies: spec [
 		project: 'Buoy-Tools' copyFrom: 'Buoy' with: [ spec loads: 'Tools' ].
 
 	spec
-		baseline: 'Glorp' with: [ spec repository: 'github://jvanecek/glorp:improve-logging' ];
-		project: 'Glorp-Core' copyFrom: 'Glorp' with: [ spec loads: 'Core' ].
+		baseline: 'Glorp' with: [ spec repository: 'github://pharo-rdbms/glorp:v9.0.4'  ];
+		project: 'Glorp-Core' copyFrom: 'Glorp' with: [ spec onLock: [ :ex | ex honor ]; loads: 'Core' ].
 
 	spec
 		baseline: 'P3'
