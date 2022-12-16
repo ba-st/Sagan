@@ -45,7 +45,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
 		baseline: 'Glorp' with: [ spec repository: 'github://pharo-rdbms/glorp:v9.0.4'  ];
-		project: 'Glorp-Core' copyFrom: 'Glorp' with: [ spec onLock: [ :ex | ex honor ]; loads: 'Core' ].
+		project: 'Glorp-Core' copyFrom: 'Glorp' with: [ spec loads: 'Core' ].
 
 	spec
 		baseline: 'P3'
