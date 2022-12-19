@@ -174,7 +174,7 @@ SingleSessionRDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrate
 
 	provider := RDBMSRepositoryProvider
 		usingSingleSessionWith: self class login
-		configuredBy: [ :options | options at: #enableLogging put: true ].
+		configuredBy: [ :options | options at: #logDatabaseEvents put: true ].
 	extraterrestrials := provider
 		createRepositoryStoringObjectsOfType: Extraterrestrial
 		checkingConflictsAccordingTo: aConflictCheckingStrategy.

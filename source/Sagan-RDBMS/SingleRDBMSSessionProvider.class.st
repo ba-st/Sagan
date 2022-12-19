@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'session',
 		'login',
-		'enableLogging'
+		'loggingEnabled'
 	],
 	#category : #'Sagan-RDBMS-Repository'
 }
@@ -35,7 +35,7 @@ SingleRDBMSSessionProvider >> createDatabaseAccessor [
 
 	| accessor |
 	accessor := DatabaseAccessor forLogin: login.
-	enableLogging then: [ 
+	loggingEnabled then: [ 
 		accessor logging: true.
 		accessor logger: GlorpLoggerToLaunchpadLogRecordAdapter new ].
 	^ accessor
@@ -59,7 +59,7 @@ SingleRDBMSSessionProvider >> initializeLoginWith: aLogin [
 SingleRDBMSSessionProvider >> initializeLoginWith: aLogin configuredBy: options [
 
 	login := aLogin.
-	enableLogging := options at: #enableLogging ifAbsent: [ false ]
+	loggingEnabled := options at: #logDatabaseEvents ifAbsent: [ false ]
 ]
 
 { #category : #initialization }
