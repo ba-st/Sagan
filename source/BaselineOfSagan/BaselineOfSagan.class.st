@@ -78,7 +78,7 @@ BaselineOfSagan >> setUpPackages: spec [
 		group: 'Tests' with: 'Sagan-Core-Tests'.
 
 	spec
-		package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp-Core' 'Core' 'ObjectPool-Core') ];
+		package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp-Core' 'Core' 'ObjectPool-Core' 'Launchpad-Logging') ];
 		group: 'RDBMS' with: #('Sagan-RDBMS').
 
 	spec package: 'Sagan-Kepler-Tests' with: [ spec requires: #('Sagan-Kepler') ].
