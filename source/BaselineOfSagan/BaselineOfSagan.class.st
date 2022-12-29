@@ -44,7 +44,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 		project: 'Buoy-Tools' copyFrom: 'Buoy' with: [ spec loads: 'Tools' ].
 
 	spec
-		baseline: 'Glorp' with: [ spec repository: 'github://pharo-rdbms/glorp:v9.0.4'  ];
+		baseline: 'Glorp' with: [ spec repository: 'github://pharo-rdbms/glorp:v9.0.6'  ];
 		project: 'Glorp-Core' copyFrom: 'Glorp' with: [ spec loads: 'Core' ].
 
 	spec

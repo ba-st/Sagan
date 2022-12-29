@@ -10,7 +10,12 @@ GlorpLoggerToLaunchpadLogRecordAdapter >> cr [
 ]
 
 { #category : #printing }
-GlorpLoggerToLaunchpadLogRecordAdapter >> show: aString [
+GlorpLoggerToLaunchpadLogRecordAdapter >> flush [
+	" "
+]
+
+{ #category : #printing }
+GlorpLoggerToLaunchpadLogRecordAdapter >> nextPutAll: aString [
 
 	LaunchpadLogRecord
 		emitStructuredDebuggingInfo: 'Glorp event received'
