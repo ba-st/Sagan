@@ -17,7 +17,7 @@ GlorpLoggerToLaunchpadLogRecordAdapter >> flush [
 { #category : #printing }
 GlorpLoggerToLaunchpadLogRecordAdapter >> nextPutAll: aString [
 
-	LaunchpadLogRecord
+	LogRecord
 		emitStructuredDebuggingInfo: 'Glorp event received'
 		with: [ :data | data at: #detail put: aString ]
 ]

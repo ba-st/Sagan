@@ -54,12 +54,12 @@ BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
 		baseline: 'SQLite3'
-			with: [ spec repository: 'github://pharo-rdbms/Pharo-SQLite3:v2.2.0' ];
+			with: [ spec repository: 'github://pharo-rdbms/Pharo-SQLite3:v2.2.3' ];
 		project: 'Glorp SQLite3' copyFrom: 'SQLite3' with: [ spec loads: 'glorp' ]. 
 		
 	spec 
-		baseline: 'Launchpad' with: [ spec repository: 'github://ba-st/Launchpad:v4' ];
-		project: 'Launchpad-Logging' copyFrom: 'Launchpad' with: [ spec loads: 'Deployment' ]
+		baseline: 'Bell' with: [ spec repository: 'github://ba-st/Bell:v1' ];
+		project: 'Bell-SUnit' copyFrom: 'Bell' with: [ spec loads: 'Dependent-SUnit-Extensions' ]
 ]
 
 { #category : #initialization }
@@ -78,7 +78,7 @@ BaselineOfSagan >> setUpPackages: spec [
 		group: 'Tests' with: 'Sagan-Core-Tests'.
 
 	spec
-		package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp-Core' 'Core' 'ObjectPool-Core' 'Launchpad-Logging') ];
+		package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp-Core' 'Core' 'ObjectPool-Core' 'Bell-SUnit') ];
 		group: 'RDBMS' with: #('Sagan-RDBMS').
 
 	spec package: 'Sagan-Kepler-Tests' with: [ spec requires: #('Sagan-Kepler') ].

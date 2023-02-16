@@ -196,20 +196,17 @@ SingleSessionRDMBSRepositoryTest >> tearDown [
 { #category : #'tests - querying' }
 SingleSessionRDMBSRepositoryTest >> testLogging [
 
-	| logger |
-	
-	logger := MemoryLogger new runDuring: [ 
-		self extraterrestrials store: self silvesterStallone ].
+	| loggingAsserter |
 
-	self
-		assert: (logger recordings first printString 
-			endsWith: '[DEBUG] Glorp event received {"detail":"Login"}');
-		assert: (logger recordings second printString 
-			endsWith: '[DEBUG] Glorp event received {"detail":"Login finished"}');
-		assert: ((logger recordings at: logger recordings size - 2) printString 
-			endsWith: '[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (sequential_number,first_name,last_name,birth_date)  VALUES (1,''Silvester'',''Stallone'',''1946-07-06'')"}');
-		assert: (logger recordings last printString 
-			endsWith: '[DEBUG] Glorp event received {"detail":"Commit Transaction"}')
+	loggingAsserter := LoggingAsserter on: self.
+	loggingAsserter
+		runMemoryLoggerDuring: [ self extraterrestrials store: self silvesterStallone ];
+		assertLogRecordsMatch: #( 
+		'[DEBUG] Glorp event received {"detail":"Login"}'
+		'[DEBUG] Glorp event received {"detail":"Login finished"}'
+		'[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (sequential_number,first_name,last_name,birth_date)  VALUES (1,''Silvester'',''Stallone'',''1946-07-06'')"}'
+		'[DEBUG] Glorp event received {"detail":"Commit Transaction"}'
+		) .
 ]
 
 { #category : #'tests - querying' }
