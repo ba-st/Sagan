@@ -201,12 +201,15 @@ SingleSessionRDMBSRepositoryTest >> testLogging [
 	loggingAsserter := LoggingAsserter on: self.
 	loggingAsserter
 		runMemoryLoggerDuring: [ self extraterrestrials store: self silvesterStallone ];
-		assertLogRecordsMatch: #( 
+		assertLogRecordsMatchInTheFollowingOrder: #( 
 		'[DEBUG] Glorp event received {"detail":"Login"}'
 		'[DEBUG] Glorp event received {"detail":"Login finished"}'
+		'[DEBUG] Glorp event received {"detail":"Begin Transaction"}'
 		'[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (sequential_number,first_name,last_name,birth_date)  VALUES (1,''Silvester'',''Stallone'',''1946-07-06'')"}'
 		'[DEBUG] Glorp event received {"detail":"Commit Transaction"}'
 		) .
+		
+	loggingAsserter stopLoggers.
 ]
 
 { #category : #'tests - querying' }

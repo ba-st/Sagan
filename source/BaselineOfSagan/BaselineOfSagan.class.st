@@ -59,6 +59,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 		
 	spec 
 		baseline: 'Bell' with: [ spec repository: 'github://ba-st/Bell:v1' ];
+		project: 'Bell-Core' copyFrom: 'Bell' with: [ spec loads: 'Development' ];
 		project: 'Bell-SUnit' copyFrom: 'Bell' with: [ spec loads: 'Dependent-SUnit-Extensions' ]
 ]
 
@@ -78,7 +79,7 @@ BaselineOfSagan >> setUpPackages: spec [
 		group: 'Tests' with: 'Sagan-Core-Tests'.
 
 	spec
-		package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp-Core' 'Core' 'ObjectPool-Core' 'Bell-SUnit') ];
+		package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp-Core' 'Core' 'ObjectPool-Core' 'Bell-Core') ];
 		group: 'RDBMS' with: #('Sagan-RDBMS').
 
 	spec package: 'Sagan-Kepler-Tests' with: [ spec requires: #('Sagan-Kepler') ].
@@ -88,6 +89,6 @@ BaselineOfSagan >> setUpPackages: spec [
 
 	spec
 		package: 'Sagan-RDBMS-Tests'
-			with: [ spec requires: #('PostgreSQL' 'SQLite' 'Sagan-Core-Tests' 'Sagan-Kepler-Tests') ];
+			with: [ spec requires: #('PostgreSQL' 'SQLite' 'Sagan-Core-Tests' 'Sagan-Kepler-Tests' 'Bell-SUnit') ];
 		group: 'Tests' with: 'Sagan-RDBMS-Tests'
 ]
