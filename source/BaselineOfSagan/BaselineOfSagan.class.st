@@ -49,7 +49,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
 		baseline: 'P3'
-			with: [ spec repository: 'github://ba-st-dependencies/P3:v1.4.2'];
+			with: [ spec repository: 'github://ba-st-dependencies/P3:v1.4.1'];
 			project: 'Glorp P3' copyFrom: 'P3' with: [ spec loads: 'glorp' ].
 
 	spec
@@ -59,7 +59,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 		
 	spec 
 		baseline: 'Bell' with: [ spec repository: 'github://ba-st/Bell:v1' ];
-		project: 'Bell-Core' copyFrom: 'Bell' with: [ spec loads: 'Development' ];
+		project: 'Bell-Core' copyFrom: 'Bell' with: [ spec loads: 'Deployment' ];
 		project: 'Bell-SUnit' copyFrom: 'Bell' with: [ spec loads: 'Dependent-SUnit-Extensions' ]
 ]
 
