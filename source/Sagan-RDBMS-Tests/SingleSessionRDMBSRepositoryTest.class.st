@@ -169,6 +169,14 @@ SingleSessionRDMBSRepositoryTest >> configureSpaceshipMappings [
 			]
 ]
 
+{ #category : #utility }
+SingleSessionRDMBSRepositoryTest >> do: aBlock unlessSQLiteIsBeingUsedInWhichCaseDo: aSQLiteBeingUsedBlock [
+
+	DatabaseAccessor classForThisPlatform DefaultDriver = SQLite3Driver
+		then: aSQLiteBeingUsedBlock
+		otherwise: aBlock
+]
+
 { #category : #initialization }
 SingleSessionRDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
@@ -196,15 +204,29 @@ SingleSessionRDMBSRepositoryTest >> tearDown [
 { #category : #'tests - querying' }
 SingleSessionRDMBSRepositoryTest >> testLogging [
 
-	self withLoggingAsserterDo: [ :asserter | 
-		asserter
-			runMemoryLoggerDuring: [ self extraterrestrials store: self silvesterStallone ];
-			assertLogRecordsMatchInTheFollowingOrder: #( '[DEBUG] Glorp event received {"detail":"Login"}'
-				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
-				   '[DEBUG] Glorp event received {"detail":"Begin Transaction"}'
-				   '[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (sequential_number,first_name,last_name,birth_date)  VALUES (1,''Silvester'',''Stallone'',''1946-07-06'')"}'
-				   '[DEBUG] Glorp event received {"detail":"Commit Transaction"}' )
-		]
+	self
+		do: [ 
+			self withLoggingAsserterDo: [ :asserter | 
+				asserter
+					runMemoryLoggerDuring: [ self extraterrestrials store: self silvesterStallone ];
+					assertLogRecordsMatchInTheFollowingOrder: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+						   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+						   '[DEBUG] Glorp event received {"detail":"Begin Transaction"}'
+						   '[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (sequential_number,first_name,last_name,birth_date)  VALUES (1,''Silvester'',''Stallone'',''1946-07-06'')"}'
+						   '[DEBUG] Glorp event received {"detail":"Commit Transaction"}' )
+				]
+			]
+		unlessSQLiteIsBeingUsedInWhichCaseDo: [ 
+			self withLoggingAsserterDo: [ :asserter | 
+				asserter
+					runMemoryLoggerDuring: [ self extraterrestrials store: self silvesterStallone ];
+					assertLogRecordsMatchInTheFollowingOrder: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+						   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+						   '[DEBUG] Glorp event received {"detail":"Begin Transaction"}'
+						   '[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (first_name,last_name,birth_date)  VALUES (?,?,?)  an Array(''Silvester'' ''Stallone'' 6 July 1946)"}'
+						   '[DEBUG] Glorp event received {"detail":"Commit Transaction"}' )
+				]
+			]
 ]
 
 { #category : #'tests - querying' }

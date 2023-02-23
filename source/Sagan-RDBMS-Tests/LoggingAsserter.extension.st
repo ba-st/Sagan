@@ -9,9 +9,10 @@ LoggingAsserter >> assertLogRecordsMatchInTheFollowingOrder: expectedLogEntries 
 	| indexes |
 
 	indexes := expectedLogEntries collect: [ :expectedLogEntry | 
-		           memoryLogger recordings detectIndex: [ :record | 
-			           record printString includesSubstring: expectedLogEntry ]
+		           memoryLogger recordings
+			           detectIndex: [ :record | record printString includesSubstring: expectedLogEntry ]
+			           ifNone: [ testCase fail ]
 		           ].
 
-	^ indexes = ( indexes sorted: [ :a :b | a < b ] )
+	testCase assert: indexes equals: ( indexes sorted: [ :a :b | a < b ] )
 ]
