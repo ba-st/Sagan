@@ -196,20 +196,15 @@ SingleSessionRDMBSRepositoryTest >> tearDown [
 { #category : #'tests - querying' }
 SingleSessionRDMBSRepositoryTest >> testLogging [
 
-	| loggingAsserter |
-
-	loggingAsserter := LoggingAsserter on: self.
-	loggingAsserter
-		runMemoryLoggerDuring: [ self extraterrestrials store: self silvesterStallone ];
-		assertLogRecordsMatchInTheFollowingOrder: #( 
-		'[DEBUG] Glorp event received {"detail":"Login"}'
-		'[DEBUG] Glorp event received {"detail":"Login finished"}'
-		'[DEBUG] Glorp event received {"detail":"Begin Transaction"}'
-		'[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (sequential_number,first_name,last_name,birth_date)  VALUES (1,''Silvester'',''Stallone'',''1946-07-06'')"}'
-		'[DEBUG] Glorp event received {"detail":"Commit Transaction"}'
-		) .
-		
-	loggingAsserter stopLoggers.
+	self withLoggingAsserterDo: [ :asserter | 
+		asserter
+			runMemoryLoggerDuring: [ self extraterrestrials store: self silvesterStallone ];
+			assertLogRecordsMatchInTheFollowingOrder: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Begin Transaction"}'
+				   '[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (sequential_number,first_name,last_name,birth_date)  VALUES (1,''Silvester'',''Stallone'',''1946-07-06'')"}'
+				   '[DEBUG] Glorp event received {"detail":"Commit Transaction"}' )
+		]
 ]
 
 { #category : #'tests - querying' }
@@ -278,4 +273,14 @@ SingleSessionRDMBSRepositoryTest >> testSpaceshipQueryingForZeroFirepower [
 SingleSessionRDMBSRepositoryTest >> withAllSpaceshipsMatching: aMatchingCriteria do: aOneArgBlock [
 
 	aOneArgBlock value: ( ships findAllMatching: aMatchingCriteria )
+]
+
+{ #category : #utility }
+SingleSessionRDMBSRepositoryTest >> withLoggingAsserterDo: aOneArgBlock [
+
+	| loggingAsserter |
+
+	loggingAsserter := LoggingAsserter on: self.
+
+	[ aOneArgBlock value: loggingAsserter ] ensure: [ loggingAsserter stopLoggers ]
 ]

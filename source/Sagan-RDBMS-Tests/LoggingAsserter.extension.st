@@ -13,5 +13,5 @@ LoggingAsserter >> assertLogRecordsMatchInTheFollowingOrder: expectedLogEntries 
 			           record printString includesSubstring: expectedLogEntry ]
 		           ].
 
-	^ indexes = ( indexes copy sort: [ :a :b | a < b ] )
+	^ indexes = ( indexes sorted: [ :a :b | a < b ] )
 ]
