@@ -8,12 +8,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        smalltalk: [ Pharo64-10, Pharo64-9.0, Pharo64-8.0 ]  
+        smalltalk: [ Pharo64-10, Pharo64-9.0 ]  
         rdbms: [ SQLite3 ]
         load-spec: [ deployment, tests, tools, development]
     name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }} + ${{ matrix.load-spec }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: hpi-swa/setup-smalltalkCI@v1
         with:
           smalltalk-image: ${{ matrix.smalltalk }}
