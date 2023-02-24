@@ -1,21 +1,21 @@
 Class {
-	#name : #GlorpLoggerToLaunchpadLogRecordAdapter,
+	#name : #GlorpLoggerToLogRecordAdapter,
 	#superclass : #Object,
 	#category : #'Sagan-RDBMS-Repository'
 }
 
 { #category : #printing }
-GlorpLoggerToLaunchpadLogRecordAdapter >> cr [
+GlorpLoggerToLogRecordAdapter >> cr [
 	" "
 ]
 
 { #category : #printing }
-GlorpLoggerToLaunchpadLogRecordAdapter >> flush [
+GlorpLoggerToLogRecordAdapter >> flush [
 	" "
 ]
 
 { #category : #printing }
-GlorpLoggerToLaunchpadLogRecordAdapter >> nextPutAll: aString [
+GlorpLoggerToLogRecordAdapter >> nextPutAll: aString [
 
 	LogRecord
 		emitStructuredDebuggingInfo: 'Glorp event received'

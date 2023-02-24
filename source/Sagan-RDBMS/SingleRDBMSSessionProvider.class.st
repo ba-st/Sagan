@@ -37,7 +37,7 @@ SingleRDBMSSessionProvider >> createDatabaseAccessor [
 	accessor := DatabaseAccessor forLogin: login.
 	loggingEnabled then: [ 
 		accessor logging: true.
-		accessor logger: GlorpLoggerToLaunchpadLogRecordAdapter new ].
+		accessor logger: GlorpLoggerToLogRecordAdapter new ].
 	^ accessor
 ]
 
