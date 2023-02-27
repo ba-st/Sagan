@@ -169,10 +169,20 @@ SingleSessionRDMBSRepositoryTest >> configureSpaceshipMappings [
 			]
 ]
 
+{ #category : #utility }
+SingleSessionRDMBSRepositoryTest >> do: aBlock unlessSQLiteIsBeingUsedInWhichCaseDo: aSQLiteBeingUsedBlock [
+
+	DatabaseAccessor classForThisPlatform DefaultDriver = SQLite3Driver
+		then: aSQLiteBeingUsedBlock
+		otherwise: aBlock
+]
+
 { #category : #initialization }
 SingleSessionRDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
-	provider := RDBMSRepositoryProvider usingSingleSessionWith: self class login.
+	provider := RDBMSRepositoryProvider
+		usingSingleSessionWith: self class login
+		configuredBy: [ :options | options at: #logDatabaseEvents put: true ].
 	extraterrestrials := provider
 		createRepositoryStoringObjectsOfType: Extraterrestrial
 		checkingConflictsAccordingTo: aConflictCheckingStrategy.
@@ -189,6 +199,34 @@ SingleSessionRDMBSRepositoryTest >> tearDown [
 
 	provider reset.
 	super tearDown
+]
+
+{ #category : #'tests - querying' }
+SingleSessionRDMBSRepositoryTest >> testLogging [
+
+	self
+		do: [ 
+			self withLoggingAsserterDo: [ :asserter | 
+				asserter
+					runMemoryLoggerDuring: [ self extraterrestrials store: self silvesterStallone ];
+					assertLogRecordsMatchInTheFollowingOrder: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+						   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+						   '[DEBUG] Glorp event received {"detail":"Begin Transaction"}'
+						   '[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (sequential_number,first_name,last_name,birth_date)  VALUES (1,''Silvester'',''Stallone'',''1946-07-06'')"}'
+						   '[DEBUG] Glorp event received {"detail":"Commit Transaction"}' )
+				]
+			]
+		unlessSQLiteIsBeingUsedInWhichCaseDo: [ 
+			self withLoggingAsserterDo: [ :asserter | 
+				asserter
+					runMemoryLoggerDuring: [ self extraterrestrials store: self silvesterStallone ];
+					assertLogRecordsMatchInTheFollowingOrder: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+						   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+						   '[DEBUG] Glorp event received {"detail":"Begin Transaction"}'
+						   '[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (first_name,last_name,birth_date)  VALUES (?,?,?)  an Array(''Silvester'' ''Stallone'' 6 July 1946)"}'
+						   '[DEBUG] Glorp event received {"detail":"Commit Transaction"}' )
+				]
+			]
 ]
 
 { #category : #'tests - querying' }
@@ -257,4 +295,14 @@ SingleSessionRDMBSRepositoryTest >> testSpaceshipQueryingForZeroFirepower [
 SingleSessionRDMBSRepositoryTest >> withAllSpaceshipsMatching: aMatchingCriteria do: aOneArgBlock [
 
 	aOneArgBlock value: ( ships findAllMatching: aMatchingCriteria )
+]
+
+{ #category : #utility }
+SingleSessionRDMBSRepositoryTest >> withLoggingAsserterDo: aOneArgBlock [
+
+	| loggingAsserter |
+
+	loggingAsserter := LoggingAsserter on: self.
+
+	[ aOneArgBlock value: loggingAsserter ] ensure: [ loggingAsserter stopLoggers ]
 ]

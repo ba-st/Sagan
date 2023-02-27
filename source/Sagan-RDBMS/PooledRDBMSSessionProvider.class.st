@@ -7,7 +7,8 @@ Class {
 		'configurationSession',
 		'sessionPool',
 		'descriptorsBySession',
-		'descriptorSystemWasCopied'
+		'descriptorSystemWasCopied',
+		'loggingEnabled'
 	],
 	#category : #'Sagan-RDBMS-Repository'
 }
@@ -49,12 +50,22 @@ PooledRDBMSSessionProvider >> configureDescriptorSystemTo: aGlorpSession [
 ]
 
 { #category : #'private-accessing' }
+PooledRDBMSSessionProvider >> createDatabaseAccessor [
+
+	| accessor |
+	accessor := DatabaseAccessor forLogin: login.
+	loggingEnabled then: [ 
+		accessor logging: true.
+		accessor logger: GlorpLoggerToLogRecordAdapter new ].
+	^ accessor
+]
+
+{ #category : #'private-accessing' }
 PooledRDBMSSessionProvider >> createNewSession [
 
 	| session |
-
 	session := GlorpSession new.
-	session accessor: ( DatabaseAccessor forLogin: login ).
+	session accessor: self createDatabaseAccessor.
 	session system: descriptorSystem.
 	session loginIfError: [ :error | DatabaseLoginFailed signal: error description ].
 	^ session
@@ -79,6 +90,7 @@ PooledRDBMSSessionProvider >> initializeConfigurationSession [
 PooledRDBMSSessionProvider >> initializeLoginWith: aLogin configuredBy: options [
 
 	login := aLogin.
+	loggingEnabled := options at: #logDatabaseEvents ifAbsent: [ false ].
 	descriptorSystem := ConfigurableDescriptorSystem new.
 	descriptorSystemWasCopied := false.
 	self initializeConfigurationSession.
