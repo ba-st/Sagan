@@ -25,16 +25,14 @@ RDBMSSessionProvider >> deleteSessions [
 RDBMSSessionProvider >> ensureSuccessfulLoggingToDatabaseWith: aSession [
 
 	Retry
-		value: [ 
-			aSession loginIfError: [ :error | 
-				DatabaseLoginFailed signal: error description ] ]
+		value: [ aSession loginIfError: [ :error | DatabaseLoginFailed signal: error description ] ]
 		configuredBy: [ :retry | 
 			retry
 				upTo: self retryAttempts;
 				backoffExponentiallyWithTimeSlot: self timeframeBetweenAttempts;
 				on: DatabaseLoginFailed evaluating: [ :tryCount :loginFailure | 
-					LaunchpadLogRecord emitInfo:
-							'Retry connection to DB. Attempt number ' , tryCount asString ] ]
+					LogRecord emitInfo: 'Retry connection to DB. Attempt number ' , tryCount asString ]
+			]
 ]
 
 { #category : #initialization }
