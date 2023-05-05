@@ -2,13 +2,11 @@ Class {
 	#name : #PooledRDBMSSessionProvider,
 	#superclass : #RDBMSSessionProvider,
 	#instVars : [
-		'login',
 		'descriptorSystem',
 		'configurationSession',
 		'sessionPool',
 		'descriptorsBySession',
-		'descriptorSystemWasCopied',
-		'loggingEnabled'
+		'descriptorSystemWasCopied'
 	],
 	#category : #'Sagan-RDBMS-Repository'
 }
@@ -54,7 +52,7 @@ PooledRDBMSSessionProvider >> createDatabaseAccessor [
 
 	| accessor |
 	accessor := DatabaseAccessor forLogin: login.
-	loggingEnabled then: [ 
+	self isLoggingEnabled then: [ 
 		accessor logging: true.
 		accessor logger: GlorpLoggerToLogRecordAdapter new ].
 	^ accessor
@@ -67,7 +65,7 @@ PooledRDBMSSessionProvider >> createNewSession [
 	session := GlorpSession new.
 	session accessor: self createDatabaseAccessor.
 	session system: descriptorSystem.
-	session loginIfError: [ :error | DatabaseLoginFailed signal: error description ].
+	self ensureSuccessfulLoggingToDatabaseWith: session.
 	^ session
 ]
 
@@ -87,10 +85,9 @@ PooledRDBMSSessionProvider >> initializeConfigurationSession [
 ]
 
 { #category : #initialization }
-PooledRDBMSSessionProvider >> initializeLoginWith: aLogin configuredBy: options [
+PooledRDBMSSessionProvider >> initializeLoginWith: aLogin configuredBy: anOptions [
 
-	login := aLogin.
-	loggingEnabled := options at: #logDatabaseEvents ifAbsent: [ false ].
+	super initializeLoginWith: aLogin configuredBy: anOptions.
 	descriptorSystem := ConfigurableDescriptorSystem new.
 	descriptorSystemWasCopied := false.
 	self initializeConfigurationSession.

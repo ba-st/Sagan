@@ -2,25 +2,17 @@ Class {
 	#name : #SingleRDBMSSessionProvider,
 	#superclass : #RDBMSSessionProvider,
 	#instVars : [
-		'session',
-		'login',
-		'loggingEnabled'
+		'session'
 	],
 	#category : #'Sagan-RDBMS-Repository'
 }
 
 { #category : #'instance creation' }
-SingleRDBMSSessionProvider class >> loginWith: aLogin [
-
-	^ self loginWith: aLogin configuredBy: [  ]
-]
-
-{ #category : #'instance creation' }
-SingleRDBMSSessionProvider class >> loginWith: aLogin configuredBy: aBlock [
+SingleRDBMSSessionProvider class >> loginWith: aLogin configuredBy: anActionConfiguration [
 
 	| options |
 	options := Dictionary new.
-	aBlock cull: options.
+	anActionConfiguration cull: options.
 	^ self new initializeLoginWith: aLogin configuredBy: options
 ]
 
@@ -35,7 +27,7 @@ SingleRDBMSSessionProvider >> createDatabaseAccessor [
 
 	| accessor |
 	accessor := DatabaseAccessor forLogin: login.
-	loggingEnabled then: [ 
+	self isLoggingEnabled then: [ 
 		accessor logging: true.
 		accessor logger: GlorpLoggerToLogRecordAdapter new ].
 	^ accessor
@@ -49,26 +41,12 @@ SingleRDBMSSessionProvider >> deleteSessions [
 ]
 
 { #category : #initialization }
-SingleRDBMSSessionProvider >> initializeLoginWith: aLogin [
-	
-	login := aLogin. 
-	
-]
-
-{ #category : #initialization }
-SingleRDBMSSessionProvider >> initializeLoginWith: aLogin configuredBy: options [
-
-	login := aLogin.
-	loggingEnabled := options at: #logDatabaseEvents ifAbsent: [ false ]
-]
-
-{ #category : #initialization }
 SingleRDBMSSessionProvider >> initializeSession [
 
 	session := GlorpSession new.
 	session accessor: self createDatabaseAccessor.
 	session system: ConfigurableDescriptorSystem new.
-	session loginIfError: [ :error | DatabaseLoginFailed signal: error description ]
+	self ensureSuccessfulLoggingToDatabaseWith: session
 ]
 
 { #category : #'private-accessing' }

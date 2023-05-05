@@ -184,12 +184,14 @@ SingleSessionRDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrate
 		usingSingleSessionWith: self class login
 		configuredBy: [ :options | options at: #logDatabaseEvents put: true ].
 	extraterrestrials := provider
-		createRepositoryStoringObjectsOfType: Extraterrestrial
-		checkingConflictsAccordingTo: aConflictCheckingStrategy.
+		                     createRepositoryStoringObjectsOfType:
+		                     Extraterrestrial
+		                     checkingConflictsAccordingTo:
+		                     aConflictCheckingStrategy.
 	self configureExtraterrestrialMappings.
 	ships := provider
-		createRepositoryStoringObjectsOfType: Spaceship
-		checkingConflictsAccordingTo: aConflictCheckingStrategy.
+		         createRepositoryStoringObjectsOfType: Spaceship
+		         checkingConflictsAccordingTo: aConflictCheckingStrategy.
 	self configureSpaceshipMappings.
 	provider prepareForInitialPersistence
 ]
