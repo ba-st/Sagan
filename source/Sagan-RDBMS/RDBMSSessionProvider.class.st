@@ -31,7 +31,10 @@ RDBMSSessionProvider >> ensureSuccessfulLoggingToDatabaseWith: aSession [
 				upTo: self retryAttempts;
 				backoffExponentiallyWithTimeSlot: self timeframeBetweenAttempts;
 				on: DatabaseLoginFailed evaluating: [ :tryCount :loginFailure | 
-					LogRecord emitInfo: 'Retry connection to DB. Attempt number ' , tryCount asString ]
+					LogRecord emitWarning: ( 'Failed to connect to database after <1p> attempts because <2s>'
+								  expandMacrosWith: tryCount
+								  with: loginFailure messageText )
+					]
 			]
 ]
 

@@ -58,12 +58,16 @@ SingleRDBMSSessionProvider >> session [
 
 { #category : #accessing }
 SingleRDBMSSessionProvider >> withConfigurationSessionDo: aBlockClosure [
-
-	aBlockClosure value: self session
+	
+	self withSessionDo: aBlockClosure
 ]
 
 { #category : #accessing }
 SingleRDBMSSessionProvider >> withSessionDo: aBlockClosure [
 
-	^ aBlockClosure value: self session
+	| currentSession |
+
+	currentSession := self session.
+	currentSession isLoggedIn not then: [ self ensureSuccessfulLoggingToDatabaseWith: currentSession ].
+	^ aBlockClosure value: currentSession
 ]
