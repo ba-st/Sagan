@@ -1,11 +1,23 @@
 Class {
-	#name : #SingleRDBMSSessionProviderTest,
+	#name : #PooledRDBMSSessionProviderTest,
 	#superclass : #RDBMSSessionProviderTest,
 	#category : #'Sagan-RDBMS-Tests'
 }
 
 { #category : #tests }
-SingleRDBMSSessionProviderTest >> testHandleFailingLogin [
+PooledRDBMSSessionProviderTest >> sessionProviderOptions [
+
+	^ [ :options | 
+	  options
+		  at: #logDatabaseEvents put: true;
+		  at: #maxActiveSessionsCount put: 1;
+		  at: #maxIdleSessionsCount put: 1;
+		  at: #minIdleSessionsCount put: 1
+	  ]
+]
+
+{ #category : #tests }
+PooledRDBMSSessionProviderTest >> testHandleFailingLogin [
 
 	| sessionProvider |
 
@@ -15,14 +27,10 @@ SingleRDBMSSessionProviderTest >> testHandleFailingLogin [
 			should: [ 
 				asserter
 					runMemoryLoggerDuring: [ 
-						sessionProvider := SingleRDBMSSessionProvider
+						sessionProvider := PooledRDBMSSessionProvider
 							                   loginWith: self class failingLogin
-							                   configuredBy: [ :options | options at: #logDatabaseEvents put: true ]
+							                   configuredBy: self sessionProviderOptions
 						];
-					assertLogRecordsMatch: #(  ).
-
-				asserter
-					runMemoryLoggerDuring: [ sessionProvider withSessionDo: [ :session |  ] ];
 					assertLogRecordsMatch: #(  )
 				]
 			raise: DatabaseLoginFailed
@@ -43,39 +51,53 @@ SingleRDBMSSessionProviderTest >> testHandleFailingLogin [
 ]
 
 { #category : #tests }
-SingleRDBMSSessionProviderTest >> testLogsInWhenSessionFirstUsed [
+PooledRDBMSSessionProviderTest >> testLogsInWhenSessionFirstUsed [
 
 	| sessionProvider |
 
 	self withLoggingAsserterDo: [ :asserter | 
 		asserter
 			runMemoryLoggerDuring: [ 
-				sessionProvider := SingleRDBMSSessionProvider
+				sessionProvider := PooledRDBMSSessionProvider
 					                   loginWith: self class login
-					                   configuredBy: [ :options | options at: #logDatabaseEvents put: true ]
+					                   configuredBy: self sessionProviderOptions
 				];
-			assertLogRecordsMatch: #(  ).
+			assertLogRecordsMatch: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}' ).
 
 		asserter
 			runMemoryLoggerDuring: [ sessionProvider withSessionDo: [ :session |  ] ];
 			assertLogRecordsMatch: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Login"}'
 				   '[DEBUG] Glorp event received {"detail":"Login finished"}' )
 		]
 ]
 
 { #category : #tests }
-SingleRDBMSSessionProviderTest >> testLogsInWhenSessionFoundedDisconnected [
+PooledRDBMSSessionProviderTest >> testLogsInWhenSessionFoundedDisconnected [
 
 	| sessionProvider |
 
-	sessionProvider := SingleRDBMSSessionProvider
-		                   loginWith: self class login
-		                   configuredBy: [ :options | options at: #logDatabaseEvents put: true ].
-
 	self withLoggingAsserterDo: [ :asserter | 
+		asserter
+			runMemoryLoggerDuring: [ 
+				sessionProvider := PooledRDBMSSessionProvider
+					                   loginWith: self class login
+					                   configuredBy: self sessionProviderOptions
+				];
+			assertLogRecordsMatch: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}' ).
+
 		asserter
 			runMemoryLoggerDuring: [ sessionProvider withSessionDo: [ :session | session logout ] ];
 			assertLogRecordsMatch: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Login"}'
 				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
 				   '[DEBUG] Glorp event received {"detail":"Logout"}'
 				   '[DEBUG] Glorp event received {"detail":"Logout finished"}' ).
@@ -83,6 +105,8 @@ SingleRDBMSSessionProviderTest >> testLogsInWhenSessionFoundedDisconnected [
 		asserter
 			runMemoryLoggerDuring: [ sessionProvider withSessionDo: [ :session |  ] ];
 			assertLogRecordsMatch: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Login"}'
 				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
 				   '[DEBUG] Glorp event received {"detail":"Logout"}'
 				   '[DEBUG] Glorp event received {"detail":"Logout finished"}'
