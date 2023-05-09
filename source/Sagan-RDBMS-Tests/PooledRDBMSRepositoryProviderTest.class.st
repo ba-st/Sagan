@@ -159,7 +159,9 @@ PooledRDBMSRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrat
 { #category : #initialization }
 PooledRDBMSRepositoryProviderTest >> tearDown [
 
-	provider reset.
+	provider
+		destroyRepositories;
+		reset.
 	super tearDown
 ]
 

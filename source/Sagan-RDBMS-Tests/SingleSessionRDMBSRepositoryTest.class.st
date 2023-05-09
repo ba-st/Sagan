@@ -199,7 +199,9 @@ SingleSessionRDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrate
 { #category : #running }
 SingleSessionRDMBSRepositoryTest >> tearDown [
 
-	provider reset.
+	provider
+		destroyRepositories;
+		reset.
 	super tearDown
 ]
 
