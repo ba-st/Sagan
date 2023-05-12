@@ -49,7 +49,9 @@ Valid options for the session pooling configuration are:
 - `minIdleSessionsCount` defaulting to 5
 - `maxActiveSessionsCount` defaulting to 12
 
-For both session providers' configuration, you can customize the connection retries upon any failure:
+For both session providers' configuration, you can customize the connection
+retries upon any failure:
+
 - `maximumConnectionAttemps` defaulting to 3
 - `timeSlotBetweenConnectionRetriesInMs` defaulting to 3000 ms
 
@@ -88,7 +90,7 @@ For instance, say you want to try Postgres with your project, all you need to do
 is write this in the console:
 
 ```bash
-cd docker; 
+cd docker;
 docker-compose up -d postgres
 ```
 
@@ -117,8 +119,8 @@ Of course you can change the database name, port and passwords, just edit the
 To shutdown the database server, just execute:
 
 ```bash
-cd docker; 
-docker-compose stop 
+cd docker;
+docker-compose stop
 ```
 
 ## Define the mapping to your RDBMS
