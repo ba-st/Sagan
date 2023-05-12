@@ -23,24 +23,17 @@ RDBMSRepositoryProvider class >> using: aLogin [
 ]
 
 { #category : #'instance creation' }
-RDBMSRepositoryProvider class >> usingSessionPoolWith: aLogin configuredBy: configurationAction [
-
-	^ self obtainingSessionFrom: (PooledRDBMSSessionProvider
-			   loginWith: aLogin
-			   configuredBy: configurationAction)
-]
-
-{ #category : #'instance creation' }
-RDBMSRepositoryProvider class >> usingSingleSessionWith: aLogin [
-
-	^ self usingSingleSessionWith: aLogin configuredBy: [  ]
-]
-
-{ #category : #'instance creation' }
-RDBMSRepositoryProvider class >> usingSingleSessionWith: aLogin configuredBy: aBlock [
+RDBMSRepositoryProvider class >> usingSessionPoolWith: aLogin configuredBy: anActionConfiguration [
 
 	^ self obtainingSessionFrom:
-		  (SingleRDBMSSessionProvider loginWith: aLogin configuredBy: aBlock)
+		  ( PooledRDBMSSessionProvider loginWith: aLogin configuredBy: anActionConfiguration )
+]
+
+{ #category : #'instance creation' }
+RDBMSRepositoryProvider class >> usingSingleSessionWith: aLogin configuredBy: anActionConfiguration [
+
+	^ self obtainingSessionFrom:
+		  ( SingleRDBMSSessionProvider loginWith: aLogin configuredBy: anActionConfiguration )
 ]
 
 { #category : #building }
