@@ -30,6 +30,12 @@ RDBMSRepositoryProvider class >> usingSessionPoolWith: aLogin configuredBy: anAc
 ]
 
 { #category : #'instance creation' }
+RDBMSRepositoryProvider class >> usingSingleSessionWith: aLogin [
+
+	^ self usingSingleSessionWith: aLogin configuredBy: [  ]
+]
+
+{ #category : #'instance creation' }
 RDBMSRepositoryProvider class >> usingSingleSessionWith: aLogin configuredBy: anActionConfiguration [
 
 	^ self obtainingSessionFrom:

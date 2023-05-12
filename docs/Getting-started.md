@@ -28,16 +28,16 @@ When creating one, you must provide a [`RDBMSSessionProvider`](../source/Sagan-R
 that will wrap the actual Glorp Session, whose responsibility, among other
 things, is to login to your database of choice.
 
-At first, is a good choice to use the [`SingleRDBMSSessionProvider`](../source/Sagan-RDBMS/SingleRDBMSSessionProvider.class.st),
+At first, it's a good choice to use the [`SingleRDBMSSessionProvider`](../source/Sagan-RDBMS/SingleRDBMSSessionProvider.class.st),
 and only worry about defining the mapping for your object correctly (see
 [Define the mapping to your RDBMS](#define-the-mapping-to-your-rdbms)).
-If you pretend to have a heavy concurrent workload on your database, then we
-recommend you to consider using the [`PooledRDBMSSessionProvider`](../source/Sagan-RDBMS/PooledRDBMSSessionProvider.class.st).
+If you intend to have a heavy concurrent workload on your database, then we
+recommend you consider using the [`PooledRDBMSSessionProvider`](../source/Sagan-RDBMS/PooledRDBMSSessionProvider.class.st).
 
 The usual case you're probably be facing is the need of more than one Repository,
 one for each type of object in your project's domain. To ease the
 standardized way of creating them, the proper way is using a [`RepositoryProvider`](../source/Sagan-Core/RepositoryProvider.class.st).
-There is 3 different ways of instantiating a provider:
+There are 3 different ways of instantiating a provider:
 
 - `InMemoryRepositoryProvider new`
 - `RDBMSRepositoryProvider usingSingleSessionWith: aLogin`
@@ -48,6 +48,12 @@ Valid options for the session pooling configuration are:
 - `maxIdleSessionsCount` defaulting to 10
 - `minIdleSessionsCount` defaulting to 5
 - `maxActiveSessionsCount` defaulting to 12
+
+For both session providers' configuration, you can customize the connection
+retries upon any failure:
+
+- `maximumConnectionAttemps` defaulting to 3
+- `timeSlotBetweenConnectionRetriesInMs` defaulting to 3000 ms
 
 Concretely, the complete algorithm to start a project with persistence using
 Sagan is:
@@ -84,7 +90,7 @@ For instance, say you want to try Postgres with your project, all you need to do
 is write this in the console:
 
 ```bash
-cd docker; 
+cd docker;
 docker-compose up -d postgres
 ```
 
@@ -113,8 +119,8 @@ Of course you can change the database name, port and passwords, just edit the
 To shutdown the database server, just execute:
 
 ```bash
-cd docker; 
-docker-compose stop 
+cd docker;
+docker-compose stop
 ```
 
 ## Define the mapping to your RDBMS
