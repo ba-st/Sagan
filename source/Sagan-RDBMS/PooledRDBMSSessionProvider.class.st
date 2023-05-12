@@ -65,7 +65,7 @@ PooledRDBMSSessionProvider >> createNewSession [
 	session := GlorpSession new.
 	session accessor: self createDatabaseAccessor.
 	session system: descriptorSystem.
-	self ensureSuccessfulLoggingToDatabaseWith: session.
+	self ensureSuccessfulLoginToDatabaseWith: session.
 	^ session
 ]
 

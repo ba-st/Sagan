@@ -46,7 +46,7 @@ SingleRDBMSSessionProvider >> initializeSession [
 	session := GlorpSession new.
 	session accessor: self createDatabaseAccessor.
 	session system: ConfigurableDescriptorSystem new.
-	self ensureSuccessfulLoggingToDatabaseWith: session
+	self ensureSuccessfulLoginToDatabaseWith: session
 ]
 
 { #category : #'private-accessing' }
@@ -68,6 +68,6 @@ SingleRDBMSSessionProvider >> withSessionDo: aBlockClosure [
 	| currentSession |
 
 	currentSession := self session.
-	currentSession isLoggedIn not then: [ self ensureSuccessfulLoggingToDatabaseWith: currentSession ].
+	currentSession isLoggedIn not then: [ self ensureSuccessfulLoginToDatabaseWith: currentSession ].
 	^ aBlockClosure value: currentSession
 ]

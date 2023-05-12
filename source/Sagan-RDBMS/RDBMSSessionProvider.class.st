@@ -22,7 +22,7 @@ RDBMSSessionProvider >> deleteSessions [
 ]
 
 { #category : #retrying }
-RDBMSSessionProvider >> ensureSuccessfulLoggingToDatabaseWith: aSession [
+RDBMSSessionProvider >> ensureSuccessfulLoginToDatabaseWith: aSession [
 
 	Retry
 		value: [ aSession loginIfError: [ :error | DatabaseLoginFailed signal: error description ] ]
