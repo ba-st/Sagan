@@ -2,7 +2,6 @@ Class {
 	#name : #RDBMSRepository,
 	#superclass : #Repository,
 	#instVars : [
-		'descriptorSystem',
 		'modelObjectClass',
 		'conflictCheckingStrategy',
 		'sessionProvider'

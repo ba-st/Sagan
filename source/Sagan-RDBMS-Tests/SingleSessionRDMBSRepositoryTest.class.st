@@ -5,7 +5,6 @@ Class {
 	#name : #SingleSessionRDMBSRepositoryTest,
 	#superclass : #RepositoryBasedTest,
 	#instVars : [
-		'session',
 		'provider'
 	],
 	#classVars : [

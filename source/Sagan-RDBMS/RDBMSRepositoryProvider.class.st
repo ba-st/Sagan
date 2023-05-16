@@ -2,9 +2,6 @@ Class {
 	#name : #RDBMSRepositoryProvider,
 	#superclass : #RepositoryProvider,
 	#instVars : [
-		'sessionPool',
-		'descriptorSystem',
-		'login',
 		'sessionProvider'
 	],
 	#category : #'Sagan-RDBMS-Repository'
