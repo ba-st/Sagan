@@ -3,8 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'options',
-		'login',
-		'loggingEnabled'
+		'login'
 	],
 	#category : #'Sagan-RDBMS-Repository'
 }

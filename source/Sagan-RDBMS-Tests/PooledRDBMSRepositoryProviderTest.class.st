@@ -19,49 +19,6 @@ PooledRDBMSRepositoryProviderTest >> assertFleetOf: aMothership isEquivalentToFl
 ]
 
 { #category : #'private-configuring' }
-PooledRDBMSRepositoryProviderTest >> configureExtraterrestrialMappings [
-
-	extraterrestrials
-		configureMappingsIn: [ :rdbmsRepository | 
-			rdbmsRepository
-				beAwareOfTableDefinedBy:
-					( RealTableDefinition
-						named: 'Extraterrestrial'
-						fieldsDefinedBy:
-							{SequentialNumberFieldDefinition new.
-							( CharacterFieldDefinition named: 'first_name' sized: 100 ).
-							( CharacterFieldDefinition named: 'last_name' sized: 100 ).
-							( DateFieldDefinition named: 'birth_date' )} );
-				beAwareOfClassModelDefinedBy:
-					( ClassModelDefinition
-						for: Extraterrestrial
-						attributesDefinedBy:
-							{( BasicAttributeDefinition named: RDBMSConstants sequentialNumberAttribute ).
-							( BasicAttributeDefinition named: #firstName ).
-							( BasicAttributeDefinition named: #lastName ).
-							( BasicAttributeDefinition named: #birthDate )} );
-				beAwareOfDescriptorDefinedBy:
-					( ConcreteDescriptorDefinition
-						for: Extraterrestrial
-						onTableNamed: 'Extraterrestrial'
-						mappingsDefinedBy:
-							{( SequentialNumberMappingDefinition onTableNamed: 'Extraterrestrial' ).
-							( DirectMappingDefinition
-								fromAttributeNamed: #firstName
-								toFieldNamed: 'first_name'
-								onTableNamed: 'Extraterrestrial' ).
-							( DirectMappingDefinition
-								fromAttributeNamed: #lastName
-								toFieldNamed: 'last_name'
-								onTableNamed: 'Extraterrestrial' ).
-							( DirectMappingDefinition
-								fromAttributeNamed: #birthDate
-								toFieldNamed: 'birth_date'
-								onTableNamed: 'Extraterrestrial' )} )
-			]
-]
-
-{ #category : #'private-configuring' }
 PooledRDBMSRepositoryProviderTest >> configureMothershipMappings [
 
 	ships
@@ -137,21 +94,18 @@ PooledRDBMSRepositoryProviderTest >> setUp [
 { #category : #initialization }
 PooledRDBMSRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
-	provider := RDBMSRepositoryProvider
-		            usingSessionPoolWith:
-		            SingleSessionRDMBSRepositoryTest login
-		            configuredBy: [ :options | 
+	provider := RDBMSRepositoryProvider usingSessionPoolWith: SingleSessionRDMBSRepositoryTest login
+		            configuredBy: [ :options |
 			            options
 				            at: #maxIdleSessionsCount put: 8;
 				            at: #minIdleSessionsCount put: 4;
-				            at: #maxActiveSessionsCount put: 10 ].
-	extraterrestrials := provider
-		createRepositoryStoringObjectsOfType: Extraterrestrial
-		checkingConflictsAccordingTo: aConflictCheckingStrategy.
-	self configureExtraterrestrialMappings.
-	ships := provider
-		createRepositoryStoringObjectsOfType: Mothership
-		checkingConflictsAccordingTo: aConflictCheckingStrategy.
+				            at: #maxActiveSessionsCount put: 10
+			            ].
+	extraterrestrials := provider createRepositoryStoringObjectsOfType: Extraterrestrial
+		                     checkingConflictsAccordingTo: aConflictCheckingStrategy.
+	ExtraterrestrialMappingConfiguration new cull: extraterrestrials.
+	ships := provider createRepositoryStoringObjectsOfType: Mothership
+		         checkingConflictsAccordingTo: aConflictCheckingStrategy.
 	self configureMothershipMappings.
 	provider prepareForInitialPersistence
 ]

@@ -5,7 +5,6 @@ Class {
 	#name : #SingleSessionRDMBSRepositoryTest,
 	#superclass : #RepositoryBasedTest,
 	#instVars : [
-		'session',
 		'provider'
 	],
 	#classVars : [
@@ -87,49 +86,6 @@ SingleSessionRDMBSRepositoryTest class >> useP3Driver [
 ]
 
 { #category : #initialization }
-SingleSessionRDMBSRepositoryTest >> configureExtraterrestrialMappings [
-
-	extraterrestrials
-		configureMappingsIn: [ :rdbmsRepository | 
-			rdbmsRepository
-				beAwareOfTableDefinedBy:
-					( RealTableDefinition
-						named: 'Extraterrestrial'
-						fieldsDefinedBy:
-							{SequentialNumberFieldDefinition new.
-							( CharacterFieldDefinition named: 'first_name' sized: 100 ).
-							( CharacterFieldDefinition named: 'last_name' sized: 100 ).
-							( DateFieldDefinition named: 'birth_date' )} );
-				beAwareOfClassModelDefinedBy:
-					( ClassModelDefinition
-						for: Extraterrestrial
-						attributesDefinedBy:
-							{( BasicAttributeDefinition named: RDBMSConstants sequentialNumberAttribute ).
-							( BasicAttributeDefinition named: #firstName ).
-							( BasicAttributeDefinition named: #lastName ).
-							( BasicAttributeDefinition named: #birthDate )} );
-				beAwareOfDescriptorDefinedBy:
-					( ConcreteDescriptorDefinition
-						for: Extraterrestrial
-						onTableNamed: 'Extraterrestrial'
-						mappingsDefinedBy:
-							{( SequentialNumberMappingDefinition onTableNamed: 'Extraterrestrial' ).
-							( DirectMappingDefinition
-								fromAttributeNamed: #firstName
-								toFieldNamed: 'first_name'
-								onTableNamed: 'Extraterrestrial' ).
-							( DirectMappingDefinition
-								fromAttributeNamed: #lastName
-								toFieldNamed: 'last_name'
-								onTableNamed: 'Extraterrestrial' ).
-							( DirectMappingDefinition
-								fromAttributeNamed: #birthDate
-								toFieldNamed: 'birth_date'
-								onTableNamed: 'Extraterrestrial' )} )
-			]
-]
-
-{ #category : #initialization }
 SingleSessionRDMBSRepositoryTest >> configureSpaceshipMappings [
 
 	ships
@@ -180,17 +136,12 @@ SingleSessionRDMBSRepositoryTest >> do: aBlock unlessSQLiteIsBeingUsedInWhichCas
 { #category : #initialization }
 SingleSessionRDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
-	provider := RDBMSRepositoryProvider
-		usingSingleSessionWith: self class login
-		configuredBy: [ :options | options at: #logDatabaseEvents put: true ].
-	extraterrestrials := provider
-		                     createRepositoryStoringObjectsOfType:
-		                     Extraterrestrial
-		                     checkingConflictsAccordingTo:
-		                     aConflictCheckingStrategy.
-	self configureExtraterrestrialMappings.
-	ships := provider
-		         createRepositoryStoringObjectsOfType: Spaceship
+	provider := RDBMSRepositoryProvider usingSingleSessionWith: self class login
+		            configuredBy: [ :options | options at: #logDatabaseEvents put: true ].
+	extraterrestrials := provider createRepositoryStoringObjectsOfType: Extraterrestrial
+		                     checkingConflictsAccordingTo: aConflictCheckingStrategy.
+	ExtraterrestrialMappingConfiguration new cull: extraterrestrials.
+	ships := provider createRepositoryStoringObjectsOfType: Spaceship
 		         checkingConflictsAccordingTo: aConflictCheckingStrategy.
 	self configureSpaceshipMappings.
 	provider prepareForInitialPersistence
@@ -216,7 +167,7 @@ SingleSessionRDMBSRepositoryTest >> testLogging [
 					assertLogRecordsMatchInTheFollowingOrder: #( '[DEBUG] Glorp event received {"detail":"Login"}'
 						   '[DEBUG] Glorp event received {"detail":"Login finished"}'
 						   '[DEBUG] Glorp event received {"detail":"Begin Transaction"}'
-						   '[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (sequential_number,first_name,last_name,birth_date)  VALUES (1,''Silvester'',''Stallone'',''1946-07-06'')"}'
+						   '[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (sequential_number,first_name,last_name,birth_date,race_name)  VALUES (1,''Silvester'',''Stallone'',''1946-07-06'',''Human'')"}'
 						   '[DEBUG] Glorp event received {"detail":"Commit Transaction"}' )
 				]
 			]
@@ -227,7 +178,7 @@ SingleSessionRDMBSRepositoryTest >> testLogging [
 					assertLogRecordsMatchInTheFollowingOrder: #( '[DEBUG] Glorp event received {"detail":"Login"}'
 						   '[DEBUG] Glorp event received {"detail":"Login finished"}'
 						   '[DEBUG] Glorp event received {"detail":"Begin Transaction"}'
-						   '[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (first_name,last_name,birth_date)  VALUES (?,?,?)  an Array(''Silvester'' ''Stallone'' 6 July 1946)"}'
+						   '[DEBUG] Glorp event received {"detail":"INSERT INTO Extraterrestrial (first_name,last_name,birth_date,race_name)  VALUES (?,?,?,?)  an Array(''Silvester'' ''Stallone'' 6 July 1946 ''Human'')"}'
 						   '[DEBUG] Glorp event received {"detail":"Commit Transaction"}' )
 				]
 			]

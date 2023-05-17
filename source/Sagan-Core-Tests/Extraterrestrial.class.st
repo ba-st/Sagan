@@ -8,15 +8,19 @@ Class {
 		'sequentialNumber',
 		'firstName',
 		'lastName',
-		'birthDate'
+		'birthDate',
+		'raceName'
 	],
 	#category : #'Sagan-Core-Tests'
 }
 
 { #category : #accessing }
-Extraterrestrial class >> namedFirst: aFirstName last: aLastName bornOn: aDate [
+Extraterrestrial class >> namedFirst: aFirstName last: aLastName bornOn: aDate as: aRace [
 
-	^ self new initializeNamedFirst: aFirstName last: aLastName bornOn: aDate
+	^ self new initializeNamedFirst: aFirstName
+		  last: aLastName
+		  bornOn: aDate
+		  as: aRace
 ]
 
 { #category : #accessing }
@@ -32,11 +36,12 @@ Extraterrestrial >> firstName [
 ]
 
 { #category : #initialization }
-Extraterrestrial >> initializeNamedFirst: aFirstName last: aLastName bornOn: aDate [
+Extraterrestrial >> initializeNamedFirst: aFirstName last: aLastName bornOn: aDate as: aRace [
 
 	firstName := aFirstName.
-	lastName := aLastName. 
-	birthDate := aDate
+	lastName := aLastName.
+	birthDate := aDate.
+	raceName := aRace
 ]
 
 { #category : #accessing }
@@ -55,6 +60,12 @@ Extraterrestrial >> printOn: aStream [
 ]
 
 { #category : #accessing }
+Extraterrestrial >> raceName [
+
+	^ raceName
+]
+
+{ #category : #accessing }
 Extraterrestrial >> sequentialNumber [
 
 	^ sequentialNumber
@@ -62,6 +73,9 @@ Extraterrestrial >> sequentialNumber [
 
 { #category : #updating }
 Extraterrestrial >> synchronizeWith: anExtraterrestial [
+
+	AssertionChecker enforce: [ self raceName = anExtraterrestial raceName ]
+		because: ( 'Once <1s>, always <1s>' expandMacrosWith: self raceName ).
 
 	firstName := anExtraterrestial firstName.
 	lastName := anExtraterrestial lastName.

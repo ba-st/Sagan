@@ -2,7 +2,6 @@ Class {
 	#name : #RepositoryProviderSystem,
 	#superclass : #SubsystemImplementation,
 	#instVars : [
-		'session',
 		'repositoryProviders'
 	],
 	#category : #'Sagan-Kepler'

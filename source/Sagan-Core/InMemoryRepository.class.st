@@ -115,8 +115,8 @@ InMemoryRepository >> update: aMutableDomainObject executing: aBlock [
 InMemoryRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
 
 	self purgeAfterCheckingInclusion: aDomainObject.
-	aDomainObject synchronizeWith: anUpdatedDomainObject.
-	self storeAfterCheckingConflicts: aDomainObject.
+	[ aDomainObject synchronizeWith: anUpdatedDomainObject ] ensure: [
+		self storeAfterCheckingConflicts: aDomainObject ].
 	^ aDomainObject
 ]
 

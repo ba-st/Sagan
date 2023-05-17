@@ -49,7 +49,7 @@ RepositoryBasedTest >> ellaTravolta [
 { #category : #'private - extraterrestrials' }
 RepositoryBasedTest >> extraterrestrialNamedFirst: aFirstName last: aLastName bornOn: aDate [
 
-	^ Extraterrestrial namedFirst: aFirstName last: aLastName bornOn: aDate
+	^ Extraterrestrial namedFirst: aFirstName last: aLastName bornOn: aDate as: 'Human'
 ]
 
 { #category : #'private - accessing' }
@@ -421,6 +421,27 @@ RepositoryBasedTest >> testStoreWithDisjunctiveDescriptedConflictChecking [
 		withMessageText: 'That full name is already in use.'.
 
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
+]
+
+{ #category : #'tests - conflict checking' }
+RepositoryBasedTest >> testUpdateFailsDueToCustomAssertion [
+
+	| alf |
+
+	self setUpRepositoryForSimpleConflictChecking.
+
+	alf := Extraterrestrial namedFirst: 'Gordon'
+		            last: 'Shumway'
+		            bornOn: '1756-10-28' asDate
+		            as: 'Melmacian'.
+	self extraterrestrials store: alf.
+
+	self should: [ self extraterrestrials update: alf with: self silvesterStallone ]
+		raise: AssertionFailed
+		withMessageText: 'Once Melmacian, always Melmacian'.
+
+	self assert: alf raceName equals: 'Melmacian'. 
+	self withTheOnlyOneIn: self extraterrestrials findAll do: [ :found | self assert: found raceName equals: 'Melmacian' ]
 ]
 
 { #category : #'tests - management' }
