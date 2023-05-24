@@ -2,9 +2,8 @@
 
 ## How can I start my project with Sagan?
 
-First, of course, [install it](how-to/how-to-load-in-pharo.md). We recommend to
-load the
-group `Development` so you have all the tests and can use them as examples.
+First, of course, [install it](how-to/how-to-load-in-pharo.md). We recommend loading
+the group `Development` so you have all the tests and can use them as examples.
 
 The main feature in Sagan is the notion of [`Repository`](../source/Sagan-Core/Repository.class.st).
 You'll use them to store, purge and query objects of some domain. Conceptually,
@@ -12,10 +11,10 @@ a Repository encapsulates the set of objects persisted in a data store and the
 operations performed over them, providing a more object-oriented view of the
 persistence layer.
 
-Currently Sagan supports two types of repositories:
+Currently, Sagan supports two types of repositories:
 
 - [`InMemoryRepository`](../source/Sagan-Core/InMemoryRepository.class.st): this
-  one will keep the managed objects in an OrderedCollection and I will not provide
+  one will keep the managed objects in an `OrderedCollection` and I will not provide
   any transactional semantics. It is useful when you start prototyping and
   writing tests, and don't want to struggle with mapping your objects to any db yet.
 - [`RDBMSRepository`](../source/Sagan-RDBMS/RDBMSRepository.class.st): once you're
@@ -26,7 +25,7 @@ Currently Sagan supports two types of repositories:
 
 When creating one, you must provide a [`RDBMSSessionProvider`](../source/Sagan-RDBMS/RDBMSSessionProvider.class.st)
 that will wrap the actual Glorp Session, whose responsibility, among other
-things, is to login to your database of choice.
+things, is to log in to your database of choice.
 
 At first, it's a good choice to use the [`SingleRDBMSSessionProvider`](../source/Sagan-RDBMS/SingleRDBMSSessionProvider.class.st),
 and only worry about defining the mapping for your object correctly (see
@@ -34,7 +33,7 @@ and only worry about defining the mapping for your object correctly (see
 If you intend to have a heavy concurrent workload on your database, then we
 recommend you consider using the [`PooledRDBMSSessionProvider`](../source/Sagan-RDBMS/PooledRDBMSSessionProvider.class.st).
 
-The usual case you're probably be facing is the need of more than one Repository,
+The usual case you are probably facing is the need of more than one Repository,
 one for each type of object in your project's domain. To ease the
 standardized way of creating them, the proper way is using a [`RepositoryProvider`](../source/Sagan-Core/RepositoryProvider.class.st).
 There are 3 different ways of instantiating a provider:
@@ -52,7 +51,7 @@ Valid options for the session pooling configuration are:
 For both session providers' configuration, you can customize the connection
 retries upon any failure:
 
-- `maximumConnectionAttemps` defaulting to 3
+- `maximumConnectionAttempts` defaulting to 3
 - `timeSlotBetweenConnectionRetriesInMs` defaulting to 3000 ms
 
 Concretely, the complete algorithm to start a project with persistence using
@@ -72,7 +71,7 @@ the servers will show in the next section.
 
 ## Setting up your database (with Docker)
 
-As Sagan is an abstraction layer on top of Glorp, it support all the database
+As Sagan is an abstraction layer on top of Glorp, it supports all the database
 servers Glorp does, but we guarantee that will work fairly with Postgres, and
 SQLite3. If you use SQLServer or any other that Glorp supports and wish to
 contribute to Sagan please check [this](../CONTRIBUTING.md).
@@ -81,8 +80,8 @@ Note that Glorp (and therefore Sagan) requires the database drivers in your
 computer, or at least a reachable server, for the actual database connectivity.
 
 In order to try any of these servers in an isolated environment, we provide you
-with a [docker-compose](../docker/docker-compose.yml) that ease you the deploy of
-the server.
+with a [docker-compose](../docker/docker-compose.yml) that ease you the deployment
+of the server.
 
 ### PostgreSQL
 
@@ -98,7 +97,7 @@ This will start the latest PostgreSQL 14 with an empty database called `test`,
 configured with the user `postgres` and password `secret`, listening in the
 default port 5432.
 
-Then you can create your repository provider as follow
+Then you can create your repository provider as follows
 
 ```smalltalk
 RDBMSRepositoryProvider using: (
@@ -113,10 +112,10 @@ RDBMSRepositoryProvider using: (
         yourself)
 ```
 
-Of course you can change the database name, port and passwords, just edit the
+Of course, you can change the database name, port and passwords, just edit the
 `docker-compose.yml` and change the login parameters accordingly.
 
-To shutdown the database server, just execute:
+To shut down the database server, just execute:
 
 ```bash
 cd docker;
@@ -131,7 +130,7 @@ need to define at least the 3 following objects:
 - `ClassModelDefinition` to acknowledge Sagan about the business object's class
   and its collection of `AttributeDefinition`.
 - `TableDefinition` that will hold the table name and column definitions
-  specified by `TableFieldDefinition` (depending the complexity of your model,
+  specified by `TableFieldDefinition` (depending on the complexity of your model,
   you might need to define more than one `RealTableDefinition` or maybe an `ImaginaryTableDefinition`)
 - `DescriptorDefinition` that describes to Sagan the mapping from the class model
   definition to the table definition using a collection of `MappingDefinition`.
