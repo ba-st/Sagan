@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        smalltalk: [ Pharo64-10, Pharo64-9.0 ]  
+        smalltalk: [ Pharo64-11, Pharo64-10, Pharo64-9.0 ]  
         rdbms: [ SQLite3 ]
         load-spec: [ deployment, tests, tools, development]
     name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }} + ${{ matrix.load-spec }}

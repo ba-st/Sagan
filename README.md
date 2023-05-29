@@ -13,8 +13,9 @@ Sagan is aimed to help solutions implementing polyglot persistence.
 [![GitHub release](https://img.shields.io/github/release/ba-st/Sagan.svg)](https://github.com/ba-st/Sagan/releases/latest)
 [![Pharo 9.0](https://img.shields.io/badge/Pharo-9.0-informational)](https://pharo.org)
 [![Pharo 10](https://img.shields.io/badge/Pharo-10-informational)](https://pharo.org)
+[![Pharo 11](https://img.shields.io/badge/Pharo-11-informational)](https://pharo.org)
 
-> *Named in honour to [Carl Sagan](https://en.wikipedia.org/wiki/Carl_Sagan), for
+> *Named in honor to [Carl Sagan](https://en.wikipedia.org/wiki/Carl_Sagan), for
 > teaching us to stay humble against the vastness of the universe.*
 
 Quick links
@@ -32,17 +33,18 @@ Quick links
 
 Sagan is tested against the following backends:
 
-| Pharo           |     |  9.0 - 64 bits | 10 - 64 bits |
-| -----------     | --- | -------------- | ------------- |
-| **PostgreSQL**  | 9.4 | ✔️             | ✔️            |
-|                 | 9.5 | ✔️             | ✔️            |
-|                 | 9.6 | ✔️             | ✔️            |
-|                 | 10  | ✔️             | ✔️            |
-|                 | 11  | ✔️             | ✔️            |
-|                 | 12  | ✔️             | ✔️            |
-|                 | 13  | ✔️             | ✔️            |
-|                 | 14  | ✔️             | ✔️            |
-| **SQLite**      | 3   | ✔️             | ✔️            |
+| Pharo           |     |  9.0 - 64 bits | 10 - 64 bits  | 11 - 64 bits |
+| -----------     | --- | -------------- | ------------- |------------- |
+| **PostgreSQL**  | 9.4 | ✔️             | ✔️            |✔️            |
+|                 | 9.5 | ✔️             | ✔️            |✔️            |
+|                 | 9.6 | ✔️             | ✔️            |✔️            |
+|                 | 10  | ✔️             | ✔️            |✔️            |
+|                 | 11  | ✔️             | ✔️            |✔️            |
+|                 | 12  | ✔️             | ✔️            |✔️            |
+|                 | 13  | ✔️             | ✔️            |✔️            |
+|                 | 14  | ✔️             | ✔️            |✔️            |
+|                 | 15  | ✔️             | ✔️            |✔️            |
+| **SQLite**      | 3   | ✔️             | ✔️            |✔️            |
 
 ## Installation
 
