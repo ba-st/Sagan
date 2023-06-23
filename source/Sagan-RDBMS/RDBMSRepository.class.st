@@ -158,8 +158,9 @@ RDBMSRepository >> storeAfterCheckingConflicts: aDomainObject [
 { #category : #management }
 RDBMSRepository >> transact: aBlock [
 
-	^ sessionProvider
-		withSessionDo: [ :session | self handleWriteErrorsDuring: [ session inUnitOfWorkDo: aBlock ] ]
+	^ sessionProvider withSessionDo: [ :session |
+			" In some rdb engines, a transactions implies reserving first a sequence before doing an insert, thus this read may fail we handle these kind of errors too "
+		  self handleReadErrorsDuring: [ self handleWriteErrorsDuring: [ session inUnitOfWorkDo: aBlock ] ] ]
 ]
 
 { #category : #management }
