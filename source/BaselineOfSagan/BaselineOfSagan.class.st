@@ -1,33 +1,39 @@
 Class {
-	#name : #BaselineOfSagan,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfSagan
+	#name : 'BaselineOfSagan',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfSagan',
+	#package : 'BaselineOfSagan'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BaselineOfSagan >> baseline: spec [
 
 	<baseline>
-	spec
-		for: #pharo
-		do: [ self
-				setUpDependencies: spec;
-				setUpPackages: spec.
-			spec
-				group: 'Deployment' with: #('Core' 'RDBMS');
-				group: 'CI' with: 'Tests';
-				group: 'Tools' with: 'Buoy-Tools';
-				group: 'Development' with: #('Tests' 'Tools')
-			]
+	spec for: #pharo do: [
+		self
+			setUpDependencies: spec;
+			setUpPackages: spec.
+		spec
+			group: 'Deployment' with: #( 'Core' 'RDBMS' );
+			group: 'CI' with: 'Tests';
+			group: 'Tools' with: 'Buoy-Tools';
+			group: 'Development' with: #( 'Tests' 'Tools' ).
+		spec postLoadDoIt: #postLoadInitialization ]
 ]
 
-{ #category : #accessing }
+{ #category : 'post load' }
+BaselineOfSagan >> postLoadInitialization [
+
+	RepositoryProviderSystem registerInterfaces
+]
+
+{ #category : 'accessing' }
 BaselineOfSagan >> projectClass [
 
 	^ MetacelloCypressBaselineProject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
@@ -65,7 +71,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 		project: 'Hyperspace-Deployment' copyFrom: 'Hyperspace' with: [ spec loads: 'Deployment' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BaselineOfSagan >> setUpPackages: spec [
 
 	spec

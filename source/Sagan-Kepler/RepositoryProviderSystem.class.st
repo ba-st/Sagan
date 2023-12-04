@@ -1,13 +1,27 @@
 Class {
-	#name : #RepositoryProviderSystem,
-	#superclass : #SubsystemImplementation,
+	#name : 'RepositoryProviderSystem',
+	#superclass : 'SubsystemImplementation',
 	#instVars : [
 		'repositoryProviders'
 	],
-	#category : #'Sagan-Kepler'
+	#category : 'Sagan-Kepler',
+	#package : 'Sagan-Kepler'
 }
 
-{ #category : #controlling }
+{ #category : 'as yet unclassified' }
+RepositoryProviderSystem class >> registerInterfaces [
+
+	<ignoreForCoverage>
+	self
+		registerInterfaceAt: #RepositoryProviderSystem
+		named: 'Repository Provider System Interface'
+		declaring:
+			#( createRepositoryFor:storingObjectsOfType:checkingConflictsAccordingTo:
+			   register:as: prepareForInitialPersistence
+			   destroyRepositores )
+]
+
+{ #category : 'controlling' }
 RepositoryProviderSystem >> createRepositoryFor: aName
 	storingObjectsOfType: aBusinessObjectClass
 	checkingConflictsAccordingTo: aConflictCheckingStrategy [
@@ -17,57 +31,57 @@ RepositoryProviderSystem >> createRepositoryFor: aName
 		checkingConflictsAccordingTo: aConflictCheckingStrategy
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 RepositoryProviderSystem >> dependencies [
 
 	^ #()
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 RepositoryProviderSystem >> destroyRepositories [
 
 	repositoryProviders do: #destroyRepositories
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 RepositoryProviderSystem >> implementedInterfaces [
 
 	^ #(#RepositoryProviderSystem)
 ]
 
-{ #category : #acccessing }
+{ #category : 'acccessing' }
 RepositoryProviderSystem >> initialize [
 
 	super initialize.
 	repositoryProviders := Dictionary new
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 RepositoryProviderSystem >> name [ 
 
 	^ 'Repository Provider'
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 RepositoryProviderSystem >> prepareForInitialPersistence [
 
 	repositoryProviders valuesDo: [ :provider | provider prepareForInitialPersistence ]
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 RepositoryProviderSystem >> register: aRepositoryProvider as: aName [
 
 	repositoryProviders at: aName put: aRepositoryProvider
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 RepositoryProviderSystem >> resolveDependencies [
 
 	super resolveDependencies.
 	repositoryProviders valuesDo: [ :provider | provider reset ]
 ]
 
-{ #category : #'private - controlling' }
+{ #category : 'private - controlling' }
 RepositoryProviderSystem >> shutDownWhenStarted [
 
 	repositoryProviders valuesDo: [ :provider | provider prepareForShutDown ].
