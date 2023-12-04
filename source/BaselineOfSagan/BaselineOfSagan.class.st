@@ -37,7 +37,7 @@ BaselineOfSagan >> projectClass [
 BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
-		baseline: 'Kepler' with: [ spec repository: 'github://ba-st/Kepler:v5/source' ];
+		baseline: 'Kepler' with: [ spec repository: 'github://ba-st/Kepler:v6/source' ];
 		project: 'Kepler-Core' copyFrom: 'Kepler' with: [ spec loads: 'Core' ].
 
 	spec
@@ -45,7 +45,7 @@ BaselineOfSagan >> setUpDependencies: spec [
 		project: 'ObjectPool-Core' copyFrom: 'ObjectPool' with: [ spec loads: 'Core' ].
 
 	spec
-		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v6/source' ];
+		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v7/source' ];
 		project: 'Buoy-SUnit' copyFrom: 'Buoy' with: [ spec loads: 'Dependent-SUnit-Extensions' ];
 		project: 'Buoy-Tools' copyFrom: 'Buoy' with: [ spec loads: 'Tools' ].
 
@@ -62,12 +62,12 @@ BaselineOfSagan >> setUpDependencies: spec [
 		project: 'Glorp SQLite3' copyFrom: 'SQLite3' with: [ spec loads: 'glorp' ].
 
 	spec
-		baseline: 'Bell' with: [ spec repository: 'github://ba-st/Bell:v1' ];
+		baseline: 'Bell' with: [ spec repository: 'github://ba-st/Bell:v2' ];
 		project: 'Bell-Core' copyFrom: 'Bell' with: [ spec loads: 'Deployment' ];
 		project: 'Bell-SUnit' copyFrom: 'Bell' with: [ spec loads: 'Dependent-SUnit-Extensions' ].
 
 	spec
-		baseline: 'Hyperspace' with: [ spec repository: 'github://ba-st/Hyperspace:v4' ];
+		baseline: 'Hyperspace' with: [ spec repository: 'github://ba-st/Hyperspace:v5' ];
 		project: 'Hyperspace-Deployment' copyFrom: 'Hyperspace' with: [ spec loads: 'Deployment' ]
 ]
 
