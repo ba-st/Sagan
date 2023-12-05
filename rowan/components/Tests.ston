@@ -1,0 +1,21 @@
+RwSimpleProjectLoadComponentV2 {
+  #name : 'Tests',
+  #condition : 'tests',
+  #componentNames : [
+    'Deployment'
+  ],
+  #packageNames : [
+    'Sagan-Core-Tests',
+    'Sagan-Kepler-Tests'
+  ],
+  #conditionalPackageMapSpecs : {
+    'gemstone' : {
+      'allusers' : {
+        #packageNameToPlatformPropertiesMap : {
+          'Sagan-Core-Tests' : { 'symbolDictName' : 'Sagan' },
+          'Sagan-Kepler-Tests' : { 'symbolDictName' : 'Sagan' }
+        }
+      }
+    }
+  }
+}

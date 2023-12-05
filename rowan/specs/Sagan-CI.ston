@@ -1,0 +1,14 @@
+RwLoadSpecificationV2 {
+  #specName: 'Sagan-CI',
+  #projectName : 'Sagan',
+  #diskUrl : 'Sagan',
+  #projectSpecFile : 'rowan/project.ston',
+  #componentNames : [
+      'Tests'
+  ],
+  #customConditionalAttributes : [
+    'sunit',
+    'tests'
+  ],
+  #comment : 'Sagan continuous integration setup'
+}
