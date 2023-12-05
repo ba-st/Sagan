@@ -1,70 +1,71 @@
 Class {
-	#name : #Spaceship,
-	#superclass : #SpaceshipBehavior,
+	#name : 'Spaceship',
+	#superclass : 'SpaceshipBehavior',
 	#instVars : [
 		'sequentialNumber',
 		'name',
 		'firepower'
 	],
-	#category : #'Sagan-Core-Tests'
+	#category : 'Sagan-Core-Tests',
+	#package : 'Sagan-Core-Tests'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Spaceship class >> named: aName [
 
 	^ self withoutFirepowerNamed: aName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Spaceship class >> named: aName firepower: aNumber [
 
 	^ self new initializeNamed: aName firepower: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Spaceship class >> noFirepower [
 
 	^ 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Spaceship class >> unlimitedFirepower [
 
 	^ Float infinity
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Spaceship class >> withUnlimitedFirepowerNamed: aName [
 
 	^ self named: aName firepower: self unlimitedFirepower
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Spaceship class >> withoutFirepowerNamed: aName [
 
 	^ self named: aName firepower: self noFirepower
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Spaceship >> firepower [
 
 	^ firepower
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Spaceship >> initializeNamed: aName firepower: aNumber [
 
 	name := aName.
 	firepower := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Spaceship >> name [
 
 	^ name
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Spaceship >> synchronizeWith: aSpaceship [
 
 	name := aSpaceship name.

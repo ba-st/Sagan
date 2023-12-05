@@ -4,22 +4,23 @@ I'm an abstract Test Case for testing the Repository implementations.
 My subclasses must provide a way to setup a functioning repository.
 "
 Class {
-	#name : #RepositoryBasedTest,
-	#superclass : #TestCase,
+	#name : 'RepositoryBasedTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'extraterrestrials',
 		'ships'
 	],
-	#category : #'Sagan-Core-Tests'
+	#category : 'Sagan-Core-Tests',
+	#package : 'Sagan-Core-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RepositoryBasedTest class >> isAbstract [ 
 
 	^self name = #RepositoryBasedTest
 ]
 
-{ #category : #'private - assertions' }
+{ #category : 'private - assertions' }
 RepositoryBasedTest >> assertRepositoryIncludesSilvesterStallone [
 
 	self extraterrestrials
@@ -28,7 +29,7 @@ RepositoryBasedTest >> assertRepositoryIncludesSilvesterStallone [
 		else: [ self fail ]
 ]
 
-{ #category : #'private - assertions' }
+{ #category : 'private - assertions' }
 RepositoryBasedTest >> assertTheOnlyOneInTheRepositoryIsSilvesterStallone [
 
 	self
@@ -40,38 +41,38 @@ RepositoryBasedTest >> assertTheOnlyOneInTheRepositoryIsSilvesterStallone [
 			]
 ]
 
-{ #category : #'private - extraterrestrials' }
+{ #category : 'private - extraterrestrials' }
 RepositoryBasedTest >> ellaTravolta [
 
-	^ self extraterrestrialNamedFirst: 'Ella' last: 'Travolta' bornOn: '2000-04-03' asDate
+	^ self extraterrestrialNamedFirst: 'Ella' last: 'Travolta' bornOn: (Date year: 2000 month: 4 day: 3)
 ]
 
-{ #category : #'private - extraterrestrials' }
+{ #category : 'private - extraterrestrials' }
 RepositoryBasedTest >> extraterrestrialNamedFirst: aFirstName last: aLastName bornOn: aDate [
 
 	^ Extraterrestrial namedFirst: aFirstName last: aLastName bornOn: aDate as: 'Human'
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 RepositoryBasedTest >> extraterrestrials [ 
 
 	extraterrestrials ifNil: [ self setUpRepositoryWithNoConflictChecking  ].
 	^ extraterrestrials 
 ]
 
-{ #category : #'private - extraterrestrials' }
+{ #category : 'private - extraterrestrials' }
 RepositoryBasedTest >> johnLock [
 
-	^ self extraterrestrialNamedFirst: 'John' last: 'Lock' bornOn: '1632-08-29' asDate
+	^ self extraterrestrialNamedFirst: 'John' last: 'Lock' bornOn: (Date year: 1632 month: 8 day: 29)
 ]
 
-{ #category : #'private - extraterrestrials' }
+{ #category : 'private - extraterrestrials' }
 RepositoryBasedTest >> johnTravolta [
 
-	^ self extraterrestrialNamedFirst: 'John' last: 'Travolta' bornOn: '1954-02-18' asDate
+	^ self extraterrestrialNamedFirst: 'John' last: 'Travolta' bornOn: (Date year: 1954 month: 2 day: 18)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RepositoryBasedTest >> setUpRepositoryForConjunctiveConflictChecking [
 
 	self
@@ -82,7 +83,7 @@ RepositoryBasedTest >> setUpRepositoryForConjunctiveConflictChecking [
 					[ :person | person lastName ]} )
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RepositoryBasedTest >> setUpRepositoryForDisjunctiveConflictChecking [
 
 	self
@@ -93,13 +94,13 @@ RepositoryBasedTest >> setUpRepositoryForDisjunctiveConflictChecking [
 					[ :person | person lastName ]} )
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RepositoryBasedTest >> setUpRepositoryForSimpleConflictChecking [
 
 	self setUpRepositoryWith: ( CriteriaBasedConflictCheckingStrategy forSingleAspectMatching: [ :person | person firstName ] )
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RepositoryBasedTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
 	self subclassResponsibility  
@@ -107,31 +108,31 @@ RepositoryBasedTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RepositoryBasedTest >> setUpRepositoryWithNoConflictChecking [
 
 	self setUpRepositoryWith: DoNotCheckForConflictsStrategy new
 ]
 
-{ #category : #'private - extraterrestrials' }
+{ #category : 'private - extraterrestrials' }
 RepositoryBasedTest >> silvesterMcCoy [
 
-	^ self extraterrestrialNamedFirst: 'Silvester' last: 'McCoy' bornOn: '1943-08-20' asDate
+	^ self extraterrestrialNamedFirst: 'Silvester' last: 'McCoy' bornOn: (Date year: 1943 month: 8 day: 20)
 ]
 
-{ #category : #'private - extraterrestrials' }
+{ #category : 'private - extraterrestrials' }
 RepositoryBasedTest >> silvesterStallone [
 
-	^ self extraterrestrialNamedFirst: 'Silvester' last: 'Stallone' bornOn: '1946-07-06' asDate
+	^ self extraterrestrialNamedFirst: 'Silvester' last: 'Stallone' bornOn: (Date year: 1946 month: 7 day: 6)
 ]
 
-{ #category : #'private - extraterrestrials' }
+{ #category : 'private - extraterrestrials' }
 RepositoryBasedTest >> sistineStallone [
 
-	^ self extraterrestrialNamedFirst: 'Sistine' last: 'Stallone' bornOn: '1998-06-27' asDate
+	^ self extraterrestrialNamedFirst: 'Sistine' last: 'Stallone' bornOn: (Date year: 1998 month: 6 day: 27)
 ]
 
-{ #category : #'tests - querying' }
+{ #category : 'tests - querying' }
 RepositoryBasedTest >> testCountMatching [
 
 	self extraterrestrials
@@ -141,10 +142,10 @@ RepositoryBasedTest >> testCountMatching [
 	self
 		assert: ( self extraterrestrials countMatching: [ :person | person lastName = 'Stallone' ] ) equals: 2;
 		assert: ( self extraterrestrials countMatching: [ :person | person firstName = 'Silvester' ] ) equals: 1; 
-		assert: ( self extraterrestrials countMatching: [ :person | person birthDate = '1998-06-27' asDate ] ) equals: 1
+		assert: ( self extraterrestrials countMatching: [ :person | person birthDate =  (Date year: 1998 month: 6 day: 27) ] ) equals: 1
 ]
 
-{ #category : #'tests - querying' }
+{ #category : 'tests - querying' }
 RepositoryBasedTest >> testFindAllMatching [
 
 	self extraterrestrials
@@ -173,7 +174,7 @@ RepositoryBasedTest >> testFindAllMatching [
 			equals: 2
 ]
 
-{ #category : #'tests - querying' }
+{ #category : 'tests - querying' }
 RepositoryBasedTest >> testFindAllMatchingSortedBy [
 
 	| sorted |
@@ -198,7 +199,7 @@ RepositoryBasedTest >> testFindAllMatchingSortedBy [
 		assert: sorted last firstName equals: 'Silvester'
 ]
 
-{ #category : #'tests - querying' }
+{ #category : 'tests - querying' }
 RepositoryBasedTest >> testFindAllMatchingSortedByBirthDate [
 
 	| sorted |
@@ -223,7 +224,7 @@ RepositoryBasedTest >> testFindAllMatchingSortedByBirthDate [
 		assert: sorted last firstName equals: 'John'
 ]
 
-{ #category : #'tests - management' }
+{ #category : 'tests - management' }
 RepositoryBasedTest >> testPurge [
 
 	| stallone |
@@ -236,7 +237,7 @@ RepositoryBasedTest >> testPurge [
 	self assert: self extraterrestrials findAll isEmpty
 ]
 
-{ #category : #'tests - management' }
+{ #category : 'tests - management' }
 RepositoryBasedTest >> testPurgeAllMatching [
 
 	self extraterrestrials
@@ -251,7 +252,7 @@ RepositoryBasedTest >> testPurgeAllMatching [
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
 
-{ #category : #'tests - management' }
+{ #category : 'tests - management' }
 RepositoryBasedTest >> testPurgeAllMatchingWhenNoneMatches [
 
 	self assert: self extraterrestrials findAll isEmpty.
@@ -267,7 +268,7 @@ RepositoryBasedTest >> testPurgeAllMatchingWhenNoneMatches [
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
 
-{ #category : #'tests - management' }
+{ #category : 'tests - management' }
 RepositoryBasedTest >> testPurgeAllMatchingWhenOnlySomeMatch [
 
 	self extraterrestrials
@@ -290,7 +291,7 @@ RepositoryBasedTest >> testPurgeAllMatchingWhenOnlySomeMatch [
 			else: [ self fail ]
 ]
 
-{ #category : #'tests - management' }
+{ #category : 'tests - management' }
 RepositoryBasedTest >> testStore [
 
 	self extraterrestrials
@@ -305,7 +306,7 @@ RepositoryBasedTest >> testStore [
 		else: [ self fail ]
 ]
 
-{ #category : #'tests - conflict checking' }
+{ #category : 'tests - conflict checking' }
 RepositoryBasedTest >> testStoreWithConflict [
 
 	self setUpRepositoryForSimpleConflictChecking.
@@ -319,7 +320,7 @@ RepositoryBasedTest >> testStoreWithConflict [
 		assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
 
-{ #category : #'tests - conflict checking' }
+{ #category : 'tests - conflict checking' }
 RepositoryBasedTest >> testStoreWithConjunctiveConflictChecking [
 
 	self setUpRepositoryForConjunctiveConflictChecking.
@@ -340,7 +341,7 @@ RepositoryBasedTest >> testStoreWithConjunctiveConflictChecking [
 		assertRepositoryIncludesSilvesterStallone
 ]
 
-{ #category : #'tests - conflict checking' }
+{ #category : 'tests - conflict checking' }
 RepositoryBasedTest >> testStoreWithConjunctiveDescriptedConflictChecking [
 
 	self setUpRepositoryWith: (CriteriaBasedConflictCheckingStrategy
@@ -366,7 +367,7 @@ RepositoryBasedTest >> testStoreWithConjunctiveDescriptedConflictChecking [
 		assertRepositoryIncludesSilvesterStallone
 ]
 
-{ #category : #'tests - conflict checking' }
+{ #category : 'tests - conflict checking' }
 RepositoryBasedTest >> testStoreWithDescriptedConflict [
 
 	self setUpRepositoryWith: (CriteriaBasedConflictCheckingStrategy
@@ -382,7 +383,7 @@ RepositoryBasedTest >> testStoreWithDescriptedConflict [
 		assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
 
-{ #category : #'tests - conflict checking' }
+{ #category : 'tests - conflict checking' }
 RepositoryBasedTest >> testStoreWithDisjunctiveConflictChecking [
 
 	self setUpRepositoryForDisjunctiveConflictChecking.
@@ -401,7 +402,7 @@ RepositoryBasedTest >> testStoreWithDisjunctiveConflictChecking [
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
 
-{ #category : #'tests - conflict checking' }
+{ #category : 'tests - conflict checking' }
 RepositoryBasedTest >> testStoreWithDisjunctiveDescriptedConflictChecking [
 
 	self setUpRepositoryWith: (CriteriaBasedConflictCheckingStrategy
@@ -423,7 +424,7 @@ RepositoryBasedTest >> testStoreWithDisjunctiveDescriptedConflictChecking [
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
 
-{ #category : #'tests - conflict checking' }
+{ #category : 'tests - conflict checking' }
 RepositoryBasedTest >> testUpdateFailsDueToCustomAssertion [
 
 	| alf |
@@ -432,7 +433,7 @@ RepositoryBasedTest >> testUpdateFailsDueToCustomAssertion [
 
 	alf := Extraterrestrial namedFirst: 'Gordon'
 		            last: 'Shumway'
-		            bornOn: '1756-10-28' asDate
+		            bornOn: (Date year: 1756 month: 10 day: 28)
 		            as: 'Melmacian'.
 	self extraterrestrials store: alf.
 
@@ -444,7 +445,7 @@ RepositoryBasedTest >> testUpdateFailsDueToCustomAssertion [
 	self withTheOnlyOneIn: self extraterrestrials findAll do: [ :found | self assert: found raceName equals: 'Melmacian' ]
 ]
 
-{ #category : #'tests - management' }
+{ #category : 'tests - management' }
 RepositoryBasedTest >> testUpdateInSameSessionAsFetch [
 
 	| stallone john |
@@ -466,7 +467,7 @@ RepositoryBasedTest >> testUpdateInSameSessionAsFetch [
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
 
-{ #category : #'tests - management' }
+{ #category : 'tests - management' }
 RepositoryBasedTest >> testUpdateWith [
 
 	| stallone |
@@ -494,7 +495,7 @@ RepositoryBasedTest >> testUpdateWith [
 				findAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Stallone' ] ) isEmpty
 ]
 
-{ #category : #'tests - conflict checking' }
+{ #category : 'tests - conflict checking' }
 RepositoryBasedTest >> testUpdateWithConflict [
 
 	| stallone |
@@ -513,7 +514,7 @@ RepositoryBasedTest >> testUpdateWithConflict [
 		assertRepositoryIncludesSilvesterStallone
 ]
 
-{ #category : #'tests - conflict checking' }
+{ #category : 'tests - conflict checking' }
 RepositoryBasedTest >> testUpdateWithConflictUsingConjunctiveConflictChecking [
 
 	| stallone |
@@ -544,7 +545,7 @@ RepositoryBasedTest >> testUpdateWithConflictUsingConjunctiveConflictChecking [
 			raise: ConflictingObjectFound
 ]
 
-{ #category : #'tests - conflict checking' }
+{ #category : 'tests - conflict checking' }
 RepositoryBasedTest >> testUpdateWithConflictUsingDisjunctiveConflictChecking [
 
 	| stallone |
@@ -569,7 +570,7 @@ RepositoryBasedTest >> testUpdateWithConflictUsingDisjunctiveConflictChecking [
 		assertRepositoryIncludesSilvesterStallone
 ]
 
-{ #category : #'tests - conflict checking' }
+{ #category : 'tests - conflict checking' }
 RepositoryBasedTest >> testUpdateWithoutConflict [
 
 	| stallone |
@@ -589,7 +590,7 @@ RepositoryBasedTest >> testUpdateWithoutConflict [
 		raise: ConflictingObjectFound
 ]
 
-{ #category : #'tests - querying' }
+{ #category : 'tests - querying' }
 RepositoryBasedTest >> testWithOneMatchingSortedByDoElse [
 
 	self extraterrestrials
@@ -609,7 +610,7 @@ RepositoryBasedTest >> testWithOneMatchingSortedByDoElse [
 		else: [ self fail ]
 ]
 
-{ #category : #'tests - management' }
+{ #category : 'tests - management' }
 RepositoryBasedTest >> updateExtraterrestrialMatching: aBlock with: aNewExtraterrestrial [
 
 	self extraterrestrials

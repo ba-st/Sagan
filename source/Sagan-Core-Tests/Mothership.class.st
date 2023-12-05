@@ -1,40 +1,41 @@
 Class {
-	#name : #Mothership,
-	#superclass : #SpaceshipBehavior,
+	#name : 'Mothership',
+	#superclass : 'SpaceshipBehavior',
 	#instVars : [
 		'sequentialNumber',
 		'name',
 		'fleet'
 	],
-	#category : #'Sagan-Core-Tests'
+	#category : 'Sagan-Core-Tests',
+	#package : 'Sagan-Core-Tests'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Mothership class >> named: aName withAll: aSpaceshipCollection [
 
 	^ self new initializeNamed: aName withAll: aSpaceshipCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Mothership >> fleet [
 
 	^ fleet copy
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Mothership >> initializeNamed: aName withAll: aSpaceshipCollection [
 
 	name := aName.
 	fleet := aSpaceshipCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Mothership >> name [
 
 	^ name
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Mothership >> synchronizeWith: aMothership [
 
 	name := aMothership name.

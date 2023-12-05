@@ -1,16 +1,17 @@
 Class {
-	#name : #SpaceshipBehavior,
-	#superclass : #Object,
-	#category : #'Sagan-Core-Tests'
+	#name : 'SpaceshipBehavior',
+	#superclass : 'Object',
+	#category : 'Sagan-Core-Tests',
+	#package : 'Sagan-Core-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceshipBehavior >> name [
 
 	self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SpaceshipBehavior >> printOn: aStream [
 
 	aStream nextPutAll: self name

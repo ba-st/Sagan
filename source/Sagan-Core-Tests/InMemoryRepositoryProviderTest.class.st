@@ -2,12 +2,13 @@
 I have the Unit Tests for the In Memory Repository implementation. 
 "
 Class {
-	#name : #InMemoryRepositoryProviderTest,
-	#superclass : #RepositoryBasedTest,
-	#category : #'Sagan-Core-Tests'
+	#name : 'InMemoryRepositoryProviderTest',
+	#superclass : 'RepositoryBasedTest',
+	#category : 'Sagan-Core-Tests',
+	#package : 'Sagan-Core-Tests'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 InMemoryRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
 	extraterrestrials := InMemoryRepositoryProvider new
@@ -18,7 +19,7 @@ InMemoryRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy
 		checkingConflictsAccordingTo: aConflictCheckingStrategy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InMemoryRepositoryProviderTest >> testSpaceshipQueryingForPositiveFirepower [
 
 	| solvalou solgrado zeodalley |
@@ -45,7 +46,7 @@ InMemoryRepositoryProviderTest >> testSpaceshipQueryingForPositiveFirepower [
 			]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InMemoryRepositoryProviderTest >> testSpaceshipQueryingForZeroFirepower [
 
 	| solvalou solgrado zeodalley |
@@ -65,7 +66,7 @@ InMemoryRepositoryProviderTest >> testSpaceshipQueryingForZeroFirepower [
 		do: [ :spaceships | self assertCollection: spaceships hasSameElements: {solvalou} ]
 ]
 
-{ #category : #utility }
+{ #category : 'utility' }
 InMemoryRepositoryProviderTest >> withAllSpaceshipsMatching: aMatchingCriteria do: aOneArgBlock [
 
 	aOneArgBlock value: ( ships findAllMatching: aMatchingCriteria )
