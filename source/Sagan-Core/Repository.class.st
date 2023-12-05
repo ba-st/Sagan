@@ -17,18 +17,19 @@ I support two main APIs:
 My concrete subclasses can support a mapping building API in the cases it's needed.
 "
 Class {
-	#name : #Repository,
-	#superclass : #Object,
-	#category : #'Sagan-Core'
+	#name : 'Repository',
+	#superclass : 'Object',
+	#category : 'Sagan-Core',
+	#package : 'Sagan-Core'
 }
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 Repository >> asMatchingCriteria: aBlockOrCriteria [
 
 	^ aBlockOrCriteria asMatchingCriteriaIn: self
 ]
 
-{ #category : #'private - preconditions' }
+{ #category : 'private - preconditions' }
 Repository >> assertIncludes: inMemoryObject [
 
 	AssertionChecker
@@ -37,61 +38,61 @@ Repository >> assertIncludes: inMemoryObject [
 		raising: ObjectNotFound
 ]
 
-{ #category : #'private - preconditions' }
+{ #category : 'private - preconditions' }
 Repository >> assertNoConflictsFor: aDomainObject [
 
 	self conflictCheckingStrategy assertNoConflictsFor: aDomainObject in: self
 ]
 
-{ #category : #'private - preconditions' }
+{ #category : 'private - preconditions' }
 Repository >> assertNoConflictsFor: anUpdatedDomainObject excluding: aDomainObject [
 
 	self conflictCheckingStrategy assertNoConflictsFor: anUpdatedDomainObject in: self excluding: aDomainObject
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 Repository >> configureMappingsIn: aBlock [
 
 	self subclassResponsibility 
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 Repository >> conflictCheckingStrategy [
 
 	^ self subclassResponsibility 
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 Repository >> countMatching: aCriteria [
 
 	self subclassResponsibility
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 Repository >> findAll [ 
 	
 	self subclassResponsibility 
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 Repository >> findAllMatching: aCriteria [
 
 	self subclassResponsibility
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 Repository >> findAllMatching: aCriteria sortedBy: aSortCriteria [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 Repository >> matchingCriteriaBuilder [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #management }
+{ #category : 'management' }
 Repository >> purge: aDomainObject [
 
 	^ self
@@ -99,19 +100,19 @@ Repository >> purge: aDomainObject [
 		purgeAfterCheckingInclusion: aDomainObject
 ]
 
-{ #category : #'private - management' }
+{ #category : 'private - management' }
 Repository >> purgeAfterCheckingInclusion: aDomainObject [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #management }
+{ #category : 'management' }
 Repository >> purgeAllMatching: aCriteria [
 
 	self subclassResponsibility
 ]
 
-{ #category : #management }
+{ #category : 'management' }
 Repository >> store: aDomainObject [
 
 	^ self
@@ -119,25 +120,25 @@ Repository >> store: aDomainObject [
 		storeAfterCheckingConflicts: aDomainObject
 ]
 
-{ #category : #'private - management' }
+{ #category : 'private - management' }
 Repository >> storeAfterCheckingConflicts: aDomainObject [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #management }
+{ #category : 'management' }
 Repository >> transact: aBlock [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #management }
+{ #category : 'management' }
 Repository >> update: aDomainObject executing: aBlock [
 
 	self subclassResponsibility
 ]
 
-{ #category : #management }
+{ #category : 'management' }
 Repository >> update: aDomainObject with: anUpdatedDomainObject [
 
 	^ self
@@ -146,19 +147,19 @@ Repository >> update: aDomainObject with: anUpdatedDomainObject [
 		updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject
 ]
 
-{ #category : #'private - management' }
+{ #category : 'private - management' }
 Repository >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 Repository >> withOneMatching: aCriteria do: foundBlock else: noneBlock [
 
 	self subclassResponsibility
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 Repository >> withOneMatching: aCriteria sortedBy: aSortCriteria do: foundBlock else: noneBlock [
 
 	self subclassResponsibility

@@ -4,77 +4,78 @@ I'm an in-memory repository. I will keep the managed objects in an OrderedCollec
 I'm useful for testing purposes and initial prototyping.
 "
 Class {
-	#name : #InMemoryRepository,
-	#superclass : #Repository,
+	#name : 'InMemoryRepository',
+	#superclass : 'Repository',
 	#instVars : [
 		'conflictCheckingStrategy',
 		'contents'
 	],
-	#category : #'Sagan-Core'
+	#category : 'Sagan-Core',
+	#package : 'Sagan-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 InMemoryRepository class >> checkingConflictsAccordingTo: aConflictCheckingStrategy [
 
 	^self new initializeCheckingConflictsAccordingTo: aConflictCheckingStrategy
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 InMemoryRepository class >> withoutCheckingConflicts [
 
 	^ self checkingConflictsAccordingTo: DoNotCheckForConflictsStrategy new
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 InMemoryRepository >> configureMappingsIn: aBlock [
 
 	
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 InMemoryRepository >> conflictCheckingStrategy [
 
 	^ conflictCheckingStrategy
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 InMemoryRepository >> countMatching: aCriteriaOrBlockClosure [
 
 	^ contents count: ( self asMatchingCriteria: aCriteriaOrBlockClosure )
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 InMemoryRepository >> findAll [
 
 	^ contents copy
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 InMemoryRepository >> findAllMatching: aCriteriaOrBlock [
 
 	^ contents select: ( self asMatchingCriteria: aCriteriaOrBlock )
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 InMemoryRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction [
 
 	^ ( self findAllMatching: aCriteriaOrBlock ) sorted: aSortFunction
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 InMemoryRepository >> initializeCheckingConflictsAccordingTo: aConflictCheckingStrategy [
 
 	conflictCheckingStrategy := aConflictCheckingStrategy.
 	contents := OrderedCollection new
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 InMemoryRepository >> matchingCriteriaBuilder [
 
 	^ InMemoryRepositoryMatchingCriteriaBuilder  new
 ]
 
-{ #category : #'private - management' }
+{ #category : 'private - management' }
 InMemoryRepository >> purgeAfterCheckingInclusion: aDomainObject [
 
 	contents
@@ -86,32 +87,32 @@ InMemoryRepository >> purgeAfterCheckingInclusion: aDomainObject [
 	^ aDomainObject
 ]
 
-{ #category : #management }
+{ #category : 'management' }
 InMemoryRepository >> purgeAllMatching: aCriteriaOrBlock [
 
 	contents := contents reject: ( self asMatchingCriteria: aCriteriaOrBlock )
 ]
 
-{ #category : #'private - management' }
+{ #category : 'private - management' }
 InMemoryRepository >> storeAfterCheckingConflicts: aDomainObject [
 
 	contents add: aDomainObject.
 	^ aDomainObject
 ]
 
-{ #category : #management }
+{ #category : 'management' }
 InMemoryRepository >> transact: aBlock [
 
 	^ aBlock value
 ]
 
-{ #category : #management }
+{ #category : 'management' }
 InMemoryRepository >> update: aMutableDomainObject executing: aBlock [
 
 	aBlock value: aMutableDomainObject
 ]
 
-{ #category : #'private - management' }
+{ #category : 'private - management' }
 InMemoryRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
 
 	self purgeAfterCheckingInclusion: aDomainObject.
@@ -120,13 +121,13 @@ InMemoryRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdate
 	^ aDomainObject
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 InMemoryRepository >> withOneMatching: aCriteriaOrBlock do: foundBlock else: noneBlock [
 
 	^ contents detect: ( self asMatchingCriteria: aCriteriaOrBlock ) ifFound: foundBlock ifNone: noneBlock
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 InMemoryRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do: foundBlock else: noneBlock [
 
 	^ ( contents sorted: aSortFunction ) detect: ( self asMatchingCriteria: aCriteriaOrBlock ) ifFound: foundBlock ifNone: noneBlock

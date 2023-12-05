@@ -2,18 +2,19 @@
 I will not perform any conflict checking
 "
 Class {
-	#name : #DoNotCheckForConflictsStrategy,
-	#superclass : #ConflictCheckingStrategy,
-	#category : #'Sagan-Core'
+	#name : 'DoNotCheckForConflictsStrategy',
+	#superclass : 'ConflictCheckingStrategy',
+	#category : 'Sagan-Core',
+	#package : 'Sagan-Core'
 }
 
-{ #category : #Evaluating }
+{ #category : 'Evaluating' }
 DoNotCheckForConflictsStrategy >> assertNoConflictsFor: objectInMemory in: aRepository [ 
 
 	
 ]
 
-{ #category : #Evaluating }
+{ #category : 'Evaluating' }
 DoNotCheckForConflictsStrategy >> assertNoConflictsFor: updatedObjectInMemory in: aRepository excluding: originalObjectInMemory [ 
 
 	

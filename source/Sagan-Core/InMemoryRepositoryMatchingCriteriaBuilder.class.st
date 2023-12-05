@@ -3,36 +3,37 @@ I'm an implementation for In Memory Repositories.
 I will try to solve everything using plain messages without any DSL.
 "
 Class {
-	#name : #InMemoryRepositoryMatchingCriteriaBuilder,
-	#superclass : #RepositoryMatchingCriteriaBuilder,
-	#category : #'Sagan-Core'
+	#name : 'InMemoryRepositoryMatchingCriteriaBuilder',
+	#superclass : 'RepositoryMatchingCriteriaBuilder',
+	#category : 'Sagan-Core',
+	#package : 'Sagan-Core'
 }
 
-{ #category : #'identity operations' }
+{ #category : 'identity operations' }
 InMemoryRepositoryMatchingCriteriaBuilder >> does: anObjectInRepository equal: anObject [
 
 	^ anObjectInRepository = anObject
 ]
 
-{ #category : #'string matching' }
+{ #category : 'string matching' }
 InMemoryRepositoryMatchingCriteriaBuilder >> does: aStringInRepository includeSubstring: aString [
 
 	^ aStringInRepository includesSubstring: aString
 ]
 
-{ #category : #'identity operations' }
+{ #category : 'identity operations' }
 InMemoryRepositoryMatchingCriteriaBuilder >> does: objectInRepository notEqual: objectInMemory [
 
 	^ objectInRepository ~= objectInMemory
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InMemoryRepositoryMatchingCriteriaBuilder >> is: anObject includedIn: aCollection [
 
 	^ aCollection includes: anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InMemoryRepositoryMatchingCriteriaBuilder >> isUndefined: anObject otherwiseSatisfy: aBooleanExpression [
 
 	"It is assumed anObject will always be defined when in memory.
@@ -41,25 +42,25 @@ InMemoryRepositoryMatchingCriteriaBuilder >> isUndefined: anObject otherwiseSati
 	^ aBooleanExpression
 ]
 
-{ #category : #'boolean operations' }
+{ #category : 'boolean operations' }
 InMemoryRepositoryMatchingCriteriaBuilder >> satisfying: aBoolean and: aBlock [
 
 	^ aBoolean and: aBlock
 ]
 
-{ #category : #'boolean operations' }
+{ #category : 'boolean operations' }
 InMemoryRepositoryMatchingCriteriaBuilder >> satisfying: aBoolean or: aBlock [
 
 	^ aBoolean or: aBlock
 ]
 
-{ #category : #'boolean operations' }
+{ #category : 'boolean operations' }
 InMemoryRepositoryMatchingCriteriaBuilder >> satisfyingAll: aBooleanCollection [
 
 	^ aBooleanCollection allSatisfy: [ :each | each ]
 ]
 
-{ #category : #'boolean operations' }
+{ #category : 'boolean operations' }
 InMemoryRepositoryMatchingCriteriaBuilder >> satisfyingAny: aBooleanCollection [
 
 	^ aBooleanCollection anySatisfy: [ :each | each ]

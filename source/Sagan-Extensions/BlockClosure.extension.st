@@ -1,6 +1,6 @@
-Extension { #name : #BlockClosure }
+Extension { #name : 'BlockClosure' }
 
-{ #category : #'*Sagan-Core' }
+{ #category : '*Sagan-Extensions' }
 BlockClosure >> asMatchingCriteriaIn: aRepository [
 
 	^ [ :object | self cull: object cull: aRepository matchingCriteriaBuilder ]
