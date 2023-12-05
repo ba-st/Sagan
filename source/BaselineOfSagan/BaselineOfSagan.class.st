@@ -79,6 +79,10 @@ BaselineOfSagan >> setUpPackages: spec [
 		group: 'Core' with: 'Sagan-Core'.
 
 	spec
+		package: 'Sagan-Extensions';
+		group: 'Core' with: 'Sagan-Extensions'.
+
+	spec
 		package: 'Sagan-Kepler' with: [ spec requires: 'Kepler-Core' ];
 		group: 'Core' with: 'Sagan-Kepler'.
 
