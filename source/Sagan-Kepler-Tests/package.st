@@ -1,1 +1,1 @@
-Package { #name : #'Sagan-Kepler-Tests' }
+Package { #name : 'Sagan-Kepler-Tests' }

@@ -1,21 +1,22 @@
 Class {
-	#name : #GalacticCoordinates,
-	#superclass : #Object,
+	#name : 'GalacticCoordinates',
+	#superclass : 'Object',
 	#instVars : [
 		'x',
 		'y',
 		'z'
 	],
-	#category : #'Sagan-Kepler-Tests'
+	#category : 'Sagan-Kepler-Tests',
+	#package : 'Sagan-Kepler-Tests'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GalacticCoordinates class >> x: anXValue y: anYValue z: aZValue [
 
 	^ self new initializex: anXValue y: anYValue z: aZValue
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GalacticCoordinates >> initializex: anXValue y: anYValue z: aZValue [
 
 	x := anXValue.
@@ -23,19 +24,19 @@ GalacticCoordinates >> initializex: anXValue y: anYValue z: aZValue [
 	z := aZValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GalacticCoordinates >> x [
 
 	^ x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GalacticCoordinates >> y [
 
 	^ y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GalacticCoordinates >> z [
 
 	^ z

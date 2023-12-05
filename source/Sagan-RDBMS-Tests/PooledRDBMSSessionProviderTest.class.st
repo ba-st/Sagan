@@ -1,10 +1,11 @@
 Class {
-	#name : #PooledRDBMSSessionProviderTest,
-	#superclass : #RDBMSSessionProviderTest,
-	#category : #'Sagan-RDBMS-Tests'
+	#name : 'PooledRDBMSSessionProviderTest',
+	#superclass : 'RDBMSSessionProviderTest',
+	#category : 'Sagan-RDBMS-Tests',
+	#package : 'Sagan-RDBMS-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSSessionProviderTest >> sessionProviderOptions [
 
 	^ [ :options | 
@@ -16,7 +17,7 @@ PooledRDBMSSessionProviderTest >> sessionProviderOptions [
 	  ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSSessionProviderTest >> testHandleFailingLogin [
 
 	| sessionProvider |
@@ -50,7 +51,7 @@ PooledRDBMSSessionProviderTest >> testHandleFailingLogin [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSSessionProviderTest >> testLogsInWhenSessionFirstUsed [
 
 	| sessionProvider |
@@ -76,7 +77,7 @@ PooledRDBMSSessionProviderTest >> testLogsInWhenSessionFirstUsed [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSSessionProviderTest >> testLogsInWhenSessionFoundedDisconnected [
 
 	| sessionProvider |

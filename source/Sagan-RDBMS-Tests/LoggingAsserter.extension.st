@@ -1,6 +1,6 @@
-Extension { #name : #LoggingAsserter }
+Extension { #name : 'LoggingAsserter' }
 
-{ #category : #'*Sagan-RDBMS-Tests' }
+{ #category : '*Sagan-RDBMS-Tests' }
 LoggingAsserter >> assertLogRecordsMatchInTheFollowingOrder: expectedLogEntries [
 
 	"Logs are producted by database, so this is a best effort to 

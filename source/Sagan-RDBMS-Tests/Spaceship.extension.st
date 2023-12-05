@@ -1,6 +1,6 @@
-Extension { #name : #Spaceship }
+Extension { #name : 'Spaceship' }
 
-{ #category : #'*Sagan-RDBMS-Tests' }
+{ #category : '*Sagan-RDBMS-Tests' }
 Spaceship >> sequentialNumber [
 
 	^ sequentialNumber

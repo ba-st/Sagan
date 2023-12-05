@@ -1,10 +1,11 @@
 Class {
-	#name : #ExtraterrestrialMappingConfiguration,
-	#superclass : #RDBMSMappingConfiguration,
-	#category : #'Sagan-RDBMS-Tests'
+	#name : 'ExtraterrestrialMappingConfiguration',
+	#superclass : 'RDBMSMappingConfiguration',
+	#category : 'Sagan-RDBMS-Tests',
+	#package : 'Sagan-RDBMS-Tests'
 }
 
-{ #category : #applying }
+{ #category : 'applying' }
 ExtraterrestrialMappingConfiguration >> cull: aRepository [
 
 	aRepository

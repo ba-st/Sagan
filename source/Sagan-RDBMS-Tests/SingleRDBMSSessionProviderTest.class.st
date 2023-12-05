@@ -1,10 +1,11 @@
 Class {
-	#name : #SingleRDBMSSessionProviderTest,
-	#superclass : #RDBMSSessionProviderTest,
-	#category : #'Sagan-RDBMS-Tests'
+	#name : 'SingleRDBMSSessionProviderTest',
+	#superclass : 'RDBMSSessionProviderTest',
+	#category : 'Sagan-RDBMS-Tests',
+	#package : 'Sagan-RDBMS-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SingleRDBMSSessionProviderTest >> testHandleFailingLogin [
 
 	| sessionProvider |
@@ -42,7 +43,7 @@ SingleRDBMSSessionProviderTest >> testHandleFailingLogin [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SingleRDBMSSessionProviderTest >> testLogsInWhenSessionFirstUsed [
 
 	| sessionProvider |
@@ -63,7 +64,7 @@ SingleRDBMSSessionProviderTest >> testLogsInWhenSessionFirstUsed [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SingleRDBMSSessionProviderTest >> testLogsInWhenSessionFoundedDisconnected [
 
 	| sessionProvider |

@@ -1,16 +1,17 @@
 Class {
-	#name : #CelestialBodyMappingConfiguration,
-	#superclass : #RDBMSMappingConfiguration,
-	#category : #'Sagan-RDBMS-Tests'
+	#name : 'CelestialBodyMappingConfiguration',
+	#superclass : 'RDBMSMappingConfiguration',
+	#category : 'Sagan-RDBMS-Tests',
+	#package : 'Sagan-RDBMS-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CelestialBodyMappingConfiguration class >> celestialBodyTableName [
 
 	^ 'CELESTIAL_BODY'
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 CelestialBodyMappingConfiguration >> celestialBodyClassDefinition [
 
 	^ ClassModelDefinition
@@ -22,7 +23,7 @@ CelestialBodyMappingConfiguration >> celestialBodyClassDefinition [
 			( TypedAttributeDefinition named: #galacticCoordinates typed: GalacticCoordinates )}
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 CelestialBodyMappingConfiguration >> celestialBodyDescriptorDefinition [
 
 	^ ConcreteDescriptorDefinition
@@ -62,7 +63,7 @@ CelestialBodyMappingConfiguration >> celestialBodyDescriptorDefinition [
 								onTableNamed: GalacticCoordinatesMappingConfiguration galacticCoordinatesTableName ) ) )}
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 CelestialBodyMappingConfiguration >> celestialBodyTableDefinition [
 
 	^ RealTableDefinition
@@ -76,13 +77,13 @@ CelestialBodyMappingConfiguration >> celestialBodyTableDefinition [
 			( DecimalFieldDefinition named: 'z' )}
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 CelestialBodyMappingConfiguration >> celestialBodyTableName [
 
 	^ self class celestialBodyTableName
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 CelestialBodyMappingConfiguration >> cull: aRepository [
 
 	aRepository

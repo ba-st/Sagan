@@ -1,40 +1,29 @@
 Class {
-	#name : #CelestialBody,
-	#superclass : #Object,
+	#name : 'CelestialBody',
+	#superclass : 'Object',
 	#instVars : [
 		'sequentialNumber',
 		'name',
 		'planetarySystem',
 		'galacticCoordinates'
 	],
-	#category : #'Sagan-Kepler-Tests'
+	#category : 'Sagan-Kepler-Tests',
+	#package : 'Sagan-Kepler-Tests'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CelestialBody class >> named: aName locatedAt: aGalacticCoordinates in: aPlanetarySystem [
 
 	^ self new initializeNamed: aName locatedAt: aGalacticCoordinates in: aPlanetarySystem
 ]
 
-{ #category : #comparing }
-CelestialBody >> = anObject [
-
-	^ PersistentObjectComparer new shouldConsider: self asEqualTo: anObject
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 CelestialBody >> galacticCoordinates [
 
 	^ galacticCoordinates
 ]
 
-{ #category : #comparing }
-CelestialBody >> hash [ 
-
-	^ PersistentObjectComparer new hashFor: self
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 CelestialBody >> initializeNamed: aName locatedAt: aGalacticCoordinates in: aPlanetarySystem [
 
 	name := aName.
@@ -42,18 +31,18 @@ CelestialBody >> initializeNamed: aName locatedAt: aGalacticCoordinates in: aPla
 	planetarySystem := aPlanetarySystem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CelestialBody >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CelestialBody >> planetarySystem [
 
 	^ planetarySystem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CelestialBody >> sequentialNumber [
 
 	^ sequentialNumber

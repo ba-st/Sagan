@@ -1,13 +1,13 @@
-Extension { #name : 'Extraterrestrial' }
+Extension { #name : 'CelestialBody' }
 
 { #category : '*Sagan-RDBMS-Tests' }
-Extraterrestrial >> = anObject [
+CelestialBody >> = anObject [
 
 	^ PersistentObjectComparer new shouldConsider: self asEqualTo: anObject
 ]
 
 { #category : '*Sagan-RDBMS-Tests' }
-Extraterrestrial >> hash [ 
+CelestialBody >> hash [ 
 
 	^ PersistentObjectComparer new hashFor: self
 ]

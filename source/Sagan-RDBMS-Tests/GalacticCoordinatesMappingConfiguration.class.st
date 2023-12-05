@@ -1,34 +1,35 @@
 Class {
-	#name : #GalacticCoordinatesMappingConfiguration,
-	#superclass : #RDBMSMappingConfiguration,
-	#category : #'Sagan-RDBMS-Tests'
+	#name : 'GalacticCoordinatesMappingConfiguration',
+	#superclass : 'RDBMSMappingConfiguration',
+	#category : 'Sagan-RDBMS-Tests',
+	#package : 'Sagan-RDBMS-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GalacticCoordinatesMappingConfiguration class >> galacticCoordinatesTableName [
 
 	^ 'GALACTIC_COORDINATES'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GalacticCoordinatesMappingConfiguration class >> xCoordinateFieldName [
 
 	^ 'x'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GalacticCoordinatesMappingConfiguration class >> yCoordinateFieldName [
 
 	^ 'y'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GalacticCoordinatesMappingConfiguration class >> zCoordinateFieldName [
 
 	^ 'z'
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 GalacticCoordinatesMappingConfiguration >> cull: aRepository [
 
 	aRepository
@@ -40,7 +41,7 @@ GalacticCoordinatesMappingConfiguration >> cull: aRepository [
 			]
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 GalacticCoordinatesMappingConfiguration >> galacticCoordinatesClassDefinition [
 
 	^ ClassModelDefinition
@@ -51,7 +52,7 @@ GalacticCoordinatesMappingConfiguration >> galacticCoordinatesClassDefinition [
 			( BasicAttributeDefinition named: #z )}
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 GalacticCoordinatesMappingConfiguration >> galacticCoordinatesDescriptorDefinition [
 
 	^ ConcreteDescriptorDefinition
@@ -72,7 +73,7 @@ GalacticCoordinatesMappingConfiguration >> galacticCoordinatesDescriptorDefiniti
 				onTableNamed: self class galacticCoordinatesTableName )}
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 GalacticCoordinatesMappingConfiguration >> galacticCoordinatesTableDefinition [
 
 	^ ImaginaryTableDefinition

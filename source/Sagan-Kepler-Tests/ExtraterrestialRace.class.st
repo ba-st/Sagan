@@ -1,52 +1,41 @@
 Class {
-	#name : #ExtraterrestialRace,
-	#superclass : #Object,
+	#name : 'ExtraterrestialRace',
+	#superclass : 'Object',
 	#instVars : [
 		'sequentialNumber',
 		'name',
 		'knownLocations'
 	],
-	#category : #'Sagan-Kepler-Tests'
+	#category : 'Sagan-Kepler-Tests',
+	#package : 'Sagan-Kepler-Tests'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExtraterrestialRace class >> named: aName foundIn: aListOfCelestialBodies [ 
 
 	^self new initializeNamed: aName foundIn: aListOfCelestialBodies 
 ]
 
-{ #category : #comparing }
-ExtraterrestialRace >> = anObject [
-
-	^ PersistentObjectComparer new shouldConsider: self asEqualTo: anObject
-]
-
-{ #category : #comparing }
-ExtraterrestialRace >> hash [ 
-
-	^ PersistentObjectComparer new hashFor: self
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExtraterrestialRace >> initializeNamed: aName foundIn: aListOfCelestialBodies [ 
 	
 	name := aName. 
 	knownLocations := aListOfCelestialBodies.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExtraterrestialRace >> knownLocations [
 
 	^ knownLocations
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExtraterrestialRace >> name [
 
 	^ name
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ExtraterrestialRace >> sequentialNumber [
 
 	^ sequentialNumber

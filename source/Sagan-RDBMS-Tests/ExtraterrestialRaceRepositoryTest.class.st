@@ -1,13 +1,14 @@
 Class {
-	#name : #ExtraterrestialRaceRepositoryTest,
-	#superclass : #RepositoryProviderSystemBasedTest,
+	#name : 'ExtraterrestialRaceRepositoryTest',
+	#superclass : 'RepositoryProviderSystemBasedTest',
 	#instVars : [
 		'extraterrestialRaces'
 	],
-	#category : #'Sagan-RDBMS-Tests'
+	#category : 'Sagan-RDBMS-Tests',
+	#package : 'Sagan-RDBMS-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExtraterrestialRaceRepositoryTest >> alderaan [
 
 	^ CelestialBody
@@ -16,7 +17,7 @@ ExtraterrestialRaceRepositoryTest >> alderaan [
 		in: 'Kuat Sector'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ExtraterrestialRaceRepositoryTest >> setUpRepositories [
 
 	celestialBodies := repositoryProviderSystem
@@ -35,7 +36,7 @@ ExtraterrestialRaceRepositoryTest >> setUpRepositories [
 	ExtraterrestialRaceMappingConfiguration new cull: extraterrestialRaces
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExtraterrestialRaceRepositoryTest >> tatooine [
 
 	^ CelestialBody
@@ -44,7 +45,7 @@ ExtraterrestialRaceRepositoryTest >> tatooine [
 		in: 'Arkanis Sector'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExtraterrestialRaceRepositoryTest >> testCreateOneRaceFoundInOnePlanet [
 
 	| tatooine hutt racesFound |
@@ -62,7 +63,7 @@ ExtraterrestialRaceRepositoryTest >> testCreateOneRaceFoundInOnePlanet [
 	self assertCollection: racesFound anyOne knownLocations hasSameElements: {tatooine}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExtraterrestialRaceRepositoryTest >> testCreateOneRaceFoundInTwoPlanets [
 
 	| humans tatooine alderaan racesInTatooine |
@@ -89,7 +90,7 @@ ExtraterrestialRaceRepositoryTest >> testCreateOneRaceFoundInTwoPlanets [
 			alderaan}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExtraterrestialRaceRepositoryTest >> testCreateTwoRacesFoundInSamePlanet [
 
 	| tatooine hutt tuskenRaiders racesInTatooine |

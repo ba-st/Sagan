@@ -1,13 +1,14 @@
 Class {
-	#name : #PooledRDBMSRepositoryProviderTest,
-	#superclass : #RepositoryBasedTest,
+	#name : 'PooledRDBMSRepositoryProviderTest',
+	#superclass : 'RepositoryBasedTest',
 	#instVars : [
 		'provider'
 	],
-	#category : #'Sagan-RDBMS-Tests'
+	#category : 'Sagan-RDBMS-Tests',
+	#package : 'Sagan-RDBMS-Tests'
 }
 
-{ #category : #utility }
+{ #category : 'utility' }
 PooledRDBMSRepositoryProviderTest >> assertFleetOf: aMothership isEquivalentToFleetOf: anotherMothership [
 
 	self assert: aMothership fleet size equals: anotherMothership fleet size.
@@ -18,7 +19,7 @@ PooledRDBMSRepositoryProviderTest >> assertFleetOf: aMothership isEquivalentToFl
 			]
 ]
 
-{ #category : #'private-configuring' }
+{ #category : 'private-configuring' }
 PooledRDBMSRepositoryProviderTest >> configureMothershipMappings [
 
 	ships
@@ -84,14 +85,14 @@ PooledRDBMSRepositoryProviderTest >> configureMothershipMappings [
 			]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PooledRDBMSRepositoryProviderTest >> setUp [
 
 	super setUp.
 	self extraterrestrials
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PooledRDBMSRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
 	provider := RDBMSRepositoryProvider usingSessionPoolWith: SingleSessionRDMBSRepositoryTest login
@@ -110,7 +111,7 @@ PooledRDBMSRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrat
 	provider prepareForInitialPersistence
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PooledRDBMSRepositoryProviderTest >> tearDown [
 
 	provider
@@ -119,7 +120,7 @@ PooledRDBMSRepositoryProviderTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testPurgeMothershipWithEmptyFleet [
 
 	| sdf1 |
@@ -130,7 +131,7 @@ PooledRDBMSRepositoryProviderTest >> testPurgeMothershipWithEmptyFleet [
 	self assert: ships findAll isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testPurgeMothershipWithMultipleShipFleet [
 
 	| sdf1 |
@@ -147,7 +148,7 @@ PooledRDBMSRepositoryProviderTest >> testPurgeMothershipWithMultipleShipFleet [
 	self assert: ships findAll isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testPurgeMothershipWithSingleShipFleet [
 
 	| sdf1 |
@@ -158,7 +159,7 @@ PooledRDBMSRepositoryProviderTest >> testPurgeMothershipWithSingleShipFleet [
 	self assert: ships findAll isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testResultOfUpdateWithIsTheUpdatedObject [
 
 	| sdf1 updatedSDF1 result |
@@ -171,7 +172,7 @@ PooledRDBMSRepositoryProviderTest >> testResultOfUpdateWithIsTheUpdatedObject [
 	self assert: result name equals: updatedSDF1 name
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testStoreMothershipWithEmptyFleet [
 
 	| sdf1 |
@@ -187,7 +188,7 @@ PooledRDBMSRepositoryProviderTest >> testStoreMothershipWithEmptyFleet [
 			]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testStoreMothershipWithMultipleShipFleet [
 
 	| sdf1 |
@@ -209,7 +210,7 @@ PooledRDBMSRepositoryProviderTest >> testStoreMothershipWithMultipleShipFleet [
 			]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testStoreMothershipWithSingleShipFleet [
 
 	| sdf1 |
@@ -225,7 +226,7 @@ PooledRDBMSRepositoryProviderTest >> testStoreMothershipWithSingleShipFleet [
 			]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithEmptyFleetToNowHaveMultipleShipFleet [
 
 	| sdf1 updatedSDF1 |
@@ -240,7 +241,7 @@ PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithEmptyFlee
 		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithEmptyFleetToNowHaveSingleShipFleet [
 
 	| sdf1 updatedSDF1 |
@@ -261,7 +262,7 @@ PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithEmptyFlee
 		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithMultipleShipFleetToNowHaveEmptyFleet [
 
 	| sdf1 updatedSDF1 |
@@ -280,7 +281,7 @@ PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithMultipleS
 		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithMultipleShipFleetToNowHaveMultipleShipFleetWhichNoLongerIncludesTheOriginalShip [
 
 	| sdf1 updatedSDF1 |
@@ -303,7 +304,7 @@ PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithMultipleS
 		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithMultipleShipFleetToNowHaveMultipleShipFleetWhichStillIncludesASubsetOfTheOriginalShips [
 
 	| sdf1 updatedSDF1 |
@@ -327,7 +328,7 @@ PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithMultipleS
 		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithMultipleShipFleetToNowHaveMultipleShipFleetWhichStillIncludesAllOriginalShips [
 
 	| sdf1 updatedSDF1 |
@@ -352,7 +353,7 @@ PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithMultipleS
 		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithSingleShipFleetToNowHaveDifferentSingleShipFleet [
 
 	| sdf1 updatedSDF1 |
@@ -367,7 +368,7 @@ PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithSingleShi
 		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithSingleShipFleetToNowHaveEmptyFleet [
 
 	| sdf1 updatedSDF1 |
@@ -382,7 +383,7 @@ PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithSingleShi
 		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithSingleShipFleetToNowHaveMultipleShipFleetWhichNoLongerIncludesTheOriginalShip [
 
 	| sdf1 updatedSDF1 |
@@ -402,7 +403,7 @@ PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithSingleShi
 		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithSingleShipFleetToNowHaveMultipleShipFleetWhichStillIncludesTheOriginalShip [
 
 	| sdf1 updatedSDF1 |
@@ -423,7 +424,7 @@ PooledRDBMSRepositoryProviderTest >> testUpdateMothershipOriginallyWithSingleShi
 		do: [ :ship | self assertFleetOf: ship isEquivalentToFleetOf: updatedSDF1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PooledRDBMSRepositoryProviderTest >> testUpdateWithOutsideTransact [
 
 	| stallone |
@@ -447,7 +448,7 @@ PooledRDBMSRepositoryProviderTest >> testUpdateWithOutsideTransact [
 				findAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Stallone' ] ) isEmpty
 ]
 
-{ #category : #utility }
+{ #category : 'utility' }
 PooledRDBMSRepositoryProviderTest >> withShipNamedAs: aName do: aOneArgBlock [
 
 	ships withOneMatching: [ :ship | ship name = aName ] do: aOneArgBlock else: [ self fail ]
