@@ -5,7 +5,7 @@ I'm useful for testing purposes and initial prototyping.
 "
 Class {
 	#name : 'InMemoryRepository',
-	#superclass : 'Repository',
+	#superclass : 'RepositoryBehavior',
 	#instVars : [
 		'conflictCheckingStrategy',
 		'contents'

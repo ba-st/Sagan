@@ -1,31 +1,33 @@
 Class {
-	#name : #SequentialNumberMappingDefinition,
-	#superclass : #MappingDefinition,
+	#name : 'SequentialNumberMappingDefinition',
+	#superclass : 'MappingDefinition',
 	#instVars : [
 		'tableName'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 SequentialNumberMappingDefinition class >> onTableNamed: aTableName [
 
 	^ self new initializeOnTableNamed: aTableName asString
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 SequentialNumberMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem [
 
 	^ aDescriptorSystem defineSequentialNumberMappingOn: aDescriptor onTableNamed: tableName
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 SequentialNumberMappingDefinition >> initializeOnTableNamed: aTableName [
 
 	tableName := aTableName
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 SequentialNumberMappingDefinition >> printOn: aStream [
 
 	aStream

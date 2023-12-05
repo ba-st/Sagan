@@ -1,31 +1,33 @@
 Class {
-	#name : #FilteredTypeResolverDefinition,
-	#superclass : #TypeResolverDefinition,
+	#name : 'FilteredTypeResolverDefinition',
+	#superclass : 'TypeResolverDefinition',
 	#instVars : [
 		'abstractClass'
 	],
-	#category : #'Sagan-RDBMS-Core'
+	#category : 'Sagan-RDBMS-Core',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Core'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 FilteredTypeResolverDefinition class >> for: anAbstractClass [
 
 	^ self new initializeFor: anAbstractClass
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 FilteredTypeResolverDefinition >> abstractClass [
 
 	^ abstractClass
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 FilteredTypeResolverDefinition >> defineTypeResolverFor: aModelClass using: aDescriptorSystem [
 
 	^ aDescriptorSystem defineFilteredTypeResolverFor: aModelClass
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 FilteredTypeResolverDefinition >> initializeFor: anAbstractClass [
 
 	abstractClass := anAbstractClass

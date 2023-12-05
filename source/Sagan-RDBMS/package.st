@@ -1,1 +1,1 @@
-Package { #name : #'Sagan-RDBMS' }
+Package { #name : 'Sagan-RDBMS' }

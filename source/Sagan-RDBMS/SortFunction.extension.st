@@ -1,12 +1,12 @@
-Extension { #name : #SortFunction }
+Extension { #name : 'SortFunction' }
 
-{ #category : #'*Sagan-RDBMS' }
+{ #category : '*Sagan-RDBMS' }
 SortFunction >> asOrderByIn: aQuery [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'*Sagan-RDBMS' }
+{ #category : '*Sagan-RDBMS' }
 SortFunction >> asReversedOrderByIn: aQuery [
 
 	self subclassResponsibility

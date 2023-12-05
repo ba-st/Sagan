@@ -1,51 +1,53 @@
 Class {
-	#name : #ClassModelDefinition,
-	#superclass : #PersistenceConceptDefinition,
+	#name : 'ClassModelDefinition',
+	#superclass : 'PersistenceConceptDefinition',
 	#instVars : [
 		'modelClass',
 		'attributeDefinitions'
 	],
-	#category : #'Sagan-RDBMS-Core'
+	#category : 'Sagan-RDBMS-Core',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Core'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ClassModelDefinition class >> for: aClass attributesDefinedBy: anAttributeDefinitionCollection [
 
 	^ self new initializeFor: aClass attributesDefinedBy: anAttributeDefinitionCollection
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ClassModelDefinition class >> withoutAttributesFor: aClass [
 
 	^ self for: aClass attributesDefinedBy: #()
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 ClassModelDefinition >> defineFor: aGlorpClassModel using: aDescriptorSystem [
 
 	aDescriptorSystem defineClassModelBasedOn: aGlorpClassModel withAttributesDefinedBy: attributeDefinitions
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 ClassModelDefinition >> initializeFor: aClass attributesDefinedBy: anAttributeDefinitionCollection [
 
 	modelClass := aClass.
 	attributeDefinitions := anAttributeDefinitionCollection
 ]
 
-{ #category : #Testing }
+{ #category : 'Testing' }
 ClassModelDefinition >> isFor: aGlorpClassModel [
 
 	^ aGlorpClassModel describedClass = modelClass
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 ClassModelDefinition >> modelClass [
 
 	^ modelClass
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 ClassModelDefinition >> printOn: aStream [
 
 	aStream

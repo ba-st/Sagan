@@ -17,20 +17,20 @@ I support two main APIs:
 My concrete subclasses can support a mapping building API in the cases it's needed.
 "
 Class {
-	#name : 'Repository',
+	#name : 'RepositoryBehavior',
 	#superclass : 'Object',
 	#category : 'Sagan-Core',
 	#package : 'Sagan-Core'
 }
 
 { #category : 'private - accessing' }
-Repository >> asMatchingCriteria: aBlockOrCriteria [
+RepositoryBehavior >> asMatchingCriteria: aBlockOrCriteria [
 
 	^ aBlockOrCriteria asMatchingCriteriaIn: self
 ]
 
 { #category : 'private - preconditions' }
-Repository >> assertIncludes: inMemoryObject [
+RepositoryBehavior >> assertIncludes: inMemoryObject [
 
 	AssertionChecker
 		enforce: [ ( self countMatching: [ :objectInRepository :criteria | criteria does: objectInRepository equal: inMemoryObject ] ) strictlyPositive ]
@@ -39,61 +39,61 @@ Repository >> assertIncludes: inMemoryObject [
 ]
 
 { #category : 'private - preconditions' }
-Repository >> assertNoConflictsFor: aDomainObject [
+RepositoryBehavior >> assertNoConflictsFor: aDomainObject [
 
 	self conflictCheckingStrategy assertNoConflictsFor: aDomainObject in: self
 ]
 
 { #category : 'private - preconditions' }
-Repository >> assertNoConflictsFor: anUpdatedDomainObject excluding: aDomainObject [
+RepositoryBehavior >> assertNoConflictsFor: anUpdatedDomainObject excluding: aDomainObject [
 
 	self conflictCheckingStrategy assertNoConflictsFor: anUpdatedDomainObject in: self excluding: aDomainObject
 ]
 
 { #category : 'mappings' }
-Repository >> configureMappingsIn: aBlock [
+RepositoryBehavior >> configureMappingsIn: aBlock [
 
 	self subclassResponsibility 
 ]
 
 { #category : 'private - accessing' }
-Repository >> conflictCheckingStrategy [
+RepositoryBehavior >> conflictCheckingStrategy [
 
 	^ self subclassResponsibility 
 ]
 
 { #category : 'querying' }
-Repository >> countMatching: aCriteria [
+RepositoryBehavior >> countMatching: aCriteria [
 
 	self subclassResponsibility
 ]
 
 { #category : 'querying' }
-Repository >> findAll [ 
+RepositoryBehavior >> findAll [ 
 	
 	self subclassResponsibility 
 ]
 
 { #category : 'querying' }
-Repository >> findAllMatching: aCriteria [
+RepositoryBehavior >> findAllMatching: aCriteria [
 
 	self subclassResponsibility
 ]
 
 { #category : 'querying' }
-Repository >> findAllMatching: aCriteria sortedBy: aSortCriteria [
+RepositoryBehavior >> findAllMatching: aCriteria sortedBy: aSortCriteria [
 
 	self subclassResponsibility
 ]
 
 { #category : 'private - accessing' }
-Repository >> matchingCriteriaBuilder [
+RepositoryBehavior >> matchingCriteriaBuilder [
 
 	^ self subclassResponsibility
 ]
 
 { #category : 'management' }
-Repository >> purge: aDomainObject [
+RepositoryBehavior >> purge: aDomainObject [
 
 	^ self
 		assertIncludes: aDomainObject;
@@ -101,19 +101,19 @@ Repository >> purge: aDomainObject [
 ]
 
 { #category : 'private - management' }
-Repository >> purgeAfterCheckingInclusion: aDomainObject [
+RepositoryBehavior >> purgeAfterCheckingInclusion: aDomainObject [
 
 	^ self subclassResponsibility
 ]
 
 { #category : 'management' }
-Repository >> purgeAllMatching: aCriteria [
+RepositoryBehavior >> purgeAllMatching: aCriteria [
 
 	self subclassResponsibility
 ]
 
 { #category : 'management' }
-Repository >> store: aDomainObject [
+RepositoryBehavior >> store: aDomainObject [
 
 	^ self
 		assertNoConflictsFor: aDomainObject;
@@ -121,25 +121,25 @@ Repository >> store: aDomainObject [
 ]
 
 { #category : 'private - management' }
-Repository >> storeAfterCheckingConflicts: aDomainObject [
+RepositoryBehavior >> storeAfterCheckingConflicts: aDomainObject [
 
 	^ self subclassResponsibility
 ]
 
 { #category : 'management' }
-Repository >> transact: aBlock [
+RepositoryBehavior >> transact: aBlock [
 
 	^ self subclassResponsibility
 ]
 
 { #category : 'management' }
-Repository >> update: aDomainObject executing: aBlock [
+RepositoryBehavior >> update: aDomainObject executing: aBlock [
 
 	self subclassResponsibility
 ]
 
 { #category : 'management' }
-Repository >> update: aDomainObject with: anUpdatedDomainObject [
+RepositoryBehavior >> update: aDomainObject with: anUpdatedDomainObject [
 
 	^ self
 		assertIncludes: aDomainObject;
@@ -148,19 +148,19 @@ Repository >> update: aDomainObject with: anUpdatedDomainObject [
 ]
 
 { #category : 'private - management' }
-Repository >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
+RepositoryBehavior >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
 
 	^ self subclassResponsibility
 ]
 
 { #category : 'querying' }
-Repository >> withOneMatching: aCriteria do: foundBlock else: noneBlock [
+RepositoryBehavior >> withOneMatching: aCriteria do: foundBlock else: noneBlock [
 
 	self subclassResponsibility
 ]
 
 { #category : 'querying' }
-Repository >> withOneMatching: aCriteria sortedBy: aSortCriteria do: foundBlock else: noneBlock [
+RepositoryBehavior >> withOneMatching: aCriteria sortedBy: aSortCriteria do: foundBlock else: noneBlock [
 
 	self subclassResponsibility
 ]

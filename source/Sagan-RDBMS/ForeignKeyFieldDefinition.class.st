@@ -1,16 +1,18 @@
 Class {
-	#name : #ForeignKeyFieldDefinition,
-	#superclass : #TableFieldDefinition,
+	#name : 'ForeignKeyFieldDefinition',
+	#superclass : 'TableFieldDefinition',
 	#instVars : [
 		'fieldName',
 		'foreignFieldName',
 		'foreignTableName',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Fields'
+	#category : 'Sagan-RDBMS-Fields',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Fields'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ForeignKeyFieldDefinition class >> named: aFieldName toFieldNamed: aForeignFieldName onTableNamed: aForeignTableName [
 
 	^ self
@@ -20,7 +22,7 @@ ForeignKeyFieldDefinition class >> named: aFieldName toFieldNamed: aForeignField
 		applyingAfterDefinition: self nullAction
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ForeignKeyFieldDefinition class >> named: aFieldName toFieldNamed: aForeignFieldName onTableNamed: aForeignTableName applyingAfterDefinition: aTwoArgBlock [
 
 	^ self new
@@ -30,7 +32,7 @@ ForeignKeyFieldDefinition class >> named: aFieldName toFieldNamed: aForeignField
 		applyingAfterDefinition: aTwoArgBlock
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ForeignKeyFieldDefinition class >> nullableNamed: aFieldName toFieldNamed: aForeignFieldName onTableNamed: aForeignTableName [
 
 	^ self
@@ -40,7 +42,7 @@ ForeignKeyFieldDefinition class >> nullableNamed: aFieldName toFieldNamed: aFore
 		applyingAfterDefinition: self makeFieldNullable
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ForeignKeyFieldDefinition class >> toBePrimaryKeyNamed: aFieldName toFieldNamed: aForeignFieldName onTableNamed: aForeignTableName [
 
 	^ self
@@ -50,7 +52,7 @@ ForeignKeyFieldDefinition class >> toBePrimaryKeyNamed: aFieldName toFieldNamed:
 		applyingAfterDefinition: self makeFieldPrimaryKey
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 ForeignKeyFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSystem [
 
 	| field |
@@ -64,13 +66,13 @@ ForeignKeyFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSys
 	^ field
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 ForeignKeyFieldDefinition >> foreignTableName [
 
 	^ foreignTableName
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 ForeignKeyFieldDefinition >> initializeNamed: aFieldName toFieldNamed: aForeignFieldName onTableNamed: aForeignTableName applyingAfterDefinition: aTwoArgBlock [
 
 	fieldName := aFieldName.
@@ -79,13 +81,13 @@ ForeignKeyFieldDefinition >> initializeNamed: aFieldName toFieldNamed: aForeignF
 	postDefinitionAction := aTwoArgBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ForeignKeyFieldDefinition >> isForForeignKeys [
 
 	^ true
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 ForeignKeyFieldDefinition >> printOn: aStream [
 
 	aStream

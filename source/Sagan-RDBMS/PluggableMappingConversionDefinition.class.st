@@ -1,15 +1,17 @@
 Class {
-	#name : #PluggableMappingConversionDefinition,
-	#superclass : #MappingConversionDefinition,
+	#name : 'PluggableMappingConversionDefinition',
+	#superclass : 'MappingConversionDefinition',
 	#instVars : [
 		'fromDatabaseToSmalltalkBlock',
 		'fromSmalltalkToDatabaseBlock',
 		'converterName'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 PluggableMappingConversionDefinition class >> named: aConverterNameOrString
 	convertingFromDatabaseToSmalltalkUsing: aFromDatabaseConversionBlock
 	fromSmalltalkToDatabaseUsing: aFromSmalltalkConversionBlock [
@@ -21,7 +23,7 @@ PluggableMappingConversionDefinition class >> named: aConverterNameOrString
 		fromSmalltalkToDatabseUsing: aFromSmalltalkConversionBlock
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 PluggableMappingConversionDefinition >> defineConversionOn: aMapping using: aDescriptorSystem [
 
 	^ aDescriptorSystem
@@ -31,7 +33,7 @@ PluggableMappingConversionDefinition >> defineConversionOn: aMapping using: aDes
 		fromSmalltalkToDatabaseUsing: fromSmalltalkToDatabaseBlock
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 PluggableMappingConversionDefinition >> initializeNamed: aConverterName
 	convertingFromDatabaseToSmalltalkUsing: aFromDatabaseConversionBlock
 	fromSmalltalkToDatabseUsing: aFromSmalltalkConversionBlock [

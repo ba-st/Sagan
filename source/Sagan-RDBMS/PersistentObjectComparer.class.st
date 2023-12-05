@@ -1,16 +1,18 @@
 Class {
-	#name : #PersistentObjectComparer,
-	#superclass : #Object,
-	#category : #'Sagan-RDBMS-Core'
+	#name : 'PersistentObjectComparer',
+	#superclass : 'Object',
+	#category : 'Sagan-RDBMS-Core',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Core'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 PersistentObjectComparer >> hashFor: anObject [ 
 
 	^anObject sequentialNumber hash
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 PersistentObjectComparer >> shouldConsider: anObject asEqualTo: anotherObject [
 
 	^anObject == anotherObject or: [| unproxiedObject |

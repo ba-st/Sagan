@@ -1,21 +1,23 @@
 Class {
-	#name : #ConstantMappingDefinition,
-	#superclass : #MappingDefinition,
+	#name : 'ConstantMappingDefinition',
+	#superclass : 'MappingDefinition',
 	#instVars : [
 		'attributeName',
 		'constant',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ConstantMappingDefinition class >> fromAttributeNamed: anAttributeName mappingTo: anObject [
 
 	^ self fromAttributeNamed: anAttributeName mappingTo: anObject applyingAfterDefinition: self nullAction
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ConstantMappingDefinition class >> fromAttributeNamed: anAttributeName mappingTo: anObject applyingAfterDefinition: aOneArgBlock [
 
 	^ self new
@@ -24,7 +26,7 @@ ConstantMappingDefinition class >> fromAttributeNamed: anAttributeName mappingTo
 		applyingAfterDefinition: aOneArgBlock
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 ConstantMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem [
 
 	| mapping |
@@ -37,7 +39,7 @@ ConstantMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSyst
 	^ mapping
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 ConstantMappingDefinition >> initializeFromAttributeNamed: anAttributeName mappingTo: anObject applyingAfterDefinition: aOneArgBlock [
 
 	attributeName := anAttributeName.
@@ -45,7 +47,7 @@ ConstantMappingDefinition >> initializeFromAttributeNamed: anAttributeName mappi
 	postDefinitionAction := aOneArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 ConstantMappingDefinition >> printOn: aStream [
 
 	aStream

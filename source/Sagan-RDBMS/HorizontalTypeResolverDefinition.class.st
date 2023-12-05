@@ -1,31 +1,33 @@
 Class {
-	#name : #HorizontalTypeResolverDefinition,
-	#superclass : #TypeResolverDefinition,
+	#name : 'HorizontalTypeResolverDefinition',
+	#superclass : 'TypeResolverDefinition',
 	#instVars : [
 		'abstractClass'
 	],
-	#category : #'Sagan-RDBMS-Core'
+	#category : 'Sagan-RDBMS-Core',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Core'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 HorizontalTypeResolverDefinition class >> for: anAbstractClass [
 
 	^ self new initializeFor: anAbstractClass
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 HorizontalTypeResolverDefinition >> abstractClass [
 
 	^ abstractClass
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 HorizontalTypeResolverDefinition >> defineTypeResolverFor: aModelClass using: aDescriptorSystem [
 
 	^ aDescriptorSystem defineHorizontalTypeResolverFor: aModelClass
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 HorizontalTypeResolverDefinition >> initializeFor: anAbstractClass [
 
 	abstractClass := anAbstractClass

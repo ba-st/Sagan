@@ -1,16 +1,18 @@
 Class {
-	#name : #TableFieldTranslationDefinition,
-	#superclass : #PersistenceConceptDefinition,
+	#name : 'TableFieldTranslationDefinition',
+	#superclass : 'PersistenceConceptDefinition',
 	#instVars : [
 		'sourceTableName',
 		'targetTableName',
 		'sourceFieldName',
 		'targetFieldName'
 	],
-	#category : #'Sagan-RDBMS-Fields'
+	#category : 'Sagan-RDBMS-Fields',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Fields'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 TableFieldTranslationDefinition class >> translatingFieldNamed: aSourceFieldName onTableNamed: aSourceTableName toFieldNamed: aTargetFieldName onTableNamed: aTargetTableName [
 
 	^ self new
@@ -20,7 +22,7 @@ TableFieldTranslationDefinition class >> translatingFieldNamed: aSourceFieldName
 		onTableNamed: aTargetTableName
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 TableFieldTranslationDefinition >> defineFor: aJoin using: aDescriptorSystem [
 
 	aDescriptorSystem
@@ -31,7 +33,7 @@ TableFieldTranslationDefinition >> defineFor: aJoin using: aDescriptorSystem [
 		onTableNamed: targetTableName
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 TableFieldTranslationDefinition >> initializeTranslatingFieldNamed: aSourceFieldName onTableNamed: aSourceTableName toFieldNamed: aTargetFieldName onTableNamed: aTargetTableName [
 
 	sourceFieldName := aSourceFieldName.
@@ -40,7 +42,7 @@ TableFieldTranslationDefinition >> initializeTranslatingFieldNamed: aSourceField
 	targetTableName := aTargetTableName
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 TableFieldTranslationDefinition >> printOn: aStream [
 
 	aStream

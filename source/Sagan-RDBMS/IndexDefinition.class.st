@@ -1,37 +1,39 @@
 Class {
-	#name : #IndexDefinition,
-	#superclass : #PersistenceConceptDefinition,
+	#name : 'IndexDefinition',
+	#superclass : 'PersistenceConceptDefinition',
 	#instVars : [
 		'fieldNames'
 	],
-	#category : #'Sagan-RDBMS-Core'
+	#category : 'Sagan-RDBMS-Core',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Core'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 IndexDefinition class >> forFieldNamed: aFieldName [
 
 	^ self forFieldsNamed: ( Array with: aFieldName )
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 IndexDefinition class >> forFieldsNamed: aFieldNameCollection [
 
 	^ self new initializeForFieldsNamed: aFieldNameCollection
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 IndexDefinition >> defineFor: aDatabaseTable using: aDescriptorSystem [ 
 	^aDescriptorSystem
 	defineIndexOn: aDatabaseTable
 	forFieldsNamed: fieldNames
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 IndexDefinition >> initializeForFieldsNamed: aFieldNameCollection [ 
 	fieldNames := aFieldNameCollection
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 IndexDefinition >> printOn: aStream [
 
 	aStream

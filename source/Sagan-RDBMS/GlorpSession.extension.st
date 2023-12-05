@@ -1,6 +1,6 @@
-Extension { #name : #GlorpSession }
+Extension { #name : 'GlorpSession' }
 
-{ #category : #'*Sagan-RDBMS' }
+{ #category : '*Sagan-RDBMS' }
 GlorpSession >> dropAll: aCollection onErrorDo: aBlock [
 
 	"Drop the tables for our descriptor system, and their associated sequences."
@@ -14,7 +14,7 @@ GlorpSession >> dropAll: aCollection onErrorDo: aBlock [
 			]
 ]
 
-{ #category : #'*Sagan-RDBMS' }
+{ #category : '*Sagan-RDBMS' }
 GlorpSession >> dropAllTablesOnErrorDo: aBlock [
 	"Drop the tables for our descriptor system, and their associated sequences."
 

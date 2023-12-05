@@ -1,34 +1,36 @@
 Class {
-	#name : #AbstractDescriptorDefinition,
-	#superclass : #DescriptorDefinition,
-	#category : #'Sagan-RDBMS-Descriptors'
+	#name : 'AbstractDescriptorDefinition',
+	#superclass : 'DescriptorDefinition',
+	#category : 'Sagan-RDBMS-Descriptors',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Descriptors'
 }
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 AbstractDescriptorDefinition >> abstractClass [
 
 	self subclassResponsibility
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 AbstractDescriptorDefinition >> defineAbstractDescriptorFor: aDescriptor using: aDescriptorSystem [
 
 	self subclassResponsibility
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 AbstractDescriptorDefinition >> defineDescriptorFor: aDescriptor using: aDescriptorSystem [
 
 	^ self defineAbstractDescriptorFor: aDescriptor using: aDescriptorSystem
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 AbstractDescriptorDefinition >> describedClass [
 
 	^ self abstractClass
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 AbstractDescriptorDefinition >> printOn: aStream [
 
 	aStream

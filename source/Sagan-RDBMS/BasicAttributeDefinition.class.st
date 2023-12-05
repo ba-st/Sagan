@@ -1,31 +1,33 @@
 Class {
-	#name : #BasicAttributeDefinition,
-	#superclass : #AttributeDefinition,
+	#name : 'BasicAttributeDefinition',
+	#superclass : 'AttributeDefinition',
 	#instVars : [
 		'attributeName'
 	],
-	#category : #'Sagan-RDBMS-Attributes'
+	#category : 'Sagan-RDBMS-Attributes',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Attributes'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 BasicAttributeDefinition class >> named: aSymbol [
 
 	^ self new initializeNamed: aSymbol
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 BasicAttributeDefinition >> defineAttributesOn: aGlorpClassModel using: aDescriptorSystem [
 
 	aDescriptorSystem defineBasicAttributeOn: aGlorpClassModel named: attributeName
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 BasicAttributeDefinition >> initializeNamed: aSymbol [
 
 	attributeName := aSymbol
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 BasicAttributeDefinition >> printOn: aStream [
 
 	aStream

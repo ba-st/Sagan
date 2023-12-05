@@ -1,6 +1,6 @@
 Class {
-	#name : #AdHocMappingDefinition,
-	#superclass : #MappingDefinition,
+	#name : 'AdHocMappingDefinition',
+	#superclass : 'MappingDefinition',
 	#instVars : [
 		'attributeName',
 		'messageToPrepareModel',
@@ -8,10 +8,12 @@ Class {
 		'fieldValueAssociations',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 AdHocMappingDefinition class >> forAttributeNamed: anAttributeName sending: aMessage to: anObjectToPrepareModel toMapAssociations: aFieldValueAssociationsCollection [
 
 	^ self
@@ -22,7 +24,7 @@ AdHocMappingDefinition class >> forAttributeNamed: anAttributeName sending: aMes
 		applyingAfterDefinition: self nullAction
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 AdHocMappingDefinition class >> forAttributeNamed: anAttributeName sending: aMessage to: anObjectToPrepareModel toMapAssociations: aFieldValueAssociationsCollection applyingAfterDefinition: aOneArgBlock [
 
 	^ self new
@@ -33,7 +35,7 @@ AdHocMappingDefinition class >> forAttributeNamed: anAttributeName sending: aMes
 		applyingAfterDefinition: aOneArgBlock
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 AdHocMappingDefinition class >> forNullableAttributeNamed: anAttributeName
 	toMapSingleAssociationTo: aFieldName
 	on: aTableName
@@ -57,7 +59,7 @@ AdHocMappingDefinition class >> forNullableAttributeNamed: anAttributeName
 						consideringNullAs: aNullObject ) )
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 AdHocMappingDefinition class >> forProxyAttributeNamed: anAttributeName sending: aMessage to: anObjectToPrepareModel toMapAssociations: aFieldValueAssociationsCollection [
 
 	^ self
@@ -68,7 +70,7 @@ AdHocMappingDefinition class >> forProxyAttributeNamed: anAttributeName sending:
 		applyingAfterDefinition: self makeMappingToUseProxies
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 AdHocMappingDefinition class >> forReadOnlyAttributeNamed: anAttributeName
 	sending: aMessage
 	to: anObjectToPrepareModel
@@ -83,13 +85,13 @@ AdHocMappingDefinition class >> forReadOnlyAttributeNamed: anAttributeName
 		applyingAfterDefinition: self makeMappingReadOnly
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 AdHocMappingDefinition class >> makeMappingToUseProxies [
 
 	^ [ :mapping :system | mapping shouldProxy: true ]
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 AdHocMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem [
 
 	| mapping |
@@ -105,7 +107,7 @@ AdHocMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem 
 	^ mapping
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 AdHocMappingDefinition >> definePseudoAttributesForNotDeclaredFieldsOn: aDescriptor using: aDescriptorSystem [
 
 	fieldValueAssociations copyWithoutFirst
@@ -117,7 +119,7 @@ AdHocMappingDefinition >> definePseudoAttributesForNotDeclaredFieldsOn: aDescrip
 			]
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 AdHocMappingDefinition >> initializeForAttributeNamed: anAttributeName
 	sending: aMessage
 	to: anObjectToPrepareModel
@@ -132,7 +134,7 @@ AdHocMappingDefinition >> initializeForAttributeNamed: anAttributeName
 	postDefinitionAction := aOneArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 AdHocMappingDefinition >> printOn: aStream [
 
 	aStream

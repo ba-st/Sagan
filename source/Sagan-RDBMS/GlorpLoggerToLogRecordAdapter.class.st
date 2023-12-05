@@ -1,20 +1,22 @@
 Class {
-	#name : #GlorpLoggerToLogRecordAdapter,
-	#superclass : #Object,
-	#category : #'Sagan-RDBMS-Repository'
+	#name : 'GlorpLoggerToLogRecordAdapter',
+	#superclass : 'Object',
+	#category : 'Sagan-RDBMS-Repository',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Repository'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 GlorpLoggerToLogRecordAdapter >> cr [
 	" "
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GlorpLoggerToLogRecordAdapter >> flush [
 	" "
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GlorpLoggerToLogRecordAdapter >> nextPutAll: aString [
 
 	LogRecord

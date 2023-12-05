@@ -1,16 +1,18 @@
 Class {
-	#name : #VariableJoinDefinition,
-	#superclass : #JoinDefinition,
+	#name : 'VariableJoinDefinition',
+	#superclass : 'JoinDefinition',
 	#instVars : [
 		'sourceFieldName',
 		'sourceTableName',
 		'targetFieldName',
 		'modelClassCollection'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 VariableJoinDefinition class >> fromFieldNamed: aSourceFieldName onTableNamed: aSourceTableName toFieldNamed: aTargetFieldName onEachTableDefinedFor: aModelClassCollection [
 
 	^ self new
@@ -20,7 +22,7 @@ VariableJoinDefinition class >> fromFieldNamed: aSourceFieldName onTableNamed: a
 		onEachTableDefinedFor: aModelClassCollection
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 VariableJoinDefinition >> defineJoinFor: aJoin using: aDescriptorSystem [
 
 	^ aDescriptorSystem
@@ -31,7 +33,7 @@ VariableJoinDefinition >> defineJoinFor: aJoin using: aDescriptorSystem [
 		onEachTableDefinedFor: modelClassCollection
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 VariableJoinDefinition >> initializeFromFieldNamed: aSourceFieldName
 	onTableNamed: aSourceTableName
 	toFieldNamed: aTargetFieldName

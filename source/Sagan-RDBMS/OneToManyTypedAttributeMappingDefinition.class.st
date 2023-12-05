@@ -1,15 +1,17 @@
 Class {
-	#name : #OneToManyTypedAttributeMappingDefinition,
-	#superclass : #MappingDefinition,
+	#name : 'OneToManyTypedAttributeMappingDefinition',
+	#superclass : 'MappingDefinition',
 	#instVars : [
 		'attributeName',
 		'translationDefinitions',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToManyTypedAttributeMappingDefinition class >> exclusiveForAttributeNamed: anAttributeName
 	translatingFieldsUsing: aTableFieldTranslationDefinition [
 
@@ -19,7 +21,7 @@ OneToManyTypedAttributeMappingDefinition class >> exclusiveForAttributeNamed: an
 		translatingFieldsUsingAll: ( Array with: aTableFieldTranslationDefinition )
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToManyTypedAttributeMappingDefinition class >> exclusiveForAttributeNamed: anAttributeName
 	translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection [
 
@@ -30,7 +32,7 @@ OneToManyTypedAttributeMappingDefinition class >> exclusiveForAttributeNamed: an
 		applyingAfterDefinition: self makeMappingExclusive
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToManyTypedAttributeMappingDefinition class >> exclusiveForAttributeNamed: anAttributeName
 	withPositionAt: aPositionFieldName
 	on: aTableName
@@ -46,7 +48,7 @@ OneToManyTypedAttributeMappingDefinition class >> exclusiveForAttributeNamed: an
 			]
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToManyTypedAttributeMappingDefinition class >> exclusiveForNonProxyAttributeNamed: anAttributeName
 	translatingFieldsUsing: aTableFieldTranslationDefinition [
 
@@ -56,7 +58,7 @@ OneToManyTypedAttributeMappingDefinition class >> exclusiveForNonProxyAttributeN
 		translatingFieldsUsingAll: ( Array with: aTableFieldTranslationDefinition )
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToManyTypedAttributeMappingDefinition class >> exclusiveForNonProxyAttributeNamed: anAttributeName
 	translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection [
 
@@ -70,7 +72,7 @@ OneToManyTypedAttributeMappingDefinition class >> exclusiveForNonProxyAttributeN
 			]
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToManyTypedAttributeMappingDefinition class >> exclusiveForNonProxyAttributeNamed: anAttributeName
 	withPositionAt: aPositionFieldName
 	on: aTableName
@@ -84,7 +86,7 @@ OneToManyTypedAttributeMappingDefinition class >> exclusiveForNonProxyAttributeN
 		translatingFieldsUsingAll: ( Array with: aTableFieldTranslationDefinition )
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToManyTypedAttributeMappingDefinition class >> exclusiveForNonProxyAttributeNamed: anAttributeName
 	withPositionAt: aPositionFieldName
 	on: aTableName
@@ -101,7 +103,7 @@ OneToManyTypedAttributeMappingDefinition class >> exclusiveForNonProxyAttributeN
 			]
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToManyTypedAttributeMappingDefinition class >> forAttributeNamed: anAttributeName translatingFieldsUsing: aTableFieldTranslationDefinition [
 
 	^ self
@@ -109,7 +111,7 @@ OneToManyTypedAttributeMappingDefinition class >> forAttributeNamed: anAttribute
 		translatingFieldsUsingAll: ( Array with: aTableFieldTranslationDefinition )
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToManyTypedAttributeMappingDefinition class >> forAttributeNamed: anAttributeName translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection [
 
 	^ self
@@ -118,7 +120,7 @@ OneToManyTypedAttributeMappingDefinition class >> forAttributeNamed: anAttribute
 		applyingAfterDefinition: self nullAction
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToManyTypedAttributeMappingDefinition class >> forAttributeNamed: anAttributeName translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection applyingAfterDefinition: aTwoArgBlock [
 
 	^ self new
@@ -127,7 +129,7 @@ OneToManyTypedAttributeMappingDefinition class >> forAttributeNamed: anAttribute
 		applyingAfterDefinition: aTwoArgBlock
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToManyTypedAttributeMappingDefinition class >> make: mapping beOrderedBy: aPositionFieldName in: aTableName [
 
 	^ mapping
@@ -135,7 +137,7 @@ OneToManyTypedAttributeMappingDefinition class >> make: mapping beOrderedBy: aPo
 		orderBy: [ :each | ( each getTable: aTableName ) getField: aPositionFieldName ]
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 OneToManyTypedAttributeMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem [
 
 	| mapping |
@@ -148,7 +150,7 @@ OneToManyTypedAttributeMappingDefinition >> defineMappingOn: aDescriptor using: 
 	^ mapping
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 OneToManyTypedAttributeMappingDefinition >> initializeForAttributeNamed: anAttributeName
 	translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection
 	applyingAfterDefinition: aTwoArgBlock [
@@ -159,7 +161,7 @@ OneToManyTypedAttributeMappingDefinition >> initializeForAttributeNamed: anAttri
 	postDefinitionAction := aTwoArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 OneToManyTypedAttributeMappingDefinition >> printOn: aStream [
 
 	aStream

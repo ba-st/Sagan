@@ -1,6 +1,6 @@
 Class {
-	#name : #ConfigurableDescriptorSystem,
-	#superclass : #DescriptorSystem,
+	#name : 'ConfigurableDescriptorSystem',
+	#superclass : 'DescriptorSystem',
 	#instVars : [
 		'tableDefinitions',
 		'descriptorDefinitions',
@@ -8,24 +8,26 @@ Class {
 		'typeResolverDefinitions',
 		'tablesInCreationOrder'
 	],
-	#category : #'Sagan-RDBMS-Core'
+	#category : 'Sagan-RDBMS-Core',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Core'
 }
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 ConfigurableDescriptorSystem >> addClassModelDefinedBy: aClassModelDefinition [
 
 	classModelDefinitions add: aClassModelDefinition.
 	allClasses := OrderedCollection new
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 ConfigurableDescriptorSystem >> addDescriptorDefinedBy: aDescriptorDefinition [
 
 	descriptorDefinitions add: aDescriptorDefinition.
 	descriptors := Dictionary new
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 ConfigurableDescriptorSystem >> addTableDefinedBy: aTableDefinition [
 
 	tableDefinitions add: aTableDefinition.
@@ -33,14 +35,14 @@ ConfigurableDescriptorSystem >> addTableDefinedBy: aTableDefinition [
 	tablesInCreationOrder := nil
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 ConfigurableDescriptorSystem >> addTypeResolverDefinedBy: aTypeResolverDefinition [
 
 	typeResolverDefinitions add: aTypeResolverDefinition.
 	typeResolvers := Dictionary new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurableDescriptorSystem >> allForeignKeyFieldDefinitions [
 
 	^ tableDefinitions
@@ -52,13 +54,13 @@ ConfigurableDescriptorSystem >> allForeignKeyFieldDefinitions [
 			]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurableDescriptorSystem >> allTableNames [
 
 	^ tableDefinitions collect: [ :definition | definition tableName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurableDescriptorSystem >> allTables [
 
 	( tablesInCreationOrder isNil or: [ tablesInCreationOrder isEmpty ] )
@@ -69,7 +71,7 @@ ConfigurableDescriptorSystem >> allTables [
 	^ tablesInCreationOrder
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurableDescriptorSystem >> assertForeignKeyFieldDoNotPointToImaginaryTables [
 
 	self allForeignKeyFieldDefinitions
@@ -87,7 +89,7 @@ ConfigurableDescriptorSystem >> assertForeignKeyFieldDoNotPointToImaginaryTables
 			]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurableDescriptorSystem >> assertRealTablesHaveAtLeastOneFieldDeclaredAsPrimaryKey [
 
 	tables
@@ -98,20 +100,20 @@ ConfigurableDescriptorSystem >> assertRealTablesHaveAtLeastOneFieldDeclaredAsPri
 			]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurableDescriptorSystem >> classModelDefinitionFor: aClassModel ifFound: aOneArgBlock ifNotFound: aZeroArgBlock [
 
 	^ classModelDefinitions detect: [ :definition | definition isFor: aClassModel ] ifFound: aOneArgBlock ifNone: aZeroArgBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurableDescriptorSystem >> constructAllClasses [
 
 	classModelDefinitions do: [ :definition | allClasses add: definition modelClass ].
 	^ allClasses
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurableDescriptorSystem >> constructAllTables [
 
 	self allTableNames do: [ :tableName | self tableNamed: tableName ].
@@ -120,7 +122,7 @@ ConfigurableDescriptorSystem >> constructAllTables [
 	^ tables
 ]
 
-{ #category : #'defining descriptors' }
+{ #category : 'defining descriptors' }
 ConfigurableDescriptorSystem >> defineAbstractDescriptorUsingFilteredTypeResolverBasedOn: aDescriptor onTableNamed: aTableName mappingsDefinedBy: mappingDefinitions [
 
 	aDescriptor table: ( self tableNamed: aTableName ).
@@ -128,13 +130,13 @@ ConfigurableDescriptorSystem >> defineAbstractDescriptorUsingFilteredTypeResolve
 	^ aDescriptor
 ]
 
-{ #category : #'defining descriptors' }
+{ #category : 'defining descriptors' }
 ConfigurableDescriptorSystem >> defineAbstractDescriptorUsingHorizontalTypeResolverBasedOn: aDescriptor [
 
 	^ aDescriptor
 ]
 
-{ #category : #'defining mappings' }
+{ #category : 'defining mappings' }
 ConfigurableDescriptorSystem >> defineAdHocMappingOn: aDescriptor forAttributeNamed: anAttributeName sending: aMessageToPrepareModel to: anObjectToPrepareModel toMapAssociations: aFieldValueAssociationsCollection [
 
 	| mapping fields |
@@ -176,19 +178,19 @@ ConfigurableDescriptorSystem >> defineAdHocMappingOn: aDescriptor forAttributeNa
 	^ mapping
 ]
 
-{ #category : #'defining attributes' }
+{ #category : 'defining attributes' }
 ConfigurableDescriptorSystem >> defineBasicAttributeOn: aGlorpClassModel named: attributeName [
 
 	aGlorpClassModel newAttributeNamed: attributeName
 ]
 
-{ #category : #'defining attributes' }
+{ #category : 'defining attributes' }
 ConfigurableDescriptorSystem >> defineBasicAttributeOn: aGlorpClassModel withoutDirectAccessNamed: attributeName [
 
 	( aGlorpClassModel newAttributeNamed: attributeName ) useDirectAccess: false
 ]
 
-{ #category : #'defining fields' }
+{ #category : 'defining fields' }
 ConfigurableDescriptorSystem >> defineBinaryLargeObjectFieldOn: aDatabaseTable named: fieldName [
 
 	| field |
@@ -198,7 +200,7 @@ ConfigurableDescriptorSystem >> defineBinaryLargeObjectFieldOn: aDatabaseTable n
 	^ field
 ]
 
-{ #category : #'defining fields' }
+{ #category : 'defining fields' }
 ConfigurableDescriptorSystem >> defineBooleanFieldOn: aDatabaseTable named: fieldName [
 
 	| field |
@@ -208,7 +210,7 @@ ConfigurableDescriptorSystem >> defineBooleanFieldOn: aDatabaseTable named: fiel
 	^ field
 ]
 
-{ #category : #'defining fields' }
+{ #category : 'defining fields' }
 ConfigurableDescriptorSystem >> defineCharacterFieldOn: aDatabaseTable named: fieldName sized: fieldSize [
 
 	| field |
@@ -218,7 +220,7 @@ ConfigurableDescriptorSystem >> defineCharacterFieldOn: aDatabaseTable named: fi
 	^ field
 ]
 
-{ #category : #'defining fields' }
+{ #category : 'defining fields' }
 ConfigurableDescriptorSystem >> defineCharacterLargeObjectFieldOn: aDatabaseTable named: fieldName [
 
 	| field |
@@ -228,13 +230,13 @@ ConfigurableDescriptorSystem >> defineCharacterLargeObjectFieldOn: aDatabaseTabl
 	^ field
 ]
 
-{ #category : #'defining other' }
+{ #category : 'defining other' }
 ConfigurableDescriptorSystem >> defineClassModelBasedOn: aGlorpClassModel withAttributesDefinedBy: attributeDefinitions [
 
 	attributeDefinitions do: [ :attributeDefinition | attributeDefinition defineFor: aGlorpClassModel using: self ]
 ]
 
-{ #category : #'defining descriptors' }
+{ #category : 'defining descriptors' }
 ConfigurableDescriptorSystem >> defineConcreteDescriptorBasedOn: aDescriptor onTableNamed: tableName mappingsDefinedBy: mappingDefinitions [
 
 	aDescriptor table: ( self tableNamed: tableName ).
@@ -242,7 +244,7 @@ ConfigurableDescriptorSystem >> defineConcreteDescriptorBasedOn: aDescriptor onT
 	^ aDescriptor
 ]
 
-{ #category : #'defining mappings' }
+{ #category : 'defining mappings' }
 ConfigurableDescriptorSystem >> defineConditionalMappingOn: aDescriptor fromAttributeNamed: attributeName sending: conditionalMessage choosingFrom: aCollectionOfMappingDefinitions accordingTo: aCollectionOfTestingBlocks [
 
 	| mapping defaultMapping |
@@ -265,7 +267,7 @@ ConfigurableDescriptorSystem >> defineConditionalMappingOn: aDescriptor fromAttr
 	^ mapping
 ]
 
-{ #category : #'defining mappings' }
+{ #category : 'defining mappings' }
 ConfigurableDescriptorSystem >> defineConstantMappingOn: aDescriptor fromAttributeNamed: attributeName mappedTo: constant [
 
 	^ ( aDescriptor newMapping: ConstantMapping )
@@ -273,7 +275,7 @@ ConfigurableDescriptorSystem >> defineConstantMappingOn: aDescriptor fromAttribu
 		constantValue: constant
 ]
 
-{ #category : #'defining fields' }
+{ #category : 'defining fields' }
 ConfigurableDescriptorSystem >> defineDateFieldOn: aDatabaseTable named: fieldName [
 
 	| field |
@@ -283,7 +285,7 @@ ConfigurableDescriptorSystem >> defineDateFieldOn: aDatabaseTable named: fieldNa
 	^ field
 ]
 
-{ #category : #'defining fields' }
+{ #category : 'defining fields' }
 ConfigurableDescriptorSystem >> defineDecimalFieldOn: aDatabaseTable named: fieldName withPrecision: precision andScale: scale [
 
 	| field |
@@ -299,7 +301,7 @@ ConfigurableDescriptorSystem >> defineDecimalFieldOn: aDatabaseTable named: fiel
 	^ field
 ]
 
-{ #category : #'defining mappings' }
+{ #category : 'defining mappings' }
 ConfigurableDescriptorSystem >> defineDirectMappingOn: aDescriptor fromAttributeNamed: attributeName toFieldNamed: fieldName onTableNamed: tableName conversionDefinedBy: conversionDefinition [
 
 	| table mapping |
@@ -311,7 +313,7 @@ ConfigurableDescriptorSystem >> defineDirectMappingOn: aDescriptor fromAttribute
 	^ conversionDefinition defineFor: mapping using: self
 ]
 
-{ #category : #'defining mappings' }
+{ #category : 'defining mappings' }
 ConfigurableDescriptorSystem >> defineEmbeddedValueOneToOneMappingOn: aDescriptor forAttributeNamed: attributeName [
 
 	| mapping |
@@ -321,7 +323,7 @@ ConfigurableDescriptorSystem >> defineEmbeddedValueOneToOneMappingOn: aDescripto
 	^ mapping
 ]
 
-{ #category : #'defining mappings' }
+{ #category : 'defining mappings' }
 ConfigurableDescriptorSystem >> defineEmbeddedValueOneToOneMappingWithTranslationOn: aDescriptor
 	translatingFieldsUsingAll: fieldTranslationDefinitions
 	basedOn: basicDefinition [
@@ -337,13 +339,13 @@ ConfigurableDescriptorSystem >> defineEmbeddedValueOneToOneMappingWithTranslatio
 	^ mapping
 ]
 
-{ #category : #'defining type resolvers' }
+{ #category : 'defining type resolvers' }
 ConfigurableDescriptorSystem >> defineFilteredTypeResolverFor: anAbstractClass [
 
 	^ FilteredTypeResolver forRootClass: anAbstractClass
 ]
 
-{ #category : #'defining fields' }
+{ #category : 'defining fields' }
 ConfigurableDescriptorSystem >> defineForeignKeyFieldOn: aDatabaseTable named: fieldName toFieldNamed: foreignFieldName onTableNamed: foreignTableName [
 
 	| field foreignField |
@@ -354,20 +356,20 @@ ConfigurableDescriptorSystem >> defineForeignKeyFieldOn: aDatabaseTable named: f
 	^ field
 ]
 
-{ #category : #'defining type resolvers' }
+{ #category : 'defining type resolvers' }
 ConfigurableDescriptorSystem >> defineHorizontalTypeResolverFor: anAbstractClass [
 
 	^ HorizontalTypeResolver forRootClass: anAbstractClass
 ]
 
-{ #category : #'defining tables' }
+{ #category : 'defining tables' }
 ConfigurableDescriptorSystem >> defineImaginaryTableBasedOn: aDatabaseTable using: tableDefinition [
 
 	aDatabaseTable isImaginary: true.
 	tableDefinition defineFor: aDatabaseTable using: self
 ]
 
-{ #category : #'defining other' }
+{ #category : 'defining other' }
 ConfigurableDescriptorSystem >> defineIndexOn: aDatabaseTable forFieldsNamed: aFieldNameCollection [
 
 	| fields index |
@@ -388,7 +390,7 @@ ConfigurableDescriptorSystem >> defineIndexOn: aDatabaseTable forFieldsNamed: aF
 	^ index
 ]
 
-{ #category : #'defining fields' }
+{ #category : 'defining fields' }
 ConfigurableDescriptorSystem >> defineIntegerFieldOn: aDatabaseTable named: fieldName [
 
 	| field |
@@ -398,7 +400,7 @@ ConfigurableDescriptorSystem >> defineIntegerFieldOn: aDatabaseTable named: fiel
 	^ field
 ]
 
-{ #category : #'defining mappings' }
+{ #category : 'defining mappings' }
 ConfigurableDescriptorSystem >> defineJoinBasedMappingOn: aDescriptor forAttributeNamed: attributeName joiningFieldNamed: sourceFieldName onTableNamed: sourceTableName toFieldNamed: targetFieldName onTableNamed: targetTableName conversionDefinedBy: conversionDefinition [
 
 	| mapping sourceTable targetTable |
@@ -416,7 +418,7 @@ ConfigurableDescriptorSystem >> defineJoinBasedMappingOn: aDescriptor forAttribu
 	^ conversionDefinition defineFor: mapping using: self
 ]
 
-{ #category : #'defining joins' }
+{ #category : 'defining joins' }
 ConfigurableDescriptorSystem >> defineJoinBasedOn: aJoin usingAll: aTranslationDefinitionCollection [
 
 	aTranslationDefinitionCollection
@@ -424,7 +426,7 @@ ConfigurableDescriptorSystem >> defineJoinBasedOn: aJoin usingAll: aTranslationD
 	^ aJoin
 ]
 
-{ #category : #'defining mappings' }
+{ #category : 'defining mappings' }
 ConfigurableDescriptorSystem >> defineManyToManyMappingOn: aDescriptor forAttributeNamed: attributeName translatingFieldsUsingAll: classTranslationDefinitions [
 
 	| join mapping |
@@ -437,7 +439,7 @@ ConfigurableDescriptorSystem >> defineManyToManyMappingOn: aDescriptor forAttrib
 	^ mapping
 ]
 
-{ #category : #'defining attributes' }
+{ #category : 'defining attributes' }
 ConfigurableDescriptorSystem >> defineOneToManyBasicAttributeMappingOn: aDescriptor forAttributeNamed: attributeName obtainingValuesFrom: aFieldName andPositionFrom: aPositionFieldName on: aTableName usingAll: classTranslationDefinitions [
 
 	| join mapping |
@@ -454,7 +456,7 @@ ConfigurableDescriptorSystem >> defineOneToManyBasicAttributeMappingOn: aDescrip
 	^ mapping
 ]
 
-{ #category : #'defining mappings' }
+{ #category : 'defining mappings' }
 ConfigurableDescriptorSystem >> defineOneToManyMappingOn: aDescriptor forAttributeNamed: attributeName translatingFieldsUsingAll: classTranslationDefinitions [
 
 	| join mapping |
@@ -467,7 +469,7 @@ ConfigurableDescriptorSystem >> defineOneToManyMappingOn: aDescriptor forAttribu
 	^ mapping
 ]
 
-{ #category : #'defining mappings' }
+{ #category : 'defining mappings' }
 ConfigurableDescriptorSystem >> defineOneToOneMappingOn: aDescriptor forAttributeNamed: attributeName [
 
 	| mapping |
@@ -477,7 +479,7 @@ ConfigurableDescriptorSystem >> defineOneToOneMappingOn: aDescriptor forAttribut
 	^ mapping
 ]
 
-{ #category : #'defining mappings' }
+{ #category : 'defining mappings' }
 ConfigurableDescriptorSystem >> defineOneToOneMappingWithTranslationOn: aDescriptor
 	basedOn: aBasicDefinition
 	translatingFieldsUsingAll: aTranslationDefinitionCollection [
@@ -492,7 +494,7 @@ ConfigurableDescriptorSystem >> defineOneToOneMappingWithTranslationOn: aDescrip
 	^ mapping
 ]
 
-{ #category : #'defining mappings' }
+{ #category : 'defining mappings' }
 ConfigurableDescriptorSystem >> defineOneToOneVariableMappingOn: aDescriptor
 	forAttributeNamed: anAttributeName
 	joiningFieldNamed: aSourceFieldName
@@ -513,7 +515,7 @@ ConfigurableDescriptorSystem >> defineOneToOneVariableMappingOn: aDescriptor
 	^ mapping
 ]
 
-{ #category : #'defining other' }
+{ #category : 'defining other' }
 ConfigurableDescriptorSystem >> definePluggableConversionOn: aMapping
 	named: aName
 	convertingFromDatabaseToSmalltalkUsing: aFromDatabaseConversionBlock
@@ -530,7 +532,7 @@ ConfigurableDescriptorSystem >> definePluggableConversionOn: aMapping
 		yourself
 ]
 
-{ #category : #'defining tables' }
+{ #category : 'defining tables' }
 ConfigurableDescriptorSystem >> defineRealTableBasedOn: aDatabaseTable fieldsDefinedBy: fieldDefinitions indexesDefinedBy: indexDefinitions [
 
 	fieldDefinitions do: [ :definition | definition defineFor: aDatabaseTable using: self ].
@@ -539,7 +541,7 @@ ConfigurableDescriptorSystem >> defineRealTableBasedOn: aDatabaseTable fieldsDef
 	self deferentialSetSchema: aDatabaseTable
 ]
 
-{ #category : #'defining fields' }
+{ #category : 'defining fields' }
 ConfigurableDescriptorSystem >> defineSequentialNumberFieldOn: aDatabaseTable [
 
 	^ ( aDatabaseTable createFieldNamed: RDBMSConstants sequentialNumberFieldName type: platform sequence )
@@ -547,7 +549,7 @@ ConfigurableDescriptorSystem >> defineSequentialNumberFieldOn: aDatabaseTable [
 		yourself
 ]
 
-{ #category : #'defining mappings' }
+{ #category : 'defining mappings' }
 ConfigurableDescriptorSystem >> defineSequentialNumberMappingOn: aDescriptor onTableNamed: tableName [
 
 	| mapping |
@@ -559,7 +561,7 @@ ConfigurableDescriptorSystem >> defineSequentialNumberMappingOn: aDescriptor onT
 	^ mapping defineFor: aDescriptor using: self
 ]
 
-{ #category : #'defining fields' }
+{ #category : 'defining fields' }
 ConfigurableDescriptorSystem >> defineSharedSequentialNumberFieldOn: aDatabaseTable forAbstractConcept: anAbstractClass [
 
 	^ ( aDatabaseTable
@@ -569,7 +571,7 @@ ConfigurableDescriptorSystem >> defineSharedSequentialNumberFieldOn: aDatabaseTa
 		yourself
 ]
 
-{ #category : #'defining fields' }
+{ #category : 'defining fields' }
 ConfigurableDescriptorSystem >> defineTimestampFieldOn: aDatabaseTable named: fieldName [
 
 	| field |
@@ -579,7 +581,7 @@ ConfigurableDescriptorSystem >> defineTimestampFieldOn: aDatabaseTable named: fi
 	^ field
 ]
 
-{ #category : #'defining other' }
+{ #category : 'defining other' }
 ConfigurableDescriptorSystem >> defineTranslationBasedOn: aJoin fromFieldNamed: sourceFieldName onTableNamed: sourceTableName toFieldNamed: targetFieldName onTableNamed: targetTableName [
 
 	| sourceTable targetTable |
@@ -589,19 +591,19 @@ ConfigurableDescriptorSystem >> defineTranslationBasedOn: aJoin fromFieldNamed: 
 	aJoin addSource: ( sourceTable fieldNamed: sourceFieldName ) target: ( targetTable fieldNamed: targetFieldName )
 ]
 
-{ #category : #'defining attributes' }
+{ #category : 'defining attributes' }
 ConfigurableDescriptorSystem >> defineTypedAttributeOn: aGlorpClassModel named: attributeName typed: attributeType [
 
 	aGlorpClassModel newAttributeNamed: attributeName type: attributeType
 ]
 
-{ #category : #'defining attributes' }
+{ #category : 'defining attributes' }
 ConfigurableDescriptorSystem >> defineTypedAttributeOn: aGlorpClassModel named: attributeName typed: attributeType inCollectionOfType: aCollectionType [
 
 	aGlorpClassModel newAttributeNamed: attributeName collection: aCollectionType of: attributeType
 ]
 
-{ #category : #'defining joins' }
+{ #category : 'defining joins' }
 ConfigurableDescriptorSystem >> defineVariableJoinBasedOn: aVariableJoin fromFieldNamed: aSourceFieldName onTableNamed: aSourceTableName toFieldNamed: aTargetFieldName onEachTableDefinedFor: aModelClassCollection [
 
 	aModelClassCollection
@@ -622,13 +624,13 @@ ConfigurableDescriptorSystem >> defineVariableJoinBasedOn: aVariableJoin fromFie
 	^ aVariableJoin
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurableDescriptorSystem >> descriptorDefinitionFor: aDescriptor ifFound: aOneArgBlock ifNotFound: aZeroArgBlock [
 
 	^ descriptorDefinitions detect: [ :definition | definition isFor: aDescriptor ] ifFound: aOneArgBlock ifNone: aZeroArgBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ConfigurableDescriptorSystem >> initialize [
 
 	super initialize.
@@ -638,7 +640,7 @@ ConfigurableDescriptorSystem >> initialize [
 	typeResolverDefinitions := OrderedCollection new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurableDescriptorSystem >> initializeClassModel: aClassModel [
 
 	self
@@ -647,7 +649,7 @@ ConfigurableDescriptorSystem >> initializeClassModel: aClassModel [
 		ifNotFound: [ self signalDefinitionMissingFor: aClassModel ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurableDescriptorSystem >> initializeDescriptor: aDescriptor [
 
 	self
@@ -656,7 +658,7 @@ ConfigurableDescriptorSystem >> initializeDescriptor: aDescriptor [
 		ifNotFound: [ self signalDefinitionMissingFor: aDescriptor ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurableDescriptorSystem >> initializeTable: aDatabaseTable [
 
 	self
@@ -665,7 +667,7 @@ ConfigurableDescriptorSystem >> initializeTable: aDatabaseTable [
 		ifNotFound: [ self signalDefinitionMissingFor: aDatabaseTable ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurableDescriptorSystem >> newTypeResolverFor: aClass [
 
 	^ typeResolverDefinitions
@@ -674,7 +676,7 @@ ConfigurableDescriptorSystem >> newTypeResolverFor: aClass [
 		ifNone: [ self signalDefinitionMissingFor: aClass ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ConfigurableDescriptorSystem >> postCopy [
 
 	" Need to refresh the Descriptors because these references
@@ -683,13 +685,13 @@ ConfigurableDescriptorSystem >> postCopy [
 	descriptors := Dictionary new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurableDescriptorSystem >> signalDefinitionMissingFor: aGlorpObject [
 
 	self error: ( 'Definition for <1p> missing.' expandMacrosWith: aGlorpObject )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurableDescriptorSystem >> tableDefinitionFor: aDatabaseTable ifFound: aOneArgBlock ifNotFound: aZeroArgBlock [
 
 	^ tableDefinitions detect: [ :definition | definition isFor: aDatabaseTable ] ifFound: aOneArgBlock ifNone: aZeroArgBlock

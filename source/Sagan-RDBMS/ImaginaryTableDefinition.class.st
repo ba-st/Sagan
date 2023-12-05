@@ -1,13 +1,15 @@
 Class {
-	#name : #ImaginaryTableDefinition,
-	#superclass : #TableDefinition,
+	#name : 'ImaginaryTableDefinition',
+	#superclass : 'TableDefinition',
 	#instVars : [
 		'tableDefinition'
 	],
-	#category : #'Sagan-RDBMS-Core'
+	#category : 'Sagan-RDBMS-Core',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Core'
 }
 
-{ #category : #Preconditions }
+{ #category : 'Preconditions' }
 ImaginaryTableDefinition class >> assertNoForeignKeyFieldDefinitionsOn: aFieldDefinitionCollection [
 
 	( aFieldDefinitionCollection
@@ -15,32 +17,32 @@ ImaginaryTableDefinition class >> assertNoForeignKeyFieldDefinitionsOn: aFieldDe
 		ifTrue: [ self error signal: 'Foreign keys can''t be defined against imaginary tables.' ]
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ImaginaryTableDefinition class >> named: aName fieldsDefinedBy: aFieldDefinitionCollection [
 
 	self assertNoForeignKeyFieldDefinitionsOn: aFieldDefinitionCollection.
 	^ self new initializeNamed: aName asString fieldsDefinedBy: aFieldDefinitionCollection
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 ImaginaryTableDefinition >> defineTableFor: aDatabaseTable using: aDescriptorSystem [
 
 	aDescriptorSystem defineImaginaryTableBasedOn: aDatabaseTable using: tableDefinition
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 ImaginaryTableDefinition >> fieldDefinitions [
 
 	^ tableDefinition fieldDefinitions
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 ImaginaryTableDefinition >> initializeNamed: aString fieldsDefinedBy: aFieldDefinitionCollection [
 
 	tableDefinition := RealTableDefinition named: aString fieldsDefinedBy: aFieldDefinitionCollection
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 ImaginaryTableDefinition >> printOn: aStream [
 
 	aStream
@@ -51,7 +53,7 @@ ImaginaryTableDefinition >> printOn: aStream [
 	self fieldDefinitions do: [ :fieldDefinition | aStream print: fieldDefinition ] separatedBy: [ aStream cr ]
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 ImaginaryTableDefinition >> tableName [
 
 	^ tableDefinition tableName

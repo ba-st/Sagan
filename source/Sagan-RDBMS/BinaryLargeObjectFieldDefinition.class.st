@@ -1,32 +1,34 @@
 Class {
-	#name : #BinaryLargeObjectFieldDefinition,
-	#superclass : #TableFieldDefinition,
+	#name : 'BinaryLargeObjectFieldDefinition',
+	#superclass : 'TableFieldDefinition',
 	#instVars : [
 		'fieldName',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Fields'
+	#category : 'Sagan-RDBMS-Fields',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Fields'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 BinaryLargeObjectFieldDefinition class >> named: aString [
 
 	^ self named: aString applyingAfterDefinition: self makeFieldNotNullable
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 BinaryLargeObjectFieldDefinition class >> named: aString applyingAfterDefinition: aTwoArgBlock [
 
 	^ self new initializeNamed: aString applyingAfterDefinition: aTwoArgBlock
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 BinaryLargeObjectFieldDefinition class >> nullableNamed: aString [
 
 	^ self named: aString applyingAfterDefinition: self makeFieldNullable
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 BinaryLargeObjectFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSystem [
 
 	| field |
@@ -36,14 +38,14 @@ BinaryLargeObjectFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescri
 	^ field
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 BinaryLargeObjectFieldDefinition >> initializeNamed: aString applyingAfterDefinition: aTwoArgBlock [
 
 	fieldName := aString.
 	postDefinitionAction := aTwoArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 BinaryLargeObjectFieldDefinition >> printOn: aStream [
 
 	aStream

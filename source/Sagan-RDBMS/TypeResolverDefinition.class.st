@@ -1,28 +1,30 @@
 Class {
-	#name : #TypeResolverDefinition,
-	#superclass : #PersistenceConceptDefinition,
-	#category : #'Sagan-RDBMS-Core'
+	#name : 'TypeResolverDefinition',
+	#superclass : 'PersistenceConceptDefinition',
+	#category : 'Sagan-RDBMS-Core',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Core'
 }
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 TypeResolverDefinition >> abstractClass [
 
 	self subclassResponsibility
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 TypeResolverDefinition >> defineFor: aModelClass using: aDescriptorSystem [
 
 	^ self defineTypeResolverFor: aModelClass using: aDescriptorSystem
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 TypeResolverDefinition >> defineTypeResolverFor: aModelClass using: aDescriptorSystem [
 
 	self subclassResponsibility
 ]
 
-{ #category : #Testing }
+{ #category : 'Testing' }
 TypeResolverDefinition >> isFor: aClass [
 
 	^ aClass = self abstractClass

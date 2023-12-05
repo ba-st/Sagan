@@ -1,32 +1,34 @@
 Class {
-	#name : #TimestampFieldDefinition,
-	#superclass : #TableFieldDefinition,
+	#name : 'TimestampFieldDefinition',
+	#superclass : 'TableFieldDefinition',
 	#instVars : [
 		'fieldName',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Fields'
+	#category : 'Sagan-RDBMS-Fields',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Fields'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 TimestampFieldDefinition class >> named: aString [
 
 	^ self named: aString applyingAfterDefinition: self makeFieldNotNullable
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 TimestampFieldDefinition class >> named: aString applyingAfterDefinition: aTwoArgBlock [
 
 	^ self new initializeNamed: aString applyingAfterDefinition: aTwoArgBlock
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 TimestampFieldDefinition class >> nullableNamed: aString [
 
 	^ self named: aString applyingAfterDefinition: self makeFieldNullable
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 TimestampFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSystem [
 
 	| field |
@@ -36,14 +38,14 @@ TimestampFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSyst
 	^ field
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 TimestampFieldDefinition >> initializeNamed: aString applyingAfterDefinition: aTwoArgBlock [
 
 	fieldName := aString.
 	postDefinitionAction := aTwoArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 TimestampFieldDefinition >> printOn: aStream [
 
 	aStream

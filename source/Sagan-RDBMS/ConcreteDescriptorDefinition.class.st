@@ -1,16 +1,18 @@
 Class {
-	#name : #ConcreteDescriptorDefinition,
-	#superclass : #DescriptorDefinition,
+	#name : 'ConcreteDescriptorDefinition',
+	#superclass : 'DescriptorDefinition',
 	#instVars : [
 		'tableName',
 		'mappingDefinitions',
 		'modelClass',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Descriptors'
+	#category : 'Sagan-RDBMS-Descriptors',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Descriptors'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ConcreteDescriptorDefinition class >> for: aModelClass onTableNamed: aTableName mappingsDefinedBy: aMappingDefinitions [
 
 	^ self
@@ -20,7 +22,7 @@ ConcreteDescriptorDefinition class >> for: aModelClass onTableNamed: aTableName 
 		applyingAfterDefinition: [ :descriptor :system |  ]
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ConcreteDescriptorDefinition class >> for: aModelClass onTableNamed: aTableName mappingsDefinedBy: aMappingDefinitions applyingAfterDefinition: aTwoArgBlock [
 
 	^ self new
@@ -30,7 +32,7 @@ ConcreteDescriptorDefinition class >> for: aModelClass onTableNamed: aTableName 
 		applyingAfterDefinition: aTwoArgBlock
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ConcreteDescriptorDefinition class >> for: aModelClass onTableNamed: aTableName mappingsDefinedBy: aMappingDefinitions usingFilteredTypeResolverFor: anAbstractClass keyedBy: aFilterTypeKey forFieldNamed: aFieldName [
 
 	^ self
@@ -40,7 +42,7 @@ ConcreteDescriptorDefinition class >> for: aModelClass onTableNamed: aTableName 
 		applyingAfterDefinition: [ :descriptor :system | ( system typeResolverFor: anAbstractClass ) register: descriptor keyedBy: aFilterTypeKey field: ( ( system tableNamed: aTableName ) fieldNamed: aFieldName ) ]
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ConcreteDescriptorDefinition class >> for: aModelClass onTableNamed: aTableName mappingsDefinedBy: aMappingDefinitions usingHorizontalTypeResolverFor: anAbstractClass [
 
 	^ self
@@ -50,7 +52,7 @@ ConcreteDescriptorDefinition class >> for: aModelClass onTableNamed: aTableName 
 		applyingAfterDefinition: [ :descriptor :system | ( system typeResolverFor: anAbstractClass ) register: descriptor abstract: false ]
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 ConcreteDescriptorDefinition >> defineDescriptorFor: aDescriptor using: aDescriptorSystem [
 
 	| descriptor |
@@ -60,13 +62,13 @@ ConcreteDescriptorDefinition >> defineDescriptorFor: aDescriptor using: aDescrip
 	^ descriptor
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 ConcreteDescriptorDefinition >> describedClass [
 
 	^ modelClass
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 ConcreteDescriptorDefinition >> initializeFor: aModelClass onTableNamed: aTableName mappingsDefinedBy: aMappingDefinitions applyingAfterDefinition: aTwoArgBlock [
 
 	modelClass := aModelClass.
@@ -75,7 +77,7 @@ ConcreteDescriptorDefinition >> initializeFor: aModelClass onTableNamed: aTableN
 	postDefinitionAction := aTwoArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 ConcreteDescriptorDefinition >> printOn: aStream [
 
 	aStream

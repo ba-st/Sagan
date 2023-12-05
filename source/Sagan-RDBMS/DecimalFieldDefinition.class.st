@@ -1,22 +1,24 @@
 Class {
-	#name : #DecimalFieldDefinition,
-	#superclass : #TableFieldDefinition,
+	#name : 'DecimalFieldDefinition',
+	#superclass : 'TableFieldDefinition',
 	#instVars : [
 		'fieldName',
 		'precision',
 		'scale',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Fields'
+	#category : 'Sagan-RDBMS-Fields',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Fields'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 DecimalFieldDefinition class >> named: aString [
 
 	^ self named: aString withPrecision: 22 andScale: 8
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 DecimalFieldDefinition class >> named: aString withPrecision: aPrecisionNumber andScale: aScaleNumber [
 
 	^ self
@@ -26,7 +28,7 @@ DecimalFieldDefinition class >> named: aString withPrecision: aPrecisionNumber a
 		applyingAfterDefinition: self makeFieldNotNullable
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 DecimalFieldDefinition class >> named: aString withPrecision: aPrecisionNumber andScale: aScaleNumber applyingAfterDefinition: aTwoArgBlock [
 
 	^ self new
@@ -36,13 +38,13 @@ DecimalFieldDefinition class >> named: aString withPrecision: aPrecisionNumber a
 		applyingAfterDefinition: aTwoArgBlock
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 DecimalFieldDefinition class >> nullableNamed: aString [
 
 	^ self nullableNamed: aString withPrecision: 22 andScale: 8
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 DecimalFieldDefinition class >> nullableNamed: aString withPrecision: aPrecisionNumber andScale: aScaleNumber [
 
 	^ self
@@ -52,7 +54,7 @@ DecimalFieldDefinition class >> nullableNamed: aString withPrecision: aPrecision
 		applyingAfterDefinition: self makeFieldNullable
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 DecimalFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSystem [
 
 	| field |
@@ -66,7 +68,7 @@ DecimalFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSystem
 	^ field
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 DecimalFieldDefinition >> initializeNamed: aString withPrecision: aPrecisionNumber andScale: aScaleNumber applyingAfterDefinition: aTwoArgBlock [
 
 	fieldName := aString.
@@ -75,7 +77,7 @@ DecimalFieldDefinition >> initializeNamed: aString withPrecision: aPrecisionNumb
 	postDefinitionAction := aTwoArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 DecimalFieldDefinition >> printOn: aStream [
 
 	aStream

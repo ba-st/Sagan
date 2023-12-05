@@ -1,32 +1,34 @@
 Class {
-	#name : #BooleanFieldDefinition,
-	#superclass : #TableFieldDefinition,
+	#name : 'BooleanFieldDefinition',
+	#superclass : 'TableFieldDefinition',
 	#instVars : [
 		'fieldName',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Fields'
+	#category : 'Sagan-RDBMS-Fields',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Fields'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 BooleanFieldDefinition class >> named: aString [
 
 	^ self named: aString applyingAfterDefinition: self makeFieldNotNullable
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 BooleanFieldDefinition class >> named: aString applyingAfterDefinition: aTwoArgBlock [
 
 	^ self new initializeNamed: aString applyingAfterDefinition: aTwoArgBlock
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 BooleanFieldDefinition class >> nullableNamed: aString [
 
 	^ self named: aString applyingAfterDefinition: self makeFieldNullable
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 BooleanFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSystem [
 
 	| field |
@@ -36,14 +38,14 @@ BooleanFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSystem
 	^ field
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 BooleanFieldDefinition >> initializeNamed: aString applyingAfterDefinition: aTwoArgBlock [
 
 	fieldName := aString.
 	postDefinitionAction := aTwoArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 BooleanFieldDefinition >> printOn: aStream [
 
 	aStream

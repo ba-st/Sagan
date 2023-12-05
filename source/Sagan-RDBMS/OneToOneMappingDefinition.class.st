@@ -1,32 +1,34 @@
 Class {
-	#name : #OneToOneMappingDefinition,
-	#superclass : #MappingDefinition,
+	#name : 'OneToOneMappingDefinition',
+	#superclass : 'MappingDefinition',
 	#instVars : [
 		'attributeName',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToOneMappingDefinition class >> forAttributeNamed: anAttributeName [
 
 	^ self forAttributeNamed: anAttributeName applyingAfterDefinition: self nullAction
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToOneMappingDefinition class >> forAttributeNamed: anAttributeName applyingAfterDefinition: aPostDefinitionAction [
 
 	^ self new initializeForAttributeNamed: anAttributeName applyingAfterDefinition: aPostDefinitionAction
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToOneMappingDefinition class >> forReadOnlyAttributeNamed: anAttributeName [
 
 	^ self forAttributeNamed: anAttributeName applyingAfterDefinition: self makeMappingReadOnly
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 OneToOneMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem [
 
 	| mapping |
@@ -36,7 +38,7 @@ OneToOneMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSyst
 	^ mapping
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 OneToOneMappingDefinition >> initializeForAttributeNamed: anAttributeName
 	applyingAfterDefinition: aPostDefinitionAction [
 
@@ -45,7 +47,7 @@ OneToOneMappingDefinition >> initializeForAttributeNamed: anAttributeName
 	postDefinitionAction := aPostDefinitionAction
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 OneToOneMappingDefinition >> printOn: aStream [
 
 	aStream
