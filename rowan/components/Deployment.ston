@@ -1,7 +1,7 @@
 RwSimpleProjectLoadComponentV2 {
   #name : 'Deployment',
   #postloadDoitName : 'scripts/deploymentPostLoad',
-  #projectNames : [ 'Kepler' ],
+  #projectNames : [ 'Kepler', 'SortFunctions' ],
   #componentNames : [	],
   #packageNames : [
     'Sagan-Core',
