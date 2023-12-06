@@ -4,7 +4,7 @@ symbolDictionary := Rowan image
 	symbolDictNamed: 'Sagan'
 	ifAbsent: [Error signal: 'Sagan symbol dictionary missing' ].
 
-"Register Kepler's built-in system interfaces"
+"Register system interfaces"
 (OrderedCollection new
 	add: #RepositoryProviderSystem;
 	yourself)
