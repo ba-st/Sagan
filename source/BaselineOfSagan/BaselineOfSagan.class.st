@@ -16,7 +16,7 @@ BaselineOfSagan >> baseline: spec [
 		spec
 			group: 'Deployment' with: #( 'Core' 'RDBMS' );
 			group: 'CI' with: 'Tests';
-			group: 'Tools' with: 'Buoy-Tools';
+			group: 'Tools' with: #( 'Core' 'Buoy-Tools' );
 			group: 'Development' with: #( 'Tests' 'Tools' ).
 		spec postLoadDoIt: #postLoadInitialization ]
 ]
