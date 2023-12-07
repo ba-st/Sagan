@@ -5,7 +5,4 @@ symbolDictionary := Rowan image
 	ifAbsent: [Error signal: 'Sagan symbol dictionary missing' ].
 
 "Register system interfaces"
-(OrderedCollection new
-	add: #RepositoryProviderSystem;
-	yourself)
-		do: [:each | (symbolDictionary at: each) registerInterfaces].
+(symbolDictionary at: #RepositoryProviderSystem) registerInterfaces.
