@@ -2,25 +2,26 @@
 Unit test for RDMBSRepository
 "
 Class {
-	#name : #SingleSessionRDMBSRepositoryTest,
-	#superclass : #RepositoryBasedTest,
+	#name : 'SingleSessionRDMBSRepositoryTest',
+	#superclass : 'RepositoryBasedTest',
 	#instVars : [
 		'provider'
 	],
 	#classVars : [
 		'DefaultLogin'
 	],
-	#category : #'Sagan-RDBMS-Tests'
+	#category : 'Sagan-RDBMS-Tests',
+	#package : 'Sagan-RDBMS-Tests'
 }
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 SingleSessionRDMBSRepositoryTest class >> defaultLogin [
 
 	<ignoreForCoverage>
 	^ self postgreSQLLogin
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 SingleSessionRDMBSRepositoryTest class >> initialize [
 
 	<ignoreForCoverage>
@@ -30,13 +31,13 @@ SingleSessionRDMBSRepositoryTest class >> initialize [
 		ifAbsent: [ self defaultLogin ]
 ]
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 SingleSessionRDMBSRepositoryTest class >> login [
 
 	^ DefaultLogin
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 SingleSessionRDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 
 	<ignoreForCoverage>
@@ -47,7 +48,7 @@ SingleSessionRDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 	^ self defaultLogin
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 SingleSessionRDMBSRepositoryTest class >> postgreSQLLogin [
 
 	<ignoreForCoverage>
@@ -63,7 +64,7 @@ SingleSessionRDMBSRepositoryTest class >> postgreSQLLogin [
 		yourself
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 SingleSessionRDMBSRepositoryTest class >> sqlite3Login [
 
 	<ignoreForCoverage>
@@ -78,14 +79,14 @@ SingleSessionRDMBSRepositoryTest class >> sqlite3Login [
 		yourself
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 SingleSessionRDMBSRepositoryTest class >> useP3Driver [
 
 	<ignoreForCoverage>
 	DatabaseAccessor classForThisPlatform DefaultDriver: P3DatabaseDriver
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SingleSessionRDMBSRepositoryTest >> configureSpaceshipMappings [
 
 	ships
@@ -125,7 +126,7 @@ SingleSessionRDMBSRepositoryTest >> configureSpaceshipMappings [
 			]
 ]
 
-{ #category : #utility }
+{ #category : 'utility' }
 SingleSessionRDMBSRepositoryTest >> do: aBlock unlessSQLiteIsBeingUsedInWhichCaseDo: aSQLiteBeingUsedBlock [
 
 	DatabaseAccessor classForThisPlatform DefaultDriver = SQLite3Driver
@@ -133,7 +134,7 @@ SingleSessionRDMBSRepositoryTest >> do: aBlock unlessSQLiteIsBeingUsedInWhichCas
 		otherwise: aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SingleSessionRDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
 	provider := RDBMSRepositoryProvider usingSingleSessionWith: self class login
@@ -147,7 +148,7 @@ SingleSessionRDMBSRepositoryTest >> setUpRepositoryWith: aConflictCheckingStrate
 	provider prepareForInitialPersistence
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SingleSessionRDMBSRepositoryTest >> tearDown [
 
 	provider
@@ -156,7 +157,7 @@ SingleSessionRDMBSRepositoryTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #'tests - querying' }
+{ #category : 'tests - querying' }
 SingleSessionRDMBSRepositoryTest >> testLogging [
 
 	self
@@ -184,7 +185,7 @@ SingleSessionRDMBSRepositoryTest >> testLogging [
 			]
 ]
 
-{ #category : #'tests - querying' }
+{ #category : 'tests - querying' }
 SingleSessionRDMBSRepositoryTest >> testMoreThanOneRepository [
 
 	self extraterrestrials store: self silvesterStallone.
@@ -199,7 +200,7 @@ SingleSessionRDMBSRepositoryTest >> testMoreThanOneRepository [
 		else: [ self fail ]
 ]
 
-{ #category : #'tests - querying' }
+{ #category : 'tests - querying' }
 SingleSessionRDMBSRepositoryTest >> testSpaceshipQueryingForPositiveFirepower [
 
 	| solvalou solgrado zeodalley |
@@ -226,7 +227,7 @@ SingleSessionRDMBSRepositoryTest >> testSpaceshipQueryingForPositiveFirepower [
 			]
 ]
 
-{ #category : #'tests - querying' }
+{ #category : 'tests - querying' }
 SingleSessionRDMBSRepositoryTest >> testSpaceshipQueryingForZeroFirepower [
 
 	| solvalou solgrado zeodalley |
@@ -246,13 +247,13 @@ SingleSessionRDMBSRepositoryTest >> testSpaceshipQueryingForZeroFirepower [
 		do: [ :spaceships | self assertCollection: spaceships hasSameElements: {solvalou} ]
 ]
 
-{ #category : #utility }
+{ #category : 'utility' }
 SingleSessionRDMBSRepositoryTest >> withAllSpaceshipsMatching: aMatchingCriteria do: aOneArgBlock [
 
 	aOneArgBlock value: ( ships findAllMatching: aMatchingCriteria )
 ]
 
-{ #category : #utility }
+{ #category : 'utility' }
 SingleSessionRDMBSRepositoryTest >> withLoggingAsserterDo: aOneArgBlock [
 
 	| loggingAsserter |

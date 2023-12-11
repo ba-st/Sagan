@@ -1,10 +1,11 @@
 Class {
-	#name : #ExtraterrestialRaceMappingConfiguration,
-	#superclass : #RDBMSMappingConfiguration,
-	#category : #'Sagan-RDBMS-Tests'
+	#name : 'ExtraterrestialRaceMappingConfiguration',
+	#superclass : 'RDBMSMappingConfiguration',
+	#category : 'Sagan-RDBMS-Tests',
+	#package : 'Sagan-RDBMS-Tests'
 }
 
-{ #category : #applying }
+{ #category : 'applying' }
 ExtraterrestialRaceMappingConfiguration >> cull: aRepository [
 
 	aRepository
@@ -17,7 +18,7 @@ ExtraterrestialRaceMappingConfiguration >> cull: aRepository [
 			]
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ExtraterrestialRaceMappingConfiguration >> extraterrestialRaceCelestialBodyRelationTable [
 
 	^ RealTableDefinition
@@ -37,7 +38,7 @@ ExtraterrestialRaceMappingConfiguration >> extraterrestialRaceCelestialBodyRelat
 				yourself )
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ExtraterrestialRaceMappingConfiguration >> extraterrestialRaceClassModelDefinition [
 
 	^ ClassModelDefinition
@@ -51,7 +52,7 @@ ExtraterrestialRaceMappingConfiguration >> extraterrestialRaceClassModelDefiniti
 				inCollectionOfType: OrderedCollection )}
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ExtraterrestialRaceMappingConfiguration >> extraterrestialRaceDescriptorDefinition [
 
 	^ ConcreteDescriptorDefinition
@@ -73,7 +74,7 @@ ExtraterrestialRaceMappingConfiguration >> extraterrestialRaceDescriptorDefiniti
 						onTableNamed: 'ExtraterrestialRaceCelestialBodyRelation' ) )}
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ExtraterrestialRaceMappingConfiguration >> extraterrestialRaceTableDefinition [
 
 	^ RealTableDefinition
@@ -83,7 +84,7 @@ ExtraterrestialRaceMappingConfiguration >> extraterrestialRaceTableDefinition [
 			( CharacterFieldDefinition named: 'name' sized: 100 )}
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ExtraterrestialRaceMappingConfiguration >> extraterrestialRaceTableName [
 
 	^ 'ExtraterrestialRace'

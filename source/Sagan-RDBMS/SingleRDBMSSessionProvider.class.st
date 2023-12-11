@@ -1,13 +1,15 @@
 Class {
-	#name : #SingleRDBMSSessionProvider,
-	#superclass : #RDBMSSessionProvider,
+	#name : 'SingleRDBMSSessionProvider',
+	#superclass : 'RDBMSSessionProvider',
 	#instVars : [
 		'session'
 	],
-	#category : #'Sagan-RDBMS-Repository'
+	#category : 'Sagan-RDBMS-Repository',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Repository'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SingleRDBMSSessionProvider class >> loginWith: aLogin configuredBy: anActionConfiguration [
 
 	| options |
@@ -16,13 +18,13 @@ SingleRDBMSSessionProvider class >> loginWith: aLogin configuredBy: anActionConf
 	^ self new initializeLoginWith: aLogin configuredBy: options
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SingleRDBMSSessionProvider >> clearSessions [
 
 	session logout
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SingleRDBMSSessionProvider >> createDatabaseAccessor [
 
 	| accessor |
@@ -33,14 +35,14 @@ SingleRDBMSSessionProvider >> createDatabaseAccessor [
 	^ accessor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SingleRDBMSSessionProvider >> deleteSessions [
 
 	self clearSessions.
 	session := nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SingleRDBMSSessionProvider >> initializeSession [
 
 	session := GlorpSession new.
@@ -49,20 +51,20 @@ SingleRDBMSSessionProvider >> initializeSession [
 	self ensureSuccessfulLoginToDatabaseWith: session
 ]
 
-{ #category : #'private-accessing' }
+{ #category : 'private-accessing' }
 SingleRDBMSSessionProvider >> session [
 
 	session ifNil: [ self initializeSession ].
 	^ session
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SingleRDBMSSessionProvider >> withConfigurationSessionDo: aBlockClosure [
 	
 	self withSessionDo: aBlockClosure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SingleRDBMSSessionProvider >> withSessionDo: aBlockClosure [
 
 	| currentSession |

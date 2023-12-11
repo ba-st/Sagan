@@ -1,15 +1,17 @@
 Class {
-	#name : #ManyToManyAttributeMappingDefinition,
-	#superclass : #MappingDefinition,
+	#name : 'ManyToManyAttributeMappingDefinition',
+	#superclass : 'MappingDefinition',
 	#instVars : [
 		'attributeName',
 		'translationDefinitions',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ManyToManyAttributeMappingDefinition class >> forAttributeNamed: anAttributeName translatingFieldsUsing: aTableFieldTranslationDefinition [
 
 	^ self
@@ -17,7 +19,7 @@ ManyToManyAttributeMappingDefinition class >> forAttributeNamed: anAttributeName
 		translatingFieldsUsingAll: ( Array with: aTableFieldTranslationDefinition )
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ManyToManyAttributeMappingDefinition class >> forAttributeNamed: anAttributeName translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection [
 
 	^ self
@@ -26,7 +28,7 @@ ManyToManyAttributeMappingDefinition class >> forAttributeNamed: anAttributeName
 		applyingAfterDefinition: self nullAction
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ManyToManyAttributeMappingDefinition class >> forAttributeNamed: anAttributeName translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection applyingAfterDefinition: aTwoArgBlock [
 
 	^ self new
@@ -35,7 +37,7 @@ ManyToManyAttributeMappingDefinition class >> forAttributeNamed: anAttributeName
 		applyingAfterDefinition: aTwoArgBlock
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 ManyToManyAttributeMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem [
 
 	| mapping |
@@ -48,7 +50,7 @@ ManyToManyAttributeMappingDefinition >> defineMappingOn: aDescriptor using: aDes
 	^ mapping
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 ManyToManyAttributeMappingDefinition >> initializeForAttributeNamed: anAttributeName
 	translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection
 	applyingAfterDefinition: aTwoArgBlock [
@@ -59,7 +61,7 @@ ManyToManyAttributeMappingDefinition >> initializeForAttributeNamed: anAttribute
 	postDefinitionAction := aTwoArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 ManyToManyAttributeMappingDefinition >> printOn: aStream [
 
 	aStream

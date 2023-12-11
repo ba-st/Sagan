@@ -1,38 +1,40 @@
 Class {
-	#name : #IntegerFieldDefinition,
-	#superclass : #TableFieldDefinition,
+	#name : 'IntegerFieldDefinition',
+	#superclass : 'TableFieldDefinition',
 	#instVars : [
 		'fieldName',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Fields'
+	#category : 'Sagan-RDBMS-Fields',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Fields'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 IntegerFieldDefinition class >> named: aString [
 
 	^ self named: aString applyingAfterDefinition: self makeFieldNotNullable
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 IntegerFieldDefinition class >> named: aString applyingAfterDefinition: aTwoArgBlock [
 
 	^ self new initializeNamed: aString applyingAfterDefinition: aTwoArgBlock
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 IntegerFieldDefinition class >> nullableNamed: aString [
 
 	^ self named: aString applyingAfterDefinition: self makeFieldNullable
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 IntegerFieldDefinition class >> toBePrimaryKeyNamed: aString [
 
 	^ self named: aString applyingAfterDefinition: self makeFieldPrimaryKey
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 IntegerFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSystem [
 
 	| field |
@@ -42,14 +44,14 @@ IntegerFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSystem
 	^ field
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 IntegerFieldDefinition >> initializeNamed: aString applyingAfterDefinition: aTwoArgBlock [
 
 	fieldName := aString.
 	postDefinitionAction := aTwoArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 IntegerFieldDefinition >> printOn: aStream [
 
 	aStream

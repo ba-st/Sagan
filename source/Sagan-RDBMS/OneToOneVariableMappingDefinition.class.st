@@ -1,6 +1,6 @@
 Class {
-	#name : #OneToOneVariableMappingDefinition,
-	#superclass : #MappingDefinition,
+	#name : 'OneToOneVariableMappingDefinition',
+	#superclass : 'MappingDefinition',
 	#instVars : [
 		'attributeName',
 		'sourceFieldName',
@@ -9,16 +9,18 @@ Class {
 		'modelClassCollection',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 OneToOneVariableMappingDefinition class >> allConcreteSubclassesOf: anAbstractModelClass [
 
 	^ anAbstractModelClass allSubclasses select: [ :class | class subclasses isEmpty ]
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToOneVariableMappingDefinition class >> forAttributeNamed: anAttributeName joiningFieldNamed: aSourceFieldName onTableNamed: aSourceTableName toFieldNamed: aTargetFieldName onTableDeterminedByCaseBetweenDescribedForAnyOf: aModelClassCollection [
 
 	^ self
@@ -30,7 +32,7 @@ OneToOneVariableMappingDefinition class >> forAttributeNamed: anAttributeName jo
 		applyingAfterDefinition: self nullAction
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToOneVariableMappingDefinition class >> forAttributeNamed: anAttributeName joiningFieldNamed: aSourceFieldName onTableNamed: aSourceTableName toFieldNamed: aTargetFieldName onTableDeterminedByCaseBetweenDescribedForAnyOf: aModelClassCollection applyingAfterDefinition: aTwoArgBlock [
 
 	^ self new
@@ -42,7 +44,7 @@ OneToOneVariableMappingDefinition class >> forAttributeNamed: anAttributeName jo
 		applyingAfterDefinition: aTwoArgBlock
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToOneVariableMappingDefinition class >> forAttributeNamed: anAttributeName joiningFieldNamed: aSourceFieldName onTableNamed: aSourceTableName toFieldNamed: aTargetFieldName onTableDeterminedByCaseBetweenDescribedForAnySubclassOf: anAbstractModelClass [
 
 	^ self
@@ -53,7 +55,7 @@ OneToOneVariableMappingDefinition class >> forAttributeNamed: anAttributeName jo
 		onTableDeterminedByCaseBetweenDescribedForAnyOf: ( self allConcreteSubclassesOf: anAbstractModelClass )
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToOneVariableMappingDefinition class >> forReadOnlyAttributeNamed: anAttributeName joiningFieldNamed: aSourceFieldName onTableNamed: aSourceTableName toFieldNamed: aTargetFieldName onTableDescribedFor: aModelClass [
 
 	^ self
@@ -65,7 +67,7 @@ OneToOneVariableMappingDefinition class >> forReadOnlyAttributeNamed: anAttribut
 		applyingAfterDefinition: self makeMappingReadOnly
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToOneVariableMappingDefinition class >> forReadOnlyAttributeNamed: anAttributeName
 	joiningFieldNamed: aSourceFieldName
 	onTableNamed: aSourceTableName
@@ -82,7 +84,7 @@ OneToOneVariableMappingDefinition class >> forReadOnlyAttributeNamed: anAttribut
 		applyingAfterDefinition: self makeMappingReadOnly
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 OneToOneVariableMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem [
 
 	| mapping |
@@ -98,7 +100,7 @@ OneToOneVariableMappingDefinition >> defineMappingOn: aDescriptor using: aDescri
 	^ mapping
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 OneToOneVariableMappingDefinition >> initializeForAttributeNamed: anAttributeName
 	joiningFieldNamed: aSourceFieldName
 	onTableNamed: aSourceTableName
@@ -115,7 +117,7 @@ OneToOneVariableMappingDefinition >> initializeForAttributeNamed: anAttributeNam
 	postDefinitionAction := aTwoArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 OneToOneVariableMappingDefinition >> printOn: aStream [
 
 	aStream

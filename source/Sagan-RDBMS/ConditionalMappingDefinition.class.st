@@ -1,16 +1,18 @@
 Class {
-	#name : #ConditionalMappingDefinition,
-	#superclass : #MappingDefinition,
+	#name : 'ConditionalMappingDefinition',
+	#superclass : 'MappingDefinition',
 	#instVars : [
 		'attributeName',
 		'mappingDefinitions',
 		'testingBlocks',
 		'conditionalMessage'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 ConditionalMappingDefinition class >> fromAttributeNamed: anAttributeName sending: aMessage choosingFrom: aMappingDefinitionCollection accordingTo: aTestingBlockCollection [
 
 	^ self new
@@ -20,7 +22,7 @@ ConditionalMappingDefinition class >> fromAttributeNamed: anAttributeName sendin
 		accordingTo: aTestingBlockCollection
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 ConditionalMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem [
 
 	^ aDescriptorSystem
@@ -31,7 +33,7 @@ ConditionalMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorS
 		accordingTo: testingBlocks
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 ConditionalMappingDefinition >> initializeFromAttributeNamed: anAttributeName
 	sending: aMessage
 	choosingFrom: aMappingDefinitionCollection
@@ -44,7 +46,7 @@ ConditionalMappingDefinition >> initializeFromAttributeNamed: anAttributeName
 	testingBlocks := aTestingBlockCollection
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 ConditionalMappingDefinition >> printOn: aStream [
 
 	aStream

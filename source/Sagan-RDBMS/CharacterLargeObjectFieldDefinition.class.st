@@ -1,32 +1,34 @@
 Class {
-	#name : #CharacterLargeObjectFieldDefinition,
-	#superclass : #TableFieldDefinition,
+	#name : 'CharacterLargeObjectFieldDefinition',
+	#superclass : 'TableFieldDefinition',
 	#instVars : [
 		'fieldName',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Fields'
+	#category : 'Sagan-RDBMS-Fields',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Fields'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 CharacterLargeObjectFieldDefinition class >> named: aString [
 
 	^ self named: aString applyingAfterDefinition: self makeFieldNotNullable
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 CharacterLargeObjectFieldDefinition class >> named: aString applyingAfterDefinition: aTwoArgBlock [
 
 	^ self new initializeNamed: aString applyingAfterDefinition: aTwoArgBlock
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 CharacterLargeObjectFieldDefinition class >> nullableNamed: aString [
 
 	^ self named: aString applyingAfterDefinition: self makeFieldNullable
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 CharacterLargeObjectFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSystem [
 
 	| field |
@@ -36,14 +38,14 @@ CharacterLargeObjectFieldDefinition >> defineFieldOn: aDatabaseTable using: aDes
 	^ field
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 CharacterLargeObjectFieldDefinition >> initializeNamed: aString applyingAfterDefinition: aTwoArgBlock [
 
 	fieldName := aString.
 	postDefinitionAction := aTwoArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 CharacterLargeObjectFieldDefinition >> printOn: aStream [
 
 	aStream

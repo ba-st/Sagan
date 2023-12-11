@@ -1,10 +1,11 @@
 Class {
-	#name : #CelestialBodyRepositoryTest,
-	#superclass : #RepositoryProviderSystemBasedTest,
-	#category : #'Sagan-RDBMS-Tests'
+	#name : 'CelestialBodyRepositoryTest',
+	#superclass : 'RepositoryProviderSystemBasedTest',
+	#category : 'Sagan-RDBMS-Tests',
+	#package : 'Sagan-RDBMS-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CelestialBodyRepositoryTest >> alderaan [
 
 	^ CelestialBody
@@ -13,7 +14,7 @@ CelestialBodyRepositoryTest >> alderaan [
 		in: 'Kuat Sector'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CelestialBodyRepositoryTest >> setUpRepositories [
 
 	celestialBodies := repositoryProviderSystem
@@ -25,7 +26,7 @@ CelestialBodyRepositoryTest >> setUpRepositories [
 	GalacticCoordinatesMappingConfiguration new cull: celestialBodies
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CelestialBodyRepositoryTest >> tatooine [
 
 	^ CelestialBody
@@ -34,7 +35,7 @@ CelestialBodyRepositoryTest >> tatooine [
 		in: 'Arkanis Sector'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CelestialBodyRepositoryTest >> testFilterByCoordinateX [
 
 	celestialBodies store: self tatooine.
@@ -52,7 +53,7 @@ CelestialBodyRepositoryTest >> testFilterByCoordinateX [
 			]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CelestialBodyRepositoryTest >> testFilterByCoordinateY [
 
 	celestialBodies store: self tatooine.
@@ -73,7 +74,7 @@ CelestialBodyRepositoryTest >> testFilterByCoordinateY [
 			]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CelestialBodyRepositoryTest >> testFilterByCoordinateZ [
 
 	celestialBodies store: self tatooine.

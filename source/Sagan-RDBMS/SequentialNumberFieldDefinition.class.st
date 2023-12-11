@@ -1,16 +1,18 @@
 Class {
-	#name : #SequentialNumberFieldDefinition,
-	#superclass : #TableFieldDefinition,
-	#category : #'Sagan-RDBMS-Fields'
+	#name : 'SequentialNumberFieldDefinition',
+	#superclass : 'TableFieldDefinition',
+	#category : 'Sagan-RDBMS-Fields',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Fields'
 }
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 SequentialNumberFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSystem [
 
 	^ aDescriptorSystem defineSequentialNumberFieldOn: aDatabaseTable
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 SequentialNumberFieldDefinition >> printOn: aStream [
 
 	aStream

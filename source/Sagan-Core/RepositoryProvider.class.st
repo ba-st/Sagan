@@ -1,35 +1,36 @@
 Class {
-	#name : #RepositoryProvider,
-	#superclass : #Object,
-	#category : #'Sagan-Core'
+	#name : 'RepositoryProvider',
+	#superclass : 'Object',
+	#category : 'Sagan-Core',
+	#package : 'Sagan-Core'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 RepositoryProvider >> createRepositoryStoringObjectsOfType: aBusinessObjectClass
 	checkingConflictsAccordingTo: aConflictCheckingStrategy [
 
 	self subclassResponsibility
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 RepositoryProvider >> destroyRepositories [
 
 	self subclassResponsibility
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 RepositoryProvider >> prepareForInitialPersistence [
 
 	self subclassResponsibility
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 RepositoryProvider >> prepareForShutDown [
 
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RepositoryProvider >> reset [
 
 	self subclassResponsibility

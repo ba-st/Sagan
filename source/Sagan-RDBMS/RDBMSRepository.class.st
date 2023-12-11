@@ -1,15 +1,17 @@
 Class {
-	#name : #RDBMSRepository,
-	#superclass : #Repository,
+	#name : 'RDBMSRepository',
+	#superclass : 'RepositoryBehavior',
 	#instVars : [
 		'modelObjectClass',
 		'conflictCheckingStrategy',
 		'sessionProvider'
 	],
-	#category : #'Sagan-RDBMS-Repository'
+	#category : 'Sagan-RDBMS-Repository',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Repository'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RDBMSRepository class >> storingObjectsOfType: aDomainObjectClass checkingConflictsAccordingTo: aConflictCheckingStrategy workingWith: aSessionProvider [
 
 	^ self new
@@ -18,72 +20,72 @@ RDBMSRepository class >> storingObjectsOfType: aDomainObjectClass checkingConfli
 		workingWith: aSessionProvider
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 RDBMSRepository >> beAwareOfClassModelDefinedBy: aClassModelDefinition [
 
 	sessionProvider
 		withConfigurationSessionDo: [ :session | session system addClassModelDefinedBy: aClassModelDefinition ]
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 RDBMSRepository >> beAwareOfDescriptorDefinedBy: aDescriptorDefinition [
 
 	sessionProvider
 		withConfigurationSessionDo: [ :session | session system addDescriptorDefinedBy: aDescriptorDefinition ]
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 RDBMSRepository >> beAwareOfTableDefinedBy: aTableDefinition [
 
 	sessionProvider
 		withConfigurationSessionDo: [ :session | session system addTableDefinedBy: aTableDefinition ]
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 RDBMSRepository >> beAwareOfTypeResolverDefinedBy: aTypeResolverDefinition [
 
 	sessionProvider
 		withConfigurationSessionDo: [ :session | session system addTypeResolverDefinedBy: aTypeResolverDefinition ]
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 RDBMSRepository >> configureMappingsIn: aBlock [
 
 	aBlock cull: self
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 RDBMSRepository >> conflictCheckingStrategy [
 
 	^ conflictCheckingStrategy
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RDBMSRepository >> countMatching: aCriteriaOrBlock [
 
 	^ self
 		withReadSessionDo: [ :session | session count: modelObjectClass where: ( self asMatchingCriteria: aCriteriaOrBlock ) ]
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 RDBMSRepository >> executeQuery: query [
 
 	^ self withReadSessionDo: [ :session | session execute: query ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RDBMSRepository >> findAll [
 
 	^ self withReadSessionDo: [ :session | session read: modelObjectClass ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RDBMSRepository >> findAllMatching: aCriteriaOrBlock [
 
 	^ self executeQuery: ( SimpleQuery read: modelObjectClass where: ( self asMatchingCriteria: aCriteriaOrBlock ) )
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RDBMSRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction [
 
 	| query |
@@ -93,7 +95,7 @@ RDBMSRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction [
 	^ self executeQuery: query
 ]
 
-{ #category : #'private - error handling' }
+{ #category : 'private - error handling' }
 RDBMSRepository >> handleReadErrorsDuring: aBlock [
 
 	^ aBlock
@@ -106,7 +108,7 @@ RDBMSRepository >> handleReadErrorsDuring: aBlock [
 			]
 ]
 
-{ #category : #'private - error handling' }
+{ #category : 'private - error handling' }
 RDBMSRepository >> handleWriteErrorsDuring: aBlock [
 
 	^ aBlock
@@ -119,7 +121,7 @@ RDBMSRepository >> handleWriteErrorsDuring: aBlock [
 			]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RDBMSRepository >> initializeStoringObjectsOfType: aDomainObjectClass
 	checkingConflictsAccordingTo: aConflictCheckingStrategy
 	workingWith: aSessionProvider [
@@ -129,33 +131,33 @@ RDBMSRepository >> initializeStoringObjectsOfType: aDomainObjectClass
 	sessionProvider := aSessionProvider
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 RDBMSRepository >> matchingCriteriaBuilder [
 
 	^ RDBMSRepositoryMatchingCriteriaBuilder new
 ]
 
-{ #category : #'private - management' }
+{ #category : 'private - management' }
 RDBMSRepository >> purgeAfterCheckingInclusion: aDomainObject [
 
 	self transact: [ :session | session delete: aDomainObject ].
 	^ aDomainObject
 ]
 
-{ #category : #management }
+{ #category : 'management' }
 RDBMSRepository >> purgeAllMatching: aCriteriaOrBlock [
 
 	self transact: [ :session | session delete: modelObjectClass where: ( self asMatchingCriteria: aCriteriaOrBlock ) ]
 ]
 
-{ #category : #'private - management' }
+{ #category : 'private - management' }
 RDBMSRepository >> storeAfterCheckingConflicts: aDomainObject [
 
 	self transact: [ :session | session register: aDomainObject ].
 	^ aDomainObject
 ]
 
-{ #category : #management }
+{ #category : 'management' }
 RDBMSRepository >> transact: aBlock [
 
 	^ sessionProvider withSessionDo: [ :session |
@@ -163,7 +165,7 @@ RDBMSRepository >> transact: aBlock [
 		  self handleReadErrorsDuring: [ self handleWriteErrorsDuring: [ session inUnitOfWorkDo: aBlock ] ] ]
 ]
 
-{ #category : #management }
+{ #category : 'management' }
 RDBMSRepository >> update: aMutableDomainObject executing: aMonadycBlock [
 
 	^ self
@@ -175,13 +177,13 @@ RDBMSRepository >> update: aMutableDomainObject executing: aMonadycBlock [
 			]
 ]
 
-{ #category : #'private - management' }
+{ #category : 'private - management' }
 RDBMSRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
 
 	^self update: aDomainObject executing: [:original | original synchronizeWith: anUpdatedDomainObject]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RDBMSRepository >> withOneMatching: aCriteriaOrBlock do: foundBlock else: noneBlock [
 
 	| query |
@@ -190,7 +192,7 @@ RDBMSRepository >> withOneMatching: aCriteriaOrBlock do: foundBlock else: noneBl
 	^ ( self executeQuery: query ) ifNil: noneBlock ifNotNil: foundBlock
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RDBMSRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do: foundBlock else: noneBlock [
 
 	| query |
@@ -200,7 +202,7 @@ RDBMSRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do:
 	^ ( self executeQuery: query ) ifNil: noneBlock ifNotNil: foundBlock
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 RDBMSRepository >> withReadSessionDo: aBlock [
 
 	^ sessionProvider

@@ -1,6 +1,6 @@
 Class {
-	#name : #AdHocMappingFieldAndValueAssociation,
-	#superclass : #Object,
+	#name : 'AdHocMappingFieldAndValueAssociation',
+	#superclass : 'Object',
 	#instVars : [
 		'accessorMessage',
 		'fieldName',
@@ -8,10 +8,12 @@ Class {
 		'fromDatabaseToSmalltalkConversion',
 		'fromSmalltalkToDatabaseConversion'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 AdHocMappingFieldAndValueAssociation class >> forDecimalRelating: anAccessorMessage to: aFieldName on: aTableName [
 
 	^ self
@@ -22,7 +24,7 @@ AdHocMappingFieldAndValueAssociation class >> forDecimalRelating: anAccessorMess
 		fromSmalltalkToDatabaseUsing: [ :aNumber | aNumber asScaledDecimal ]
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 AdHocMappingFieldAndValueAssociation class >> forNullableField: aFieldName on: aTableName convertingFromDatabaseToSmalltalkUsing: dbToStBlock fromSmalltalkToDatabaseUsing: stToDbBlock consideringNullAs: aNullObject [
 
 	^ self
@@ -39,7 +41,7 @@ AdHocMappingFieldAndValueAssociation class >> forNullableField: aFieldName on: a
 			]
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 AdHocMappingFieldAndValueAssociation class >> relating: anAccessorMessage to: aFieldName on: aTableName [
 
 	^ self
@@ -50,7 +52,7 @@ AdHocMappingFieldAndValueAssociation class >> relating: anAccessorMessage to: aF
 		fromSmalltalkToDatabaseUsing: [ :anObject | anObject ]
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 AdHocMappingFieldAndValueAssociation class >> relating: anAccessorMessage
 	to: aFieldName
 	on: aTableName
@@ -66,31 +68,31 @@ AdHocMappingFieldAndValueAssociation class >> relating: anAccessorMessage
 		fromSmalltalkToDatabaseUsing: fromSmalltalkToDatabaseBlock
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 AdHocMappingFieldAndValueAssociation >> accessorMessage [
 
 	^ accessorMessage
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 AdHocMappingFieldAndValueAssociation >> fieldName [
 
 	^ fieldName
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 AdHocMappingFieldAndValueAssociation >> fromDatabaseToSmalltalkConversion [
 
 	^ fromDatabaseToSmalltalkConversion
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 AdHocMappingFieldAndValueAssociation >> fromSmalltalkToDatabaseConversion [
 
 	^ fromSmalltalkToDatabaseConversion
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 AdHocMappingFieldAndValueAssociation >> initializeRelating: anAccessorMessage
 	to: aFieldName
 	on: aTableName
@@ -105,7 +107,7 @@ AdHocMappingFieldAndValueAssociation >> initializeRelating: anAccessorMessage
 	fromSmalltalkToDatabaseConversion := aFromSmalltalkToDatabaseBlock
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 AdHocMappingFieldAndValueAssociation >> tableName [
 
 	^ tableName

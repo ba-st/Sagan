@@ -1,21 +1,23 @@
 Class {
-	#name : #RealTableDefinition,
-	#superclass : #TableDefinition,
+	#name : 'RealTableDefinition',
+	#superclass : 'TableDefinition',
 	#instVars : [
 		'tableName',
 		'fieldDefinitions',
 		'indexDefinitions'
 	],
-	#category : #'Sagan-RDBMS-Core'
+	#category : 'Sagan-RDBMS-Core',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Core'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 RealTableDefinition class >> named: aName fieldsDefinedBy: aFieldDefinitionCollection [
 
 	^ self named: aName fieldsDefinedBy: aFieldDefinitionCollection indexesDefinedBy: #()
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 RealTableDefinition class >> named: aName
 	fieldsDefinedBy: aFieldDefinitionCollection
 	indexesDefinedBy: anIndexDefinitionCollection [
@@ -27,19 +29,19 @@ RealTableDefinition class >> named: aName
 		indexesDefinedBy: anIndexDefinitionCollection
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 RealTableDefinition >> defineTableFor: aDatabaseTable using: aDescriptorSystem [
 
 	aDescriptorSystem defineRealTableBasedOn: aDatabaseTable fieldsDefinedBy: fieldDefinitions indexesDefinedBy: indexDefinitions
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 RealTableDefinition >> fieldDefinitions [
 
 	^ fieldDefinitions copy
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 RealTableDefinition >> initializeNamed: aString
 	fieldsDefinedBy: aFieldDefinitionCollection
 	indexesDefinedBy: anIndexDefinitionCollection [
@@ -49,7 +51,7 @@ RealTableDefinition >> initializeNamed: aString
 	indexDefinitions := anIndexDefinitionCollection
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 RealTableDefinition >> printOn: aStream [
 
 	aStream
@@ -60,7 +62,7 @@ RealTableDefinition >> printOn: aStream [
 	fieldDefinitions do: [ :fieldDefinition | aStream print: fieldDefinition ] separatedBy: [ aStream cr ]
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 RealTableDefinition >> tableName [
 
 	^ tableName

@@ -1,32 +1,33 @@
 Class {
-	#name : #RepositoryProviderSystemBasedTest,
-	#superclass : #TestCase,
+	#name : 'RepositoryProviderSystemBasedTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'repositoryProviderSystem',
 		'celestialBodies'
 	],
-	#category : #'Sagan-RDBMS-Tests'
+	#category : 'Sagan-RDBMS-Tests',
+	#package : 'Sagan-RDBMS-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RepositoryProviderSystemBasedTest class >> isAbstract [ 
 
 	^self name = #RepositoryProviderSystemBasedTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RepositoryProviderSystemBasedTest >> repositoriesContainerName [
 
 	^ 'mainDb'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RepositoryProviderSystemBasedTest >> repositoryProvider [
 
 	^ RDBMSRepositoryProvider using: SingleSessionRDMBSRepositoryTest login
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RepositoryProviderSystemBasedTest >> setUp [
 
 	super setUp.
@@ -37,13 +38,13 @@ RepositoryProviderSystemBasedTest >> setUp [
 	repositoryProviderSystem prepareForInitialPersistence
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RepositoryProviderSystemBasedTest >> setUpRepositories [
 
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RepositoryProviderSystemBasedTest >> tearDown [
 
 	repositoryProviderSystem destroyRepositories

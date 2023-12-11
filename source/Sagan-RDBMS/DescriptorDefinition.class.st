@@ -1,28 +1,30 @@
 Class {
-	#name : #DescriptorDefinition,
-	#superclass : #PersistenceConceptDefinition,
-	#category : #'Sagan-RDBMS-Descriptors'
+	#name : 'DescriptorDefinition',
+	#superclass : 'PersistenceConceptDefinition',
+	#category : 'Sagan-RDBMS-Descriptors',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Descriptors'
 }
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 DescriptorDefinition >> defineDescriptorFor: aDescriptor using: aDescriptorSystem [
 
 	self subclassResponsibility
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 DescriptorDefinition >> defineFor: aDescriptor using: aDescriptorSystem [
 
 	^ self defineDescriptorFor: aDescriptor using: aDescriptorSystem
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 DescriptorDefinition >> describedClass [
 
 	self subclassResponsibility
 ]
 
-{ #category : #Testing }
+{ #category : 'Testing' }
 DescriptorDefinition >> isFor: aDescriptor [
 
 	^ self describedClass = aDescriptor describedClass

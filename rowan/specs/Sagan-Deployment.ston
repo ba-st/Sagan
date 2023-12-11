@@ -1,0 +1,9 @@
+RwLoadSpecificationV2 {
+  #specName: 'Sagan-Deployment',
+  #projectName : 'Sagan',
+  #diskUrl : 'Sagan',
+  #projectSpecFile : 'rowan/project.ston',
+  #componentNames : [
+      'Deployment'
+  ]
+}

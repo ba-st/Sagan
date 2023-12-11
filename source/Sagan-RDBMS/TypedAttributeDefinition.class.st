@@ -1,33 +1,35 @@
 Class {
-	#name : #TypedAttributeDefinition,
-	#superclass : #AttributeDefinition,
+	#name : 'TypedAttributeDefinition',
+	#superclass : 'AttributeDefinition',
 	#instVars : [
 		'attributeName',
 		'attributeType'
 	],
-	#category : #'Sagan-RDBMS-Attributes'
+	#category : 'Sagan-RDBMS-Attributes',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Attributes'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 TypedAttributeDefinition class >> named: aSymbol typed: aType [
 
 	^ self new initializeNamed: aSymbol typed: aType
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 TypedAttributeDefinition >> defineAttributesOn: aGlorpClassModel using: aDescriptorSystem [
 
 	aDescriptorSystem defineTypedAttributeOn: aGlorpClassModel named: attributeName typed: attributeType
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 TypedAttributeDefinition >> initializeNamed: aSymbol typed: aType [
 
 	attributeName := aSymbol.
 	attributeType := aType
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 TypedAttributeDefinition >> printOn: aStream [
 
 	aStream

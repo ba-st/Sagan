@@ -2,8 +2,8 @@
 I'm a dummy object used for the persistence tests
 "
 Class {
-	#name : #Extraterrestrial,
-	#superclass : #Object,
+	#name : 'Extraterrestrial',
+	#superclass : 'Object',
 	#instVars : [
 		'sequentialNumber',
 		'firstName',
@@ -11,10 +11,11 @@ Class {
 		'birthDate',
 		'raceName'
 	],
-	#category : #'Sagan-Core-Tests'
+	#category : 'Sagan-Core-Tests',
+	#package : 'Sagan-Core-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Extraterrestrial class >> namedFirst: aFirstName last: aLastName bornOn: aDate as: aRace [
 
 	^ self new initializeNamedFirst: aFirstName
@@ -23,19 +24,19 @@ Extraterrestrial class >> namedFirst: aFirstName last: aLastName bornOn: aDate a
 		  as: aRace
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Extraterrestrial >> birthDate [
 
 	^ birthDate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Extraterrestrial >> firstName [
 
 	^ firstName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Extraterrestrial >> initializeNamedFirst: aFirstName last: aLastName bornOn: aDate as: aRace [
 
 	firstName := aFirstName.
@@ -44,13 +45,13 @@ Extraterrestrial >> initializeNamedFirst: aFirstName last: aLastName bornOn: aDa
 	raceName := aRace
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Extraterrestrial >> lastName [
 
 	^ lastName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Extraterrestrial >> printOn: aStream [
 
 	aStream
@@ -59,19 +60,19 @@ Extraterrestrial >> printOn: aStream [
 		nextPutAll: firstName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Extraterrestrial >> raceName [
 
 	^ raceName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Extraterrestrial >> sequentialNumber [
 
 	^ sequentialNumber
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Extraterrestrial >> synchronizeWith: anExtraterrestial [
 
 	AssertionChecker enforce: [ self raceName = anExtraterrestial raceName ]

@@ -1,35 +1,36 @@
 Class {
-	#name : #InMemoryRepositoryProvider,
-	#superclass : #RepositoryProvider,
-	#category : #'Sagan-Core'
+	#name : 'InMemoryRepositoryProvider',
+	#superclass : 'RepositoryProvider',
+	#category : 'Sagan-Core',
+	#package : 'Sagan-Core'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 InMemoryRepositoryProvider >> createRepositoryStoringObjectsOfType: aBusinessObjectClass
 	checkingConflictsAccordingTo: aConflictCheckingStrategy [
 
 	^ InMemoryRepository checkingConflictsAccordingTo: aConflictCheckingStrategy
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 InMemoryRepositoryProvider >> destroyRepositories [
 	
 	" In memory all repositories are destroyed once the system is shut down "
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 InMemoryRepositoryProvider >> prepareForInitialPersistence [
 
 	
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 InMemoryRepositoryProvider >> prepareForShutDown [
 
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 InMemoryRepositoryProvider >> reset [
 
 	

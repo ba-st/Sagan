@@ -1,26 +1,28 @@
 Class {
-	#name : #RDBMSSessionProvider,
-	#superclass : #Object,
+	#name : 'RDBMSSessionProvider',
+	#superclass : 'Object',
 	#instVars : [
 		'options',
 		'login'
 	],
-	#category : #'Sagan-RDBMS-Repository'
+	#category : 'Sagan-RDBMS-Repository',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Repository'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RDBMSSessionProvider >> clearSessions [
 
 	self subclassResponsibility 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RDBMSSessionProvider >> deleteSessions [
 
 	self subclassResponsibility 
 ]
 
-{ #category : #retrying }
+{ #category : 'retrying' }
 RDBMSSessionProvider >> ensureSuccessfulLoginToDatabaseWith: aSession [
 
 	Retry
@@ -37,26 +39,26 @@ RDBMSSessionProvider >> ensureSuccessfulLoginToDatabaseWith: aSession [
 			]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RDBMSSessionProvider >> initializeLoginWith: aLogin configuredBy: anOptions [
 
 	login := aLogin.
 	options := anOptions
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RDBMSSessionProvider >> isLoggingEnabled [
 
 	^ options at: #logDatabaseEvents ifAbsent: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RDBMSSessionProvider >> retryAttempts [
 
 	^ options at: #maximumConnectionAttemps ifAbsent: [ 3 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RDBMSSessionProvider >> timeframeBetweenAttempts [
 
 	^ options
@@ -64,13 +66,13 @@ RDBMSSessionProvider >> timeframeBetweenAttempts [
 		  ifAbsent: [ Duration milliSeconds: 3000 ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RDBMSSessionProvider >> withConfigurationSessionDo: aBlockClosure [
 
 	self subclassResponsibility 
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RDBMSSessionProvider >> withSessionDo: aBlockClosure [
 
 	self subclassResponsibility 

@@ -1,14 +1,16 @@
 Class {
-	#name : #EmbeddedValueOneToOneMappingWithTranslationDefinition,
-	#superclass : #MappingDefinition,
+	#name : 'EmbeddedValueOneToOneMappingWithTranslationDefinition',
+	#superclass : 'MappingDefinition',
 	#instVars : [
 		'basicDefinition',
 		'fieldTranslationDefinitions'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 EmbeddedValueOneToOneMappingWithTranslationDefinition class >> forAttributeNamed: anAttributeName translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection [
 
 	^ self new
@@ -16,7 +18,7 @@ EmbeddedValueOneToOneMappingWithTranslationDefinition class >> forAttributeNamed
 		translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 EmbeddedValueOneToOneMappingWithTranslationDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem [
 
 	^ aDescriptorSystem
@@ -25,7 +27,7 @@ EmbeddedValueOneToOneMappingWithTranslationDefinition >> defineMappingOn: aDescr
 		basedOn: basicDefinition
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 EmbeddedValueOneToOneMappingWithTranslationDefinition >> initializeForAttributeNamed: anAttributeName
 	translatingFieldsUsingAll: aTableFieldTranslationDefinitionCollection [
 
@@ -34,7 +36,7 @@ EmbeddedValueOneToOneMappingWithTranslationDefinition >> initializeForAttributeN
 	fieldTranslationDefinitions := aTableFieldTranslationDefinitionCollection
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 EmbeddedValueOneToOneMappingWithTranslationDefinition >> printOn: aStream [
 
 	aStream

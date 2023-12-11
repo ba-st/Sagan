@@ -1,10 +1,11 @@
 Class {
-	#name : #RDBMSSessionProviderTest,
-	#superclass : #TestCase,
-	#category : #'Sagan-RDBMS-Tests'
+	#name : 'RDBMSSessionProviderTest',
+	#superclass : 'TestCase',
+	#category : 'Sagan-RDBMS-Tests',
+	#package : 'Sagan-RDBMS-Tests'
 }
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 RDBMSSessionProviderTest class >> failingLogin [
 
 	^ Login new
@@ -17,13 +18,13 @@ RDBMSSessionProviderTest class >> failingLogin [
 		  yourself
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 RDBMSSessionProviderTest class >> login [
 
 	^ SingleSessionRDMBSRepositoryTest login 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RDBMSSessionProviderTest >> expectedFailingLogingMessage [
 
 	^ DatabaseAccessor classForThisPlatform DefaultDriver = SQLite3Driver
@@ -31,7 +32,7 @@ RDBMSSessionProviderTest >> expectedFailingLogingMessage [
 		  otherwise: [ 'ConnectionTimedOut: Cannot connect to 127.0.0.1:2345' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RDBMSSessionProviderTest >> withLoggingAsserterDo: aOneArgBlock [
 
 	| loggingAsserter |

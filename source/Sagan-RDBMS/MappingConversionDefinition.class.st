@@ -1,16 +1,18 @@
 Class {
-	#name : #MappingConversionDefinition,
-	#superclass : #PersistenceConceptDefinition,
-	#category : #'Sagan-RDBMS-Mappings'
+	#name : 'MappingConversionDefinition',
+	#superclass : 'PersistenceConceptDefinition',
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 MappingConversionDefinition >> defineConversionOn: aMapping using: aDescriptorSystem [
 
 	self subclassResponsibility
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 MappingConversionDefinition >> defineFor: aMapping using: aDescriptorSystem [
 
 	^ self defineConversionOn: aMapping using: aDescriptorSystem

@@ -6,15 +6,16 @@ error in the repository implementation.
 I will keep a reference to the original error to aid in debugging or logging purposes.
 "
 Class {
-	#name : #PersistenceCommandFailed,
-	#superclass : #SystemCommandExecutionError,
+	#name : 'PersistenceCommandFailed',
+	#superclass : 'SystemCommandExecutionError',
 	#instVars : [
 		'originatingErrorMessageText'
 	],
-	#category : #'Sagan-Core'
+	#category : 'Sagan-Core',
+	#package : 'Sagan-Core'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 PersistenceCommandFailed class >> signal: aMessageText dueTo: anOriginatingError because: anOriginatingErrorMessageText [
 
 	self new
@@ -23,19 +24,19 @@ PersistenceCommandFailed class >> signal: aMessageText dueTo: anOriginatingError
 		signal: aMessageText
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PersistenceCommandFailed >> fullDescription [
 
 	^ '<1s> [<2s>]' expandMacrosWith: self messageText with: originatingErrorMessageText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PersistenceCommandFailed >> originatingError [
 
 	^ self tag
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PersistenceCommandFailed >> originatingErrorMessageText: aMessageText [
 
 	originatingErrorMessageText := aMessageText

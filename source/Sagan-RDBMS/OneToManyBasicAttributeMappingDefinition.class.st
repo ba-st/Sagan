@@ -1,6 +1,6 @@
 Class {
-	#name : #OneToManyBasicAttributeMappingDefinition,
-	#superclass : #MappingDefinition,
+	#name : 'OneToManyBasicAttributeMappingDefinition',
+	#superclass : 'MappingDefinition',
 	#instVars : [
 		'attributeName',
 		'resultFieldName',
@@ -9,10 +9,12 @@ Class {
 		'positionFieldName',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToManyBasicAttributeMappingDefinition class >> forAttributeNamed: anAttributeName obtainingValuesFrom: aFieldName andPositionFrom: aPositionFieldName on: aTableName translatingUsing: aTableFieldTranslationDefinition [
 
 	^ self
@@ -23,7 +25,7 @@ OneToManyBasicAttributeMappingDefinition class >> forAttributeNamed: anAttribute
 		translatingUsingAll: ( Array with: aTableFieldTranslationDefinition )
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToManyBasicAttributeMappingDefinition class >> forAttributeNamed: anAttributeName obtainingValuesFrom: aFieldName andPositionFrom: aPositionFieldName on: aTableName translatingUsingAll: aTableFieldTranslationDefinitionCollection [
 
 	^ self
@@ -35,7 +37,7 @@ OneToManyBasicAttributeMappingDefinition class >> forAttributeNamed: anAttribute
 		applyingAfterDefinition: self nullAction
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 OneToManyBasicAttributeMappingDefinition class >> forAttributeNamed: anAttributeName obtainingValuesFrom: aFieldName andPositionFrom: aPositionFieldName on: aTableName translatingUsingAll: aTableFieldTranslationDefinitionCollection applyingAfterDefinition: aOneArgBlock [
 
 	^ self new
@@ -47,7 +49,7 @@ OneToManyBasicAttributeMappingDefinition class >> forAttributeNamed: anAttribute
 		applyingAfterDefinition: aOneArgBlock
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 OneToManyBasicAttributeMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem [
 
 	| mapping |
@@ -63,7 +65,7 @@ OneToManyBasicAttributeMappingDefinition >> defineMappingOn: aDescriptor using: 
 	^ mapping
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 OneToManyBasicAttributeMappingDefinition >> initializeForAttributeNamed: anAttributeName
 	obtainingValuesFrom: aFieldName
 	andPositionFrom: aPositionFieldName
@@ -80,7 +82,7 @@ OneToManyBasicAttributeMappingDefinition >> initializeForAttributeNamed: anAttri
 	postDefinitionAction := aTwoArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 OneToManyBasicAttributeMappingDefinition >> printOn: aStream [
 
 	aStream

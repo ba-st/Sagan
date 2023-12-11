@@ -1,16 +1,18 @@
 Class {
-	#name : #FilteredAbstractDescriptorDefinition,
-	#superclass : #AbstractDescriptorDefinition,
+	#name : 'FilteredAbstractDescriptorDefinition',
+	#superclass : 'AbstractDescriptorDefinition',
 	#instVars : [
 		'abstractClass',
 		'tableName',
 		'mappingDefinitions',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Descriptors'
+	#category : 'Sagan-RDBMS-Descriptors',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Descriptors'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 FilteredAbstractDescriptorDefinition class >> for: anAbstractClass onTableNamed: aTableName mappingsDefinedBy: aMappingDefinitions [
 
 	^ self
@@ -20,7 +22,7 @@ FilteredAbstractDescriptorDefinition class >> for: anAbstractClass onTableNamed:
 		applyingAfterDefinition: [ :descriptor :system | ( system typeResolverFor: anAbstractClass ) register: descriptor abstract: true ]
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 FilteredAbstractDescriptorDefinition class >> for: anAbstractClass onTableNamed: aTableName mappingsDefinedBy: aMappingDefinitions applyingAfterDefinition: aTwoArgBlock [
 
 	^ self new
@@ -30,13 +32,13 @@ FilteredAbstractDescriptorDefinition class >> for: anAbstractClass onTableNamed:
 		applyingAfterDefinition: aTwoArgBlock
 ]
 
-{ #category : #Accessing }
+{ #category : 'Accessing' }
 FilteredAbstractDescriptorDefinition >> abstractClass [
 
 	^ abstractClass
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 FilteredAbstractDescriptorDefinition >> defineAbstractDescriptorFor: aDescriptor using: aDescriptorSystem [
 
 	| descriptor |
@@ -46,7 +48,7 @@ FilteredAbstractDescriptorDefinition >> defineAbstractDescriptorFor: aDescriptor
 	^ descriptor
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 FilteredAbstractDescriptorDefinition >> initializeFor: anAbstractClass onTableNamed: aTableName mappingsDefinedBy: aMappingDefinitions applyingAfterDefinition: aTwoArgBlock [
 
 	abstractClass := anAbstractClass.

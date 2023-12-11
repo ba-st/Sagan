@@ -1,21 +1,23 @@
 Class {
-	#name : #TypedCollectionAttributeDefinition,
-	#superclass : #AttributeDefinition,
+	#name : 'TypedCollectionAttributeDefinition',
+	#superclass : 'AttributeDefinition',
 	#instVars : [
 		'attributeName',
 		'attributeType',
 		'collectionType'
 	],
-	#category : #'Sagan-RDBMS-Attributes'
+	#category : 'Sagan-RDBMS-Attributes',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Attributes'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 TypedCollectionAttributeDefinition class >> named: aSymbol typed: aType inCollectionOfType: aCollectionType [
 
 	^ self new initializeNamed: aSymbol typed: aType inCollectionOfType: aCollectionType
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 TypedCollectionAttributeDefinition >> defineAttributesOn: aGlorpClassModel using: aDescriptorSystem [
 
 	aDescriptorSystem
@@ -25,7 +27,7 @@ TypedCollectionAttributeDefinition >> defineAttributesOn: aGlorpClassModel using
 		inCollectionOfType: collectionType
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 TypedCollectionAttributeDefinition >> initializeNamed: aSymbol typed: aType inCollectionOfType: aCollectionType [
 
 	attributeName := aSymbol.
@@ -33,7 +35,7 @@ TypedCollectionAttributeDefinition >> initializeNamed: aSymbol typed: aType inCo
 	collectionType := aCollectionType
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 TypedCollectionAttributeDefinition >> printOn: aStream [
 
 	aStream

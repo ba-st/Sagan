@@ -1,0 +1,22 @@
+RwSimpleProjectLoadComponentV2 {
+  #name : 'Deployment',
+  #postloadDoitName : 'scripts/deploymentPostLoad',
+  #projectNames : [ 'Kepler', 'SortFunctions' ],
+  #componentNames : [	],
+  #packageNames : [
+    'Sagan-Core',
+    'Sagan-Extensions',
+    'Sagan-Kepler'
+  ],
+  #conditionalPackageMapSpecs : {
+    'gemstone' : {
+      'allusers' : {
+        #packageNameToPlatformPropertiesMap : {
+          'Sagan-Core' : { 'symbolDictName' : 'Sagan' },
+          'Sagan-Extensions' : { 'symbolDictName' : 'Globals' },
+          'Sagan-Kepler' : { 'symbolDictName' : 'Sagan' }
+        }
+      }
+    }
+  }
+}

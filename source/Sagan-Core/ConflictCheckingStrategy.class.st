@@ -12,18 +12,19 @@ Public API and Key Messages
 In case a conflict is detected I will raise a ConflictingObjectFound exception.
 "
 Class {
-	#name : #ConflictCheckingStrategy,
-	#superclass : #Object,
-	#category : #'Sagan-Core'
+	#name : 'ConflictCheckingStrategy',
+	#superclass : 'Object',
+	#category : 'Sagan-Core',
+	#package : 'Sagan-Core'
 }
 
-{ #category : #Evaluating }
+{ #category : 'Evaluating' }
 ConflictCheckingStrategy >> assertNoConflictsFor: objectInMemory in: aRepository [ 
 
 	self subclassResponsibility
 ]
 
-{ #category : #Evaluating }
+{ #category : 'Evaluating' }
 ConflictCheckingStrategy >> assertNoConflictsFor: updatedObjectInMemory in: aRepository excluding: originalObjectInMemory [ 
 
 	self subclassResponsibility

@@ -1,10 +1,11 @@
 Class {
-	#name : #ImaginaryTableDefinitionTest,
-	#superclass : #TestCase,
-	#category : #'Sagan-RDBMS-Tests'
+	#name : 'ImaginaryTableDefinitionTest',
+	#superclass : 'TestCase',
+	#category : 'Sagan-RDBMS-Tests',
+	#package : 'Sagan-RDBMS-Tests'
 }
 
-{ #category : #Test }
+{ #category : 'Test' }
 ImaginaryTableDefinitionTest >> testImaginaryTableDefinitionWithForeignKeyFieldShouldNotBeAllowed [
 
 	self

@@ -1,27 +1,29 @@
 Class {
-	#name : #CharacterFieldDefinition,
-	#superclass : #TableFieldDefinition,
+	#name : 'CharacterFieldDefinition',
+	#superclass : 'TableFieldDefinition',
 	#instVars : [
 		'fieldName',
 		'fieldSize',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Fields'
+	#category : 'Sagan-RDBMS-Fields',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Fields'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 CharacterFieldDefinition class >> named: aString sized: aSmallInteger [
 
 	^ self named: aString sized: aSmallInteger applyingAfterDefinition: self makeFieldNotNullable
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 CharacterFieldDefinition class >> named: aString sized: aSmallInteger applyingAfterDefinition: aTwoArgBlock [
 
 	^ self new initializeNamed: aString sized: aSmallInteger applyingAfterDefinition: aTwoArgBlock
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 CharacterFieldDefinition class >> named: aString sized: aSmallInteger withDefaultValue: aValue [
 
 	^ self
@@ -33,25 +35,25 @@ CharacterFieldDefinition class >> named: aString sized: aSmallInteger withDefaul
 			]
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 CharacterFieldDefinition class >> nullableNamed: aString sized: aSmallInteger [
 
 	^ self named: aString sized: aSmallInteger applyingAfterDefinition: self makeFieldNullable
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 CharacterFieldDefinition class >> toBePrimaryKeyNamed: aString sized: aSmallInteger [
 
 	^ self named: aString sized: aSmallInteger applyingAfterDefinition: self makeFieldPrimaryKey
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 CharacterFieldDefinition class >> uniqueNamed: aString sized: aSmallInteger [
 
 	^ self named: aString sized: aSmallInteger applyingAfterDefinition: self makeFieldUniqueNotNullable
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 CharacterFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSystem [
 
 	| field |
@@ -61,7 +63,7 @@ CharacterFieldDefinition >> defineFieldOn: aDatabaseTable using: aDescriptorSyst
 	^ field
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 CharacterFieldDefinition >> initializeNamed: aString sized: aSmallInteger applyingAfterDefinition: aTwoArgBlock [
 
 	fieldName := aString.
@@ -69,7 +71,7 @@ CharacterFieldDefinition >> initializeNamed: aString sized: aSmallInteger applyi
 	postDefinitionAction := aTwoArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 CharacterFieldDefinition >> printOn: aStream [
 
 	aStream

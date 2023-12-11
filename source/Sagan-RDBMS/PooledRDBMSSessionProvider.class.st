@@ -1,6 +1,6 @@
 Class {
-	#name : #PooledRDBMSSessionProvider,
-	#superclass : #RDBMSSessionProvider,
+	#name : 'PooledRDBMSSessionProvider',
+	#superclass : 'RDBMSSessionProvider',
 	#instVars : [
 		'descriptorSystem',
 		'configurationSession',
@@ -8,10 +8,12 @@ Class {
 		'descriptorsBySession',
 		'descriptorSystemWasCopied'
 	],
-	#category : #'Sagan-RDBMS-Repository'
+	#category : 'Sagan-RDBMS-Repository',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Repository'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PooledRDBMSSessionProvider class >> loginWith: aLogin configuredBy: aBlock [
 
 	| options |
@@ -20,21 +22,21 @@ PooledRDBMSSessionProvider class >> loginWith: aLogin configuredBy: aBlock [
 	^ self new initializeLoginWith: aLogin configuredBy: options
 ]
 
-{ #category : #'private-accessing' }
+{ #category : 'private-accessing' }
 PooledRDBMSSessionProvider >> assertDescriptorSystemCanBeConfigured [
 
 	descriptorSystemWasCopied
 		ifTrue: [ self error: 'DescriptorSystem has been copied and cannot longer be configured' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PooledRDBMSSessionProvider >> clearSessions [
 
 	sessionPool clear.
 	configurationSession reset
 ]
 
-{ #category : #'private-accessing' }
+{ #category : 'private-accessing' }
 PooledRDBMSSessionProvider >> configureDescriptorSystemTo: aGlorpSession [
 
 	| system |
@@ -47,7 +49,7 @@ PooledRDBMSSessionProvider >> configureDescriptorSystemTo: aGlorpSession [
 	^ aGlorpSession
 ]
 
-{ #category : #'private-accessing' }
+{ #category : 'private-accessing' }
 PooledRDBMSSessionProvider >> createDatabaseAccessor [
 
 	| accessor |
@@ -58,7 +60,7 @@ PooledRDBMSSessionProvider >> createDatabaseAccessor [
 	^ accessor
 ]
 
-{ #category : #'private-accessing' }
+{ #category : 'private-accessing' }
 PooledRDBMSSessionProvider >> createNewSession [
 
 	| session |
@@ -69,7 +71,7 @@ PooledRDBMSSessionProvider >> createNewSession [
 	^ session
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PooledRDBMSSessionProvider >> deleteSessions [
 
 	sessionPool minIdleObjects: nil.
@@ -77,14 +79,14 @@ PooledRDBMSSessionProvider >> deleteSessions [
 	configurationSession logout
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PooledRDBMSSessionProvider >> initializeConfigurationSession [
 
 	configurationSession := self createNewSession.
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PooledRDBMSSessionProvider >> initializeLoginWith: aLogin configuredBy: anOptions [
 
 	super initializeLoginWith: aLogin configuredBy: anOptions.
@@ -94,7 +96,7 @@ PooledRDBMSSessionProvider >> initializeLoginWith: aLogin configuredBy: anOption
 	self initializeWorkingSessionsPoolConfiguredBy: options
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PooledRDBMSSessionProvider >> initializeWorkingSessionsPoolConfiguredBy: options [
 
 	descriptorsBySession := Dictionary new.
@@ -110,7 +112,7 @@ PooledRDBMSSessionProvider >> initializeWorkingSessionsPoolConfiguredBy: options
 		maxActiveObjects: (options at: #maxActiveSessionsCount ifAbsent: [ 12 ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PooledRDBMSSessionProvider >> withConfigurationSessionDo: aBlockClosure [
 
 	self assertDescriptorSystemCanBeConfigured.
@@ -118,7 +120,7 @@ PooledRDBMSSessionProvider >> withConfigurationSessionDo: aBlockClosure [
 	aBlockClosure cull: configurationSession
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PooledRDBMSSessionProvider >> withSessionDo: aBlockClosure [
 
 	^ CurrentRDBMSSession

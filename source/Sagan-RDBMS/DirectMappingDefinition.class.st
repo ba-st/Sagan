@@ -1,6 +1,6 @@
 Class {
-	#name : #DirectMappingDefinition,
-	#superclass : #MappingDefinition,
+	#name : 'DirectMappingDefinition',
+	#superclass : 'MappingDefinition',
 	#instVars : [
 		'attributeName',
 		'fieldName',
@@ -8,10 +8,12 @@ Class {
 		'tableName',
 		'postDefinitionAction'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #'Conversion Definitions' }
+{ #category : 'Conversion Definitions' }
 DirectMappingDefinition class >> booleanToIntegerConversionDefinition [
 
 	^ PluggableMappingConversionDefinition
@@ -20,7 +22,7 @@ DirectMappingDefinition class >> booleanToIntegerConversionDefinition [
 		fromSmalltalkToDatabaseUsing: [ :aBoolean | aBoolean ]
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 DirectMappingDefinition class >> fromAttributeNamed: anAttributeName toFieldNamed: aFieldName onTableNamed: aTableName [
 
 	^ self
@@ -30,7 +32,7 @@ DirectMappingDefinition class >> fromAttributeNamed: anAttributeName toFieldName
 		conversionDefinedBy: self nullConversionDefinition
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 DirectMappingDefinition class >> fromAttributeNamed: anAttributeName toFieldNamed: aFieldName onTableNamed: aTableName conversionDefinedBy: aConversionDefinition [
 
 	^ self
@@ -41,7 +43,7 @@ DirectMappingDefinition class >> fromAttributeNamed: anAttributeName toFieldName
 		applyingAfterDefinition: self nullAction
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 DirectMappingDefinition class >> fromAttributeNamed: anAttributeName toFieldNamed: aFieldName onTableNamed: aTableName conversionDefinedBy: aConversionDefinition applyingAfterDefinition: aTwoArgBlock [
 
 	^ self new
@@ -52,7 +54,7 @@ DirectMappingDefinition class >> fromAttributeNamed: anAttributeName toFieldName
 		applyingAfterDefinition: aTwoArgBlock
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 DirectMappingDefinition class >> fromBooleanAttributeNamed: anAttributeName toFieldNamed: aFieldName onTableNamed: aTableName [
 
 	^ self
@@ -62,7 +64,7 @@ DirectMappingDefinition class >> fromBooleanAttributeNamed: anAttributeName toFi
 		conversionDefinedBy: self booleanToIntegerConversionDefinition
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 DirectMappingDefinition class >> fromPseudoAttributeNamed: anAttributeName toFieldNamed: aFieldName onTableNamed: aTableName [
 
 	^ self
@@ -72,7 +74,7 @@ DirectMappingDefinition class >> fromPseudoAttributeNamed: anAttributeName toFie
 		conversionDefinedBy: self nullConversionDefinition
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 DirectMappingDefinition class >> fromPseudoAttributeNamed: anAttributeName toFieldNamed: aFieldName onTableNamed: aTableName conversionDefinedBy: aConversionDefinition [
 
 	^ self
@@ -83,7 +85,7 @@ DirectMappingDefinition class >> fromPseudoAttributeNamed: anAttributeName toFie
 		applyingAfterDefinition: self makeMappingForPseudoVariable
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 DirectMappingDefinition class >> fromReadOnlyAttributeNamed: anAttributeName toFieldNamed: aFieldName onTableNamed: aTableName [
 
 	^ self
@@ -94,7 +96,7 @@ DirectMappingDefinition class >> fromReadOnlyAttributeNamed: anAttributeName toF
 		applyingAfterDefinition: self makeMappingReadOnly
 ]
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 DirectMappingDefinition class >> fromSymbolAttributeNamed: anAttributeName toFieldNamed: aFieldName onTableNamed: aTableName [
 
 	^ self
@@ -104,13 +106,13 @@ DirectMappingDefinition class >> fromSymbolAttributeNamed: anAttributeName toFie
 		conversionDefinedBy: self symbolToStringConversionDefinition
 ]
 
-{ #category : #'Conversion Definitions' }
+{ #category : 'Conversion Definitions' }
 DirectMappingDefinition class >> nullConversionDefinition [
 
 	^ NullMappingConversionDefinition new
 ]
 
-{ #category : #'Conversion Definitions' }
+{ #category : 'Conversion Definitions' }
 DirectMappingDefinition class >> symbolToStringConversionDefinition [
 
 	^ PluggableMappingConversionDefinition
@@ -119,7 +121,7 @@ DirectMappingDefinition class >> symbolToStringConversionDefinition [
 		fromSmalltalkToDatabaseUsing: [ :aSymbol | aSymbol asString ]
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 DirectMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem [
 
 	| mapping |
@@ -134,7 +136,7 @@ DirectMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem
 	^ mapping
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 DirectMappingDefinition >> initializeFromAttributeNamed: anAttributeName
 	toFieldNamed: aFieldName
 	onTableNamed: aTableName
@@ -149,7 +151,7 @@ DirectMappingDefinition >> initializeFromAttributeNamed: anAttributeName
 	postDefinitionAction := aTwoArgBlock
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 DirectMappingDefinition >> printOn: aStream [
 
 	aStream

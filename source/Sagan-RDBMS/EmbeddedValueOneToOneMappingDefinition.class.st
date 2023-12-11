@@ -1,31 +1,33 @@
 Class {
-	#name : #EmbeddedValueOneToOneMappingDefinition,
-	#superclass : #MappingDefinition,
+	#name : 'EmbeddedValueOneToOneMappingDefinition',
+	#superclass : 'MappingDefinition',
 	#instVars : [
 		'attributeName'
 	],
-	#category : #'Sagan-RDBMS-Mappings'
+	#category : 'Sagan-RDBMS-Mappings',
+	#package : 'Sagan-RDBMS',
+	#tag : 'Mappings'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : 'Instance Creation' }
 EmbeddedValueOneToOneMappingDefinition class >> forAttributeNamed: anAttributeName [
 
 	^ self new initializeForAttributeNamed: anAttributeName
 ]
 
-{ #category : #Defining }
+{ #category : 'Defining' }
 EmbeddedValueOneToOneMappingDefinition >> defineMappingOn: aDescriptor using: aDescriptorSystem [
 
 	^ aDescriptorSystem defineEmbeddedValueOneToOneMappingOn: aDescriptor forAttributeNamed: attributeName
 ]
 
-{ #category : #Initialization }
+{ #category : 'Initialization' }
 EmbeddedValueOneToOneMappingDefinition >> initializeForAttributeNamed: anAttributeName [
 
 	attributeName := anAttributeName
 ]
 
-{ #category : #Printing }
+{ #category : 'Printing' }
 EmbeddedValueOneToOneMappingDefinition >> printOn: aStream [
 
 	aStream
