@@ -16,7 +16,7 @@ RwSimpleProjectLoadComponentV2 {
           'Sagan-Core' : { 'symbolDictName' : 'Sagan' },
           'Sagan-Extensions' : { 'symbolDictName' : 'Globals' },
           'Sagan-Kepler' : { 'symbolDictName' : 'Sagan' }, 
-          'Sagan-Gemstone' : { 'symbolDictName' : 'Sagan' },
+          'Sagan-Gemstone' : { 'symbolDictName' : 'Sagan' }
         }
       }
     }
