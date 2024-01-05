@@ -311,6 +311,38 @@ RepositoryBasedTest >> testStore [
 ]
 
 { #category : 'tests - conflict checking' }
+RepositoryBasedTest >> testStoreIdentical [
+
+	| found instance |
+
+	self setUpRepositoryWithNoConflictChecking.
+	instance := self silvesterStallone.
+	self extraterrestrials store: instance.
+	self extraterrestrials store: instance.
+
+	found := self extraterrestrials findAll.
+	self assert: found size equals: 2.
+	self assert: ( found allSatisfy: [ :extraterrestrial |
+			  extraterrestrial firstName = 'Silvester' and: [ extraterrestrial lastName = 'Stallone' ] ] )
+]
+
+{ #category : 'tests - conflict checking' }
+RepositoryBasedTest >> testStoreRepeated [
+
+	| found |
+
+	self setUpRepositoryWithNoConflictChecking.
+
+	self extraterrestrials store: self silvesterStallone.
+	self extraterrestrials store: self silvesterStallone.
+	
+	found := self extraterrestrials findAll.
+	self assert: found size equals: 2.
+	self assert: ( found allSatisfy: [ :extraterrestrial |
+			  extraterrestrial firstName = 'Silvester' and: [ extraterrestrial lastName = 'Stallone' ] ] )
+]
+
+{ #category : 'tests - conflict checking' }
 RepositoryBasedTest >> testStoreWithConflict [
 
 	self setUpRepositoryForSimpleConflictChecking.

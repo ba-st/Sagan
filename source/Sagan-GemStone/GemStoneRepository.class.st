@@ -66,7 +66,7 @@ GemStoneRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction 
 GemStoneRepository >> initializeCheckingConflictsAccordingTo: aConflictCheckingStrategy [
 
 	conflictCheckingStrategy := aConflictCheckingStrategy.
-	contents := Bag new
+	contents := Set new
 ]
 
 { #category : 'private - accessing' }
