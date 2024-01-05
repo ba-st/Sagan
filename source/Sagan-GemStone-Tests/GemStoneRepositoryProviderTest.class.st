@@ -1,23 +1,23 @@
 Class {
-	#name : 'GemstoneRepositoryProviderTest',
+	#name : 'GemStoneRepositoryProviderTest',
 	#superclass : 'RepositoryBasedTest',
 	#category : 'Sagan-GemStone-Tests',
 	#package : 'Sagan-GemStone-Tests'
 }
 
 { #category : 'initialization' }
-GemstoneRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy [
+GemStoneRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
-	extraterrestrials := GemstoneRepositoryProvider new
+	extraterrestrials := GemStoneRepositoryProvider new
 		                     createRepositoryStoringObjectsOfType: Extraterrestrial
 		                     checkingConflictsAccordingTo: aConflictCheckingStrategy.
-	ships := GemstoneRepositoryProvider new
+	ships := GemStoneRepositoryProvider new
 		         createRepositoryStoringObjectsOfType: Spaceship
 		         checkingConflictsAccordingTo: aConflictCheckingStrategy
 ]
 
 { #category : 'tests' }
-GemstoneRepositoryProviderTest >> testSpaceshipQueryingForPositiveFirepower [
+GemStoneRepositoryProviderTest >> testSpaceshipQueryingForPositiveFirepower [
 
 	| solvalou solgrado zeodalley |
 
@@ -42,7 +42,7 @@ GemstoneRepositoryProviderTest >> testSpaceshipQueryingForPositiveFirepower [
 ]
 
 { #category : 'tests' }
-GemstoneRepositoryProviderTest >> testSpaceshipQueryingForZeroFirepower [
+GemStoneRepositoryProviderTest >> testSpaceshipQueryingForZeroFirepower [
 
 	| solvalou solgrado zeodalley |
 
@@ -63,7 +63,7 @@ GemstoneRepositoryProviderTest >> testSpaceshipQueryingForZeroFirepower [
 ]
 
 { #category : 'utility' }
-GemstoneRepositoryProviderTest >> withAllSpaceshipsMatching: aMatchingCriteria do: aOneArgBlock [
+GemStoneRepositoryProviderTest >> withAllSpaceshipsMatching: aMatchingCriteria do: aOneArgBlock [
 
 	aOneArgBlock value: ( ships findAllMatching: aMatchingCriteria )
 ]

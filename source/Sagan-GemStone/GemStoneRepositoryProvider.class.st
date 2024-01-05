@@ -1,37 +1,37 @@
 Class {
-	#name : 'GemstoneRepositoryProvider',
+	#name : 'GemStoneRepositoryProvider',
 	#superclass : 'RepositoryProvider',
 	#category : 'Sagan-GemStone',
 	#package : 'Sagan-GemStone'
 }
 
 { #category : 'building' }
-GemstoneRepositoryProvider >> createRepositoryStoringObjectsOfType: aBusinessObjectClass
+GemStoneRepositoryProvider >> createRepositoryStoringObjectsOfType: aBusinessObjectClass
 	checkingConflictsAccordingTo: aConflictCheckingStrategy [
 
-	^ GemstoneRepository checkingConflictsAccordingTo: aConflictCheckingStrategy
+	^ GemStoneRepository checkingConflictsAccordingTo: aConflictCheckingStrategy
 ]
 
 { #category : 'controlling' }
-GemstoneRepositoryProvider >> destroyRepositories [
+GemStoneRepositoryProvider >> destroyRepositories [
 	
 	" In memory all repositories are destroyed once the system is shut down "
 ]
 
 { #category : 'controlling' }
-GemstoneRepositoryProvider >> prepareForInitialPersistence [
+GemStoneRepositoryProvider >> prepareForInitialPersistence [
 
 	
 ]
 
 { #category : 'controlling' }
-GemstoneRepositoryProvider >> prepareForShutDown [
+GemStoneRepositoryProvider >> prepareForShutDown [
 
 	
 ]
 
 { #category : 'initialization' }
-GemstoneRepositoryProvider >> reset [
+GemStoneRepositoryProvider >> reset [
 
 	
 ]

@@ -1,10 +1,10 @@
 "
-I'm a Gemstone repository. I will keep the managed objects in an collections optimized for Gemstone indexes, and provide transactional semantics.
+I'm a GemStone repository. I will keep the managed objects in an collections optimized for GemStone indexes, and provide transactional semantics.
 
-I require a working Gemstone connection.
+I require a working GemStone connection.
 "
 Class {
-	#name : 'GemstoneRepository',
+	#name : 'GemStoneRepository',
 	#superclass : 'RepositoryBehavior',
 	#instVars : [
 		'conflictCheckingStrategy',
@@ -15,68 +15,68 @@ Class {
 }
 
 { #category : 'instance creation' }
-GemstoneRepository class >> checkingConflictsAccordingTo: aConflictCheckingStrategy [
+GemStoneRepository class >> checkingConflictsAccordingTo: aConflictCheckingStrategy [
 
 	^self new initializeCheckingConflictsAccordingTo: aConflictCheckingStrategy
 ]
 
 { #category : 'instance creation' }
-GemstoneRepository class >> withoutCheckingConflicts [
+GemStoneRepository class >> withoutCheckingConflicts [
 
 	^ self checkingConflictsAccordingTo: DoNotCheckForConflictsStrategy new
 ]
 
 { #category : 'configuring' }
-GemstoneRepository >> configureMappingsIn: aBlock [
+GemStoneRepository >> configureMappingsIn: aBlock [
 
 	
 ]
 
 { #category : 'private - accessing' }
-GemstoneRepository >> conflictCheckingStrategy [
+GemStoneRepository >> conflictCheckingStrategy [
 
 	^ conflictCheckingStrategy
 ]
 
 { #category : 'querying' }
-GemstoneRepository >> countMatching: aCriteriaOrBlockClosure [
+GemStoneRepository >> countMatching: aCriteriaOrBlockClosure [
 
 	^ contents count: ( self asMatchingCriteria: aCriteriaOrBlockClosure )
 ]
 
 { #category : 'querying' }
-GemstoneRepository >> findAll [
+GemStoneRepository >> findAll [
 
 	^ contents copy
 ]
 
 { #category : 'querying' }
-GemstoneRepository >> findAllMatching: aCriteriaOrBlock [
+GemStoneRepository >> findAllMatching: aCriteriaOrBlock [
 
 	^ contents select: ( self asMatchingCriteria: aCriteriaOrBlock )
 ]
 
 { #category : 'querying' }
-GemstoneRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction [
+GemStoneRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction [
 
 	^ ( self findAllMatching: aCriteriaOrBlock ) sorted: aSortFunction
 ]
 
 { #category : 'initialization' }
-GemstoneRepository >> initializeCheckingConflictsAccordingTo: aConflictCheckingStrategy [
+GemStoneRepository >> initializeCheckingConflictsAccordingTo: aConflictCheckingStrategy [
 
 	conflictCheckingStrategy := aConflictCheckingStrategy.
 	contents := OrderedCollection new
 ]
 
 { #category : 'private - accessing' }
-GemstoneRepository >> matchingCriteriaBuilder [
+GemStoneRepository >> matchingCriteriaBuilder [
 
-	^ GemstoneRepositoryMatchingCriteriaBuilder new
+	^ GemStoneRepositoryMatchingCriteriaBuilder new
 ]
 
 { #category : 'private - management' }
-GemstoneRepository >> purgeAfterCheckingInclusion: aDomainObject [
+GemStoneRepository >> purgeAfterCheckingInclusion: aDomainObject [
 
 	contents remove: aDomainObject ifAbsent: [
 		DataInconsistencyFound signal:
@@ -87,32 +87,32 @@ GemstoneRepository >> purgeAfterCheckingInclusion: aDomainObject [
 ]
 
 { #category : 'management' }
-GemstoneRepository >> purgeAllMatching: aCriteriaOrBlock [
+GemStoneRepository >> purgeAllMatching: aCriteriaOrBlock [
 
 	contents := contents reject: ( self asMatchingCriteria: aCriteriaOrBlock )
 ]
 
 { #category : 'private - management' }
-GemstoneRepository >> storeAfterCheckingConflicts: aDomainObject [
+GemStoneRepository >> storeAfterCheckingConflicts: aDomainObject [
 
 	contents add: aDomainObject.
 	^ aDomainObject
 ]
 
 { #category : 'management' }
-GemstoneRepository >> transact: aBlock [
+GemStoneRepository >> transact: aBlock [
 
 	^ aBlock value
 ]
 
 { #category : 'management' }
-GemstoneRepository >> update: aMutableDomainObject executing: aBlock [
+GemStoneRepository >> update: aMutableDomainObject executing: aBlock [
 
 	aBlock value: aMutableDomainObject
 ]
 
 { #category : 'private - management' }
-GemstoneRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
+GemStoneRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
 
 	self purgeAfterCheckingInclusion: aDomainObject.
 	[ aDomainObject synchronizeWith: anUpdatedDomainObject ] ensure: [
@@ -121,7 +121,7 @@ GemstoneRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdate
 ]
 
 { #category : 'querying' }
-GemstoneRepository >> withOneMatching: aCriteriaOrBlock do: foundBlock else: noneBlock [
+GemStoneRepository >> withOneMatching: aCriteriaOrBlock do: foundBlock else: noneBlock [
 
 	^ contents
 		  detect: ( self asMatchingCriteria: aCriteriaOrBlock )
@@ -130,7 +130,7 @@ GemstoneRepository >> withOneMatching: aCriteriaOrBlock do: foundBlock else: non
 ]
 
 { #category : 'querying' }
-GemstoneRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do: foundBlock else: noneBlock [
+GemStoneRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do: foundBlock else: noneBlock [
 
 	^ ( contents sorted: aSortFunction )
 		  detect: ( self asMatchingCriteria: aCriteriaOrBlock )
