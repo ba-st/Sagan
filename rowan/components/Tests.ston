@@ -7,7 +7,7 @@ RwSimpleProjectLoadComponentV2 {
   #packageNames : [
     'Sagan-Core-Tests',
     'Sagan-Kepler-Tests',
-    'Sagan-Gemstone-Tests'
+    'Sagan-GemStone-Tests'
   ],
   #conditionalPackageMapSpecs : {
     'gemstone' : {
@@ -15,7 +15,7 @@ RwSimpleProjectLoadComponentV2 {
         #packageNameToPlatformPropertiesMap : {
           'Sagan-Core-Tests' : { 'symbolDictName' : 'Sagan' },
           'Sagan-Kepler-Tests' : { 'symbolDictName' : 'Sagan' },
-          'Sagan-Gemstone-Tests' : { 'symbolDictName' : 'Sagan' }
+          'Sagan-GemStone-Tests' : { 'symbolDictName' : 'Sagan' }
         }
       }
     }
