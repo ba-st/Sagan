@@ -321,9 +321,10 @@ RepositoryBasedTest >> testStoreIdentical [
 	self extraterrestrials store: instance.
 
 	found := self extraterrestrials findAll.
-	self assert: found size equals: 2.
-	self assert: ( found allSatisfy: [ :extraterrestrial |
-			  extraterrestrial firstName = 'Silvester' and: [ extraterrestrial lastName = 'Stallone' ] ] )
+	self withTheOnlyOneIn: found do: [ :extraterrestrial |
+		self assert:
+			( extraterrestrial firstName = 'Silvester' and: [ extraterrestrial lastName = 'Stallone' ] )
+		]
 ]
 
 { #category : 'tests - conflict checking' }

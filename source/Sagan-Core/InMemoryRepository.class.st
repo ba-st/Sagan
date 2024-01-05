@@ -66,7 +66,7 @@ InMemoryRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction 
 InMemoryRepository >> initializeCheckingConflictsAccordingTo: aConflictCheckingStrategy [
 
 	conflictCheckingStrategy := aConflictCheckingStrategy.
-	contents := OrderedCollection new
+	contents := Set new
 ]
 
 { #category : 'private - accessing' }
