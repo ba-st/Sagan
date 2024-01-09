@@ -25,7 +25,7 @@ RepositoryBasedTest >> assertRepositoryIncludesSilvesterStallone [
 
 	self extraterrestrials
 		withOneMatching: [ :extraterrestrial |
-			extraterrestrial firstName = 'Silvester' and: [ extraterrestrial lastName = 'Stallone' ] ]
+			extraterrestrial firstName = 'Silvester' & ( extraterrestrial lastName = 'Stallone' ) ]
 		do: [ :extraterrestrial |
 			self assert:
 				( extraterrestrial firstName = 'Silvester' and: [ extraterrestrial lastName = 'Stallone' ] )
@@ -149,7 +149,7 @@ RepositoryBasedTest >> testAddLargeNumberOfObjects [
 					store: self ellaTravolta
 				]
 			]
-		notTakeMoreThanMilliseconds: 6000
+		notTakeMoreThanMilliseconds: self timeLimitInMillisecondsWhenAdding
 ]
 
 { #category : 'tests - querying' }
@@ -255,7 +255,7 @@ RepositoryBasedTest >> testFindAllMatchingWhenCollectionIsLarge [
 						  extraterrestrial firstName = 'Silvester' ] ) size
 				equals: 1000
 			]
-		notTakeMoreThanMilliseconds: 1000
+		notTakeMoreThanMilliseconds: self timeLimitInMillisecondsWhenQuerying
 ]
 
 { #category : 'tests - management' }
@@ -675,6 +675,18 @@ RepositoryBasedTest >> testWithOneMatchingSortedByDoElse [
 				assert: extraterrestrial firstName equals: 'John'
 			]
 		else: [ self fail ]
+]
+
+{ #category : 'private - accessing' }
+RepositoryBasedTest >> timeLimitInMillisecondsWhenAdding [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'private - accessing' }
+RepositoryBasedTest >> timeLimitInMillisecondsWhenQuerying [
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'tests - management' }

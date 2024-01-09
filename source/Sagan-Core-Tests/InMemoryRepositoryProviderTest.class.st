@@ -66,6 +66,18 @@ InMemoryRepositoryProviderTest >> testSpaceshipQueryingForZeroFirepower [
 		do: [ :spaceships | self assertCollection: spaceships hasSameElements: {solvalou} ]
 ]
 
+{ #category : 'private - accessing' }
+InMemoryRepositoryProviderTest >> timeLimitInMillisecondsWhenAdding [
+
+	^ 2000
+]
+
+{ #category : 'private - accessing' }
+InMemoryRepositoryProviderTest >> timeLimitInMillisecondsWhenQuerying [
+
+	^ 100
+]
+
 { #category : 'utility' }
 InMemoryRepositoryProviderTest >> withAllSpaceshipsMatching: aMatchingCriteria do: aOneArgBlock [
 

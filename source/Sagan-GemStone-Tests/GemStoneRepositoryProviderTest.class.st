@@ -62,6 +62,18 @@ GemStoneRepositoryProviderTest >> testSpaceshipQueryingForZeroFirepower [
 		do: [ :spaceships | self assertCollection: spaceships hasSameElements: { solvalou } ]
 ]
 
+{ #category : 'private - accessing' }
+GemStoneRepositoryProviderTest >> timeLimitInMillisecondsWhenAdding [
+
+	^ 2000
+]
+
+{ #category : 'private - accessing' }
+GemStoneRepositoryProviderTest >> timeLimitInMillisecondsWhenQuerying [
+
+	^ 100
+]
+
 { #category : 'utility' }
 GemStoneRepositoryProviderTest >> withAllSpaceshipsMatching: aMatchingCriteria do: aOneArgBlock [
 

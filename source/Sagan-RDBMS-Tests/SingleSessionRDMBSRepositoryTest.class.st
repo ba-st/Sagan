@@ -89,41 +89,34 @@ SingleSessionRDMBSRepositoryTest class >> useP3Driver [
 { #category : 'initialization' }
 SingleSessionRDMBSRepositoryTest >> configureSpaceshipMappings [
 
-	ships
-		configureMappingsIn: [ :rdbmsRepository | 
-			rdbmsRepository
-				beAwareOfTableDefinedBy:
-					( RealTableDefinition
-						named: 'Spaceship'
-						fieldsDefinedBy:
-							{SequentialNumberFieldDefinition new.
-							( CharacterFieldDefinition named: 'name' sized: 100 ).
-							( DecimalFieldDefinition nullableNamed: 'firepower' )} );
-				beAwareOfClassModelDefinedBy:
-					( ClassModelDefinition
-						for: Spaceship
-						attributesDefinedBy:
-							{( BasicAttributeDefinition named: RDBMSConstants sequentialNumberAttribute ).
-							( BasicAttributeDefinition named: #name ).
-							( BasicAttributeDefinition named: #firepower )} );
-				beAwareOfDescriptorDefinedBy:
-					( ConcreteDescriptorDefinition
-						for: Spaceship
-						onTableNamed: 'Spaceship'
-						mappingsDefinedBy:
-							{( SequentialNumberMappingDefinition onTableNamed: 'Spaceship' ).
-							( DirectMappingDefinition
-								fromAttributeNamed: #name
-								toFieldNamed: 'name'
-								onTableNamed: 'Spaceship' ).
-							( AdHocMappingDefinition
-								forNullableAttributeNamed: #firepower
-								toMapSingleAssociationTo: 'firepower'
-								on: 'Spaceship'
-								convertingFromDatabaseToSmalltalkUsing: [ :number | number asFloat ]
-								fromSmalltalkToDatabaseUsing: [ :number | number asScaledDecimal ]
-								consideringNullAs: Spaceship unlimitedFirepower )} )
-			]
+	ships configureMappingsIn: [ :rdbmsRepository |
+		rdbmsRepository
+			beAwareOfTableDefinedBy: ( RealTableDefinition
+					  named: 'Spaceship'
+					  fieldsDefinedBy: {
+							  SequentialNumberFieldDefinition new.
+							  ( CharacterFieldDefinition named: 'name' sized: 100 ).
+							  ( DecimalFieldDefinition nullableNamed: 'firepower' ) }
+					  indexesDefinedBy: { ( IndexDefinition forFieldNamed: 'name' ) } );
+			beAwareOfClassModelDefinedBy: ( ClassModelDefinition for: Spaceship attributesDefinedBy: {
+							  ( BasicAttributeDefinition named: RDBMSConstants sequentialNumberAttribute ).
+							  ( BasicAttributeDefinition named: #name ).
+							  ( BasicAttributeDefinition named: #firepower ) } );
+			beAwareOfDescriptorDefinedBy:
+				( ConcreteDescriptorDefinition for: Spaceship onTableNamed: 'Spaceship' mappingsDefinedBy: {
+							  ( SequentialNumberMappingDefinition onTableNamed: 'Spaceship' ).
+							  ( DirectMappingDefinition
+								    fromAttributeNamed: #name
+								    toFieldNamed: 'name'
+								    onTableNamed: 'Spaceship' ).
+							  ( AdHocMappingDefinition
+								    forNullableAttributeNamed: #firepower
+								    toMapSingleAssociationTo: 'firepower'
+								    on: 'Spaceship'
+								    convertingFromDatabaseToSmalltalkUsing: [ :number | number asFloat ]
+								    fromSmalltalkToDatabaseUsing: [ :number | number asScaledDecimal ]
+								    consideringNullAs: Spaceship unlimitedFirepower ) } )
+		]
 ]
 
 { #category : 'utility' }
@@ -245,6 +238,18 @@ SingleSessionRDMBSRepositoryTest >> testSpaceshipQueryingForZeroFirepower [
 	self
 		withAllSpaceshipsMatching: [ :spaceship :builder | builder satisfyingAny: {( spaceship firepower = 0 )} ]
 		do: [ :spaceships | self assertCollection: spaceships hasSameElements: {solvalou} ]
+]
+
+{ #category : 'private - accessing' }
+SingleSessionRDMBSRepositoryTest >> timeLimitInMillisecondsWhenAdding [
+
+	^ 5500
+]
+
+{ #category : 'private - accessing' }
+SingleSessionRDMBSRepositoryTest >> timeLimitInMillisecondsWhenQuerying [
+
+	^ 50
 ]
 
 { #category : 'utility' }

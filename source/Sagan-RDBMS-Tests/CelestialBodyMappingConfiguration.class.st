@@ -67,14 +67,15 @@ CelestialBodyMappingConfiguration >> celestialBodyDescriptorDefinition [
 CelestialBodyMappingConfiguration >> celestialBodyTableDefinition [
 
 	^ RealTableDefinition
-		named: self celestialBodyTableName
-		fieldsDefinedBy:
-			{SequentialNumberFieldDefinition new.
-			( CharacterFieldDefinition named: 'name' sized: 100 ).
-			( CharacterFieldDefinition named: 'planetary_system' sized: 100 ).
-			( DecimalFieldDefinition named: 'x' ).
-			( DecimalFieldDefinition named: 'y' ).
-			( DecimalFieldDefinition named: 'z' )}
+		  named: self celestialBodyTableName
+		  fieldsDefinedBy: {
+				  SequentialNumberFieldDefinition new.
+				  ( CharacterFieldDefinition named: 'name' sized: 100 ).
+				  ( CharacterFieldDefinition named: 'planetary_system' sized: 100 ).
+				  ( DecimalFieldDefinition named: 'x' ).
+				  ( DecimalFieldDefinition named: 'y' ).
+				  ( DecimalFieldDefinition named: 'z' ) }
+		  indexesDefinedBy: { ( IndexDefinition forFieldNamed: 'name' ) }
 ]
 
 { #category : 'private - accessing' }
