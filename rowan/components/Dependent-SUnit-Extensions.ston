@@ -6,6 +6,6 @@ RwSimpleProjectLoadComponentV2 {
   ],
   #projectNames : [
     'Kepler'
-  ]
+  ],
   #packageNames : [ ]
 }
