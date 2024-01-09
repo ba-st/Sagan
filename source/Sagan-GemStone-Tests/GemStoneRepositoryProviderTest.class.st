@@ -70,13 +70,13 @@ GemStoneRepositoryProviderTest >> testSpaceshipQueryingForZeroFirepower [
 { #category : 'private - accessing' }
 GemStoneRepositoryProviderTest >> timeLimitInMillisecondsWhenAdding [
 
-	^ 2000
+	^ 200
 ]
 
 { #category : 'private - accessing' }
 GemStoneRepositoryProviderTest >> timeLimitInMillisecondsWhenQuerying [
 
-	^ 100
+	^ 3
 ]
 
 { #category : 'utility' }
