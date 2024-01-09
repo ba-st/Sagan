@@ -136,6 +136,22 @@ RepositoryBasedTest >> sistineStallone [
 	^ self extraterrestrialNamedFirst: 'Sistine' last: 'Stallone' bornOn: (Date year: 1998 month: 6 day: 27)
 ]
 
+{ #category : 'tests - management' }
+RepositoryBasedTest >> testAddLargeNumberOfObjects [
+
+	self
+		should: [
+			1000 timesRepeat: [
+				self extraterrestrials
+					store: self johnTravolta;
+					store: self johnLock;
+					store: self silvesterStallone;
+					store: self ellaTravolta
+				]
+			]
+		notTakeMoreThan: 6 seconds
+]
+
 { #category : 'tests - querying' }
 RepositoryBasedTest >> testCountMatching [
 
@@ -226,6 +242,20 @@ RepositoryBasedTest >> testFindAllMatchingSortedByBirthDate [
 		assert: sorted second firstName equals: 'Silvester';
 		assert: sorted last lastName equals: 'Travolta';
 		assert: sorted last firstName equals: 'John'
+]
+
+{ #category : 'tests - querying' }
+RepositoryBasedTest >> testFindAllMatchingWhenCollectionIsLarge [
+
+	self testAddLargeNumberOfObjects.
+	self
+		should: [
+			self
+				assert: ( self extraterrestrials findAllMatching: [ :extraterrestrial |
+						  extraterrestrial firstName = 'Silvester' ] ) size
+				equals: 1000
+			]
+		notTakeMoreThan: 1 second
 ]
 
 { #category : 'tests - management' }
