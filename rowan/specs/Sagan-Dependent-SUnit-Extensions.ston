@@ -1,0 +1,12 @@
+RwLoadSpecificationV2 {
+  #specName: 'Sagan-Dependent-SUnit-Extensions',
+  #projectName : 'Sagan',
+  #diskUrl : 'Sagan',
+  #projectSpecFile : 'rowan/project.ston',
+  #componentNames : [
+      'Dependent-SUnit-Extensions'
+  ],
+  #customConditionalAttributes : [
+    'sunit'
+  ]
+}
