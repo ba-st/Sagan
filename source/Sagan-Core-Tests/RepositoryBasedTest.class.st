@@ -149,7 +149,7 @@ RepositoryBasedTest >> testAddLargeNumberOfObjects [
 					store: self ellaTravolta
 				]
 			]
-		notTakeMoreThan: 6 seconds
+		notTakeMoreThanMilliseconds: 6000
 ]
 
 { #category : 'tests - querying' }
@@ -255,7 +255,7 @@ RepositoryBasedTest >> testFindAllMatchingWhenCollectionIsLarge [
 						  extraterrestrial firstName = 'Silvester' ] ) size
 				equals: 1000
 			]
-		notTakeMoreThan: 1 second
+		notTakeMoreThanMilliseconds: 1000
 ]
 
 { #category : 'tests - management' }
