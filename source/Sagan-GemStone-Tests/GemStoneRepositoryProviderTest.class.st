@@ -11,6 +11,11 @@ GemStoneRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy
 	extraterrestrials := GemStoneRepositoryProvider new
 		                     createRepositoryStoringObjectsOfType: Extraterrestrial
 		                     checkingConflictsAccordingTo: aConflictCheckingStrategy.
+	extraterrestrials configureWith: [ :repository |
+		repository
+			index: 'firstName' byEqualityWithType: String;
+			index: 'lastName' byEqualityWithType: String
+		].
 	ships := GemStoneRepositoryProvider new
 		         createRepositoryStoringObjectsOfType: Spaceship
 		         checkingConflictsAccordingTo: aConflictCheckingStrategy

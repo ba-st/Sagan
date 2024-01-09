@@ -9,7 +9,7 @@ Class {
 ExtraterrestialRaceMappingConfiguration >> cull: aRepository [
 
 	aRepository
-		configureMappingsIn: [ :repository | 
+		configureWith: [ :repository | 
 			repository
 				beAwareOfClassModelDefinedBy: self extraterrestialRaceClassModelDefinition;
 				beAwareOfDescriptorDefinedBy: self extraterrestialRaceDescriptorDefinition;

@@ -88,7 +88,7 @@ CelestialBodyMappingConfiguration >> celestialBodyTableName [
 CelestialBodyMappingConfiguration >> cull: aRepository [
 
 	aRepository
-		configureMappingsIn: [ :repository | 
+		configureWith: [ :repository | 
 			repository
 				beAwareOfClassModelDefinedBy: self celestialBodyClassDefinition;
 				beAwareOfDescriptorDefinedBy: self celestialBodyDescriptorDefinition;

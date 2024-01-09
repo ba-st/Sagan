@@ -33,7 +33,7 @@ GalacticCoordinatesMappingConfiguration class >> zCoordinateFieldName [
 GalacticCoordinatesMappingConfiguration >> cull: aRepository [
 
 	aRepository
-		configureMappingsIn: [ :repository | 
+		configureWith: [ :repository | 
 			repository
 				beAwareOfClassModelDefinedBy: self galacticCoordinatesClassDefinition;
 				beAwareOfTableDefinedBy: self galacticCoordinatesTableDefinition;

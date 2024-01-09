@@ -8,7 +8,7 @@ Class {
 { #category : 'applying' }
 ExtraterrestrialMappingConfiguration >> cull: aRepository [
 
-	aRepository configureMappingsIn: [ :rdbmsRepository |
+	aRepository configureWith: [ :rdbmsRepository |
 		rdbmsRepository
 			beAwareOfTableDefinedBy: ( RealTableDefinition
 					  named: 'Extraterrestrial'

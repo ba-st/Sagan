@@ -27,9 +27,9 @@ GemStoneRepository class >> withoutCheckingConflicts [
 ]
 
 { #category : 'configuring' }
-GemStoneRepository >> configureMappingsIn: aBlock [
+GemStoneRepository >> configureWith: aBlock [
 
-	
+	aBlock cull: self
 ]
 
 { #category : 'private - accessing' }
@@ -60,6 +60,14 @@ GemStoneRepository >> findAllMatching: aCriteriaOrBlock [
 GemStoneRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction [
 
 	^ ( self findAllMatching: aCriteriaOrBlock ) sorted: aSortFunction
+]
+
+{ #category : 'configuring' }
+GemStoneRepository >> index: aPath byEqualityWithType: aType [
+
+	GsIndexSpec new
+		equalityIndex: ('each.<1s>' expandMacrosWith: aPath) lastElementClass: aType;
+		createIndexesOn: contents
 ]
 
 { #category : 'initialization' }

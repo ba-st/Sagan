@@ -27,7 +27,7 @@ InMemoryRepository class >> withoutCheckingConflicts [
 ]
 
 { #category : 'configuring' }
-InMemoryRepository >> configureMappingsIn: aBlock [
+InMemoryRepository >> configureWith: aBlock [
 
 	
 ]

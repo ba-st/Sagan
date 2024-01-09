@@ -22,7 +22,7 @@ PooledRDBMSRepositoryProviderTest >> assertFleetOf: aMothership isEquivalentToFl
 { #category : 'private - configuring' }
 PooledRDBMSRepositoryProviderTest >> configureMothershipMappings [
 
-	ships configureMappingsIn: [ :rdbmsRepository |
+	ships configureWith: [ :rdbmsRepository |
 		rdbmsRepository
 			beAwareOfTableDefinedBy: ( RealTableDefinition named: 'Mothership' fieldsDefinedBy: {
 							  SequentialNumberFieldDefinition new.

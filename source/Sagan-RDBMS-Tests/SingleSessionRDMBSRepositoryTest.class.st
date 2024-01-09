@@ -89,7 +89,7 @@ SingleSessionRDMBSRepositoryTest class >> useP3Driver [
 { #category : 'initialization' }
 SingleSessionRDMBSRepositoryTest >> configureSpaceshipMappings [
 
-	ships configureMappingsIn: [ :rdbmsRepository |
+	ships configureWith: [ :rdbmsRepository |
 		rdbmsRepository
 			beAwareOfTableDefinedBy: ( RealTableDefinition
 					  named: 'Spaceship'

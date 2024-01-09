@@ -20,36 +20,36 @@ RDBMSRepository class >> storingObjectsOfType: aDomainObjectClass checkingConfli
 		workingWith: aSessionProvider
 ]
 
-{ #category : 'mappings' }
+{ #category : 'configuring' }
 RDBMSRepository >> beAwareOfClassModelDefinedBy: aClassModelDefinition [
 
 	sessionProvider
 		withConfigurationSessionDo: [ :session | session system addClassModelDefinedBy: aClassModelDefinition ]
 ]
 
-{ #category : 'mappings' }
+{ #category : 'configuring' }
 RDBMSRepository >> beAwareOfDescriptorDefinedBy: aDescriptorDefinition [
 
 	sessionProvider
 		withConfigurationSessionDo: [ :session | session system addDescriptorDefinedBy: aDescriptorDefinition ]
 ]
 
-{ #category : 'mappings' }
+{ #category : 'configuring' }
 RDBMSRepository >> beAwareOfTableDefinedBy: aTableDefinition [
 
 	sessionProvider
 		withConfigurationSessionDo: [ :session | session system addTableDefinedBy: aTableDefinition ]
 ]
 
-{ #category : 'mappings' }
+{ #category : 'configuring' }
 RDBMSRepository >> beAwareOfTypeResolverDefinedBy: aTypeResolverDefinition [
 
 	sessionProvider
 		withConfigurationSessionDo: [ :session | session system addTypeResolverDefinedBy: aTypeResolverDefinition ]
 ]
 
-{ #category : 'mappings' }
-RDBMSRepository >> configureMappingsIn: aBlock [
+{ #category : 'configuring' }
+RDBMSRepository >> configureWith: aBlock [
 
 	aBlock cull: self
 ]
