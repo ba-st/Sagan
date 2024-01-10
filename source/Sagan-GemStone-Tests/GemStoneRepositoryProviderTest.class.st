@@ -13,8 +13,8 @@ GemStoneRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy
 		                     checkingConflictsAccordingTo: aConflictCheckingStrategy.
 	extraterrestrials configureWith: [ :repository |
 		repository
-			index: 'firstName' byEqualityWithType: String;
-			index: 'lastName' byEqualityWithType: String
+			indexByEquality: 'firstName' typed: String;
+			indexByEquality: 'lastName' typed: String
 		].
 	ships := GemStoneRepositoryProvider new
 		         createRepositoryStoringObjectsOfType: Spaceship
@@ -65,6 +65,29 @@ GemStoneRepositoryProviderTest >> testSpaceshipQueryingForZeroFirepower [
 		withAllSpaceshipsMatching: [ :spaceship :builder |
 		builder satisfyingAny: { ( spaceship firepower = 0 ) } ]
 		do: [ :spaceships | self assertCollection: spaceships hasSameElements: { solvalou } ]
+]
+
+{ #category : 'tests' }
+GemStoneRepositoryProviderTest >> testSpaceshipWhenUsingIdentityIndex [
+
+	| solvalou anotherSolvalou zeodalley |
+
+	self setUpRepositoryWithNoConflictChecking.
+	ships configureWith: [ :repository | repository indexByIdentity: 'name' ].
+
+	solvalou := Spaceship withoutFirepowerNamed: 'Solvalou'.
+	anotherSolvalou := Spaceship withoutFirepowerNamed: 'Solvalou'.
+	zeodalley := Spaceship withoutFirepowerNamed: 'Zeodalley'.
+
+	ships store: solvalou.
+	ships store: anotherSolvalou.
+	ships store: zeodalley.
+
+	self withAllSpaceshipsMatching: [ :spaceship | spaceship name = 'Solvalou' ] do: [ :spaceships |
+		self assertCollection: spaceships hasSameElements: {
+				solvalou.
+				anotherSolvalou }
+		]
 ]
 
 { #category : 'private - accessing' }

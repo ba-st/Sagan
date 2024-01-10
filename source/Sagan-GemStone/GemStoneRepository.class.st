@@ -63,10 +63,20 @@ GemStoneRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction 
 ]
 
 { #category : 'configuring' }
-GemStoneRepository >> index: aPath byEqualityWithType: aType [
+GemStoneRepository >> indexByEquality: aPath typed: aType [
 
 	GsIndexSpec new
-		equalityIndex: ('each.<1s>' expandMacrosWith: aPath) lastElementClass: aType;
+		equalityIndex: ( 'each.<1s>' expandMacrosWith: aPath )
+		lastElementClass: aType
+		options: self saganGemStoneIndexOptions;
+		createIndexesOn: contents
+]
+
+{ #category : 'configuring' }
+GemStoneRepository >> indexByIdentity: aPath [
+
+	GsIndexSpec new
+		identityIndex: ( 'each.<1s>' expandMacrosWith: aPath ) options: self saganGemStoneIndexOptions;
 		createIndexesOn: contents
 ]
 
@@ -98,6 +108,13 @@ GemStoneRepository >> purgeAfterCheckingInclusion: aDomainObject [
 GemStoneRepository >> purgeAllMatching: aCriteriaOrBlock [
 
 	contents := contents reject: ( self asMatchingCriteria: aCriteriaOrBlock )
+]
+
+{ #category : 'private - accessing' }
+GemStoneRepository >> saganGemStoneIndexOptions [
+
+	^ GsIndexOptions btreePlusIndex + GsIndexOptions optimizedComparison
+	  + GsIndexOptions reducedConflict
 ]
 
 { #category : 'private - management' }
