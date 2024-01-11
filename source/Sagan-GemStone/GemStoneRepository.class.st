@@ -62,14 +62,6 @@ GemStoneRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction 
 	^ ( self findAllMatching: aCriteriaOrBlock ) sorted: aSortFunction
 ]
 
-{ #category : 'querying' }
-GemStoneRepository >> findApplying: aQueryString [
-
-	^ ( GsQuery fromString: aQueryString )
-		  on: contents;
-		  queryResult
-]
-
 { #category : 'configuring' }
 GemStoneRepository >> indexByEquality: aPath typed: aType [
 
@@ -169,4 +161,12 @@ GemStoneRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction 
 		  detect: ( self asMatchingCriteria: aCriteriaOrBlock )
 		  ifFound: foundBlock
 		  ifNone: noneBlock
+]
+
+{ #category : 'querying' }
+GemStoneRepository >> withQueryFrom: aQueryString do: aBlock [
+
+	^ aBlock value: ( ( GsQuery fromString: aQueryString )
+			    on: contents;
+			    yourself )
 ]

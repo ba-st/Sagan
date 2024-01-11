@@ -22,7 +22,7 @@ GemStoneRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy
 ]
 
 { #category : 'tests' }
-GemStoneRepositoryProviderTest >> testFindApplyingWhenCollectionIsLarge [
+GemStoneRepositoryProviderTest >> testQueryingWhenCollectionIsLargeAndIndexed [
 
 	4 timesRepeat: [
 		1000 timesRepeat: [
@@ -43,15 +43,20 @@ GemStoneRepositoryProviderTest >> testFindApplyingWhenCollectionIsLarge [
 		].
 	self
 		should: [
-			self
-				assert: ( self extraterrestrials findApplying: 'each.firstName = ''Silvester''' ) size
-				equals: 4
+			self extraterrestrials withQueryFrom: 'each.firstName = ''Silvester''' do: [ :query |
+				self assert: query size equals: 4.
+				query do: [ :extraterrestrial |
+					self
+						assert: extraterrestrial firstName equals: 'Silvester';
+						assert: extraterrestrial lastName equals: 'Stallone'
+					]
+				]
 			]
 		notTakeMoreThanMilliseconds: 1
 ]
 
 { #category : 'tests' }
-GemStoneRepositoryProviderTest >> testFindApplyingWhenCollectionIsLargeAndNotIndexed [
+GemStoneRepositoryProviderTest >> testQueryingWhenCollectionIsLargeButNotIndexed [
 
 	| notIndexed |
 
@@ -76,9 +81,18 @@ GemStoneRepositoryProviderTest >> testFindApplyingWhenCollectionIsLargeAndNotInd
 				store: self ellaTravolta
 			]
 		].
+
 	self
 		should: [
-		self assert: ( notIndexed findApplying: 'each.firstName = ''Silvester''' ) size equals: 4 ]
+			notIndexed withQueryFrom: 'each.firstName = ''Silvester''' do: [ :query |
+				self assert: query size equals: 4.
+				query do: [ :extraterrestrial |
+					self
+						assert: extraterrestrial firstName equals: 'Silvester';
+						assert: extraterrestrial lastName equals: 'Stallone'
+					]
+				]
+			]
 		notTakeMoreThanMilliseconds: 17
 ]
 
@@ -148,6 +162,27 @@ GemStoneRepositoryProviderTest >> testSpaceshipWhenUsingIdentityIndex [
 		self assertCollection: spaceships hasSameElements: {
 				solvalou.
 				anotherSolvalou }
+		]
+]
+
+{ #category : 'tests' }
+GemStoneRepositoryProviderTest >> testStreamQueryResults [
+
+	self extraterrestrials
+		store: self johnTravolta;
+		store: self johnLock;
+		store: self ellaTravolta;
+		store: self silvesterStallone.
+
+	self extraterrestrials withQueryFrom: 'each.firstName = ''Silvester''' do: [ :query |
+		| stream extraterrestrial |
+
+		stream := query readStream.
+		extraterrestrial := stream next.
+		self
+			assert: extraterrestrial firstName equals: 'Silvester';
+			assert: extraterrestrial lastName equals: 'Stallone'.
+		self assert: stream atEnd
 		]
 ]
 
