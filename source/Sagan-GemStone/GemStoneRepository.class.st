@@ -62,6 +62,14 @@ GemStoneRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction 
 	^ ( self findAllMatching: aCriteriaOrBlock ) sorted: aSortFunction
 ]
 
+{ #category : 'querying' }
+GemStoneRepository >> findApplying: aQueryString [
+
+	^ ( GsQuery fromString: aQueryString )
+		  on: contents;
+		  queryResult
+]
+
 { #category : 'configuring' }
 GemStoneRepository >> indexByEquality: aPath typed: aType [
 
@@ -84,7 +92,7 @@ GemStoneRepository >> indexByIdentity: aPath [
 GemStoneRepository >> initializeCheckingConflictsAccordingTo: aConflictCheckingStrategy [
 
 	conflictCheckingStrategy := aConflictCheckingStrategy.
-	contents := Set new
+	contents := RcIdentitySet new
 ]
 
 { #category : 'private - accessing' }

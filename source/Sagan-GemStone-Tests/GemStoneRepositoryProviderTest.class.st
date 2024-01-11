@@ -22,6 +22,67 @@ GemStoneRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy
 ]
 
 { #category : 'tests' }
+GemStoneRepositoryProviderTest >> testFindApplyingWhenCollectionIsLarge [
+
+	4 timesRepeat: [
+		1000 timesRepeat: [
+			self extraterrestrials
+				store: self johnTravolta;
+				store: self johnLock;
+				store: self ellaTravolta
+			].
+
+		self extraterrestrials store: self silvesterStallone.
+
+		1000 timesRepeat: [
+			self extraterrestrials
+				store: self johnTravolta;
+				store: self johnLock;
+				store: self ellaTravolta
+			]
+		].
+	self
+		should: [
+			self
+				assert: ( self extraterrestrials findApplying: 'each.firstName = ''Silvester''' ) size
+				equals: 4
+			]
+		notTakeMoreThanMilliseconds: 1
+]
+
+{ #category : 'tests' }
+GemStoneRepositoryProviderTest >> testFindApplyingWhenCollectionIsLargeAndNotIndexed [
+
+	| notIndexed |
+
+	notIndexed := GemStoneRepositoryProvider new
+		              createRepositoryStoringObjectsOfType: Extraterrestrial
+		              checkingConflictsAccordingTo: DoNotCheckForConflictsStrategy new.
+
+	4 timesRepeat: [
+		1000 timesRepeat: [
+			notIndexed
+				store: self johnTravolta;
+				store: self johnLock;
+				store: self ellaTravolta
+			].
+
+		notIndexed store: self silvesterStallone.
+
+		1000 timesRepeat: [
+			notIndexed
+				store: self johnTravolta;
+				store: self johnLock;
+				store: self ellaTravolta
+			]
+		].
+	self
+		should: [
+		self assert: ( notIndexed findApplying: 'each.firstName = ''Silvester''' ) size equals: 4 ]
+		notTakeMoreThanMilliseconds: 17
+]
+
+{ #category : 'tests' }
 GemStoneRepositoryProviderTest >> testSpaceshipQueryingForPositiveFirepower [
 
 	| solvalou solgrado zeodalley |
