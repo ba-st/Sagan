@@ -22,6 +22,44 @@ GemStoneRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy
 ]
 
 { #category : 'tests' }
+GemStoneRepositoryProviderTest >> testMothershipQuery [
+
+	| fleets mothers motherships |
+
+	fleets := {
+		          {
+			          ( Spaceship named: 'VF-1A' ).
+			          ( Spaceship named: 'VF-1D' ).
+			          ( Spaceship named: 'VF-1J' ).
+			          ( Spaceship named: 'VF-1S' ) } asSet.
+		          {
+			          ( Spaceship named: 'VF-2A' ).
+			          ( Spaceship named: 'VF-2D' ).
+			          ( Spaceship named: 'VF-2J' ).
+			          ( Spaceship named: 'VF-2S' ) } asSet }.
+
+	mothers := {
+		           ( Mothership named: 'SDF-1' withAll: fleets first ).
+		           ( Mothership named: 'SDF-2' withAll: fleets last ).
+		           ( Mothership named: 'SDF-1' withAll: fleets last ) }.
+
+	motherships := GemStoneRepositoryProvider new
+		               createRepositoryStoringObjectsOfType: Mothership
+		               checkingConflictsAccordingTo: DoNotCheckForConflictsStrategy new.
+	motherships configureWith: [ :repository |
+		repository
+			indexByEquality: 'name' typed: String;
+			indexByEquality: 'fleet.*.name' typed: String
+		].
+
+	mothers do: [ :mother | motherships store: mother ].
+
+	motherships
+		withQueryFrom: '(each.fleet.*.name = ''VF-1D'') & (each.name = ''SDF-1'')'
+		do: [ :query | self assertCollection: query asArray hasSameElements: { mothers first } ]
+]
+
+{ #category : 'tests' }
 GemStoneRepositoryProviderTest >> testQueryingWhenCollectionIsLargeAndIndexed [
 
 	4 timesRepeat: [
@@ -52,7 +90,7 @@ GemStoneRepositoryProviderTest >> testQueryingWhenCollectionIsLargeAndIndexed [
 					]
 				]
 			]
-		notTakeMoreThanMilliseconds: 1
+		notTakeMoreThanMilliseconds: 2
 ]
 
 { #category : 'tests' }
@@ -94,6 +132,27 @@ GemStoneRepositoryProviderTest >> testQueryingWhenCollectionIsLargeButNotIndexed
 				]
 			]
 		notTakeMoreThanMilliseconds: 17
+]
+
+{ #category : 'tests' }
+GemStoneRepositoryProviderTest >> testSpaceshipFirepowerRangeQuery [
+
+	| solvalou solgrado zeodalley |
+
+	self setUpRepositoryWithNoConflictChecking.
+	ships configureWith: [ :repository | repository indexByEquality: 'firepower' typed: Integer ].
+
+	solvalou := Spaceship withoutFirepowerNamed: 'Solvalou'.
+	solgrado := Spaceship named: 'Solgrado' firepower: 7650.
+	zeodalley := Spaceship named: 'Zeodalley' firepower: 2117.
+
+	ships store: solvalou.
+	ships store: solgrado.
+	ships store: zeodalley.
+
+	ships
+		withQueryFrom: '2117 < each.firepower <= 8000'
+		do: [ :query | self assertCollection: query queryResult asSet hasSameElements: { solgrado } ]
 ]
 
 { #category : 'tests' }

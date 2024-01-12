@@ -166,7 +166,9 @@ GemStoneRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction 
 { #category : 'querying' }
 GemStoneRepository >> withQueryFrom: aQueryString do: aBlock [
 
-	^ aBlock value: ( ( GsQuery fromString: aQueryString )
+	^ aBlock value: ( ( GsQuery
+			      fromString: aQueryString
+			      options: GsQueryOptions default + GsQueryOptions cacheQueryResult )
 			    on: contents;
 			    yourself )
 ]
