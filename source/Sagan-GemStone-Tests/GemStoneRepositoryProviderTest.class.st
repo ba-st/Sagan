@@ -5,6 +5,19 @@ Class {
 	#package : 'Sagan-GemStone-Tests'
 }
 
+{ #category : 'utility' }
+GemStoneRepositoryProviderTest >> pickTwoElementsFrom: aQuery [
+
+	| chosen |
+
+	chosen := Set new.
+	aQuery do: [ :each |
+		chosen size >= 2 ifTrue: [ ^ chosen ].
+		chosen add: each
+		].
+	^ chosen
+]
+
 { #category : 'initialization' }
 GemStoneRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy [
 
@@ -22,41 +35,37 @@ GemStoneRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy
 ]
 
 { #category : 'tests' }
-GemStoneRepositoryProviderTest >> testMothershipQuery [
+GemStoneRepositoryProviderTest >> testQueryReturningBeforeAllIndexedResultsAreRead [
 
-	| fleets mothers motherships |
+	| one two three four five six seven |
 
-	fleets := {
-		          {
-			          ( Spaceship named: 'VF-1A' ).
-			          ( Spaceship named: 'VF-1D' ).
-			          ( Spaceship named: 'VF-1J' ).
-			          ( Spaceship named: 'VF-1S' ) } asSet.
-		          {
-			          ( Spaceship named: 'VF-2A' ).
-			          ( Spaceship named: 'VF-2D' ).
-			          ( Spaceship named: 'VF-2J' ).
-			          ( Spaceship named: 'VF-2S' ) } asSet }.
+	self setUpRepositoryWithNoConflictChecking.
+	ships configureWith: [ :repository | repository indexByEquality: 'firepower' typed: Integer ].
 
-	mothers := {
-		           ( Mothership named: 'SDF-1' withAll: fleets first ).
-		           ( Mothership named: 'SDF-2' withAll: fleets last ).
-		           ( Mothership named: 'SDF-1' withAll: fleets last ) }.
+	one := Spaceship named: 'one' firepower: 1001.
+	two := Spaceship named: 'two' firepower: 2002.
+	three := Spaceship named: 'three' firepower: 3003.
+	four := Spaceship named: 'four' firepower: 4004.
+	five := Spaceship named: 'five' firepower: 5005.
+	six := Spaceship named: 'six' firepower: 6006.
+	seven := Spaceship named: 'seven' firepower: 7007.
 
-	motherships := GemStoneRepositoryProvider new
-		               createRepositoryStoringObjectsOfType: Mothership
-		               checkingConflictsAccordingTo: DoNotCheckForConflictsStrategy new.
-	motherships configureWith: [ :repository |
-		repository
-			indexByEquality: 'name' typed: String;
-			indexByEquality: 'fleet.*.name' typed: String
-		].
+	ships
+		store: one;
+		store: two;
+		store: three;
+		store: four;
+		store: five;
+		store: six;
+		store: seven.
 
-	mothers do: [ :mother | motherships store: mother ].
+	ships withQueryFrom: '2001 <= each.firepower < 6000' do: [ :query |
+		| chosen |
 
-	motherships
-		withQueryFrom: '(each.fleet.*.name = ''VF-1D'') & (each.name = ''SDF-1'')'
-		do: [ :query | self assertCollection: query asArray hasSameElements: { mothers first } ]
+		chosen := self pickTwoElementsFrom: query.
+		self assert: chosen size equals: 2.
+		self assert: ( chosen allSatisfy: [ :each | each firepower between: 2000 and: 6000 - 1 ] )
+		]
 ]
 
 { #category : 'tests' }
@@ -132,6 +141,46 @@ GemStoneRepositoryProviderTest >> testQueryingWhenCollectionIsLargeButNotIndexed
 				]
 			]
 		notTakeMoreThanMilliseconds: 17
+]
+
+{ #category : 'tests' }
+GemStoneRepositoryProviderTest >> testSetValueQueryUsingSetValueIndex [
+
+	| fleets mothers motherships |
+
+	"Index paths that include collections, and the queries that use these indexes, are generally referred to as Set-valued indexes and queries for historical reasons, although any kind of indexable collection, not just Sets, may be used."
+
+	fleets := {
+		          {
+			          ( Spaceship named: 'VF-1A' ).
+			          ( Spaceship named: 'VF-1D' ).
+			          ( Spaceship named: 'VF-1J' ).
+			          ( Spaceship named: 'VF-1S' ) } asSet.
+		          {
+			          ( Spaceship named: 'VF-2A' ).
+			          ( Spaceship named: 'VF-2D' ).
+			          ( Spaceship named: 'VF-2J' ).
+			          ( Spaceship named: 'VF-2S' ) } asSet }.
+
+	mothers := {
+		           ( Mothership named: 'SDF-1' withAll: fleets first ).
+		           ( Mothership named: 'SDF-2' withAll: fleets last ).
+		           ( Mothership named: 'SDF-1' withAll: fleets last ) }.
+
+	motherships := GemStoneRepositoryProvider new
+		               createRepositoryStoringObjectsOfType: Mothership
+		               checkingConflictsAccordingTo: DoNotCheckForConflictsStrategy new.
+	motherships configureWith: [ :repository |
+		repository
+			indexByEquality: 'name' typed: String;
+			indexByEquality: 'fleet.*.name' typed: String
+		].
+
+	mothers do: [ :mother | motherships store: mother ].
+
+	motherships
+		withQueryFrom: '(each.fleet.*.name = ''VF-1D'') & (each.name = ''SDF-1'')'
+		do: [ :query | self assertCollection: query asArray hasSameElements: { mothers first } ]
 ]
 
 { #category : 'tests' }
