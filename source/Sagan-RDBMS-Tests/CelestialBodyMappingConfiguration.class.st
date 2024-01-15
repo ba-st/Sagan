@@ -75,7 +75,7 @@ CelestialBodyMappingConfiguration >> celestialBodyTableDefinition [
 				  ( DecimalFieldDefinition named: 'x' ).
 				  ( DecimalFieldDefinition named: 'y' ).
 				  ( DecimalFieldDefinition named: 'z' ) }
-		  indexesDefinedBy: {  }
+		  indexesDefinedBy: { ( IndexDefinition forFieldNamed: 'name' ) }
 ]
 
 { #category : 'private - accessing' }

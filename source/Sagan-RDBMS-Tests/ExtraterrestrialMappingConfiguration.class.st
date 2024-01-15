@@ -18,7 +18,10 @@ ExtraterrestrialMappingConfiguration >> cull: aRepository [
 							  ( CharacterFieldDefinition named: 'last_name' sized: 100 ).
 							  ( DateFieldDefinition named: 'birth_date' ).
 							  ( CharacterFieldDefinition named: 'race_name' sized: 100 ) }
-					  indexesDefinedBy: { } );
+					  indexesDefinedBy: {
+							  ( IndexDefinition forFieldNamed: 'first_name' ).
+							  ( IndexDefinition forFieldNamed: 'last_name' ).
+							  ( IndexDefinition forFieldsNamed: { 'first_name'. 'last_name' } ) } );
 			beAwareOfClassModelDefinedBy:
 				( ClassModelDefinition for: Extraterrestrial attributesDefinedBy: {
 							  ( BasicAttributeDefinition named: RDBMSConstants sequentialNumberAttribute ).

@@ -82,7 +82,7 @@ ExtraterrestialRaceMappingConfiguration >> extraterrestialRaceTableDefinition [
 		  fieldsDefinedBy: {
 				  SequentialNumberFieldDefinition new.
 				  ( CharacterFieldDefinition named: 'name' sized: 100 ) }
-		  indexesDefinedBy: { }
+		  indexesDefinedBy: { ( IndexDefinition forFieldNamed: 'name' ) }
 ]
 
 { #category : 'private - accessing' }

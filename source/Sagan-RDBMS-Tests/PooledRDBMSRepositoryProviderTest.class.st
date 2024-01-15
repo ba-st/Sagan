@@ -36,7 +36,7 @@ PooledRDBMSRepositoryProviderTest >> configureMothershipMappings [
 								    named: 'mother'
 								    toFieldNamed: RDBMSConstants sequentialNumberFieldName
 								    onTableNamed: 'MotherShip' ) }
-					  indexesDefinedBy: {} );
+					  indexesDefinedBy: { ( IndexDefinition forFieldNamed: 'name' ) } );
 			beAwareOfClassModelDefinedBy: ( ClassModelDefinition for: Mothership attributesDefinedBy: {
 							  ( BasicAttributeDefinition named: RDBMSConstants sequentialNumberAttribute ).
 							  ( BasicAttributeDefinition named: #name ).
