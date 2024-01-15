@@ -97,7 +97,7 @@ SingleSessionRDMBSRepositoryTest >> configureSpaceshipMappings [
 							  SequentialNumberFieldDefinition new.
 							  ( CharacterFieldDefinition named: 'name' sized: 100 ).
 							  ( DecimalFieldDefinition nullableNamed: 'firepower' ) }
-					  indexesDefinedBy: { ( IndexDefinition forFieldNamed: 'name' ) } );
+					  indexesDefinedBy: { } );
 			beAwareOfClassModelDefinedBy: ( ClassModelDefinition for: Spaceship attributesDefinedBy: {
 							  ( BasicAttributeDefinition named: RDBMSConstants sequentialNumberAttribute ).
 							  ( BasicAttributeDefinition named: #name ).
