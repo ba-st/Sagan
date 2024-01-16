@@ -434,18 +434,6 @@ PooledRDBMSRepositoryProviderTest >> testUpdateWithOutsideTransact [
 				findAllMatching: [ :extraterrestrial | extraterrestrial lastName = 'Stallone' ] ) isEmpty
 ]
 
-{ #category : 'private - accessing' }
-PooledRDBMSRepositoryProviderTest >> timeLimitInMillisecondsWhenAdding [
-
-	^ 5500
-]
-
-{ #category : 'private - accessing' }
-PooledRDBMSRepositoryProviderTest >> timeLimitInMillisecondsWhenQuerying [
-
-	^ 50
-]
-
 { #category : 'utility' }
 PooledRDBMSRepositoryProviderTest >> withShipNamedAs: aName do: aOneArgBlock [
 

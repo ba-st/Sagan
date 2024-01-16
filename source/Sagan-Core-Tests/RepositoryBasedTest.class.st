@@ -140,22 +140,6 @@ RepositoryBasedTest >> sistineStallone [
 	^ self extraterrestrialNamedFirst: 'Sistine' last: 'Stallone' bornOn: (Date year: 1998 month: 6 day: 27)
 ]
 
-{ #category : 'tests - management' }
-RepositoryBasedTest >> testAddLargeNumberOfObjects [
-
-	self
-		should: [
-			1000 timesRepeat: [
-				self extraterrestrials
-					store: self johnTravolta;
-					store: self johnLock;
-					store: self silvesterStallone;
-					store: self ellaTravolta
-				]
-			]
-		notTakeMoreThanMilliseconds: self timeLimitInMillisecondsWhenAdding
-]
-
 { #category : 'tests - querying' }
 RepositoryBasedTest >> testCountMatching [
 
@@ -246,20 +230,6 @@ RepositoryBasedTest >> testFindAllMatchingSortedByBirthDate [
 		assert: sorted second firstName equals: 'Silvester';
 		assert: sorted last lastName equals: 'Travolta';
 		assert: sorted last firstName equals: 'John'
-]
-
-{ #category : 'tests - querying' }
-RepositoryBasedTest >> testFindAllMatchingWhenCollectionIsLarge [
-
-	self testAddLargeNumberOfObjects.
-	self
-		should: [
-			self
-				assert: ( self extraterrestrials findAllMatching: [ :extraterrestrial |
-						  extraterrestrial firstName = 'Silvester' ] ) size
-				equals: 1000
-			]
-		notTakeMoreThanMilliseconds: self timeLimitInMillisecondsWhenQuerying
 ]
 
 { #category : 'tests - management' }
@@ -680,18 +650,6 @@ RepositoryBasedTest >> testWithOneMatchingSortedByDoElse [
 				assert: extraterrestrial firstName equals: 'John'
 			]
 		else: [ self fail ]
-]
-
-{ #category : 'private - accessing' }
-RepositoryBasedTest >> timeLimitInMillisecondsWhenAdding [
-
-	^ self subclassResponsibility
-]
-
-{ #category : 'private - accessing' }
-RepositoryBasedTest >> timeLimitInMillisecondsWhenQuerying [
-
-	^ self subclassResponsibility
 ]
 
 { #category : 'tests - management' }

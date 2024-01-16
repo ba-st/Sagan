@@ -294,18 +294,6 @@ GemStoneRepositoryProviderTest >> testStreamQueryResults [
 		]
 ]
 
-{ #category : 'private - accessing' }
-GemStoneRepositoryProviderTest >> timeLimitInMillisecondsWhenAdding [
-
-	^ 200
-]
-
-{ #category : 'private - accessing' }
-GemStoneRepositoryProviderTest >> timeLimitInMillisecondsWhenQuerying [
-
-	^ 3
-]
-
 { #category : 'utility' }
 GemStoneRepositoryProviderTest >> withAllSpaceshipsMatching: aMatchingCriteria do: aOneArgBlock [
 

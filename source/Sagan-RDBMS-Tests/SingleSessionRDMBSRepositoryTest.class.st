@@ -240,18 +240,6 @@ SingleSessionRDMBSRepositoryTest >> testSpaceshipQueryingForZeroFirepower [
 		do: [ :spaceships | self assertCollection: spaceships hasSameElements: {solvalou} ]
 ]
 
-{ #category : 'private - accessing' }
-SingleSessionRDMBSRepositoryTest >> timeLimitInMillisecondsWhenAdding [
-
-	^ 5500
-]
-
-{ #category : 'private - accessing' }
-SingleSessionRDMBSRepositoryTest >> timeLimitInMillisecondsWhenQuerying [
-
-	^ 50
-]
-
 { #category : 'utility' }
 SingleSessionRDMBSRepositoryTest >> withAllSpaceshipsMatching: aMatchingCriteria do: aOneArgBlock [
 
