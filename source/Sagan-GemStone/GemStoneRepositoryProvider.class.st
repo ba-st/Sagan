@@ -14,8 +14,8 @@ GemStoneRepositoryProvider >> createRepositoryStoringObjectsOfType: aBusinessObj
 
 { #category : 'controlling' }
 GemStoneRepositoryProvider >> destroyRepositories [
-	
-	" In memory all repositories are destroyed once the system is shut down "
+
+	IndexManager current removeAllIndexes
 ]
 
 { #category : 'controlling' }

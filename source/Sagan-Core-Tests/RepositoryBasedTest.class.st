@@ -24,11 +24,15 @@ RepositoryBasedTest class >> isAbstract [
 RepositoryBasedTest >> assertRepositoryIncludesSilvesterStallone [
 
 	self extraterrestrials
-		withOneMatching: [ :extraterrestrial |
-			extraterrestrial firstName = 'Silvester' & ( extraterrestrial lastName = 'Stallone' ) ]
+		withOneMatching: [ :extraterrestrial :criteria |
+			criteria
+				satisfying: extraterrestrial firstName = 'Silvester'
+				and: extraterrestrial lastName = 'Stallone'
+			]
 		do: [ :extraterrestrial |
-			self assert:
-				( extraterrestrial firstName = 'Silvester' and: [ extraterrestrial lastName = 'Stallone' ] )
+			self
+				assert: extraterrestrial firstName equals: 'Silvester';
+				assert: extraterrestrial lastName equals: 'Stallone'
 			]
 		else: [ self fail ]
 ]
@@ -352,8 +356,9 @@ RepositoryBasedTest >> testStoreIdentical [
 
 	found := self extraterrestrials findAll.
 	self withTheOnlyOneIn: found do: [ :extraterrestrial |
-		self assert:
-			( extraterrestrial firstName = 'Silvester' and: [ extraterrestrial lastName = 'Stallone' ] )
+		self
+			assert: extraterrestrial firstName equals: 'Silvester';
+			assert: extraterrestrial lastName equals: 'Stallone'
 		]
 ]
 
