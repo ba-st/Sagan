@@ -61,9 +61,7 @@ RDBMSSessionProvider >> retryAttempts [
 { #category : 'accessing' }
 RDBMSSessionProvider >> timeframeBetweenAttempts [
 
-	^ options
-		  at: #timeSlotBetweenConnectionRetriesInMs
-		  ifAbsent: [ Duration milliSeconds: 3000 ]
+	^ options at: #timeSlotBetweenConnectionRetriesInMs ifAbsent: [ Duration seconds: 3 ]
 ]
 
 { #category : 'enumerating' }

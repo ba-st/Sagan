@@ -8,12 +8,13 @@ Class {
 { #category : 'tests' }
 PooledRDBMSSessionProviderTest >> sessionProviderOptions [
 
-	^ [ :options | 
+	^ [ :options |
 	  options
 		  at: #logDatabaseEvents put: true;
 		  at: #maxActiveSessionsCount put: 1;
 		  at: #maxIdleSessionsCount put: 1;
-		  at: #minIdleSessionsCount put: 1
+		  at: #minIdleSessionsCount put: 1;
+		  at: #timeSlotBetweenConnectionRetriesInMs put: ( Duration seconds: 1 )
 	  ]
 ]
 
@@ -52,33 +53,7 @@ PooledRDBMSSessionProviderTest >> testHandleFailingLogin [
 ]
 
 { #category : 'tests' }
-PooledRDBMSSessionProviderTest >> testLogsInWhenSessionFirstUsed [
-
-	| sessionProvider |
-
-	self withLoggingAsserterDo: [ :asserter | 
-		asserter
-			runMemoryLoggerDuring: [ 
-				sessionProvider := PooledRDBMSSessionProvider
-					                   loginWith: self class login
-					                   configuredBy: self sessionProviderOptions
-				];
-			assertLogRecordsMatch: #( '[DEBUG] Glorp event received {"detail":"Login"}'
-				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
-				   '[DEBUG] Glorp event received {"detail":"Login"}'
-				   '[DEBUG] Glorp event received {"detail":"Login finished"}' ).
-
-		asserter
-			runMemoryLoggerDuring: [ sessionProvider withSessionDo: [ :session |  ] ];
-			assertLogRecordsMatch: #( '[DEBUG] Glorp event received {"detail":"Login"}'
-				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
-				   '[DEBUG] Glorp event received {"detail":"Login"}'
-				   '[DEBUG] Glorp event received {"detail":"Login finished"}' )
-		]
-]
-
-{ #category : 'tests' }
-PooledRDBMSSessionProviderTest >> testLogsInWhenSessionFoundedDisconnected [
+PooledRDBMSSessionProviderTest >> testLogsInWhenReusingSession [
 
 	| sessionProvider |
 
@@ -111,6 +86,32 @@ PooledRDBMSSessionProviderTest >> testLogsInWhenSessionFoundedDisconnected [
 				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
 				   '[DEBUG] Glorp event received {"detail":"Logout"}'
 				   '[DEBUG] Glorp event received {"detail":"Logout finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}' )
+		]
+]
+
+{ #category : 'tests' }
+PooledRDBMSSessionProviderTest >> testLogsInWhenSessionFirstUsed [
+
+	| sessionProvider |
+
+	self withLoggingAsserterDo: [ :asserter | 
+		asserter
+			runMemoryLoggerDuring: [ 
+				sessionProvider := PooledRDBMSSessionProvider
+					                   loginWith: self class login
+					                   configuredBy: self sessionProviderOptions
+				];
+			assertLogRecordsMatch: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}' ).
+
+		asserter
+			runMemoryLoggerDuring: [ sessionProvider withSessionDo: [ :session |  ] ];
+			assertLogRecordsMatch: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
 				   '[DEBUG] Glorp event received {"detail":"Login"}'
 				   '[DEBUG] Glorp event received {"detail":"Login finished"}' )
 		]
