@@ -27,7 +27,7 @@ RepositoryBasedTest >> assertRepositoryIncludesSilvesterStallone [
 		withOneMatching: [ :extraterrestrial :criteria |
 			criteria
 				satisfying: extraterrestrial firstName = 'Silvester'
-				and: extraterrestrial lastName = 'Stallone'
+				and: [ extraterrestrial lastName = 'Stallone' ]
 			]
 		do: [ :extraterrestrial |
 			self
