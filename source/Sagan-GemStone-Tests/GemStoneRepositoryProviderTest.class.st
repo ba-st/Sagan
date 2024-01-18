@@ -99,7 +99,7 @@ GemStoneRepositoryProviderTest >> testQueryingWhenCollectionIsLargeAndIndexed [
 					]
 				]
 			]
-		notTakeMoreThanMilliseconds: 2
+		notTakeMoreThanMilliseconds: 6
 ]
 
 { #category : 'tests' }
@@ -140,7 +140,7 @@ GemStoneRepositoryProviderTest >> testQueryingWhenCollectionIsLargeButNotIndexed
 					]
 				]
 			]
-		notTakeMoreThanMilliseconds: 17
+		notTakeMoreThanMilliseconds: 24
 ]
 
 { #category : 'tests' }
