@@ -19,70 +19,56 @@ PooledRDBMSRepositoryProviderTest >> assertFleetOf: aMothership isEquivalentToFl
 			]
 ]
 
-{ #category : 'private-configuring' }
+{ #category : 'private - configuring' }
 PooledRDBMSRepositoryProviderTest >> configureMothershipMappings [
 
-	ships
-		configureMappingsIn: [ :rdbmsRepository | 
-			rdbmsRepository
-				beAwareOfTableDefinedBy:
-					( RealTableDefinition
-						named: 'Mothership'
-						fieldsDefinedBy:
-							{SequentialNumberFieldDefinition new.
-							( CharacterFieldDefinition named: 'name' sized: 100 )} );
-				beAwareOfTableDefinedBy:
-					( RealTableDefinition
-						named: 'Spaceship'
-						fieldsDefinedBy:
-							{SequentialNumberFieldDefinition new.
-							( CharacterFieldDefinition named: 'name' sized: 100 ).
-							( ForeignKeyFieldDefinition
-								named: 'mother'
-								toFieldNamed: RDBMSConstants sequentialNumberFieldName
-								onTableNamed: 'MotherShip' )} );
-				beAwareOfClassModelDefinedBy:
-					( ClassModelDefinition
-						for: Mothership
-						attributesDefinedBy:
-							{( BasicAttributeDefinition named: RDBMSConstants sequentialNumberAttribute ).
-							( BasicAttributeDefinition named: #name ).
-							( TypedCollectionAttributeDefinition named: #fleet typed: Spaceship inCollectionOfType: Array )} );
-				beAwareOfClassModelDefinedBy:
-					( ClassModelDefinition
-						for: Spaceship
-						attributesDefinedBy:
-							{( BasicAttributeDefinition named: RDBMSConstants sequentialNumberAttribute ).
-							( BasicAttributeDefinition named: #name )} );
-				beAwareOfDescriptorDefinedBy:
-					( ConcreteDescriptorDefinition
-						for: Mothership
-						onTableNamed: 'Mothership'
-						mappingsDefinedBy:
-							{( SequentialNumberMappingDefinition onTableNamed: 'Mothership' ).
-							( DirectMappingDefinition
-								fromAttributeNamed: #name
-								toFieldNamed: 'name'
-								onTableNamed: 'Mothership' ).
-							( OneToManyTypedAttributeMappingDefinition
-								exclusiveForNonProxyAttributeNamed: #fleet
-								translatingFieldsUsing:
-									( TableFieldTranslationDefinition
-										translatingFieldNamed: RDBMSConstants sequentialNumberFieldName
-										onTableNamed: 'Mothership'
-										toFieldNamed: 'mother'
-										onTableNamed: 'Spaceship' ) )	"Must disable use of proxies in that last mapping otherwise some cases of update will break. See issue #40."} );
-				beAwareOfDescriptorDefinedBy:
-					( ConcreteDescriptorDefinition
-						for: Spaceship
-						onTableNamed: 'Spaceship'
-						mappingsDefinedBy:
-							{( SequentialNumberMappingDefinition onTableNamed: 'Spaceship' ).
-							( DirectMappingDefinition
-								fromAttributeNamed: #name
-								toFieldNamed: 'name'
-								onTableNamed: 'Spaceship' )} )
-			]
+	ships configureWith: [ :rdbmsRepository |
+		rdbmsRepository
+			beAwareOfTableDefinedBy: ( RealTableDefinition named: 'Mothership' fieldsDefinedBy: {
+							  SequentialNumberFieldDefinition new.
+							  ( CharacterFieldDefinition named: 'name' sized: 100 ) } );
+			beAwareOfTableDefinedBy: ( RealTableDefinition
+					  named: 'Spaceship'
+					  fieldsDefinedBy: {
+							  SequentialNumberFieldDefinition new.
+							  ( CharacterFieldDefinition named: 'name' sized: 100 ).
+							  ( ForeignKeyFieldDefinition
+								    named: 'mother'
+								    toFieldNamed: RDBMSConstants sequentialNumberFieldName
+								    onTableNamed: 'MotherShip' ) }
+					  indexesDefinedBy: { ( IndexDefinition forFieldNamed: 'name' ) } );
+			beAwareOfClassModelDefinedBy: ( ClassModelDefinition for: Mothership attributesDefinedBy: {
+							  ( BasicAttributeDefinition named: RDBMSConstants sequentialNumberAttribute ).
+							  ( BasicAttributeDefinition named: #name ).
+							  ( TypedCollectionAttributeDefinition
+								    named: #fleet
+								    typed: Spaceship
+								    inCollectionOfType: Array ) } );
+			beAwareOfClassModelDefinedBy: ( ClassModelDefinition for: Spaceship attributesDefinedBy: {
+							  ( BasicAttributeDefinition named: RDBMSConstants sequentialNumberAttribute ).
+							  ( BasicAttributeDefinition named: #name ) } );
+			beAwareOfDescriptorDefinedBy:
+				( ConcreteDescriptorDefinition for: Mothership onTableNamed: 'Mothership' mappingsDefinedBy: {
+							  ( SequentialNumberMappingDefinition onTableNamed: 'Mothership' ).
+							  ( DirectMappingDefinition
+								    fromAttributeNamed: #name
+								    toFieldNamed: 'name'
+								    onTableNamed: 'Mothership' ).
+							  ( OneToManyTypedAttributeMappingDefinition
+								    exclusiveForNonProxyAttributeNamed: #fleet
+								    translatingFieldsUsing: ( TableFieldTranslationDefinition
+										      translatingFieldNamed: RDBMSConstants sequentialNumberFieldName
+										      onTableNamed: 'Mothership'
+										      toFieldNamed: 'mother'
+										      onTableNamed: 'Spaceship' ) "Must disable use of proxies in that last mapping otherwise some cases of update will break. See issue #40." ) } );
+			beAwareOfDescriptorDefinedBy:
+				( ConcreteDescriptorDefinition for: Spaceship onTableNamed: 'Spaceship' mappingsDefinedBy: {
+							  ( SequentialNumberMappingDefinition onTableNamed: 'Spaceship' ).
+							  ( DirectMappingDefinition
+								    fromAttributeNamed: #name
+								    toFieldNamed: 'name'
+								    onTableNamed: 'Spaceship' ) } )
+		]
 ]
 
 { #category : 'running' }

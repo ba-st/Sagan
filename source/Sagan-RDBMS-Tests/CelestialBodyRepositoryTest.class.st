@@ -60,11 +60,9 @@ CelestialBodyRepositoryTest >> testFilterByCoordinateY [
 	celestialBodies store: self alderaan.
 
 	self
-		withTheOnlyOneIn:
-			( celestialBodies
-				findAllMatching:
-					[ :body :builder | builder satisfying: body galacticCoordinates y > -500 and: body galacticCoordinates y < 0 ] )
-		do: [ :found | 
+		withTheOnlyOneIn: ( celestialBodies findAllMatching: [ :body :builder |
+				  builder satisfying: body galacticCoordinates y > -500 and: [ body galacticCoordinates y < 0 ] ] )
+		do: [ :found |
 			self
 				assert: found name equals: 'Tatooine';
 				assert: found planetarySystem equals: 'Arkanis Sector';

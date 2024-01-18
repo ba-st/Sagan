@@ -24,8 +24,16 @@ RepositoryBasedTest class >> isAbstract [
 RepositoryBasedTest >> assertRepositoryIncludesSilvesterStallone [
 
 	self extraterrestrials
-		withOneMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ]
-		do: [ :extraterrestrial | self assert: extraterrestrial lastName equals: 'Stallone' ]
+		withOneMatching: [ :extraterrestrial :criteria |
+			criteria
+				satisfying: extraterrestrial firstName = 'Silvester'
+				and: [ extraterrestrial lastName = 'Stallone' ]
+			]
+		do: [ :extraterrestrial |
+			self
+				assert: extraterrestrial firstName equals: 'Silvester';
+				assert: extraterrestrial lastName equals: 'Stallone'
+			]
 		else: [ self fail ]
 ]
 
@@ -304,6 +312,40 @@ RepositoryBasedTest >> testStore [
 		withOneMatching: [ :extraterrestrial | extraterrestrial firstName = 'John' ]
 		do: [ :extraterrestrial | self assert: extraterrestrial lastName equals: 'Travolta' ]
 		else: [ self fail ]
+]
+
+{ #category : 'tests - conflict checking' }
+RepositoryBasedTest >> testStoreIdentical [
+
+	| found instance |
+
+	self setUpRepositoryWithNoConflictChecking.
+	instance := self silvesterStallone.
+	self extraterrestrials store: instance.
+	self extraterrestrials store: instance.
+
+	found := self extraterrestrials findAll.
+	self withTheOnlyOneIn: found do: [ :extraterrestrial |
+		self
+			assert: extraterrestrial firstName equals: 'Silvester';
+			assert: extraterrestrial lastName equals: 'Stallone'
+		]
+]
+
+{ #category : 'tests - conflict checking' }
+RepositoryBasedTest >> testStoreRepeated [
+
+	| found |
+
+	self setUpRepositoryWithNoConflictChecking.
+
+	self extraterrestrials store: self silvesterStallone.
+	self extraterrestrials store: self silvesterStallone.
+	
+	found := self extraterrestrials findAll.
+	self assert: found size equals: 2.
+	self assert: ( found allSatisfy: [ :extraterrestrial |
+			  extraterrestrial firstName = 'Silvester' and: [ extraterrestrial lastName = 'Stallone' ] ] )
 ]
 
 { #category : 'tests - conflict checking' }

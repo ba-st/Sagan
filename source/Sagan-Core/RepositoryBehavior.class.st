@@ -50,8 +50,8 @@ RepositoryBehavior >> assertNoConflictsFor: anUpdatedDomainObject excluding: aDo
 	self conflictCheckingStrategy assertNoConflictsFor: anUpdatedDomainObject in: self excluding: aDomainObject
 ]
 
-{ #category : 'mappings' }
-RepositoryBehavior >> configureMappingsIn: aBlock [
+{ #category : 'configuring' }
+RepositoryBehavior >> configureWith: aBlock [
 
 	self subclassResponsibility 
 ]

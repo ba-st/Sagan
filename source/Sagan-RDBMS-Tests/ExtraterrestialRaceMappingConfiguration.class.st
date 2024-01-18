@@ -9,7 +9,7 @@ Class {
 ExtraterrestialRaceMappingConfiguration >> cull: aRepository [
 
 	aRepository
-		configureMappingsIn: [ :repository | 
+		configureWith: [ :repository | 
 			repository
 				beAwareOfClassModelDefinedBy: self extraterrestialRaceClassModelDefinition;
 				beAwareOfDescriptorDefinedBy: self extraterrestialRaceDescriptorDefinition;
@@ -78,10 +78,11 @@ ExtraterrestialRaceMappingConfiguration >> extraterrestialRaceDescriptorDefiniti
 ExtraterrestialRaceMappingConfiguration >> extraterrestialRaceTableDefinition [
 
 	^ RealTableDefinition
-		named: self extraterrestialRaceTableName
-		fieldsDefinedBy:
-			{SequentialNumberFieldDefinition new.
-			( CharacterFieldDefinition named: 'name' sized: 100 )}
+		  named: self extraterrestialRaceTableName
+		  fieldsDefinedBy: {
+				  SequentialNumberFieldDefinition new.
+				  ( CharacterFieldDefinition named: 'name' sized: 100 ) }
+		  indexesDefinedBy: { ( IndexDefinition forFieldNamed: 'name' ) }
 ]
 
 { #category : 'private - accessing' }
