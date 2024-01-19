@@ -127,7 +127,7 @@ GemStoneRepository >> storeAfterCheckingConflicts: aDomainObject [
 { #category : 'management' }
 GemStoneRepository >> transact: aBlock [
 
-	^ aBlock value
+	^ GemStoneTransaction new transact: aBlock
 ]
 
 { #category : 'management' }

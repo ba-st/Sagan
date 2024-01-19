@@ -35,6 +35,28 @@ GemStoneRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy
 ]
 
 { #category : 'tests' }
+GemStoneRepositoryProviderTest >> testNestedTransactions [
+
+	self assert: self extraterrestrials findAll isEmpty.
+
+	self extraterrestrials transact: [
+		self extraterrestrials store: self silvesterStallone.
+		self assertTheOnlyOneInTheRepositoryIsSilvesterStallone.
+
+		System abortTransaction.
+		self assert: self extraterrestrials findAll isEmpty.
+		self extraterrestrials transact: [ self extraterrestrials store: self johnTravolta ]
+		].
+
+	self withTheOnlyOneIn: self extraterrestrials findAll do: [ :extraterrestrial |
+		self
+			assert: extraterrestrial firstName equals: 'John';
+			assert: extraterrestrial lastName equals: 'Travolta'
+		]
+
+]
+
+{ #category : 'tests' }
 GemStoneRepositoryProviderTest >> testQueryReturningBeforeAllIndexedResultsAreRead [
 
 	| one two three four five six seven |
