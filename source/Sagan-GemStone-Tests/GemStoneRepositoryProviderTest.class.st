@@ -53,7 +53,6 @@ GemStoneRepositoryProviderTest >> testNestedTransactions [
 			assert: extraterrestrial firstName equals: 'John';
 			assert: extraterrestrial lastName equals: 'Travolta'
 		]
-
 ]
 
 { #category : 'tests' }
@@ -314,6 +313,68 @@ GemStoneRepositoryProviderTest >> testStreamQueryResults [
 			assert: extraterrestrial lastName equals: 'Stallone'.
 		self assert: stream atEnd
 		]
+]
+
+{ #category : 'tests' }
+GemStoneRepositoryProviderTest >> testTransactionLevel [
+
+	| initialLevel |
+
+	initialLevel := System transactionLevel.
+	self assert: initialLevel >= 0.
+
+	self extraterrestrials transact: [
+		self assert: System transactionLevel equals: initialLevel + 1.
+		self extraterrestrials transact: [ self assert: System transactionLevel equals: initialLevel + 2 ].
+		self assert: System transactionLevel equals: initialLevel + 1
+		].
+	self assert: System transactionLevel equals: initialLevel
+
+]
+
+{ #category : 'tests' }
+GemStoneRepositoryProviderTest >> testTransactionLevelWithManualAbort [
+
+	| initialLevel |
+
+	initialLevel := System transactionLevel.
+	self assert: initialLevel >= 0.
+
+	self extraterrestrials transact: [
+		self assert: System transactionLevel equals: initialLevel + 1.
+		self extraterrestrials transact: [
+			self assert: System transactionLevel equals: initialLevel + 2.
+			System abortTransaction.
+			self assert: System transactionLevel equals: initialLevel + 1
+			].
+		self assert: System transactionLevel equals: initialLevel.
+		].
+	self assert: System transactionLevel equals: initialLevel
+
+]
+
+{ #category : 'tests' }
+GemStoneRepositoryProviderTest >> testTransactionLevelWithUnhandledException [
+
+	| initialLevel |
+
+	initialLevel := System transactionLevel.
+	self assert: initialLevel >= 0.
+
+	[
+	self extraterrestrials transact: [
+		self assert: System transactionLevel equals: initialLevel + 1.
+		self extraterrestrials transact: [
+			self assert: System transactionLevel equals: initialLevel + 2.
+			1 / 0
+			]
+		]
+	]
+		on: ZeroDivide
+		do: [ :ex | ex return ].
+
+	self assert: System transactionLevel equals: initialLevel
+
 ]
 
 { #category : 'utility' }

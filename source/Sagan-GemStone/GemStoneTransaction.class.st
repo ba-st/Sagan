@@ -16,7 +16,10 @@ GemStoneTransaction >> transact: aBlock [
 	System inTransaction
 		ifTrue: [ System beginNestedTransaction ]
 		ifFalse: [ System beginTransaction ].
+	[
 	result := aBlock value.
-	System commitTransaction.
+	System commitTransaction
+	] ifCurtailed: [ result := System abortTransaction ].
+
 	^ result
 ]
