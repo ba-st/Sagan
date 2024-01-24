@@ -341,11 +341,14 @@ RepositoryBasedTest >> testStoreRepeated [
 
 	self extraterrestrials store: self silvesterStallone.
 	self extraterrestrials store: self silvesterStallone.
-	
+
 	found := self extraterrestrials findAll.
 	self assert: found size equals: 2.
-	self assert: ( found allSatisfy: [ :extraterrestrial |
-			  extraterrestrial firstName = 'Silvester' and: [ extraterrestrial lastName = 'Stallone' ] ] )
+	found do: [ :extraterrestrial |
+		self
+			assert: extraterrestrial firstName equals: 'Silvester';
+			assert: extraterrestrial lastName equals: 'Stallone'
+		]
 ]
 
 { #category : 'tests - conflict checking' }
