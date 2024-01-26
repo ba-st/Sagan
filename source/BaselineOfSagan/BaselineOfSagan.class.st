@@ -87,20 +87,33 @@ BaselineOfSagan >> setUpPackages: spec [
 		group: 'Core' with: 'Sagan-Kepler'.
 
 	spec
-		package: 'Sagan-Core-Tests' with: [ spec requires: #('Sagan-Core' 'Buoy-SUnit') ];
+		package: 'Sagan-Core-Tests' with: [ spec requires: #( 'Sagan-Core' 'Buoy-SUnit' ) ];
 		group: 'Tests' with: 'Sagan-Core-Tests'.
 
 	spec
-		package: 'Sagan-RDBMS' with: [ spec requires: #('Glorp-Core' 'Core' 'ObjectPool-Core' 'Bell-Core' 'Hyperspace-Deployment') ];
-		group: 'RDBMS' with: #('Sagan-RDBMS').
+		package: 'Sagan-RDBMS'
+		with: [
+			spec requires: #( 'Glorp-Core' 'Core' 'ObjectPool-Core' 'Bell-Core' 'Hyperspace-Deployment' ) ];
+		group: 'RDBMS' with: #( 'Sagan-RDBMS' ).
 
-	spec package: 'Sagan-Kepler-Tests' with: [ spec requires: #('Sagan-Kepler') ].
+	spec
+		package: 'Sagan-GemStone' with: [ spec requires: #( 'Core' ) ];
+		group: 'GemStone' with: #( 'Sagan-GemStone' ).
 
-	spec group: 'PostgreSQL' with: #('RDBMS' 'Glorp P3').
-	spec group: 'SQLite' with: #('RDBMS' 'Glorp SQLite3').
+	spec package: 'Sagan-Kepler-Tests' with: [ spec requires: #( 'Sagan-Kepler' ) ].
+
+	spec group: 'PostgreSQL' with: #( 'RDBMS' 'Glorp P3' ).
+	spec group: 'SQLite' with: #( 'RDBMS' 'Glorp SQLite3' ).
 
 	spec
 		package: 'Sagan-RDBMS-Tests'
-			with: [ spec requires: #('PostgreSQL' 'SQLite' 'Sagan-Core-Tests' 'Sagan-Kepler-Tests' 'Bell-SUnit') ];
-		group: 'Tests' with: 'Sagan-RDBMS-Tests'
+		with: [
+			spec requires: #( 'PostgreSQL' 'SQLite' 'Sagan-Core-Tests' 'Sagan-Kepler-Tests'
+				   'Bell-SUnit' ) ];
+		group: 'Tests' with: 'Sagan-RDBMS-Tests'.
+
+	spec
+		package: 'Sagan-GemStone-Tests'
+		with: [ spec requires: #( 'Sagan-Core-Tests' 'Sagan-Kepler-Tests' ) ];
+		group: 'Tests' with: 'Sagan-GemStone-Tests'
 ]
