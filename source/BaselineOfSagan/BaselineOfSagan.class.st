@@ -38,7 +38,8 @@ BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
 		baseline: 'Kepler' with: [ spec repository: 'github://ba-st/Kepler:v6/source' ];
-		project: 'Kepler-Core' copyFrom: 'Kepler' with: [ spec loads: 'Core' ].
+		project: 'Kepler-Core' copyFrom: 'Kepler' with: [ spec loads: 'Core' ];
+		project: 'Kepler-SUnit' copyFrom: 'Kepler' with: [ spec loads: 'Dependent-SUnit-Extensions' ].
 
 	spec
 		baseline: 'ObjectPool' with: [ spec repository: 'github://pharo-ide/ObjectPool:v1.0.3' ];
@@ -96,7 +97,7 @@ BaselineOfSagan >> setUpPackages: spec [
 			spec requires: #( 'Glorp-Core' 'Core' 'ObjectPool-Core' 'Bell-Core' 'Hyperspace-Deployment' ) ];
 		group: 'RDBMS' with: #( 'Sagan-RDBMS' ).
 
-	spec package: 'Sagan-Kepler-Tests' with: [ spec requires: #( 'Sagan-Kepler' ) ].
+	spec package: 'Sagan-Kepler-Tests' with: [ spec requires: #( 'Sagan-Kepler' 'Kepler-SUnit' ) ].
 
 	spec group: 'PostgreSQL' with: #( 'RDBMS' 'Glorp P3' ).
 	spec group: 'SQLite' with: #( 'RDBMS' 'Glorp SQLite3' ).
