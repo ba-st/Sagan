@@ -15,6 +15,18 @@ InMemoryRepositoryProviderModuleTest >> repositoryIn: aUserStory [
 ]
 
 { #category : 'tests' }
+InMemoryRepositoryProviderModuleTest >> testAccessing [
+
+	| module |
+
+	module := InMemoryRepositoryProviderModule toInstallOn: 'a system'.
+	self
+		assert: module name equals: 'In Memory Repository Provider';
+		assert: module rootSystem equals: 'a system';
+		assertCollection: module systemInterfacesToInstall equals: #( #RepositoryProviderSystem )
+]
+
+{ #category : 'tests' }
 InMemoryRepositoryProviderModuleTest >> testInstallation [
 
 	| userStory celestialBodies |
