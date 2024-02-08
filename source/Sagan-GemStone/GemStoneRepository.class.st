@@ -96,18 +96,20 @@ GemStoneRepository >> matchingCriteriaBuilder [
 { #category : 'private - management' }
 GemStoneRepository >> purgeAfterCheckingInclusion: aDomainObject [
 
-	contents remove: aDomainObject ifAbsent: [
-		DataInconsistencyFound signal:
-			( '<1p> was expected to be found in the contents, but it was not.' expandMacrosWith:
-				  aDomainObject )
-		].
-	^ aDomainObject
+	^ self transact: [
+		  contents remove: aDomainObject ifAbsent: [
+			  DataInconsistencyFound signal:
+				  ( '<1p> was expected to be found in the contents, but it was not.' expandMacrosWith:
+					    aDomainObject )
+			  ].
+		  aDomainObject
+		  ]
 ]
 
 { #category : 'management' }
 GemStoneRepository >> purgeAllMatching: aCriteriaOrBlock [
 
-	contents := contents reject: ( self asMatchingCriteria: aCriteriaOrBlock )
+	self transact: [ contents := contents reject: ( self asMatchingCriteria: aCriteriaOrBlock ) ]
 ]
 
 { #category : 'private - accessing' }
@@ -120,8 +122,10 @@ GemStoneRepository >> saganGemStoneIndexOptions [
 { #category : 'private - management' }
 GemStoneRepository >> storeAfterCheckingConflicts: aDomainObject [
 
-	contents add: aDomainObject.
-	^ aDomainObject
+	^ self transact: [
+		  contents add: aDomainObject.
+		  aDomainObject
+		  ]
 ]
 
 { #category : 'management' }
@@ -133,7 +137,7 @@ GemStoneRepository >> transact: aBlock [
 { #category : 'management' }
 GemStoneRepository >> update: aMutableDomainObject executing: aBlock [
 
-	aBlock value: aMutableDomainObject
+	self transact: [ aBlock value: aMutableDomainObject ]
 ]
 
 { #category : 'private - management' }
