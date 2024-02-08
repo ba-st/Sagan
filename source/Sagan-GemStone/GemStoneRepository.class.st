@@ -65,19 +65,23 @@ GemStoneRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction 
 { #category : 'configuring' }
 GemStoneRepository >> indexByEquality: aPath typed: aType [
 
-	GsIndexSpec new
-		equalityIndex: ( 'each.<1s>' expandMacrosWith: aPath )
-		lastElementClass: aType
-		options: self saganGemStoneIndexOptions;
-		createIndexesOn: contents
+	self transact: [
+		GsIndexSpec new
+			equalityIndex: ( 'each.<1s>' expandMacrosWith: aPath )
+			lastElementClass: aType
+			options: self saganGemStoneIndexOptions;
+			createIndexesOn: contents
+		]
 ]
 
 { #category : 'configuring' }
 GemStoneRepository >> indexByIdentity: aPath [
 
-	GsIndexSpec new
-		identityIndex: ( 'each.<1s>' expandMacrosWith: aPath ) options: self saganGemStoneIndexOptions;
-		createIndexesOn: contents
+	self transact: [
+		GsIndexSpec new
+			identityIndex: ( 'each.<1s>' expandMacrosWith: aPath ) options: self saganGemStoneIndexOptions;
+			createIndexesOn: contents
+		]
 ]
 
 { #category : 'initialization' }
