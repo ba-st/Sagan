@@ -40,14 +40,10 @@ GemStoneRepositoryProviderTest >> testExceptionsAbortTransactionsUntilHandled [
 	self assert: self extraterrestrials findAll isEmpty.
 
 	self extraterrestrials transact: [
+		[
 		self extraterrestrials store: self silvesterStallone.
 		self assertTheOnlyOneInTheRepositoryIsSilvesterStallone.
-
-		[
-		self extraterrestrials transact: [
-			self extraterrestrials store: self johnTravolta.
-			1 / 0
-			]
+		1 / 0
 		]
 			on: ZeroDivide
 			do: [ :ex | ex return ]
@@ -340,54 +336,55 @@ GemStoneRepositoryProviderTest >> testStreamQueryResults [
 { #category : 'tests' }
 GemStoneRepositoryProviderTest >> testTransactionLevel [
 
-	| initialLevel |
+	| baseLevel |
 
-	initialLevel := System transactionLevel.
-	self assert: initialLevel >= 0.
+	baseLevel := System transactionLevel.
 
 	self extraterrestrials transact: [
-		self assert: System transactionLevel equals: initialLevel + 1.
-		self extraterrestrials transact: [ self assert: System transactionLevel equals: initialLevel + 2 ].
-		self assert: System transactionLevel equals: initialLevel + 1
-		].
-	self assert: System transactionLevel equals: initialLevel
+		| levelDuringTransaction |
 
+		levelDuringTransaction := System transactionLevel.
+		self extraterrestrials transact: [
+			self assert: System transactionLevel equals: levelDuringTransaction ].
+		self assert: System transactionLevel equals: levelDuringTransaction
+		].
+	self assert: System transactionLevel equals: baseLevel
 ]
 
 { #category : 'tests' }
 GemStoneRepositoryProviderTest >> testTransactionLevelWithManualAbort [
 
-	| initialLevel |
+	| baseLevel |
 
-	initialLevel := System transactionLevel.
-	self assert: initialLevel >= 0.
+	baseLevel := System transactionLevel.
 
 	self extraterrestrials transact: [
-		self assert: System transactionLevel equals: initialLevel + 1.
-		self extraterrestrials transact: [
-			self assert: System transactionLevel equals: initialLevel + 2.
-			System abortTransaction.
-			self assert: System transactionLevel equals: initialLevel + 1
-			].
-		self assert: System transactionLevel equals: initialLevel.
-		].
-	self assert: System transactionLevel equals: initialLevel
+		| levelDuringTransaction |
 
+		levelDuringTransaction := System transactionLevel.
+		self extraterrestrials transact: [
+			self assert: System transactionLevel equals: levelDuringTransaction.
+			System abortTransaction.
+			self assert: System transactionLevel equals: levelDuringTransaction
+			].
+		self assert: System transactionLevel equals: levelDuringTransaction
+		].
+	self assert: System transactionLevel equals: baseLevel
 ]
 
 { #category : 'tests' }
 GemStoneRepositoryProviderTest >> testTransactionLevelWithUnhandledException [
 
-	| initialLevel |
+	| baseLevel |
 
-	initialLevel := System transactionLevel.
-	self assert: initialLevel >= 0.
-
+	baseLevel := System transactionLevel.
 	[
+	| levelDuringTransaction |
+
 	self extraterrestrials transact: [
-		self assert: System transactionLevel equals: initialLevel + 1.
+		levelDuringTransaction := System transactionLevel.
 		self extraterrestrials transact: [
-			self assert: System transactionLevel equals: initialLevel + 2.
+			self assert: System transactionLevel equals: levelDuringTransaction.
 			1 / 0
 			]
 		]
@@ -395,8 +392,7 @@ GemStoneRepositoryProviderTest >> testTransactionLevelWithUnhandledException [
 		on: ZeroDivide
 		do: [ :ex | ex return ].
 
-	self assert: System transactionLevel equals: initialLevel
-
+	self assert: System transactionLevel equals: baseLevel
 ]
 
 { #category : 'utility' }

@@ -11,15 +11,16 @@ Class {
 { #category : 'processing' }
 GemStoneTransaction >> transact: aBlock [
 
-	| result |
+	^ System inTransaction
+		  ifTrue: aBlock
+		  ifFalse: [
+			  | result |
 
-	System inTransaction
-		ifTrue: [ System beginNestedTransaction ]
-		ifFalse: [ System beginTransaction ].
-	[
-	result := aBlock value.
-	System commitTransaction
-	] ifCurtailed: [ result := System abortTransaction ].
-
-	^ result
+			  System beginTransaction.
+			  [
+			  result := aBlock value.
+			  System commitTransaction
+			  ] ifCurtailed: [ result := System abortTransaction ].
+			  result
+			  ]
 ]
