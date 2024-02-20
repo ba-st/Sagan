@@ -20,7 +20,7 @@ GemStoneTransaction >> transact: aBlock [
 			  [
 			  result := aBlock value.
 			  System commitTransaction
-			  ] ifCurtailed: [ result := System abortTransaction ].
+			  ] ifCurtailed: [ System abortTransaction ].
 			  result
 			  ]
 ]
