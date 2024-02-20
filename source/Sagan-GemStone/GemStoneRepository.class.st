@@ -65,19 +65,23 @@ GemStoneRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction 
 { #category : 'configuring' }
 GemStoneRepository >> indexByEquality: aPath typed: aType [
 
-	GsIndexSpec new
-		equalityIndex: ( 'each.<1s>' expandMacrosWith: aPath )
-		lastElementClass: aType
-		options: self saganGemStoneIndexOptions;
-		createIndexesOn: contents
+	self transact: [
+		GsIndexSpec new
+			equalityIndex: ( 'each.<1s>' expandMacrosWith: aPath )
+			lastElementClass: aType
+			options: self saganGemStoneIndexOptions;
+			createIndexesOn: contents
+		]
 ]
 
 { #category : 'configuring' }
 GemStoneRepository >> indexByIdentity: aPath [
 
-	GsIndexSpec new
-		identityIndex: ( 'each.<1s>' expandMacrosWith: aPath ) options: self saganGemStoneIndexOptions;
-		createIndexesOn: contents
+	self transact: [
+		GsIndexSpec new
+			identityIndex: ( 'each.<1s>' expandMacrosWith: aPath ) options: self saganGemStoneIndexOptions;
+			createIndexesOn: contents
+		]
 ]
 
 { #category : 'initialization' }
@@ -96,18 +100,20 @@ GemStoneRepository >> matchingCriteriaBuilder [
 { #category : 'private - management' }
 GemStoneRepository >> purgeAfterCheckingInclusion: aDomainObject [
 
-	contents remove: aDomainObject ifAbsent: [
-		DataInconsistencyFound signal:
-			( '<1p> was expected to be found in the contents, but it was not.' expandMacrosWith:
-				  aDomainObject )
-		].
-	^ aDomainObject
+	^ self transact: [
+		  contents remove: aDomainObject ifAbsent: [
+			  DataInconsistencyFound signal:
+				  ( '<1p> was expected to be found in the contents, but it was not.' expandMacrosWith:
+					    aDomainObject )
+			  ].
+		  aDomainObject
+		  ]
 ]
 
 { #category : 'management' }
 GemStoneRepository >> purgeAllMatching: aCriteriaOrBlock [
 
-	contents := contents reject: ( self asMatchingCriteria: aCriteriaOrBlock )
+	self transact: [ contents := contents reject: ( self asMatchingCriteria: aCriteriaOrBlock ) ]
 ]
 
 { #category : 'private - accessing' }
@@ -120,8 +126,10 @@ GemStoneRepository >> saganGemStoneIndexOptions [
 { #category : 'private - management' }
 GemStoneRepository >> storeAfterCheckingConflicts: aDomainObject [
 
-	contents add: aDomainObject.
-	^ aDomainObject
+	^ self transact: [
+		  contents add: aDomainObject.
+		  aDomainObject
+		  ]
 ]
 
 { #category : 'management' }
@@ -133,7 +141,7 @@ GemStoneRepository >> transact: aBlock [
 { #category : 'management' }
 GemStoneRepository >> update: aMutableDomainObject executing: aBlock [
 
-	aBlock value: aMutableDomainObject
+	self transact: [ aBlock value: aMutableDomainObject ]
 ]
 
 { #category : 'private - management' }
