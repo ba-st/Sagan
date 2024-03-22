@@ -87,6 +87,139 @@ GemStoneRepositoryProviderTest >> testQueryReturningBeforeAllIndexedResultsAreRe
 ]
 
 { #category : 'tests' }
+GemStoneRepositoryProviderTest >> testQueryingIndexedCollectionByStreaming [
+
+	1000 timesRepeat: [
+		self extraterrestrials
+			store: self johnTravolta;
+			store: self johnLock;
+			store: self ellaTravolta
+		].
+
+	self extraterrestrials store: self silvesterStallone.
+
+	1000 timesRepeat: [
+		self extraterrestrials
+			store: self johnTravolta;
+			store: self johnLock;
+			store: self ellaTravolta
+		].
+
+	self extraterrestrials withQueryFrom: 'each.firstName >= ''''' do: [ :query |
+		| stream silvesterStallone |
+
+		stream := query readStream.
+		stream skip: 2000 * 3.
+		silvesterStallone := stream next.
+		self assert:
+			( silvesterStallone firstName = 'Silvester' and: [ silvesterStallone lastName = 'Stallone' ] ).
+		self assert: stream atEnd
+		]
+]
+
+{ #category : 'tests' }
+GemStoneRepositoryProviderTest >> testQueryingIndexedCollectionForAllElements [
+
+	4 timesRepeat: [
+		1000 timesRepeat: [
+			self extraterrestrials
+				store: self johnTravolta;
+				store: self johnLock;
+				store: self ellaTravolta
+			].
+
+		self extraterrestrials store: self silvesterStallone.
+
+		1000 timesRepeat: [
+			self extraterrestrials
+				store: self johnTravolta;
+				store: self johnLock;
+				store: self ellaTravolta
+			]
+		].
+	self extraterrestrials withQueryFrom: 'true' do: [ :query |
+		self assert: query size equals: 3000 + 1 + 3000 * 4.
+		self
+			assert: ( query select: [ :extraterrestrial |
+					  extraterrestrial firstName = 'Silvester' and: [ extraterrestrial lastName = 'Stallone' ] ] )
+					size
+			equals: 4.
+		self
+			assert: ( query select: [ :extraterrestrial |
+					  extraterrestrial firstName = 'John' and: [ extraterrestrial lastName = 'Travolta' ] ] ) size
+			equals: 2000 * 4.
+		self
+			assert: ( query select: [ :extraterrestrial |
+					  extraterrestrial firstName = 'John' and: [ extraterrestrial lastName = 'Lock' ] ] ) size
+			equals: 2000 * 4.
+		self
+			assert: ( query select: [ :extraterrestrial |
+					  extraterrestrial firstName = 'Ella' and: [ extraterrestrial lastName = 'Travolta' ] ] ) size
+			equals: 2000 * 4
+		]
+]
+
+{ #category : 'tests' }
+GemStoneRepositoryProviderTest >> testQueryingIndexedCollectionForNoElements [
+
+	4 timesRepeat: [
+		1000 timesRepeat: [
+			self extraterrestrials
+				store: self johnTravolta;
+				store: self johnLock;
+				store: self ellaTravolta
+			].
+
+		self extraterrestrials store: self silvesterStallone.
+
+		1000 timesRepeat: [
+			self extraterrestrials
+				store: self johnTravolta;
+				store: self johnLock;
+				store: self ellaTravolta
+			]
+		].
+	self extraterrestrials withQueryFrom: 'false' do: [ :query | self assert: query isEmpty ]
+]
+
+{ #category : 'tests' }
+GemStoneRepositoryProviderTest >> testQueryingInterval [
+
+	| result |
+
+	1000 timesRepeat: [
+		self extraterrestrials
+			store: self johnTravolta;
+			store: self johnLock;
+			store: self ellaTravolta;
+			store: self silvesterStallone
+		].
+
+	result := self extraterrestrials findAllFrom: 1000 to: 1001 sortedBy: 'lastName'.
+	self assert: result size equals: 2.
+	self assert: ( result first firstName = 'John' and: [ result first lastName = 'Lock' ] ).
+	self assert: ( result last firstName = 'Silvester' and: [ result last lastName = 'Stallone' ] ).
+
+	result := self extraterrestrials findAllFrom: 4000 to: 4005 sortedBy: 'lastName'.
+	self
+		withTheOnlyOneIn: result
+		do: [ :extraterrestrial | self assert: extraterrestrial lastName equals: 'Travolta' ].
+	result := self extraterrestrials findAllFrom: 4000 to: 4005 sortedBy: 'firstName'.
+	self withTheOnlyOneIn: result do: [ :extraterrestrial |
+		self
+			assert: extraterrestrial firstName equals: 'Silvester';
+			assert: extraterrestrial lastName equals: 'Stallone'
+		].
+
+	result := self extraterrestrials findAllFrom: -50 to: 0 sortedBy: 'lastName'.
+	self assert: result isEmpty.
+	result := self extraterrestrials findAllFrom: 6 to: -2 sortedBy: 'lastName'.
+	self assert: result isEmpty.
+	result := self extraterrestrials findAllFrom: 5000 to: 10000 sortedBy: 'lastName'.
+	self assert: result isEmpty
+]
+
+{ #category : 'tests' }
 GemStoneRepositoryProviderTest >> testQueryingWhenCollectionIsLargeAndIndexed [
 
 	4 timesRepeat: [

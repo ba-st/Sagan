@@ -51,6 +51,22 @@ InMemoryRepository >> findAll [
 ]
 
 { #category : 'querying' }
+InMemoryRepository >> findAllFrom: aFromIndex to: aToIndex sortedBy: anIndexName [
+
+	| from to |
+
+	contents ifEmpty: [ ^ contents ].
+
+	from := ( aFromIndex min: contents size ) max: 0.
+	to := ( aToIndex min: contents size ) max: 0.
+
+	^ ( contents sorted: [ :a :b |
+		    ( a instVarNamed: anIndexName asString ) <= ( b instVarNamed: anIndexName asString ) ] )
+		  copyFrom: from
+		  to: to
+]
+
+{ #category : 'querying' }
 InMemoryRepository >> findAllMatching: aCriteriaOrBlock [
 
 	^ contents select: ( self asMatchingCriteria: aCriteriaOrBlock )
