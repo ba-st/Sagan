@@ -39,6 +39,12 @@ InMemoryRepository >> conflictCheckingStrategy [
 ]
 
 { #category : 'querying' }
+InMemoryRepository >> countAll [
+
+	^ contents size
+]
+
+{ #category : 'querying' }
 InMemoryRepository >> countMatching: aCriteriaOrBlockClosure [
 
 	^ contents count: ( self asMatchingCriteria: aCriteriaOrBlockClosure )
@@ -51,7 +57,7 @@ InMemoryRepository >> findAll [
 ]
 
 { #category : 'querying' }
-InMemoryRepository >> findAllFrom: aFromIndex to: aToIndex sortedBy: anIndexName [
+InMemoryRepository >> findAllFrom: aFromIndex upTo: aToIndex sortedBy: anIndexName [
 
 	| from to |
 

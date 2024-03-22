@@ -39,6 +39,12 @@ GemStoneRepository >> conflictCheckingStrategy [
 ]
 
 { #category : 'querying' }
+GemStoneRepository >> countAll [
+
+	^ contents size
+]
+
+{ #category : 'querying' }
 GemStoneRepository >> countMatching: aCriteriaOrBlockClosure [
 
 	^ contents count: ( self asMatchingCriteria: aCriteriaOrBlockClosure )
@@ -51,19 +57,23 @@ GemStoneRepository >> findAll [
 ]
 
 { #category : 'querying' }
-GemStoneRepository >> findAllFrom: aFromIndex to: aToIndex sortedBy: anIndexName [
+GemStoneRepository >> findAllFrom: aStartingPosition upTo: aMaximumPosition sortedBy: anIndexName [
 
 	| results |
 
 	results := OrderedCollection new.
 	self withQueryFrom: ( 'each.<1s> >= ''''' expandMacrosWith: anIndexName asString ) do: [ :query |
-		| stream start limit |
+		| stream skipped limit |
 
 		stream := query readStream.
-		start := aFromIndex - 1 max: 0.
-		limit := aToIndex - start max: 0.
-		stream skip: start.
-		limit timesRepeat: [ stream atEnd ifFalse: [ results add: stream next ] ]
+		skipped := aStartingPosition - 1 max: 0.
+		limit := aMaximumPosition - skipped max: 0.
+		stream skip: skipped.
+		limit timesRepeat: [
+			stream atEnd
+				ifTrue: [ ^ results ]
+				ifFalse: [ results add: stream next ]
+			]
 		].
 	^ results
 ]
