@@ -57,22 +57,6 @@ InMemoryRepository >> findAll [
 ]
 
 { #category : 'querying' }
-InMemoryRepository >> findAllFrom: aFromIndex upTo: aToIndex sortedBy: anIndexName [
-
-	| from to |
-
-	contents ifEmpty: [ ^ contents ].
-
-	from := ( aFromIndex min: contents size ) max: 0.
-	to := ( aToIndex min: contents size ) max: 0.
-
-	^ ( contents sorted: [ :a :b |
-		    ( a instVarNamed: anIndexName asString ) <= ( b instVarNamed: anIndexName asString ) ] )
-		  copyFrom: from
-		  to: to
-]
-
-{ #category : 'querying' }
 InMemoryRepository >> findAllMatching: aCriteriaOrBlock [
 
 	^ contents select: ( self asMatchingCriteria: aCriteriaOrBlock )
@@ -141,6 +125,22 @@ InMemoryRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdate
 	[ aDomainObject synchronizeWith: anUpdatedDomainObject ] ensure: [
 		self storeAfterCheckingConflicts: aDomainObject ].
 	^ aDomainObject
+]
+
+{ #category : 'private - querying' }
+InMemoryRepository >> validatedFindAllFrom: aStartingPosition upTo: aMaximumPosition sortedByAscending: aVariableName [
+
+	| from to |
+
+	( contents isEmpty or: [ aStartingPosition > contents size ] ) ifTrue: [ ^ Set new ].
+
+	from := aStartingPosition max: 1.
+	to := ( aMaximumPosition min: contents size ) max: 1.
+
+	^ ( contents sorted: [ :a :b |
+		    ( a instVarNamed: aVariableName asString ) <= ( b instVarNamed: aVariableName asString ) ] )
+		  copyFrom: from
+		  to: to
 ]
 
 { #category : 'querying' }

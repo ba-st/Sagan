@@ -57,28 +57,6 @@ GemStoneRepository >> findAll [
 ]
 
 { #category : 'querying' }
-GemStoneRepository >> findAllFrom: aStartingPosition upTo: aMaximumPosition sortedBy: anIndexName [
-
-	| results |
-
-	results := OrderedCollection new.
-	self withQueryFrom: ( 'each.<1s> >= ''''' expandMacrosWith: anIndexName asString ) do: [ :query |
-		| stream skipped limit |
-
-		stream := query readStream.
-		skipped := aStartingPosition - 1 max: 0.
-		limit := aMaximumPosition - skipped max: 0.
-		stream skip: skipped.
-		limit timesRepeat: [
-			stream atEnd
-				ifTrue: [ ^ results ]
-				ifFalse: [ results add: stream next ]
-			]
-		].
-	^ results
-]
-
-{ #category : 'querying' }
 GemStoneRepository >> findAllMatching: aCriteriaOrBlock [
 
 	^ contents select: ( self asMatchingCriteria: aCriteriaOrBlock )
@@ -179,6 +157,30 @@ GemStoneRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdate
 	[ aDomainObject synchronizeWith: anUpdatedDomainObject ] ensure: [
 		self storeAfterCheckingConflicts: aDomainObject ].
 	^ aDomainObject
+]
+
+{ #category : 'private - querying' }
+GemStoneRepository >> validatedFindAllFrom: aStartingPosition upTo: aMaximumPosition sortedByAscending: aVariableName [
+
+	| results |
+
+	results := OrderedCollection new.
+	self
+		withQueryFrom: ( 'each.<1s> >= ''''' expandMacrosWith: aVariableName asString )
+		do: [ :query |
+			| stream limit offset |
+
+			stream := query readStream.
+			limit := aMaximumPosition - aStartingPosition + 1.
+			offset := aStartingPosition - 1.
+			stream skip: offset.
+			limit timesRepeat: [
+				stream atEnd
+					ifTrue: [ ^ results ]
+					ifFalse: [ results add: stream next ]
+				]
+			].
+	^ results
 ]
 
 { #category : 'querying' }

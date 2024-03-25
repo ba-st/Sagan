@@ -195,27 +195,27 @@ GemStoneRepositoryProviderTest >> testQueryingInterval [
 			store: self silvesterStallone
 		].
 
-	result := self extraterrestrials findAllFrom: 1000 upTo: 1001 sortedBy: 'lastName'.
+	result := self extraterrestrials findAllFrom: 1000 upTo: 1001 sortedByAscending: 'lastName'.
 	self assert: result size equals: 2.
 	self assert: ( result first firstName = 'John' and: [ result first lastName = 'Lock' ] ).
 	self assert: ( result last firstName = 'Silvester' and: [ result last lastName = 'Stallone' ] ).
 
-	result := self extraterrestrials findAllFrom: 4000 upTo: 4005 sortedBy: 'lastName'.
+	result := self extraterrestrials findAllFrom: 4000 upTo: 4005 sortedByAscending: 'lastName'.
 	self
 		withTheOnlyOneIn: result
 		do: [ :extraterrestrial | self assert: extraterrestrial lastName equals: 'Travolta' ].
-	result := self extraterrestrials findAllFrom: 4000 upTo: 4005 sortedBy: 'firstName'.
+	result := self extraterrestrials findAllFrom: 4000 upTo: 4005 sortedByAscending: 'firstName'.
 	self withTheOnlyOneIn: result do: [ :extraterrestrial |
 		self
 			assert: extraterrestrial firstName equals: 'Silvester';
 			assert: extraterrestrial lastName equals: 'Stallone'
 		].
 
-	result := self extraterrestrials findAllFrom: -50 upTo: 0 sortedBy: 'lastName'.
+	result := self extraterrestrials findAllFrom: -50 upTo: 0 sortedByAscending: 'lastName'.
 	self assert: result isEmpty.
-	result := self extraterrestrials findAllFrom: 6 upTo: -2 sortedBy: 'lastName'.
+	result := self extraterrestrials findAllFrom: 6 upTo: -2 sortedByAscending: 'lastName'.
 	self assert: result isEmpty.
-	result := self extraterrestrials findAllFrom: 5000 upTo: 10000 sortedBy: 'lastName'.
+	result := self extraterrestrials findAllFrom: 5000 upTo: 10000 sortedByAscending: 'lastName'.
 	self assert: result isEmpty
 ]
 
