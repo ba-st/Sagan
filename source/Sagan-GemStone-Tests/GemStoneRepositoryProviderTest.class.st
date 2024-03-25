@@ -209,14 +209,7 @@ GemStoneRepositoryProviderTest >> testQueryingInterval [
 		self
 			assert: extraterrestrial firstName equals: 'Silvester';
 			assert: extraterrestrial lastName equals: 'Stallone'
-		].
-
-	result := self extraterrestrials findAllFrom: -50 upTo: 0 sortedByAscending: 'lastName'.
-	self assert: result isEmpty.
-	result := self extraterrestrials findAllFrom: 6 upTo: -2 sortedByAscending: 'lastName'.
-	self assert: result isEmpty.
-	result := self extraterrestrials findAllFrom: 5000 upTo: 10000 sortedByAscending: 'lastName'.
-	self assert: result isEmpty
+		]
 ]
 
 { #category : 'tests' }

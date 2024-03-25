@@ -138,9 +138,15 @@ InMemoryRepository >> validatedFindAllFrom: aStartingPosition upTo: aMaximumPosi
 	to := ( aMaximumPosition min: contents size ) max: 1.
 
 	^ ( contents sorted: [ :a :b |
-		    ( a instVarNamed: aVariableName asString ) <= ( b instVarNamed: aVariableName asString ) ] )
+		    ( self valueOf: aVariableName in: a ) <= ( self valueOf: aVariableName in: b ) ] )
 		  copyFrom: from
 		  to: to
+]
+
+{ #category : 'private - accessing' }
+InMemoryRepository >> valueOf: aVariableName in: anObject [
+
+	^ anObject instVarAt: ( anObject class instVarNames indexOf: aVariableName )
 ]
 
 { #category : 'querying' }
