@@ -39,6 +39,12 @@ InMemoryRepository >> conflictCheckingStrategy [
 ]
 
 { #category : 'querying' }
+InMemoryRepository >> countAll [
+
+	^ contents size
+]
+
+{ #category : 'querying' }
 InMemoryRepository >> countMatching: aCriteriaOrBlockClosure [
 
 	^ contents count: ( self asMatchingCriteria: aCriteriaOrBlockClosure )
@@ -119,6 +125,28 @@ InMemoryRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdate
 	[ aDomainObject synchronizeWith: anUpdatedDomainObject ] ensure: [
 		self storeAfterCheckingConflicts: aDomainObject ].
 	^ aDomainObject
+]
+
+{ #category : 'private - querying' }
+InMemoryRepository >> validatedFindAllFrom: aStartingPosition upTo: aMaximumPosition sortedByAscending: aVariableName [
+
+	| from to |
+
+	( contents isEmpty or: [ aStartingPosition > contents size ] ) ifTrue: [ ^ Set new ].
+
+	from := aStartingPosition max: 1.
+	to := ( aMaximumPosition min: contents size ) max: 1.
+
+	^ ( contents sorted: [ :a :b |
+		    ( self valueOf: aVariableName in: a ) <= ( self valueOf: aVariableName in: b ) ] )
+		  copyFrom: from
+		  to: to
+]
+
+{ #category : 'private - accessing' }
+InMemoryRepository >> valueOf: aVariableName in: anObject [
+
+	^ anObject instVarAt: ( anObject class instVarNames indexOf: aVariableName )
 ]
 
 { #category : 'querying' }
