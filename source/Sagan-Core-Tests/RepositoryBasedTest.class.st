@@ -141,6 +141,16 @@ RepositoryBasedTest >> sistineStallone [
 ]
 
 { #category : 'tests - querying' }
+RepositoryBasedTest >> testCountAll [
+
+	self extraterrestrials
+		store: self silvesterStallone;
+		store: self sistineStallone.
+
+	self assert: self extraterrestrials countAll equals: 2
+]
+
+{ #category : 'tests - querying' }
 RepositoryBasedTest >> testCountMatching [
 
 	self extraterrestrials
@@ -151,6 +161,46 @@ RepositoryBasedTest >> testCountMatching [
 		assert: ( self extraterrestrials countMatching: [ :person | person lastName = 'Stallone' ] ) equals: 2;
 		assert: ( self extraterrestrials countMatching: [ :person | person firstName = 'Silvester' ] ) equals: 1; 
 		assert: ( self extraterrestrials countMatching: [ :person | person birthDate =  (Date year: 1998 month: 6 day: 27) ] ) equals: 1
+]
+
+{ #category : 'tests - querying' }
+RepositoryBasedTest >> testFindAllFromUpToSortedByAscending [
+
+	| found |
+
+	self extraterrestrials
+		store: self johnTravolta;
+		store: self johnLock;
+		store: self silvesterStallone.
+
+	found := self extraterrestrials findAllFrom: 2 upTo: 2 sortedByAscending: #lastName.
+	self
+		withTheOnlyOneIn: found
+		do: [ :extraterrestrial | self assert: extraterrestrial lastName equals: 'Stallone' ].
+
+	found := self extraterrestrials findAllFrom: 1 upTo: 1 sortedByAscending: #lastName.
+	self
+		withTheOnlyOneIn: found
+		do: [ :extraterrestrial | self assert: extraterrestrial lastName equals: 'Lock' ].
+
+	found := self extraterrestrials findAllFrom: 1 upTo: 2 sortedByAscending: #firstName.
+	self assert: ( found allSatisfy: [ :extraterrestrial | extraterrestrial firstName = 'John' ] ).
+
+	found := self extraterrestrials findAllFrom: 8 upTo: 9 sortedByAscending: #lastName.
+	self assert: found isEmpty.
+
+	self
+		should: [ self extraterrestrials findAllFrom: 0 upTo: 0 sortedByAscending: #lastName ]
+		raise: PersistenceCommandFailed
+		withMessageText: 'Starting position must be strictly positive.'.
+	self
+		should: [ self extraterrestrials findAllFrom: -6 upTo: 1 sortedByAscending: #lastName ]
+		raise: PersistenceCommandFailed
+		withMessageText: 'Starting position must be strictly positive.'.
+	self
+		should: [ self extraterrestrials findAllFrom: 3 upTo: 1 sortedByAscending: #lastName ]
+		raise: PersistenceCommandFailed
+		withMessageText: 'Maximum position must be equal or greater than starting position.'
 ]
 
 { #category : 'tests - querying' }

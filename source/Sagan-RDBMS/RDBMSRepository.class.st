@@ -61,6 +61,12 @@ RDBMSRepository >> conflictCheckingStrategy [
 ]
 
 { #category : 'querying' }
+RDBMSRepository >> countAll [
+
+	^ self withReadSessionDo: [ :session | session count: modelObjectClass ]
+]
+
+{ #category : 'querying' }
 RDBMSRepository >> countMatching: aCriteriaOrBlock [
 
 	^ self
@@ -181,6 +187,19 @@ RDBMSRepository >> update: aMutableDomainObject executing: aMonadycBlock [
 RDBMSRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
 
 	^self update: aDomainObject executing: [:original | original synchronizeWith: anUpdatedDomainObject]
+]
+
+{ #category : 'private - querying' }
+RDBMSRepository >> validatedFindAllFrom: aStartingPosition upTo: aMaximumPosition sortedByAscending: aVariableName [
+
+	| query limit offset |
+
+	limit := aMaximumPosition - aStartingPosition + 1.
+	offset := aStartingPosition - 1.
+	query := SimpleQuery read: modelObjectClass limit: limit.
+	query offset: offset.
+	aVariableName ascending asSortFunction asOrderByIn: query.
+	^ self executeQuery: query
 ]
 
 { #category : 'querying' }

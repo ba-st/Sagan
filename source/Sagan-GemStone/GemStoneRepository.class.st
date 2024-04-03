@@ -39,6 +39,12 @@ GemStoneRepository >> conflictCheckingStrategy [
 ]
 
 { #category : 'querying' }
+GemStoneRepository >> countAll [
+
+	^ contents size
+]
+
+{ #category : 'querying' }
 GemStoneRepository >> countMatching: aCriteriaOrBlockClosure [
 
 	^ contents count: ( self asMatchingCriteria: aCriteriaOrBlockClosure )
@@ -151,6 +157,30 @@ GemStoneRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdate
 	[ aDomainObject synchronizeWith: anUpdatedDomainObject ] ensure: [
 		self storeAfterCheckingConflicts: aDomainObject ].
 	^ aDomainObject
+]
+
+{ #category : 'private - querying' }
+GemStoneRepository >> validatedFindAllFrom: aStartingPosition upTo: aMaximumPosition sortedByAscending: aVariableName [
+
+	| results |
+
+	results := OrderedCollection new.
+	self
+		withQueryFrom: ( 'each.<1s> >= ''''' expandMacrosWith: aVariableName asString )
+		do: [ :query |
+			| stream limit offset |
+
+			stream := query readStream.
+			limit := aMaximumPosition - aStartingPosition + 1.
+			offset := aStartingPosition - 1.
+			stream skip: offset.
+			limit timesRepeat: [
+				stream atEnd
+					ifTrue: [ ^ results ]
+					ifFalse: [ results add: stream next ]
+				]
+			].
+	^ results
 ]
 
 { #category : 'querying' }

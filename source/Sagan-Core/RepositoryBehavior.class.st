@@ -30,6 +30,17 @@ RepositoryBehavior >> asMatchingCriteria: aBlockOrCriteria [
 ]
 
 { #category : 'private - preconditions' }
+RepositoryBehavior >> assertBoundariesAreValidFrom: aStartingPosition upTo: aMaximumPosition [
+
+	aStartingPosition strictlyPositive ifFalse: [
+		PersistenceCommandFailed signal: 'Starting position must be strictly positive.' ].
+
+	aStartingPosition <= aMaximumPosition ifFalse: [
+		PersistenceCommandFailed signal:
+			'Maximum position must be equal or greater than starting position.' ]
+]
+
+{ #category : 'private - preconditions' }
 RepositoryBehavior >> assertIncludes: inMemoryObject [
 
 	AssertionChecker
@@ -63,27 +74,43 @@ RepositoryBehavior >> conflictCheckingStrategy [
 ]
 
 { #category : 'querying' }
-RepositoryBehavior >> countMatching: aCriteria [
+RepositoryBehavior >> countAll [
 
-	self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : 'querying' }
-RepositoryBehavior >> findAll [ 
-	
-	self subclassResponsibility 
+RepositoryBehavior >> countMatching: aCriteria [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'querying' }
+RepositoryBehavior >> findAll [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'querying' }
+RepositoryBehavior >> findAllFrom: aStartingPosition upTo: aMaximumPosition sortedByAscending: aVariableName [
+
+	self assertBoundariesAreValidFrom: aStartingPosition upTo: aMaximumPosition.
+	^ self
+		  validatedFindAllFrom: aStartingPosition
+		  upTo: aMaximumPosition
+		  sortedByAscending: aVariableName
 ]
 
 { #category : 'querying' }
 RepositoryBehavior >> findAllMatching: aCriteria [
 
-	self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : 'querying' }
 RepositoryBehavior >> findAllMatching: aCriteria sortedBy: aSortCriteria [
 
-	self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : 'private - accessing' }
@@ -153,14 +180,20 @@ RepositoryBehavior >> updateAfterCheckingConflicts: aDomainObject with: anUpdate
 	^ self subclassResponsibility
 ]
 
+{ #category : 'private - querying' }
+RepositoryBehavior >> validatedFindAllFrom: aStartingPosition upTo: aMaximumPosition sortedByAscending: aVariableName [
+
+	^ self subclassResponsibility
+]
+
 { #category : 'querying' }
 RepositoryBehavior >> withOneMatching: aCriteria do: foundBlock else: noneBlock [
 
-	self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : 'querying' }
 RepositoryBehavior >> withOneMatching: aCriteria sortedBy: aSortCriteria do: foundBlock else: noneBlock [
 
-	self subclassResponsibility
+	^ self subclassResponsibility
 ]
