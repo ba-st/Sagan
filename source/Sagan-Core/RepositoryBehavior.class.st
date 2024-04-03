@@ -197,3 +197,9 @@ RepositoryBehavior >> withOneMatching: aCriteria sortedBy: aSortCriteria do: fou
 
 	^ self subclassResponsibility
 ]
+
+{ #category : 'querying' }
+RepositoryBehavior >> withOneWhere: aVariableName is: anExpectedValue do: foundBlock else: noneBlock [
+
+	^ self subclassResponsibility
+]
