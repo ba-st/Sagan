@@ -1,19 +1,28 @@
 name: Baseline groups
-
-on: [push,pull_request,workflow_dispatch]
-
+on:
+  - push
+  - pull_request
+  - workflow_dispatch
 jobs:
    build:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        smalltalk: [ Pharo64-11, Pharo64-10, Pharo64-9.0 ]  
-        rdbms: [ SQLite3 ]
-        load-spec: [ deployment, tests, tools, development]
+        smalltalk:
+          - Pharo64-9.0
+          - Pharo64-10
+          - Pharo64-11
+        rdbms:
+          - SQLite3
+        load-spec:
+          - deployment
+          - tests
+          - tools
+          - development
     name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }} + ${{ matrix.load-spec }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: hpi-swa/setup-smalltalkCI@v1
         with:
           smalltalk-image: ${{ matrix.smalltalk }}

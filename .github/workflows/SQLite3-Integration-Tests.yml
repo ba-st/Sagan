@@ -1,18 +1,23 @@
 name: SQLite3 Integration Tests
-
-on: [push,pull_request,workflow_dispatch]
-
+on:
+  - push
+  - pull_request
+  - workflow_dispatch
 jobs:
    build:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        smalltalk: [ Pharo64-11, Pharo64-10, Pharo64-9.0 ]
-        rdbms: [ SQLite3 ]
+        smalltalk:
+          - Pharo64-9.0
+          - Pharo64-10
+          - Pharo64-11
+        rdbms:
+          - SQLite3
     name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: hpi-swa/setup-smalltalkCI@v1
         with:
           smalltalk-image: ${{ matrix.smalltalk }}
@@ -29,5 +34,5 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          name: ${{matrix.rdbms}}-${{matrix.smalltalk}}
+          name: Integration-Tests-${{matrix.rdbms}}-${{matrix.smalltalk}}
           token: ${{ secrets.CODECOV_TOKEN }}
