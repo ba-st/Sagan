@@ -11,14 +11,18 @@ SingleRDBMSSessionProviderTest >> testHandleFailingLogin [
 	| sessionProvider |
 
 	self timeLimit: 30 seconds.
-	self withLoggingAsserterDo: [ :asserter | 
+	self withLoggingAsserterDo: [ :asserter |
 		self
-			should: [ 
+			should: [
 				asserter
-					runMemoryLoggerDuring: [ 
+					runMemoryLoggerDuring: [
 						sessionProvider := SingleRDBMSSessionProvider
 							                   loginWith: self class failingLogin
-							                   configuredBy: [ :options | options at: #logDatabaseEvents put: true ]
+							                   configuredBy: [ :options |
+								                   options
+									                   at: #logDatabaseEvents put: true;
+									                   at: #timeSlotBetweenConnectionRetriesInMs put: 1 second
+								                   ]
 						];
 					assertLogRecordsMatch: #(  ).
 
@@ -29,7 +33,7 @@ SingleRDBMSSessionProviderTest >> testHandleFailingLogin [
 			raise: DatabaseLoginFailed
 			withMessageText: self expectedFailingLogingMessage.
 
-		asserter assertLogRecordsMatch: { 
+		asserter assertLogRecordsMatch: {
 				'[DEBUG] Glorp event received {"detail":"Login"}'.
 				( '[WARNING] Failed to connect to database after 1 attempts because <1s>' expandMacrosWith:
 					  self expectedFailingLogingMessage ).

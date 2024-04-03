@@ -37,16 +37,16 @@ BaselineOfSagan >> projectClass [
 BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
-		baseline: 'Kepler' with: [ spec repository: 'github://ba-st/Kepler:v6/source' ];
+		baseline: 'Kepler' with: [ spec repository: 'github://ba-st/Kepler:v6' ];
 		project: 'Kepler-Core' copyFrom: 'Kepler' with: [ spec loads: 'Core' ];
 		project: 'Kepler-SUnit' copyFrom: 'Kepler' with: [ spec loads: 'Dependent-SUnit-Extensions' ].
 
 	spec
-		baseline: 'ObjectPool' with: [ spec repository: 'github://pharo-ide/ObjectPool:v1.0.3' ];
+		baseline: 'ObjectPool' with: [ spec repository: 'github://ba-st-dependencies/ObjectPool:v2' ];
 		project: 'ObjectPool-Core' copyFrom: 'ObjectPool' with: [ spec loads: 'Core' ].
 
 	spec
-		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v7/source' ];
+		baseline: 'Buoy' with: [ spec repository: 'github://ba-st/Buoy:v7' ];
 		project: 'Buoy-SUnit' copyFrom: 'Buoy' with: [ spec loads: 'Dependent-SUnit-Extensions' ];
 		project: 'Buoy-Tools' copyFrom: 'Buoy' with: [ spec loads: 'Tools' ].
 
