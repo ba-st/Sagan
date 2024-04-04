@@ -152,11 +152,26 @@ InMemoryRepository >> valueOf: aVariableName in: anObject [
 { #category : 'querying' }
 InMemoryRepository >> withOneMatching: aCriteriaOrBlock do: foundBlock else: noneBlock [
 
-	^ contents detect: ( self asMatchingCriteria: aCriteriaOrBlock ) ifFound: foundBlock ifNone: noneBlock
+	^ contents
+		  detect: ( self asMatchingCriteria: aCriteriaOrBlock )
+		  ifFound: foundBlock
+		  ifNone: noneBlock
 ]
 
 { #category : 'querying' }
 InMemoryRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do: foundBlock else: noneBlock [
 
-	^ ( contents sorted: aSortFunction ) detect: ( self asMatchingCriteria: aCriteriaOrBlock ) ifFound: foundBlock ifNone: noneBlock
+	^ ( contents sorted: aSortFunction )
+		  detect: ( self asMatchingCriteria: aCriteriaOrBlock )
+		  ifFound: foundBlock
+		  ifNone: noneBlock
+]
+
+{ #category : 'querying' }
+InMemoryRepository >> withOneWhere: aVariableName is: anExpectedValue do: foundBlock else: noneBlock [
+
+	^ self
+		  withOneMatching: [ :element | ( self valueOf: aVariableName in: element ) = anExpectedValue ]
+		  do: foundBlock
+		  else: noneBlock
 ]

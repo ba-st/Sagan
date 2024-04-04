@@ -202,6 +202,19 @@ GemStoneRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction 
 ]
 
 { #category : 'querying' }
+GemStoneRepository >> withOneWhere: aVariableName is: anExpectedValue do: foundBlock else: noneBlock [
+
+	^ self
+		  withQueryFrom: ( 'each.<1s> = target' expandMacrosWith: aVariableName asString )
+		  do: [ :query |
+			  query bind: 'target' to: anExpectedValue.
+			  query isEmpty
+				  ifTrue: noneBlock
+				  ifFalse: [ foundBlock value: query any ]
+			  ]
+]
+
+{ #category : 'querying' }
 GemStoneRepository >> withQueryFrom: aQueryString do: aBlock [
 
 	^ aBlock value: ( ( GsQuery

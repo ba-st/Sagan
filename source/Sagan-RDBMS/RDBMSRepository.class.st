@@ -221,6 +221,15 @@ RDBMSRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do:
 	^ ( self executeQuery: query ) ifNil: noneBlock ifNotNil: foundBlock
 ]
 
+{ #category : 'querying' }
+RDBMSRepository >> withOneWhere: anAttributeName is: anExpectedValue do: foundBlock else: noneBlock [
+
+	^ self
+		  withOneMatching: [ :element | ( element perform: anAttributeName asSymbol ) = anExpectedValue ]
+		  do: foundBlock
+		  else: noneBlock
+]
+
 { #category : 'private - accessing' }
 RDBMSRepository >> withReadSessionDo: aBlock [
 

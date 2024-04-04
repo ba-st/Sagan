@@ -705,6 +705,31 @@ RepositoryBasedTest >> testWithOneMatchingSortedByDoElse [
 		else: [ self fail ]
 ]
 
+{ #category : 'tests - querying' }
+RepositoryBasedTest >> testWithOneWhereIsDoElse [
+
+	| found |
+
+	self extraterrestrials
+		store: self johnTravolta;
+		store: self johnLock;
+		store: self silvesterStallone.
+
+	found := self extraterrestrials
+		         withOneWhere: #lastName
+		         is: 'Stallone'
+		         do: [ :extraterrestrial | extraterrestrial ]
+		         else: [ self fail ].
+	self assert: found firstName equals: 'Silvester'.
+
+	found := self extraterrestrials
+		         withOneWhere: #lastName
+		         is: 'Silvester'
+		         do: [ :extraterrestrial | self fail ]
+		         else: [ 'Not found' ].
+	self assert: found equals: 'Not found'
+]
+
 { #category : 'tests - management' }
 RepositoryBasedTest >> updateExtraterrestrialMatching: aBlock with: aNewExtraterrestrial [
 
