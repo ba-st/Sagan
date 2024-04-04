@@ -202,12 +202,6 @@ RDBMSRepository >> validatedFindAllFrom: aStartingPosition upTo: aMaximumPositio
 	^ self executeQuery: query
 ]
 
-{ #category : 'private - accessing' }
-RDBMSRepository >> valueOf: aVariableName in: anObject [
-
-	^ anObject instVarAt: ( anObject class instVarNames indexOf: aVariableName )
-]
-
 { #category : 'querying' }
 RDBMSRepository >> withOneMatching: aCriteriaOrBlock do: foundBlock else: noneBlock [
 
@@ -231,9 +225,10 @@ RDBMSRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do:
 RDBMSRepository >> withOneWhere: aVariableName is: anExpectedValue do: foundBlock else: noneBlock [
 
 	^ self
-		  withOneMatching: [ :element | ( self valueOf: aVariableName in: element ) = anExpectedValue ]
+		  withOneMatching: [ :element | ( element perform: aVariableName asSymbol ) = anExpectedValue ]
 		  do: foundBlock
 		  else: noneBlock
+		
 ]
 
 { #category : 'private - accessing' }
