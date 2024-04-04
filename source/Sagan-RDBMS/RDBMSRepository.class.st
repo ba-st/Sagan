@@ -222,13 +222,12 @@ RDBMSRepository >> withOneMatching: aCriteriaOrBlock sortedBy: aSortFunction do:
 ]
 
 { #category : 'querying' }
-RDBMSRepository >> withOneWhere: aVariableName is: anExpectedValue do: foundBlock else: noneBlock [
+RDBMSRepository >> withOneWhere: anAttributeName is: anExpectedValue do: foundBlock else: noneBlock [
 
 	^ self
-		  withOneMatching: [ :element | ( element perform: aVariableName asSymbol ) = anExpectedValue ]
+		  withOneMatching: [ :element | ( element perform: anAttributeName asSymbol ) = anExpectedValue ]
 		  do: foundBlock
 		  else: noneBlock
-		
 ]
 
 { #category : 'private - accessing' }
