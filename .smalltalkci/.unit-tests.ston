@@ -5,7 +5,8 @@ SmalltalkCISpec {
       #directory : '../source',
       #load : [ 'CI' ],
       #platforms : [  #pharo ],
-      #onConflict : #useLoaded
+      #onConflict : #useLoaded,
+      #failOn : [ #Warning ]
     }
   ],
   #testing : {
