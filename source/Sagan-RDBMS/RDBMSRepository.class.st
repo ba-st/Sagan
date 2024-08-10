@@ -92,6 +92,15 @@ RDBMSRepository >> findAllMatching: aCriteriaOrBlock [
 ]
 
 { #category : 'querying' }
+RDBMSRepository >> findAllMatching: aCriteriaOrBlock limitedTo: aMaxNumberOfResults [
+
+  ^ self executeQuery: ( SimpleQuery
+          read: modelObjectClass
+          where: ( self asMatchingCriteria: aCriteriaOrBlock )
+          limit: aMaxNumberOfResults )
+]
+
+{ #category : 'querying' }
 RDBMSRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction [
 
 	| query |

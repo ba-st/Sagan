@@ -108,6 +108,12 @@ RepositoryBehavior >> findAllMatching: aCriteria [
 ]
 
 { #category : 'querying' }
+RepositoryBehavior >> findAllMatching: aCriteriaOrBlock limitedTo: aMaxNumberOfResults [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'querying' }
 RepositoryBehavior >> findAllMatching: aCriteria sortedBy: aSortCriteria [
 
 	^ self subclassResponsibility

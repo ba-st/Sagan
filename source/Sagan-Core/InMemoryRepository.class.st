@@ -63,6 +63,21 @@ InMemoryRepository >> findAllMatching: aCriteriaOrBlock [
 ]
 
 { #category : 'querying' }
+InMemoryRepository >> findAllMatching: aCriteriaOrBlock limitedTo: aMaxNumberOfResults [
+
+  | results |
+  results := Set new.
+  contents do: [ :element |
+      results size < aMaxNumberOfResults
+        ifTrue: [
+          ( ( self asMatchingCriteria: aCriteriaOrBlock ) value: element ) ifTrue: [
+              results add: element ] ]
+        ifFalse: [ ^ results ]
+    ].
+  ^ results
+]
+
+{ #category : 'querying' }
 InMemoryRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction [
 
 	^ ( self findAllMatching: aCriteriaOrBlock ) sorted: aSortFunction
