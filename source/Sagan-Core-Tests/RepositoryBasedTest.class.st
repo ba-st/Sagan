@@ -233,7 +233,7 @@ RepositoryBasedTest >> testFindAllMatching [
 ]
 
 { #category : 'tests - querying' }
-RepositoryBasedTest >> testFindAllMatchingLimitedTo [
+RepositoryBasedTest >> testFindAllMatchingLimitedToSortedByAscending [
 
   | results |
   self extraterrestrials
@@ -245,11 +245,16 @@ RepositoryBasedTest >> testFindAllMatchingLimitedTo [
   results := self extraterrestrials
                findAllMatching: [ :extraterrestrial :criteria |
                    criteria does: extraterrestrial lastName asUppercase includeSubstring: 'L' ]
-               limitedTo: 2.
+               limitedTo: 2
+			sortedByAscending: #lastName.
 
   self
     assert: results size equals: 2;
-    assert: ( results allSatisfy: [ :result | result lastName asUppercase includesSubstring: 'L' ] )
+    assert: ( results anySatisfy: [ :result | result lastName = 'Lock' ] );
+    deny: ( results anySatisfy: [ :result | result lastName = 'McCoy' ] );
+    assert: ( results anySatisfy: [ :result | result lastName = 'Stallone' ] );
+    deny: ( results anySatisfy: [ :result | result lastName = 'Travolta' ] )
+
 ]
 
 { #category : 'tests - querying' }

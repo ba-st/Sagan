@@ -63,18 +63,11 @@ InMemoryRepository >> findAllMatching: aCriteriaOrBlock [
 ]
 
 { #category : 'querying' }
-InMemoryRepository >> findAllMatching: aCriteriaOrBlock limitedTo: aMaxNumberOfResults [
+InMemoryRepository >> findAllMatching: aCriteriaOrBlock limitedTo: aMaxNumberOfResults sortedByAscending: aVariableName [
 
-  | results |
-  results := Set new.
-  contents do: [ :element |
-      results size < aMaxNumberOfResults
-        ifTrue: [
-          ( ( self asMatchingCriteria: aCriteriaOrBlock ) value: element ) ifTrue: [
-              results add: element ] ]
-        ifFalse: [ ^ results ]
-    ].
-  ^ results
+  ^ ( ( contents sorted: [ :a :b |
+            ( self valueOf: aVariableName in: a ) <= ( self valueOf: aVariableName in: b ) ] )
+        select: ( self asMatchingCriteria: aCriteriaOrBlock ) ) copyUpTo: aMaxNumberOfResults
 ]
 
 { #category : 'querying' }
