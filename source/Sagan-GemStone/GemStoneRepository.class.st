@@ -63,6 +63,27 @@ GemStoneRepository >> findAllMatching: aCriteriaOrBlock [
 ]
 
 { #category : 'querying' }
+GemStoneRepository >> findAllMatching: aCriteriaOrBlock limitedTo: aMaxNumberOfResults sortedByAscending: aVariableName [
+
+  | results matchingCriteria |
+  results := OrderedCollection new.
+  matchingCriteria := self asMatchingCriteria: aCriteriaOrBlock.
+  self
+    withQueryFrom: ( 'each.<1s> >= ''''' expandMacrosWith: aVariableName asString )
+    do: [ :query |
+        | stream current |
+        stream := query readStream.
+        [ stream atEnd ] whileFalse: [
+            current := stream next.
+            results size < aMaxNumberOfResults
+              ifTrue: [ ( matchingCriteria value: current ) ifTrue: [ results add: current ] ]
+              ifFalse: [ ^ results ]
+          ]
+      ].
+  ^ results
+]
+
+{ #category : 'querying' }
 GemStoneRepository >> findAllMatching: aCriteriaOrBlock sortedBy: aSortFunction [
 
 	^ ( self findAllMatching: aCriteriaOrBlock ) sorted: aSortFunction

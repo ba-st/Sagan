@@ -38,6 +38,13 @@ InMemoryRepository >> conflictCheckingStrategy [
 	^ conflictCheckingStrategy
 ]
 
+{ #category : 'private - querying' }
+InMemoryRepository >> contentsSortedByAscending: aVariableName [
+
+  ^ contents sorted: [ :a :b |
+        ( self valueOf: aVariableName in: a ) <= ( self valueOf: aVariableName in: b ) ]
+]
+
 { #category : 'querying' }
 InMemoryRepository >> countAll [
 
@@ -60,6 +67,13 @@ InMemoryRepository >> findAll [
 InMemoryRepository >> findAllMatching: aCriteriaOrBlock [
 
 	^ contents select: ( self asMatchingCriteria: aCriteriaOrBlock )
+]
+
+{ #category : 'querying' }
+InMemoryRepository >> findAllMatching: aCriteriaOrBlock limitedTo: aMaxNumberOfResults sortedByAscending: aVariableName [
+
+  ^ ( ( self contentsSortedByAscending: aVariableName ) select:
+        ( self asMatchingCriteria: aCriteriaOrBlock ) ) copyFirst: aMaxNumberOfResults
 ]
 
 { #category : 'querying' }
@@ -130,17 +144,13 @@ InMemoryRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdate
 { #category : 'private - querying' }
 InMemoryRepository >> validatedFindAllFrom: aStartingPosition upTo: aMaximumPosition sortedByAscending: aVariableName [
 
-	| from to |
+  | from to |
+  ( contents isEmpty or: [ aStartingPosition > contents size ] ) ifTrue: [ ^ Set new ].
 
-	( contents isEmpty or: [ aStartingPosition > contents size ] ) ifTrue: [ ^ Set new ].
+  from := aStartingPosition max: 1.
+  to := ( aMaximumPosition min: contents size ) max: 1.
 
-	from := aStartingPosition max: 1.
-	to := ( aMaximumPosition min: contents size ) max: 1.
-
-	^ ( contents sorted: [ :a :b |
-		    ( self valueOf: aVariableName in: a ) <= ( self valueOf: aVariableName in: b ) ] )
-		  copyFrom: from
-		  to: to
+  ^ ( self contentsSortedByAscending: aVariableName ) copyFrom: from to: to
 ]
 
 { #category : 'private - accessing' }
