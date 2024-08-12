@@ -73,7 +73,7 @@ InMemoryRepository >> findAllMatching: aCriteriaOrBlock [
 InMemoryRepository >> findAllMatching: aCriteriaOrBlock limitedTo: aMaxNumberOfResults sortedByAscending: aVariableName [
 
   ^ ( ( self contentsSortedByAscending: aVariableName ) select:
-        ( self asMatchingCriteria: aCriteriaOrBlock ) ) copyUpTo: aMaxNumberOfResults
+        ( self asMatchingCriteria: aCriteriaOrBlock ) ) copyFirst: aMaxNumberOfResults
 ]
 
 { #category : 'querying' }
