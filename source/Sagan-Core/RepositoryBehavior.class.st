@@ -43,10 +43,13 @@ RepositoryBehavior >> assertBoundariesAreValidFrom: aStartingPosition upTo: aMax
 { #category : 'private - preconditions' }
 RepositoryBehavior >> assertIncludes: inMemoryObject [
 
-	AssertionChecker
-		enforce: [ ( self countMatching: [ :objectInRepository :criteria | criteria does: objectInRepository equal: inMemoryObject ] ) strictlyPositive ]
-		because: [ '<1p> was not found.' expandMacrosWith: inMemoryObject ]
-		raising: ObjectNotFound
+  AssertionChecker
+    enforce: [
+        ( self countMatching: [ :objectInRepository :criteria |
+              criteria does: objectInRepository equal: inMemoryObject ] ) strictlyPositive
+      ]
+    because: [ '{1} was not found.' localizedWithAll: { inMemoryObject printString } ]
+    raising: ObjectNotFound
 ]
 
 { #category : 'private - preconditions' }

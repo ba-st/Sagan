@@ -23,11 +23,8 @@ Class {
 { #category : 'instance creation' }
 CriteriaBasedConflictCheckingStrategy class >> accordingTo: aBlockOrMatchingCriteria [
 
-	^ self
-		  accordingTo: aBlockOrMatchingCriteria
-		  explainingConflictWith: [ :objectInMemory | 
-			  'Something is in conflict with <1p>' expandMacrosWith:
-				  objectInMemory ]
+  ^ self accordingTo: aBlockOrMatchingCriteria explainingConflictWith: [ :objectInMemory |
+        'Something is in conflict with {1}' localizedWithAll: { objectInMemory printString } ]
 ]
 
 { #category : 'instance creation' }
