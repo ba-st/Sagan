@@ -571,6 +571,40 @@ GemStoneRepositoryProviderTest >> testTransactionLevelWithUnhandledException [
 	self assert: System transactionLevel equals: baseLevel
 ]
 
+{ #category : 'tests' }
+GemStoneRepositoryProviderTest >> testUpdateWithWhileAbbortTransactionsAreSignaled [
+
+	| stallone semaphore previous |
+
+	previous := System transactionMode.
+	[
+		System transactionMode: #manualBegin.
+		semaphore := Semaphore new.
+		self setUpSemaphorizedRepositoryWaitingOn: semaphore.
+		stallone := self silvesterStallone.
+		self extraterrestrials store: stallone.
+		self
+			assert: self extraterrestrials findAll size equals: 1;
+			assert: ( self extraterrestrials findAll includes: stallone ).
+		[
+			self
+				updateExtraterrestrialMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ]
+				with: self johnLock
+		] fork.
+		Processor yield.
+		System inTransaction ifFalse: [ System abortTransaction ].
+		semaphore signal.
+		Processor yield.
+		self assert: self extraterrestrials findAll size equals: 1.
+		self extraterrestrials
+			withOneMatching: [ :extraterrestrial | extraterrestrial firstName = 'John' ]
+			do: [ :john | self assert: john lastName equals: 'Lock' ]
+			else: [ self fail ].
+		self assert: ( self extraterrestrials findAllMatching: [ :extraterrestrial |
+					  extraterrestrial lastName = 'Stallone' ] ) isEmpty
+	] ensure: [ System transactionMode: previous ]
+]
+
 { #category : 'utility' }
 GemStoneRepositoryProviderTest >> withAllSpaceshipsMatching: aMatchingCriteria do: aOneArgBlock [
 
