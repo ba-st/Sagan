@@ -127,14 +127,12 @@ GemStoneRepository >> matchingCriteriaBuilder [
 { #category : 'private - management' }
 GemStoneRepository >> purgeAfterCheckingInclusion: aDomainObject [
 
-	^ self transact: [
-		  contents remove: aDomainObject ifAbsent: [
-			  DataInconsistencyFound signal:
-				  ( '<1p> was expected to be found in the contents, but it was not.' expandMacrosWith:
-					    aDomainObject )
-			  ].
-		  aDomainObject
-		  ]
+	contents remove: aDomainObject ifAbsent: [
+			DataInconsistencyFound signal:
+				( '<1p> was expected to be found in the contents, but it was not.' expandMacrosWith:
+					  aDomainObject )
+		].
+	^ aDomainObject
 ]
 
 { #category : 'management' }
@@ -153,10 +151,14 @@ GemStoneRepository >> saganGemStoneIndexOptions [
 { #category : 'private - management' }
 GemStoneRepository >> storeAfterCheckingConflicts: aDomainObject [
 
-	^ self transact: [
-		  contents add: aDomainObject.
-		  aDomainObject
-		  ]
+	contents add: aDomainObject.
+	^ aDomainObject
+]
+
+{ #category : 'private - management' }
+GemStoneRepository >> synchronize: aDomainObject with: anUpdatedDomainObject [
+
+	aDomainObject synchronizeWith: anUpdatedDomainObject
 ]
 
 { #category : 'management' }
@@ -175,8 +177,8 @@ GemStoneRepository >> update: aMutableDomainObject executing: aBlock [
 GemStoneRepository >> updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject [
 
 	self purgeAfterCheckingInclusion: aDomainObject.
-	[ aDomainObject synchronizeWith: anUpdatedDomainObject ] ensure: [
-		self storeAfterCheckingConflicts: aDomainObject ].
+	[ self synchronize: aDomainObject with: anUpdatedDomainObject ] ensure: [
+			self storeAfterCheckingConflicts: aDomainObject ].
 	^ aDomainObject
 ]
 

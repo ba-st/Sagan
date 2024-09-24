@@ -19,37 +19,75 @@ GemStoneRepositoryProviderTest >> pickTwoElementsFrom: aQuery [
 ]
 
 { #category : 'initialization' }
-GemStoneRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy [
+GemStoneRepositoryProviderTest >> setUpRepositoryProvidedBy: aGemStoneRepositoryProvider with: aConflictCheckingStrategy [
 
-	extraterrestrials := GemStoneRepositoryProvider new
+	extraterrestrials := aGemStoneRepositoryProvider
 		                     createRepositoryStoringObjectsOfType: Extraterrestrial
 		                     checkingConflictsAccordingTo: aConflictCheckingStrategy.
 	extraterrestrials configureWith: [ :repository |
-		repository
-			indexByEquality: 'firstName' typed: String;
-			indexByEquality: 'lastName' typed: String
+			repository
+				indexByEquality: 'firstName' typed: String;
+				indexByEquality: 'lastName' typed: String
 		].
 	ships := GemStoneRepositoryProvider new
 		         createRepositoryStoringObjectsOfType: Spaceship
 		         checkingConflictsAccordingTo: aConflictCheckingStrategy
 ]
 
+{ #category : 'initialization' }
+GemStoneRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy [
+
+	self setUpRepositoryProvidedBy: GemStoneRepositoryProvider new with: aConflictCheckingStrategy
+]
+
+{ #category : 'initialization' }
+GemStoneRepositoryProviderTest >> setUpSemaphorizedRepositoryWaitingOn: aSemaphore [
+
+	self
+		setUpRepositoryProvidedBy: ( SemaphorizedGemStoneRepositoryProvider waitingOn: aSemaphore )
+		with: DoNotCheckForConflictsStrategy new
+]
+
 { #category : 'tests' }
 GemStoneRepositoryProviderTest >> testExceptionsAbortTransactionsUntilHandled [
 
 	self assert: self extraterrestrials findAll isEmpty.
-
-	self extraterrestrials transact: [
-		[
+	[
 		self extraterrestrials store: self silvesterStallone.
 		self assertTheOnlyOneInTheRepositoryIsSilvesterStallone.
 		1 / 0
-		]
-			on: ZeroDivide
-			do: [ :ex | ex return ]
-		].
-
+	]
+		on: ZeroDivide
+		do: [ :ex | ex return ].
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
+]
+
+{ #category : 'tests - conflict checking' }
+GemStoneRepositoryProviderTest >> testPurgeInSimultaneous [
+
+	| semaphore previous |
+
+	previous := System transactionMode.
+	[
+		System transactionMode: #manualBegin.
+		semaphore := Semaphore new.
+		self
+			setUpRepositoryProvidedBy: ( SemaphorizedGemStoneRepositoryProvider waitingOn: semaphore )
+			with:
+			( CriteriaBasedConflictCheckingStrategy forSingleAspectMatching: [ :person | person firstName ] ).
+		[ self extraterrestrials store: self silvesterStallone ] fork.
+		Processor yield.
+		semaphore signal.
+		[ self extraterrestrials purge: self silvesterStallone ] fork.
+		Processor yield.
+		[ self should: [ self extraterrestrials purge: self silvesterStallone ] raise: ObjectNotFound ]
+			fork.
+		Processor yield.
+		semaphore signal.
+		semaphore signal.
+		Processor yield.
+		self assert: self extraterrestrials findAll isEmpty
+	] ensure: [ System transactionMode: previous ]
 ]
 
 { #category : 'tests' }
@@ -415,6 +453,39 @@ GemStoneRepositoryProviderTest >> testSpaceshipWhenUsingIdentityIndex [
 				solvalou.
 				anotherSolvalou }
 		]
+]
+
+{ #category : 'tests - conflict checking' }
+GemStoneRepositoryProviderTest >> testStoreInSimultaneous [
+
+	| semaphore previous |
+
+	previous := System transactionMode.
+	[
+		System transactionMode: #manualBegin.
+		semaphore := Semaphore new.
+		self
+			setUpRepositoryProvidedBy: ( SemaphorizedGemStoneRepositoryProvider waitingOn: semaphore )
+			with:
+			( CriteriaBasedConflictCheckingStrategy forSingleAspectMatching: [ :person | person firstName ] ).
+		[ self extraterrestrials store: self silvesterStallone ] fork.
+		Processor yield.
+		[
+			self
+				should: [ self extraterrestrials store: self silvesterStallone ]
+				raise: ConflictingObjectFound
+				withMessageText: 'Something is in conflict with Stallone, Silvester'
+		] fork.
+		Processor yield.
+		semaphore signal.
+		semaphore signal.
+		Processor yield.
+		self withTheOnlyOneIn: self extraterrestrials findAll do: [ :extraterrestrial |
+				self
+					assert: extraterrestrial firstName equals: 'Silvester';
+					assert: extraterrestrial lastName equals: 'Stallone'
+			]
+	] ensure: [ System transactionMode: previous ]
 ]
 
 { #category : 'tests' }
