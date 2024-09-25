@@ -131,9 +131,11 @@ RepositoryBehavior >> matchingCriteriaBuilder [
 { #category : 'management' }
 RepositoryBehavior >> purge: aDomainObject [
 
-	^ self
-		assertIncludes: aDomainObject;
-		purgeAfterCheckingInclusion: aDomainObject
+	^ self transact: [
+			  self
+				  assertIncludes: aDomainObject;
+				  purgeAfterCheckingInclusion: aDomainObject
+		  ]
 ]
 
 { #category : 'private - management' }
@@ -151,9 +153,11 @@ RepositoryBehavior >> purgeAllMatching: aCriteria [
 { #category : 'management' }
 RepositoryBehavior >> store: aDomainObject [
 
-	^ self
-		assertNoConflictsFor: aDomainObject;
-		storeAfterCheckingConflicts: aDomainObject
+	^ self transact: [
+			  self
+				  assertNoConflictsFor: aDomainObject;
+				  storeAfterCheckingConflicts: aDomainObject
+		  ]
 ]
 
 { #category : 'private - management' }
@@ -177,10 +181,12 @@ RepositoryBehavior >> update: aDomainObject executing: aBlock [
 { #category : 'management' }
 RepositoryBehavior >> update: aDomainObject with: anUpdatedDomainObject [
 
-	^ self
-		assertIncludes: aDomainObject;
-		assertNoConflictsFor: anUpdatedDomainObject excluding: aDomainObject;
-		updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject
+	^ self transact: [
+			  self
+				  assertIncludes: aDomainObject;
+				  assertNoConflictsFor: anUpdatedDomainObject excluding: aDomainObject;
+				  updateAfterCheckingConflicts: aDomainObject with: anUpdatedDomainObject
+		  ]
 ]
 
 { #category : 'private - management' }

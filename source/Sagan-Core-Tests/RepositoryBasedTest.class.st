@@ -603,12 +603,9 @@ RepositoryBasedTest >> testUpdateInSameSessionAsFetch [
 
 	stallone := self silvesterStallone.
 	self extraterrestrials
-		transact: [ self extraterrestrials
-				withOneMatching: [ :extraterrestrial | extraterrestrial firstName = 'John' ]
-				do: [ :lock | self extraterrestrials update: lock with: stallone ]
-				else: [ self fail ]
-			].
-
+		withOneMatching: [ :extraterrestrial | extraterrestrial firstName = 'John' ]
+		do: [ :lock | self extraterrestrials update: lock with: stallone ]
+		else: [ self fail ].
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
 
@@ -784,9 +781,8 @@ RepositoryBasedTest >> testWithOneWhereIsDoElse [
 RepositoryBasedTest >> updateExtraterrestrialMatching: aBlock with: aNewExtraterrestrial [
 
 	self extraterrestrials
-		transact: [ self extraterrestrials
-				withOneMatching: aBlock
-				do: [ :extraterrestrial | self extraterrestrials update: extraterrestrial with: aNewExtraterrestrial ]
-				else: [ self fail ]
-			]
+		withOneMatching: aBlock
+		do: [ :extraterrestrial |
+			self extraterrestrials update: extraterrestrial with: aNewExtraterrestrial ]
+		else: [ self fail ]
 ]

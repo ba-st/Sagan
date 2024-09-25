@@ -19,36 +19,46 @@ GemStoneRepositoryProviderTest >> pickTwoElementsFrom: aQuery [
 ]
 
 { #category : 'initialization' }
-GemStoneRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy [
+GemStoneRepositoryProviderTest >> setUpRepositoryProvidedBy: aGemStoneRepositoryProvider with: aConflictCheckingStrategy [
 
-	extraterrestrials := GemStoneRepositoryProvider new
+	extraterrestrials := aGemStoneRepositoryProvider
 		                     createRepositoryStoringObjectsOfType: Extraterrestrial
 		                     checkingConflictsAccordingTo: aConflictCheckingStrategy.
 	extraterrestrials configureWith: [ :repository |
-		repository
-			indexByEquality: 'firstName' typed: String;
-			indexByEquality: 'lastName' typed: String
+			repository
+				indexByEquality: 'firstName' typed: String;
+				indexByEquality: 'lastName' typed: String
 		].
 	ships := GemStoneRepositoryProvider new
 		         createRepositoryStoringObjectsOfType: Spaceship
 		         checkingConflictsAccordingTo: aConflictCheckingStrategy
 ]
 
+{ #category : 'initialization' }
+GemStoneRepositoryProviderTest >> setUpRepositoryWith: aConflictCheckingStrategy [
+
+	self setUpRepositoryProvidedBy: GemStoneRepositoryProvider new with: aConflictCheckingStrategy
+]
+
+{ #category : 'initialization' }
+GemStoneRepositoryProviderTest >> setUpSemaphorizedRepositoryWaitingOn: aSemaphore [
+
+	self
+		setUpRepositoryProvidedBy: ( SemaphorizedGemStoneRepositoryProvider waitingOn: aSemaphore )
+		with: DoNotCheckForConflictsStrategy new
+]
+
 { #category : 'tests' }
 GemStoneRepositoryProviderTest >> testExceptionsAbortTransactionsUntilHandled [
 
 	self assert: self extraterrestrials findAll isEmpty.
-
-	self extraterrestrials transact: [
-		[
+	[
 		self extraterrestrials store: self silvesterStallone.
 		self assertTheOnlyOneInTheRepositoryIsSilvesterStallone.
 		1 / 0
-		]
-			on: ZeroDivide
-			do: [ :ex | ex return ]
-		].
-
+	]
+		on: ZeroDivide
+		do: [ :ex | ex return ].
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
 
@@ -498,6 +508,40 @@ GemStoneRepositoryProviderTest >> testTransactionLevelWithUnhandledException [
 		do: [ :ex | ex return ].
 
 	self assert: System transactionLevel equals: baseLevel
+]
+
+{ #category : 'tests' }
+GemStoneRepositoryProviderTest >> testUpdateWithWhileAbbortTransactionsAreSignaled [
+
+	| stallone semaphore previous |
+
+	previous := System transactionMode.
+	[
+		System transactionMode: #manualBegin.
+		semaphore := Semaphore new.
+		self setUpSemaphorizedRepositoryWaitingOn: semaphore.
+		stallone := self silvesterStallone.
+		self extraterrestrials store: stallone.
+		self
+			assert: self extraterrestrials findAll size equals: 1;
+			assert: ( self extraterrestrials findAll includes: stallone ).
+		[
+			self
+				updateExtraterrestrialMatching: [ :extraterrestrial | extraterrestrial firstName = 'Silvester' ]
+				with: self johnLock
+		] fork.
+		Processor yield.
+		System inTransaction ifFalse: [ System abortTransaction ].
+		semaphore signal.
+		Processor yield.
+		self assert: self extraterrestrials findAll size equals: 1.
+		self extraterrestrials
+			withOneMatching: [ :extraterrestrial | extraterrestrial firstName = 'John' ]
+			do: [ :john | self assert: john lastName equals: 'Lock' ]
+			else: [ self fail ].
+		self assert: ( self extraterrestrials findAllMatching: [ :extraterrestrial |
+					  extraterrestrial lastName = 'Stallone' ] ) isEmpty
+	] ensure: [ System transactionMode: previous ]
 ]
 
 { #category : 'utility' }
