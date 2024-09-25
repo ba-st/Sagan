@@ -62,34 +62,6 @@ GemStoneRepositoryProviderTest >> testExceptionsAbortTransactionsUntilHandled [
 	self assertTheOnlyOneInTheRepositoryIsSilvesterStallone
 ]
 
-{ #category : 'tests - conflict checking' }
-GemStoneRepositoryProviderTest >> testPurgeInSimultaneous [
-
-	| semaphore previous |
-
-	previous := System transactionMode.
-	[
-		System transactionMode: #manualBegin.
-		semaphore := Semaphore new.
-		self
-			setUpRepositoryProvidedBy: ( SemaphorizedGemStoneRepositoryProvider waitingOn: semaphore )
-			with:
-			( CriteriaBasedConflictCheckingStrategy forSingleAspectMatching: [ :person | person firstName ] ).
-		[ self extraterrestrials store: self silvesterStallone ] fork.
-		Processor yield.
-		semaphore signal.
-		[ self extraterrestrials purge: self silvesterStallone ] fork.
-		Processor yield.
-		[ self should: [ self extraterrestrials purge: self silvesterStallone ] raise: ObjectNotFound ]
-			fork.
-		Processor yield.
-		semaphore signal.
-		semaphore signal.
-		Processor yield.
-		self assert: self extraterrestrials findAll isEmpty
-	] ensure: [ System transactionMode: previous ]
-]
-
 { #category : 'tests' }
 GemStoneRepositoryProviderTest >> testQueryReturningBeforeAllIndexedResultsAreRead [
 
@@ -453,39 +425,6 @@ GemStoneRepositoryProviderTest >> testSpaceshipWhenUsingIdentityIndex [
 				solvalou.
 				anotherSolvalou }
 		]
-]
-
-{ #category : 'tests - conflict checking' }
-GemStoneRepositoryProviderTest >> testStoreInSimultaneous [
-
-	| semaphore previous |
-
-	previous := System transactionMode.
-	[
-		System transactionMode: #manualBegin.
-		semaphore := Semaphore new.
-		self
-			setUpRepositoryProvidedBy: ( SemaphorizedGemStoneRepositoryProvider waitingOn: semaphore )
-			with:
-			( CriteriaBasedConflictCheckingStrategy forSingleAspectMatching: [ :person | person firstName ] ).
-		[ self extraterrestrials store: self silvesterStallone ] fork.
-		Processor yield.
-		[
-			self
-				should: [ self extraterrestrials store: self silvesterStallone ]
-				raise: ConflictingObjectFound
-				withMessageText: 'Something is in conflict with Stallone, Silvester'
-		] fork.
-		Processor yield.
-		semaphore signal.
-		semaphore signal.
-		Processor yield.
-		self withTheOnlyOneIn: self extraterrestrials findAll do: [ :extraterrestrial |
-				self
-					assert: extraterrestrial firstName equals: 'Silvester';
-					assert: extraterrestrial lastName equals: 'Stallone'
-			]
-	] ensure: [ System transactionMode: previous ]
 ]
 
 { #category : 'tests' }

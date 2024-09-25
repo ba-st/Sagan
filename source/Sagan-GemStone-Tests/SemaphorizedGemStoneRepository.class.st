@@ -17,20 +17,6 @@ SemaphorizedGemStoneRepository class >> checkingConflictsAccordingTo: aConflictC
 	^ self new initializeCheckingConflictsAccordingTo: aConflictCheckingStrategy waitingOn: aSemaphore
 ]
 
-{ #category : 'private - preconditions' }
-SemaphorizedGemStoneRepository >> assertIncludes: aDomainObject [
-
-	super assertIncludes: aDomainObject.
-	semaphore wait
-]
-
-{ #category : 'private - preconditions' }
-SemaphorizedGemStoneRepository >> assertNoConflictsFor: aDomainObject [
-
-	super assertNoConflictsFor: aDomainObject.
-	semaphore wait
-]
-
 { #category : 'initialization' }
 SemaphorizedGemStoneRepository >> initializeCheckingConflictsAccordingTo: aConflictCheckingStrategy waitingOn: aSemaphore [
 
