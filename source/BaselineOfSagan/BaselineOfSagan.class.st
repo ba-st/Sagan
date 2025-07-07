@@ -63,12 +63,12 @@ BaselineOfSagan >> setUpDependencies: spec [
 		project: 'Glorp SQLite3' copyFrom: 'SQLite3' with: [ spec loads: 'glorp' ].
 
 	spec
-		baseline: 'Bell' with: [ spec repository: 'github://ba-st/Bell:v3' ];
+		baseline: 'Bell' with: [ spec repository: 'github://ba-st/Bell:v4' ];
 		project: 'Bell-Core' copyFrom: 'Bell' with: [ spec loads: 'Deployment' ];
 		project: 'Bell-SUnit' copyFrom: 'Bell' with: [ spec loads: 'Dependent-SUnit-Extensions' ].
 
 	spec
-		baseline: 'Hyperspace' with: [ spec repository: 'github://ba-st/Hyperspace:v6' ];
+		baseline: 'Hyperspace' with: [ spec repository: 'github://ba-st/Hyperspace:v7' ];
 		project: 'Hyperspace-Deployment' copyFrom: 'Hyperspace' with: [ spec loads: 'Deployment' ]
 ]
 
