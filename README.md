@@ -4,8 +4,8 @@
 
 Sagan is aimed to help solutions implementing polyglot persistence.
 
-[![SQLite3 Status](https://github.com/ba-st/Sagan/workflows/SQLite3%20Integration%20Tests/badge.svg?branch=release-candidate)](https://github.com/ba-st/Sagan/actions?query=workflow%3ASQLite3%20Integration%20Tests)
-[![PostgreSQL Status](https://github.com/ba-st/Sagan/workflows/PostgreSQL%20Integration%20Tests/badge.svg?branch=release-candidate)](https://github.com/ba-st/Sagan/actions?query=workflow%3APostgreSQL%20Integration%20Tests)
+[![SQLite3 Status](https://github.com/ba-st/Sagan/actions/workflows/SQLite3-Integration-Tests.yml/badge.svg)](https://github.com/ba-st/Sagan/actions/workflows/SQLite3-Integration-Tests.yml)
+[![PostgreSQL Status](https://github.com/ba-st/Sagan/actions/workflows/PostgreSQL-Integration-Tests.yml/badge.svg)](https://github.com/ba-st/Sagan/actions/workflows/PostgreSQL-Integration-Tests.yml)
 [![Coverage Status](https://codecov.io/github/ba-st/Sagan/coverage.svg?branch=release-candidate)](https://codecov.io/gh/ba-st/Sagan/branch/release-candidate)
 [![Baseline groups](https://github.com/ba-st/Sagan/actions/workflows/loading-groups.yml/badge.svg)](https://github.com/ba-st/Sagan/actions/workflows/loading-groups.yml)
 [![Markdown Lint](https://github.com/ba-st/Sagan/actions/workflows/markdown-lint.yml/badge.svg)](https://github.com/ba-st/Sagan/actions/workflows/markdown-lint.yml)
@@ -14,6 +14,8 @@ Sagan is aimed to help solutions implementing polyglot persistence.
 [![Pharo 9.0](https://img.shields.io/badge/Pharo-9.0-informational)](https://pharo.org)
 [![Pharo 10](https://img.shields.io/badge/Pharo-10-informational)](https://pharo.org)
 [![Pharo 11](https://img.shields.io/badge/Pharo-11-informational)](https://pharo.org)
+[![Pharo 12](https://img.shields.io/badge/Pharo-11-informational)](https://pharo.org)
+[![Pharo 13](https://img.shields.io/badge/Pharo-11-informational)](https://pharo.org)
 
 [![GS64 3.7.1](https://img.shields.io/badge/GS64-3.7.1-informational)](https://gemtalksystems.com/products/gs64/)
 
@@ -35,18 +37,20 @@ Quick links
 
 Sagan is tested against the following backends:
 
-| Pharo           |     |  9.0 - 64 bits | 10 - 64 bits  | 11 - 64 bits |
-| -----------     | --- | -------------- | ------------- |------------- |
-| **PostgreSQL**  | 9.4 | ✔️             | ✔️            |✔️            |
-|                 | 9.5 | ✔️             | ✔️            |✔️            |
-|                 | 9.6 | ✔️             | ✔️            |✔️            |
-|                 | 10  | ✔️             | ✔️            |✔️            |
-|                 | 11  | ✔️             | ✔️            |✔️            |
-|                 | 12  | ✔️             | ✔️            |✔️            |
-|                 | 13  | ✔️             | ✔️            |✔️            |
-|                 | 14  | ✔️             | ✔️            |✔️            |
-|                 | 15  | ✔️             | ✔️            |✔️            |
-| **SQLite**      | 3   | ✔️             | ✔️            |✔️            |
+| Pharo 64 bits   |     |  9 | 10 | 11 | 12 | 13 |
+| -----------     | --- | -- | -- | -- | -- | -- |
+| **PostgreSQL**  | 9.4 | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+|                 | 9.5 | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+|                 | 9.6 | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+|                 | 10  | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+|                 | 11  | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+|                 | 12  | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+|                 | 13  | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+|                 | 14  | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+|                 | 15  | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+|                 | 16  | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+|                 | 17  | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+| **SQLite**      | 3   | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
 
 ## Installation
 

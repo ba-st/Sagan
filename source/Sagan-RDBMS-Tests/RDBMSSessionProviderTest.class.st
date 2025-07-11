@@ -25,11 +25,15 @@ RDBMSSessionProviderTest class >> login [
 ]
 
 { #category : 'tests' }
-RDBMSSessionProviderTest >> expectedFailingLogingMessage [
+RDBMSSessionProviderTest >> expectedFailingLoginMessage [
 
-	^ DatabaseAccessor classForThisPlatform DefaultDriver = SQLite3Driver
-		  then: [ 'SQLite3CantOpen: unable to open database file' ]
-		  otherwise: [ 'ConnectionTimedOut: Cannot connect to 127.0.0.1:2345' ]
+  ^ DatabaseAccessor classForThisPlatform DefaultDriver = SQLite3Driver
+      then: [ 'SQLite3CantOpen: unable to open database file' ]
+      otherwise: [
+          SystemVersion current major >= 12
+            then: [ 'ConnectionClosed: Connection aborted to 127.0.0.1:2345' ]
+            otherwise: [ 'ConnectionTimedOut: Cannot connect to 127.0.0.1:2345' ]
+        ]
 ]
 
 { #category : 'tests' }

@@ -13,6 +13,8 @@ jobs:
           - Pharo64-9.0
           - Pharo64-10
           - Pharo64-11
+          - Pharo64-12
+          - Pharo64-13
         rdbms:
           - PostgreSQLv9.4
           - PostgreSQLv9.5
@@ -23,6 +25,8 @@ jobs:
           - PostgreSQLv13
           - PostgreSQLv14
           - PostgreSQLv15
+          - PostgreSQLv16
+          - PostgreSQLv17
     name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }}
     steps:
       - uses: actions/checkout@v4
@@ -40,7 +44,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RDBMS: ${{ matrix.rdbms }}
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           name: Integration-Tests-${{matrix.rdbms}}-${{matrix.smalltalk}}
           token: ${{ secrets.CODECOV_TOKEN }}

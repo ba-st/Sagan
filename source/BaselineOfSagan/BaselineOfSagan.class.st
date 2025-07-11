@@ -51,15 +51,15 @@ BaselineOfSagan >> setUpDependencies: spec [
 		project: 'Buoy-Tools' copyFrom: 'Buoy' with: [ spec loads: 'Tools' ].
 
 	spec
-		baseline: 'Glorp' with: [ spec repository: 'github://pharo-rdbms/glorp:v9.0.6' ];
+		baseline: 'Glorp' with: [ spec repository: 'github://ba-st-dependencies/Glorp:v9' ];
 		project: 'Glorp-Core' copyFrom: 'Glorp' with: [ spec loads: 'Core' ].
 
 	spec
-		baseline: 'P3' with: [ spec repository: 'github://ba-st-dependencies/P3:v1.4.2' ];
+		baseline: 'P3' with: [ spec repository: 'github://ba-st-dependencies/P3:v1' ];
 		project: 'Glorp P3' copyFrom: 'P3' with: [ spec loads: 'glorp' ].
 
 	spec
-		baseline: 'SQLite3' with: [ spec repository: 'github://pharo-rdbms/Pharo-SQLite3:v2.2.6' ];
+		baseline: 'SQLite3' with: [ spec repository: 'github://ba-st-dependencies/Pharo-SQLite3:v2' ];
 		project: 'Glorp SQLite3' copyFrom: 'SQLite3' with: [ spec loads: 'glorp' ].
 
 	spec

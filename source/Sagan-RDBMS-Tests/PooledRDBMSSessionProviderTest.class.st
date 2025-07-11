@@ -36,18 +36,18 @@ PooledRDBMSSessionProviderTest >> testHandleFailingLogin [
 					assertLogRecordsMatch: #(  )
 				]
 			raise: DatabaseLoginFailed
-			withMessageText: self expectedFailingLogingMessage.
+			withMessageText: self expectedFailingLoginMessage.
 
 		asserter assertLogRecordsMatch: { 
 				'[DEBUG] Glorp event received {"detail":"Login"}'.
 				( '[WARNING] Failed to connect to database after 1 attempts because <1s>' expandMacrosWith:
-					  self expectedFailingLogingMessage ).
+					  self expectedFailingLoginMessage ).
 				'[DEBUG] Glorp event received {"detail":"Login"}'.
 				( '[WARNING] Failed to connect to database after 2 attempts because <1s>' expandMacrosWith:
-					  self expectedFailingLogingMessage ).
+					  self expectedFailingLoginMessage ).
 				'[DEBUG] Glorp event received {"detail":"Login"}'.
 				( '[WARNING] Failed to connect to database after 3 attempts because <1s>' expandMacrosWith:
-					  self expectedFailingLogingMessage ).
+					  self expectedFailingLoginMessage ).
 				'[DEBUG] Glorp event received {"detail":"Login"}' }
 		]
 ]
