@@ -4,8 +4,6 @@
 
 Sagan is aimed to help solutions implementing polyglot persistence.
 
-[![Pharo - Unit Tests](https://github.com/ba-st/Buoy/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/ba-st/Buoy/actions/workflows/unit-tests.yml)
-
 [![SQLite3 Status](https://github.com/ba-st/Sagan/actions/workflows/SQLite3-Integration-Tests.yml/badge.svg)](https://github.com/ba-st/Sagan/actions/workflows/SQLite3-Integration-Tests.yml)
 [![PostgreSQL Status](https://github.com/ba-st/Sagan/actions/workflows/PostgreSQL-Integration-Tests.yml/badge.svg)](https://github.com/ba-st/Sagan/actions/workflows/PostgreSQL-Integration-Tests.yml)
 [![Coverage Status](https://codecov.io/github/ba-st/Sagan/coverage.svg?branch=release-candidate)](https://codecov.io/gh/ba-st/Sagan/branch/release-candidate)
