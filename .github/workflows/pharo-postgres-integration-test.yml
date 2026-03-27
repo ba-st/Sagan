@@ -12,10 +12,15 @@ jobs:
     services:
       postgres:
         image: postgres:${{ inputs.postgres-version }}
+        command: >-
+          -c ssl=on
+          -c ssl_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+          -c ssl_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
         options: >-
-          ssl=on
-          ssl_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
-          ssl_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
         env:
           POSTGRES_PASSWORD: secret
           POSTGRES_USER: postgres
