@@ -37,7 +37,7 @@ BaselineOfSagan >> projectClass [
 BaselineOfSagan >> setUpDependencies: spec [
 
 	spec
-		baseline: 'Kepler' with: [ spec repository: 'github://ba-st/Kepler:v7' ];
+		baseline: 'Kepler' with: [ spec repository: 'github://ba-st/Kepler:v8' ];
 		project: 'Kepler-Core' copyFrom: 'Kepler' with: [ spec loads: 'Core' ];
 		project: 'Kepler-SUnit' copyFrom: 'Kepler' with: [ spec loads: 'Dependent-SUnit-Extensions' ].
 

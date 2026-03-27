@@ -1,0 +1,31 @@
+name: Reusable PostgreSQL Integration Tests
+on:
+  workflow_call:
+    inputs:
+      postgres-version:
+        required: true
+        type: string
+jobs:
+  group-loading-pharo-10:
+    runs-on: ubuntu-latest
+    name: Pharo64-10
+    services:
+      postgres:
+        image: postgres:${{ inputs.postgres-version }}
+        options: >-
+          -c ssl=on
+          -c ssl_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+          -c ssl_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+        env:
+          POSTGRES_PASSWORD: secret
+          POSTGRES_USER: postgres
+          POSTGRES_DB: test
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ba-st-actions/pharo-ci@v10
+        with:
+          spec: .smalltalkci/.unit-tests.ston
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RDBMS: PostgreSQLv${{ postgres-version }}
+        timeout-minutes: 15

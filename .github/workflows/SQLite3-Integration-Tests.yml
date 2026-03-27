@@ -19,7 +19,7 @@ jobs:
           - SQLite3
     name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: hpi-swa/setup-smalltalkCI@v1
         with:
           smalltalk-image: ${{ matrix.smalltalk }}

@@ -11,7 +11,6 @@ Sagan is aimed to help solutions implementing polyglot persistence.
 [![Markdown Lint](https://github.com/ba-st/Sagan/actions/workflows/markdown-lint.yml/badge.svg)](https://github.com/ba-st/Sagan/actions/workflows/markdown-lint.yml)
 
 [![GitHub release](https://img.shields.io/github/release/ba-st/Sagan.svg)](https://github.com/ba-st/Sagan/releases/latest)
-[![Pharo 9.0](https://img.shields.io/badge/Pharo-9.0-informational)](https://pharo.org)
 [![Pharo 10](https://img.shields.io/badge/Pharo-10-informational)](https://pharo.org)
 [![Pharo 11](https://img.shields.io/badge/Pharo-11-informational)](https://pharo.org)
 [![Pharo 12](https://img.shields.io/badge/Pharo-12-informational)](https://pharo.org)
