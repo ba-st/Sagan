@@ -33,4 +33,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RDBMS: PostgreSQLv${{ inputs.postgres-version }}
+          SAGAN_POSTGRES_HOSTNAME: postgres
         timeout-minutes: 15
