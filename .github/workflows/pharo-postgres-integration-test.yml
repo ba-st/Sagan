@@ -19,9 +19,9 @@ jobs:
           --health-retries 5
         env:
           POSTGRES_INITDB_ARGS:  >-
-            --set ssl=on
-            --set ssl_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
-            --set ssl_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+            -c ssl=on
+            -c ssl_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+            -c ssl_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
           POSTGRES_PASSWORD: secret
           POSTGRES_USER: postgres
           POSTGRES_DB: test
