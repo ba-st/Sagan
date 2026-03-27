@@ -27,5 +27,5 @@ jobs:
           spec: .smalltalkci/.unit-tests.ston
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RDBMS: PostgreSQLv${{ postgres-version }}
+          RDBMS: PostgreSQLv${{ inputs.postgres-version }}
         timeout-minutes: 15
