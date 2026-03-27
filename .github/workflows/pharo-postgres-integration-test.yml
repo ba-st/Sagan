@@ -35,3 +35,90 @@ jobs:
           RDBMS: PostgreSQLv${{ inputs.postgres-version }}
           SAGAN_POSTGRES_HOSTNAME: postgres
         timeout-minutes: 15
+  group-loading-pharo-11:
+    runs-on: ubuntu-latest
+    name: Pharo64-11
+    services:
+      postgres:
+        image: postgres:${{ inputs.postgres-version }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_INITDB_ARGS:  >-
+            -c ssl=on
+            -c ssl_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+            -c ssl_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+          POSTGRES_PASSWORD: secret
+          POSTGRES_USER: postgres
+          POSTGRES_DB: test
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ba-st-actions/pharo-ci@v11
+        with:
+          spec: .smalltalkci/.unit-tests.ston
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RDBMS: PostgreSQLv${{ inputs.postgres-version }}
+          SAGAN_POSTGRES_HOSTNAME: postgres
+        timeout-minutes: 15
+  group-loading-pharo-12:
+    runs-on: ubuntu-latest
+    name: Pharo64-12
+    services:
+      postgres:
+        image: postgres:${{ inputs.postgres-version }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_INITDB_ARGS:  >-
+            -c ssl=on
+            -c ssl_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+            -c ssl_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+          POSTGRES_PASSWORD: secret
+          POSTGRES_USER: postgres
+          POSTGRES_DB: test
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ba-st-actions/pharo-ci@v12
+        with:
+          spec: .smalltalkci/.unit-tests.ston
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RDBMS: PostgreSQLv${{ inputs.postgres-version }}
+          SAGAN_POSTGRES_HOSTNAME: postgres
+        timeout-minutes: 15
+  group-loading-pharo-13:
+    runs-on: ubuntu-latest
+    name: Pharo64-13
+    services:
+      postgres:
+        image: postgres:${{ inputs.postgres-version }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_INITDB_ARGS:  >-
+            -c ssl=on
+            -c ssl_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+            -c ssl_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+          POSTGRES_PASSWORD: secret
+          POSTGRES_USER: postgres
+          POSTGRES_DB: test
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ba-st-actions/pharo-ci@v13
+        with:
+          spec: .smalltalkci/.unit-tests.ston
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RDBMS: PostgreSQLv${{ inputs.postgres-version }}
+          SAGAN_POSTGRES_HOSTNAME: postgres
+        timeout-minutes: 15
