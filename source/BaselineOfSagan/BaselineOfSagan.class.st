@@ -24,7 +24,7 @@ BaselineOfSagan >> baseline: spec [
 { #category : 'post load' }
 BaselineOfSagan >> postLoadInitialization [
 
-	RepositoryProviderSystem registerInterfaces
+  self classNamed: #RepositoryProviderSystem ifPresent: [ :class | class registerInterfaces ]
 ]
 
 { #category : 'accessing' }
