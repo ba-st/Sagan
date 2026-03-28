@@ -51,6 +51,7 @@ SingleSessionRDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 { #category : 'configuring' }
 SingleSessionRDMBSRepositoryTest class >> postgreSQLHostname [
 
+  <ignoreForCoverage>
   ^ LanguagePlatform current os
       environmentAt: 'SAGAN_POSTGRES_HOSTNAME'
       ifPresent: [ :hostname | hostname ]
