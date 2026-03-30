@@ -4,37 +4,83 @@ on:
   - pull_request
   - workflow_dispatch
 jobs:
-   build:
+   unit-tests-pharo-10:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        smalltalk:
-          - Pharo64-9.0
-          - Pharo64-10
-          - Pharo64-11
-          - Pharo64-12
-          - Pharo64-13
-        rdbms:
-          - SQLite3
-    name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }}
+    name: Pharo64-10
     steps:
-      - uses: actions/checkout@v4
-      - uses: hpi-swa/setup-smalltalkCI@v1
-        with:
-          smalltalk-image: ${{ matrix.smalltalk }}
-      - name: Install SQLite3
-        run: ./scripts/install-SQLite3.sh
-        env:
-          RDBMS: ${{ matrix.rdbms }}
+      - uses: actions/checkout@v6
       - name: Load Image and Run Tests
-        run: smalltalkci -s ${{ matrix.smalltalk }} .smalltalkci/.unit-tests.ston
-        timeout-minutes: 15
+        uses: ba-st-actions/pharo-ci@v10
+        with:
+          entrypoint: ./scripts/install-SQLite3-and-run-pharo-ci.sh
+          spec: .smalltalkci/.unit-tests.ston
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RDBMS: ${{ matrix.rdbms }}
+          RDBMS: SQLite3
+        timeout-minutes: 15
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
-          name: Integration-Tests-${{matrix.rdbms}}-${{matrix.smalltalk}}
+          name: Unit-Tests-Pharo-10
           token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unit
+   unit-tests-pharo-11:
+    runs-on: ubuntu-latest
+    name: Pharo64-11
+    steps:
+      - uses: actions/checkout@v6
+      - name: Load Image and Run Tests
+        uses: ba-st-actions/pharo-ci@v11
+        with:
+          entrypoint: ./scripts/install-SQLite3-and-run-pharo-ci.sh
+          spec: .smalltalkci/.unit-tests.ston
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RDBMS: SQLite3
+        timeout-minutes: 15
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          name: Unit-Tests-Pharo-11
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unit
+   unit-tests-pharo-12:
+    runs-on: ubuntu-latest
+    name: Pharo64-12
+    steps:
+      - uses: actions/checkout@v6
+      - name: Load Image and Run Tests
+        uses: ba-st-actions/pharo-ci@v12
+        with:
+          entrypoint: ./scripts/install-SQLite3-and-run-pharo-ci.sh
+          spec: .smalltalkci/.unit-tests.ston
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RDBMS: SQLite3
+        timeout-minutes: 15
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          name: Unit-Tests-Pharo-12
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unit
+   unit-tests-pharo-13:
+    runs-on: ubuntu-latest
+    name: Pharo64-13
+    steps:
+      - uses: actions/checkout@v6
+      - name: Load Image and Run Tests
+        uses: ba-st-actions/pharo-ci@v13
+        with:
+          entrypoint: ./scripts/install-SQLite3-and-run-pharo-ci.sh
+          spec: .smalltalkci/.unit-tests.ston
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RDBMS: SQLite3
+        timeout-minutes: 15
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          name: Unit-Tests-Pharo-13
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unit

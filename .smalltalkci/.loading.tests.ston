@@ -9,9 +9,7 @@ SmalltalkCISpec {
     }
   ],
   #testing : {
-    #coverage : {
-      #packages : [ 'Sagan*' ],
-      #format: #lcov
-    }
+    #packages : [ ],
+    #failOnZeroTests: false
   }   
 }

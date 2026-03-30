@@ -49,19 +49,29 @@ SingleSessionRDMBSRepositoryTest class >> loginFor: anEnvironmentVariable [
 ]
 
 { #category : 'configuring' }
+SingleSessionRDMBSRepositoryTest class >> postgreSQLHostname [
+
+  <ignoreForCoverage>
+  ^ LanguagePlatform current os
+      environmentAt: 'SAGAN_POSTGRES_HOSTNAME'
+      ifPresent: [ :hostname | hostname ]
+      ifAbsent: [ 'localhost' ]
+]
+
+{ #category : 'configuring' }
 SingleSessionRDMBSRepositoryTest class >> postgreSQLLogin [
 
-	<ignoreForCoverage>
-	self useP3Driver.
-	^ Login new
-		database: PostgreSQLPlatform new;
-		username: 'postgres';
-		password: 'secret';
-		host: 'localhost';
-		port: 5432;
-		databaseName: 'test';
-		setSSL;
-		yourself
+  <ignoreForCoverage>
+  self useP3Driver.
+  ^ Login new
+      database: PostgreSQLPlatform new;
+      username: 'postgres';
+      password: 'secret';
+      host: self postgreSQLHostname;
+      port: 5432;
+      databaseName: 'test';
+      setSSL;
+      yourself
 ]
 
 { #category : 'configuring' }
