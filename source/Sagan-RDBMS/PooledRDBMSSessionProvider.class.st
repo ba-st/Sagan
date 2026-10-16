@@ -128,7 +128,11 @@ PooledRDBMSSessionProvider >> withSessionDo: aBlockClosure [
 		ifAbsent: [ sessionPool
 				withPooled: [ :session | 
 					self configureDescriptorSystemTo: session.
-					CurrentRDBMSSession value: session during: [ aBlockClosure value: session ]
+					"A use cut short may leave a response pending on the connection. Logging out makes
+					the pool discard the session instead of handing out a desynchronized connection."
+					CurrentRDBMSSession
+						value: session
+						during: [ [ aBlockClosure value: session ] ifCurtailed: [ session logout ] ]
 					]
 			]
 ]

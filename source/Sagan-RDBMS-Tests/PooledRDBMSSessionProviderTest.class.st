@@ -116,3 +116,49 @@ PooledRDBMSSessionProviderTest >> testLogsInWhenSessionFirstUsed [
 				   '[DEBUG] Glorp event received {"detail":"Login finished"}' )
 		]
 ]
+
+{ #category : 'tests' }
+PooledRDBMSSessionProviderTest >> testSessionIsReplacedAfterFailedUse [
+
+	| sessionProvider |
+
+	self withLoggingAsserterDo: [ :asserter | 
+		asserter
+			runMemoryLoggerDuring: [ 
+				sessionProvider := PooledRDBMSSessionProvider
+					                   loginWith: self class login
+					                   configuredBy: self sessionProviderOptions
+				];
+			assertLogRecordsMatch: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}' ).
+
+		asserter
+			runMemoryLoggerDuring: [ 
+				self
+					should: [ 
+						sessionProvider withSessionDo: [ :session | 
+							ConnectionTimedOut signal: 'Data receive timed out.' ]
+						]
+					raise: ConnectionTimedOut
+				];
+			assertLogRecordsMatch: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Logout"}'
+				   '[DEBUG] Glorp event received {"detail":"Logout finished"}' ).
+
+		asserter
+			runMemoryLoggerDuring: [ sessionProvider withSessionDo: [ :session |  ] ];
+			assertLogRecordsMatch: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Logout"}'
+				   '[DEBUG] Glorp event received {"detail":"Logout finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}' )
+		]
+]
