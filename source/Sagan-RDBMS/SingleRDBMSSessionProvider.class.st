@@ -71,5 +71,7 @@ SingleRDBMSSessionProvider >> withSessionDo: aBlockClosure [
 
 	currentSession := self session.
 	currentSession isLoggedIn not then: [ self ensureSuccessfulLoginToDatabaseWith: currentSession ].
-	^ aBlockClosure value: currentSession
+	"A use cut short may leave a response pending on the connection. Logging out forces the
+	next use to log in again instead of reading that response."
+	^ [ aBlockClosure value: currentSession ] ifCurtailed: [ currentSession logout ]
 ]
