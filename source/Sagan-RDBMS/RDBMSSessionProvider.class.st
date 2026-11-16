@@ -70,6 +70,24 @@ RDBMSSessionProvider >> withConfigurationSessionDo: aBlockClosure [
 	self subclassResponsibility 
 ]
 
+{ #category : 'private' }
+RDBMSSessionProvider >> withSession: aSession loggingOutOnErrorDo: aBlockClosure [
+
+	"An error may leave a response pending on the connection, so the session must not be used again.
+	ifCurtailed: would also log out after a non-local return, so only an error marks the session.
+	The logout waits for ensure:, which runs after the unit of work has rolled back."
+
+	| failed |
+
+	failed := false.
+	^ [ 
+	  [ aBlockClosure value: aSession ] on: Error do: [ :error | 
+		  failed := true.
+		  error pass
+		  ]
+	  ] ensure: [ failed then: [ aSession logout ] ]
+]
+
 { #category : 'enumerating' }
 RDBMSSessionProvider >> withSessionDo: aBlockClosure [
 

@@ -118,6 +118,27 @@ PooledRDBMSSessionProviderTest >> testLogsInWhenSessionFirstUsed [
 ]
 
 { #category : 'tests' }
+PooledRDBMSSessionProviderTest >> testSessionIsKeptAfterNonLocalReturn [
+
+	| sessionProvider |
+
+	self withLoggingAsserterDo: [ :asserter | 
+		asserter
+			runMemoryLoggerDuring: [ 
+				sessionProvider := PooledRDBMSSessionProvider
+					                   loginWith: self class login
+					                   configuredBy: self sessionProviderOptions.
+				self returnEarlyFromSessionOf: sessionProvider.
+				sessionProvider withSessionDo: [ :session |  ]
+				];
+			assertLogRecordsMatch: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}'
+				   '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}' )
+		]
+]
+
+{ #category : 'tests' }
 PooledRDBMSSessionProviderTest >> testSessionIsReplacedAfterFailedUse [
 
 	| sessionProvider |

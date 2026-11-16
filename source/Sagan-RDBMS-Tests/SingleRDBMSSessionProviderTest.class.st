@@ -97,6 +97,26 @@ SingleRDBMSSessionProviderTest >> testLogsInWhenSessionFirstUsed [
 ]
 
 { #category : 'tests' }
+SingleRDBMSSessionProviderTest >> testSessionIsKeptAfterNonLocalReturn [
+
+	| sessionProvider |
+
+	sessionProvider := SingleRDBMSSessionProvider
+		                   loginWith: self class login
+		                   configuredBy: [ :options | options at: #logDatabaseEvents put: true ].
+
+	self withLoggingAsserterDo: [ :asserter | 
+		asserter
+			runMemoryLoggerDuring: [ 
+				self returnEarlyFromSessionOf: sessionProvider.
+				sessionProvider withSessionDo: [ :session |  ]
+				];
+			assertLogRecordsMatch: #( '[DEBUG] Glorp event received {"detail":"Login"}'
+				   '[DEBUG] Glorp event received {"detail":"Login finished"}' )
+		]
+]
+
+{ #category : 'tests' }
 SingleRDBMSSessionProviderTest >> testSessionIsReplacedAfterFailedUse [
 
 	| sessionProvider |
