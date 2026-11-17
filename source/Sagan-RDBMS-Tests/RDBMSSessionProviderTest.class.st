@@ -36,6 +36,12 @@ RDBMSSessionProviderTest >> expectedFailingLoginMessage [
         ]
 ]
 
+{ #category : 'private - support' }
+RDBMSSessionProviderTest >> returnEarlyFromSessionOf: aSessionProvider [
+
+	aSessionProvider withSessionDo: [ :session | ^ session ]
+]
+
 { #category : 'tests' }
 RDBMSSessionProviderTest >> withLoggingAsserterDo: aOneArgBlock [
 

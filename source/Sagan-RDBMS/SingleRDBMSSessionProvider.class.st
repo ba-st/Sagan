@@ -71,5 +71,5 @@ SingleRDBMSSessionProvider >> withSessionDo: aBlockClosure [
 
 	currentSession := self session.
 	currentSession isLoggedIn not then: [ self ensureSuccessfulLoginToDatabaseWith: currentSession ].
-	^ aBlockClosure value: currentSession
+	^ self withSession: currentSession loggingOutOnErrorDo: aBlockClosure
 ]

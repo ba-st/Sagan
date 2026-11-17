@@ -128,7 +128,9 @@ PooledRDBMSSessionProvider >> withSessionDo: aBlockClosure [
 		ifAbsent: [ sessionPool
 				withPooled: [ :session | 
 					self configureDescriptorSystemTo: session.
-					CurrentRDBMSSession value: session during: [ aBlockClosure value: session ]
+					CurrentRDBMSSession
+						value: session
+						during: [ self withSession: session loggingOutOnErrorDo: aBlockClosure ]
 					]
 			]
 ]
